@@ -20,8 +20,27 @@ const PLATFORM_MARKS = {
   whatsapp: 'WA',
 }
 
-export default function OfficialLinks({ links = [] }) {
+export default function OfficialLinks({ links = [], compact = false }) {
   if (!links.length) return null
+
+  // Compacta (ficha por capítulos): una fila de canales, sin tarjetas.
+  if (compact) {
+    return (
+      <nav className="official-links-compact" id="enlaces-de-interes" aria-labelledby="enlaces-de-interes-titulo">
+        <p className="official-links-compact-title" id="enlaces-de-interes-titulo">Canales oficiales</p>
+        <ul>
+          {links.map((link) => (
+            <li key={link.id || link.platform}>
+              <a href={link.url} target="_blank" rel="noopener noreferrer">
+                <span aria-hidden="true">{PLATFORM_MARKS[link.platform] || '↗'}</span>
+                {link.label || PLATFORM_LABELS[link.platform] || 'Enlace oficial'}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )
+  }
 
   return (
     <section className="section official-links-section" id="enlaces-de-interes">

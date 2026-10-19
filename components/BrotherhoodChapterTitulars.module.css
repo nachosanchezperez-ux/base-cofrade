@@ -45,14 +45,11 @@
   object-position: center 22%;
 }
 
-.thumb figcaption {
-  position: absolute;
-  inset: auto 0 0;
-  padding: 3px 4px;
-  background: rgba(0, 0, 0, .6);
-  color: #fff;
-  font-size: 9px;
-  line-height: 1.2;
+.credit {
+  display: block;
+  margin-top: 2px;
+  color: #6b747d;
+  font-size: 12px;
 }
 
 .body {
@@ -79,8 +76,7 @@
 }
 
 .body h3 a:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  opacity: .8;
 }
 
 .authorship {

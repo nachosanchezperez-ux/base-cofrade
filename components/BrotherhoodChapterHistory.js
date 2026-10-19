@@ -25,10 +25,13 @@ function Milestone({ item, highlighted }) {
   </li>
 }
 
-export default function BrotherhoodChapterHistory({ items = [], introduction = '', formerTitulars = [], today = '' }) {
-  const { past, upcoming } = splitHistory(items, today)
+export default function BrotherhoodChapterHistory({ items = [], introduction = '', formerTitulars = [], today = '', announced = [], children = null }) {
+  const split = splitHistory(items, today)
+  const past = split.past
+  // Lo anunciado: hitos futuros de la cronología y la «gran cita» de la agenda.
+  const upcoming = [...split.upcoming, ...announced.filter((item) => !split.upcoming.some((other) => other.titulo === item.titulo))]
   const { lead, rest } = historyParagraphs(introduction)
-  if (!past.length && !lead && !formerTitulars.length && !upcoming.length) return null
+  if (!past.length && !lead && !formerTitulars.length && !upcoming.length && !children) return null
   const highlighted = new Set(representativeHistory(past))
 
   return <section className={`section ${styles.section}`} id="historia" aria-labelledby="historia-titulo">
@@ -53,6 +56,8 @@ export default function BrotherhoodChapterHistory({ items = [], introduction = '
           {rest.map((paragraph) => <p key={paragraph.slice(0, 40)}>{paragraph}</p>)}
         </details> : null}
       </div> : null}
+
+      {children}
 
       <FormerTitulars items={formerTitulars} />
     </div>

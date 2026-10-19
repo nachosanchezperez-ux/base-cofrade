@@ -1,0 +1,73 @@
+/* Bandas propias en la ficha por capítulos: filas, sin tarjetas. */
+.section {
+  padding-block: 8px 16px !important;
+  background: transparent !important;
+}
+
+.title {
+  margin: 0 0 8px;
+  color: #171b20;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list li {
+  padding: 12px 0;
+  border-top: 1px solid #e3e7eb;
+}
+
+.name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin: 0 0 4px;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.name a {
+  color: var(--brotherhood-primary, #153b69);
+  text-decoration: none;
+}
+
+.name span {
+  color: #59636e;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.text,
+.more p {
+  margin: 0;
+  color: #3d454e;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.more summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  cursor: pointer;
+  list-style: none;
+  color: #2a333c;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.more summary::-webkit-details-marker {
+  display: none;
+}
+
+.more[open] summary b {
+  transform: rotate(45deg);
+}

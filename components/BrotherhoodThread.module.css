@@ -96,8 +96,7 @@ a.name {
 }
 
 a.name:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  opacity: .8;
 }
 
 a.name:focus-visible {
@@ -154,4 +153,13 @@ a.name:focus-visible {
   .entry {
     padding-top: 26px;
   }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }

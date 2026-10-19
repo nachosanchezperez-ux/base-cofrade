@@ -39,10 +39,13 @@ export default function BrotherhoodProgramHero({
   compact = false,
   actions = null,
   collapseOfficialName = false,
+  localityOnce = false,
 }) {
   const visibleFacts = facts.filter((fact) => fact?.label && fact?.value).slice(0, 4)
   const hasPhoto = Boolean(media.photoSrc)
-  const context = [seat, locality].filter(Boolean).join(' · ')
+  // localityOnce (ficha por capítulos): la localidad ya va junto al tipo; la
+  // línea de contexto queda solo para la sede.
+  const context = (localityOnce ? [seat] : [seat, locality]).filter(Boolean).join(' · ')
   const width = Number(media.width)
   const height = Number(media.height)
   const hasDimensions = width > 0 && height > 0

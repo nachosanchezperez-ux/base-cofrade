@@ -24,7 +24,8 @@ export default function BrotherhoodThread({ nodes = [] }) {
         {nodes.map((node, index) => <li key={`${node.kind}-${node.href || index}`} className={styles.node} data-kind={node.kind}>
           <span className={styles.relation} aria-hidden={node.relation ? undefined : true}>{node.relation || ''}</span>
           <div className={styles.entry}>
-            <small className={styles.kind}>{KIND_LABELS[node.kind]}</small>
+            {/* Con relación («Titular», «Lo acompaña»…) el tipo sobra a la vista. */}
+            <small className={node.relation ? styles.srOnly : styles.kind}>{KIND_LABELS[node.kind]}</small>
             {node.current
               ? <strong className={styles.name} aria-current="page">{node.label}</strong>
               : <Link href={node.href} className={styles.name} prefetch={false}>{node.label}</Link>}

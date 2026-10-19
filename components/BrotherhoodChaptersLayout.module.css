@@ -19,8 +19,16 @@
   padding-top: 24px;
 }
 
+/* El nombre del capítulo ya lo dicen la barra, la mini cabecera y el título
+   de cada sección: aquí queda solo para lectores de pantalla y como destino
+   del foco al cambiar de capítulo (sin título repetido a la vista). */
 .chapterHead {
-  margin-bottom: 4px;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 .chapterTitle {
@@ -144,6 +152,62 @@
 /* Una noticia protagonista; las demás, en segundo nivel y sin competir. */
 .newsLead :global(ol) {
   margin: 0;
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+/* Gran cita (coronación…), justo después de Próximamente. */
+.milestone {
+  margin-top: 18px;
+  scroll-margin-top: calc(var(--chapter-offset, 140px) + 8px);
+}
+
+.life {
+  margin-top: 16px;
+}
+
+/* Música: quién acompaña hoy, en filas. */
+.bandsToday {
+  padding-block: 4px 12px;
+}
+
+.bandsTodayTitle {
+  margin: 0 0 6px;
+  color: #171b20;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.bandsToday ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bandsToday li {
+  display: grid;
+  gap: 2px;
+  padding: 10px 0;
+  border-top: 1px solid #e3e7eb;
+}
+
+.bandsToday a,
+.bandsToday strong {
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 17px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.bandsToday li span {
+  color: #59636e;
+  font-size: 14px;
+}
+
+/* Zonas táctiles: enlaces de calendario de Próximamente. */
+.homeSide :global([class*='__subscribe'] a) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 .newsLead :global(h3) {

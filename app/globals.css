@@ -3713,3 +3713,11 @@ button, input { font: inherit; }
 .cross-guide-music em{font-style:normal;color:var(--ink-soft)}
 .step-music-links{display:flex;flex-wrap:wrap;gap:4px 12px}
 .step-music-links a{color:var(--bc-red)}
+
+/* Canales oficiales en una fila (ficha por capítulos · OfficialLinks compact). */
+.official-links-compact{padding:8px 0 4px}
+.official-links-compact-title{margin:0 0 8px;color:#59636e;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.official-links-compact ul{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.official-links-compact a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px 0 6px;border-radius:999px;background:color-mix(in srgb,var(--brotherhood-primary,#153b69) 8%,#fff);color:var(--brotherhood-primary,#153b69);font-size:14px;font-weight:700;text-decoration:none}
+.official-links-compact a span{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--brotherhood-primary,#153b69);color:var(--brotherhood-light,#fff);font-size:11px;font-weight:800}
+.official-links-compact a:focus-visible{outline:3px solid #175f99;outline-offset:2px}

@@ -94,7 +94,6 @@
 }
 
 .body h3 a,
-.images a,
 .figures a,
 .music a {
   color: var(--brotherhood-primary, #153b69);
@@ -102,14 +101,11 @@
 }
 
 .body h3 a:hover,
-.images a:hover,
 .figures a:hover,
 .music a:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  opacity: .8;
 }
 
-.images,
 .figures,
 .people {
   margin: 0 0 4px;
@@ -118,9 +114,38 @@
   line-height: 1.45;
 }
 
-.images em {
-  font-style: normal;
+/* Imágenes del paso (antes repetidas en «Sagrados Titulares»). */
+.images {
+  margin: 4px 0 6px;
+  padding: 0;
+  list-style: none;
+}
+
+.images li + li {
+  margin-top: 8px;
+}
+
+.body .imageName {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.25;
+}
+
+.imageName a {
+  color: var(--brotherhood-primary, #153b69);
+  text-decoration: none;
+}
+
+.authorship {
+  margin: 2px 0 0;
   color: #59636e;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.kind a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .figures {
@@ -244,31 +269,6 @@
 .habitCard:focus-visible {
   outline: 3px solid #175f99;
   outline-offset: 2px;
-}
-
-.pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.pill {
-  display: inline-grid;
-  padding: 5px 10px;
-  border-radius: 10px;
-  background: #fff;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.pill em {
-  color: #59636e;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 800;
-  letter-spacing: .08em;
-  text-transform: uppercase;
 }
 
 .habitLine {

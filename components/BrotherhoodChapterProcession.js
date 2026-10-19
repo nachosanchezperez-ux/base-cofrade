@@ -1,21 +1,13 @@
 import { Fragment } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { TitularDetails } from './BrotherhoodChapterTitulars'
 import styles from './BrotherhoodChapterProcession.module.css'
 
 // Cortejo (o procesión) como en un programa de mano: de la Cruz de Guía al
 // último paso, en orden, cada uno con su foto, sus imágenes, su capataz y la
 // banda que lo acompaña. Los datos técnicos van plegados. Conserva el ancla
 // #pasos de la ficha. Solo se muestran datos documentados.
-
-// «, de Luis Ortega Bru» pero «, atribuido a Roque de Balduque» o «, autor desconocido».
-export function authorship(autor = '') {
-  const value = String(autor || '').trim()
-  if (!value) return ''
-  return /^(atribuid|anónim|anonim|autor desconocido|desconocido|escuela|taller|círculo|circulo|seguidor)/i.test(value)
-    ? `, ${value.charAt(0).toLowerCase()}${value.slice(1)}`
-    : `, de ${value}`
-}
 
 function BandLink({ item }) {
   return item.bandaSlug
@@ -36,22 +28,37 @@ function Music({ items = [], fallback = '' }) {
   </p>
 }
 
-// Tramo de nazarenos: la figura sobre el hilo del cortejo y sus prendas
-// principales en pastillas (túnica, antifaz, cíngulo). Toca para ver la túnica.
+// Tramo de nazarenos: la figura sobre el hilo del cortejo y el acceso a su
+// túnica. Las prendas están completas en el cromo (#tunica); aquí no se repiten.
 function Nazarenes({ habit }) {
-  const pills = habit.pills || []
   return <li className={`${styles.stop} ${styles.nazarenes}`}>
     {habit.imagenPath
       ? <figure className={styles.habitFigure}><Image src={habit.imagenPath} alt="" width={1024} height={1536} sizes="110px" /></figure>
       : <span className={styles.marker} aria-hidden="true">N</span>}
     <a href={habit.anchor || '#tunica'} className={styles.habitCard}>
-      <small className={styles.kind}>Nazarenos{habit.label ? ` · ${habit.label}` : ''}</small>
-      {pills.length ? <span className={styles.pills}>
-        {pills.map((pill) => <span key={pill.key} className={styles.pill}><em>{pill.label}</em>{pill.value}</span>)}
-      </span> : <span className={styles.habitLine}>{habit.summary}</span>}
+      <small className={styles.kind}>Nazarenos</small>
+      {habit.label ? <span className={styles.habitLine}>{habit.label}</span> : null}
       <span className={styles.habitLink}>Ver la túnica <span aria-hidden="true">›</span></span>
     </a>
   </li>
+}
+
+function normalized(value = '') {
+  return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim()
+}
+
+// Imágenes del paso: nombre, autoría y «Sobre la imagen» (antes en Titulares).
+function StepImages({ images }) {
+  return <ul className={styles.images}>
+    {images.map((image) => {
+      const authorship = [image.autor, image.fecha].filter(Boolean).join(' · ')
+      return <li key={image.id}>
+        <h3 className={styles.imageName}>{image.fichaDisponible && image.slug ? <Link href={`/imagenes/${image.slug}`} prefetch={false}>{image.nombre}</Link> : image.nombre}</h3>
+        {authorship ? <p className={styles.authorship}>{authorship}</p> : null}
+        <TitularDetails item={image} />
+      </li>
+    })}
+  </ul>
 }
 
 export default function BrotherhoodChapterProcession({ title = 'Pasos', crossGuide = [], steps = [], showCrossGuide = true, habitsBefore = {} }) {
@@ -79,15 +86,20 @@ export default function BrotherhoodChapterProcession({ title = 'Pasos', crossGui
               <Image src={step.media.path} alt={step.media.alt || `Fotografía de ${step.nombre}`} fill sizes="(max-width: 899px) 96px, 160px" style={{ objectPosition: step.framing || 'center' }} />
             </figure> : <span className={styles.marker} aria-hidden="true">{index + 1}</span>}
             <div className={styles.body}>
-              <small className={styles.kind}>{[steps.length > 1 ? `${index + 1}` : '', step.tipo].filter(Boolean).join(' · ')}</small>
-              <h3>{step.fichaDisponible ? <Link href={`/pasos/${step.slug}`} prefetch={false}>{step.nombre}</Link> : step.nombre}</h3>
-              {step.images.length ? <p className={styles.images}>
-                {step.images.map((image, imageIndex) => <span key={image.id}>
-                  {imageIndex ? ' · ' : ''}
-                  {image.fichaDisponible && image.slug ? <Link href={`/imagenes/${image.slug}`} prefetch={false}>{image.nombre}</Link> : image.nombre}
-                  {image.autor ? <em>{authorship(image.autor)}{image.fecha ? ` (${image.fecha})` : ''}</em> : null}
-                </span>)}
-              </p> : null}
+              {/* Si el nombre del paso solo repite el de sus imágenes, manda la imagen:
+                  el tipo enlaza a la ficha del paso y su nombre completo queda en el título. */}
+              {(() => {
+                const kind = [steps.length > 1 ? `${index + 1}` : '', step.tipo].filter(Boolean).join(' · ')
+                const repeats = step.images.length > 0 && step.images.every((image) => normalized(step.nombre).includes(normalized(image.nombre)))
+                if (!repeats) return <>
+                  <small className={styles.kind}>{kind}</small>
+                  <h3>{step.fichaDisponible ? <Link href={`/pasos/${step.slug}`} prefetch={false}>{step.nombre}</Link> : step.nombre}</h3>
+                </>
+                return <small className={styles.kind} title={step.nombre}>
+                  {step.fichaDisponible ? <Link href={`/pasos/${step.slug}`} prefetch={false} aria-label={`${kind}: ${step.nombre}`}>{kind} <span aria-hidden="true">›</span></Link> : kind}
+                </small>
+              })()}
+              {step.images.length ? <StepImages images={step.images} /> : null}
               {step.figures.length ? <p className={styles.figures}>Figuras: {step.figures.map((image, i) => <span key={image.id}>{i ? ', ' : ''}{image.fichaDisponible && image.slug ? <Link href={`/imagenes/${image.slug}`} prefetch={false}>{image.nombre}</Link> : image.nombre}</span>)}</p> : null}
               {step.capataz ? <p className={styles.people}>Capataz: <strong>{step.capataz}</strong></p> : null}
               <Music items={step.music} fallback={step.musicFallback} />

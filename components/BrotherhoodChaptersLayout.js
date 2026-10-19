@@ -2,7 +2,6 @@ import Image from 'next/image'
 import BrotherhoodChapterNav, { ChapterIcon } from './BrotherhoodChapterNav'
 import BrotherhoodQuickFacts from './BrotherhoodQuickFacts'
 import BrotherhoodOverviewV2 from './BrotherhoodOverviewV2'
-import BrotherhoodEditorialGuide from './BrotherhoodEditorialGuide'
 import HiloMovementCards from './HiloMovementCards'
 import { plural } from '@/lib/plural'
 import styles from './BrotherhoodChaptersLayout.module.css'
@@ -59,6 +58,8 @@ export default function BrotherhoodChaptersLayout({
   hasMusic = false,
   tileMedia = null,
   crestSrc = '',
+  milestone = null,
+  currentBands = [],
   slots,
 }) {
   const byId = Object.fromEntries(chapters.map((chapter, index) => [chapter.id, { chapter, index }]))
@@ -79,7 +80,18 @@ export default function BrotherhoodChaptersLayout({
 
   // Música: el envoltorio #musica conserva el tratamiento lineal de la versión
   // lectura (sin tarjetas anidadas). En una Gloria vive dentro de Patrimonio.
+  // Quién acompaña hoy (Cruz de Guía y pasos): el resumen musical de la
+  // Hermandad; el detalle por paso sigue en Cortejo/Procesión.
+  const bandsToday = currentBands.length ? <div className={`shell ${styles.bandsToday}`}>
+    <h3 className={styles.bandsTodayTitle}>Acompañan hoy</h3>
+    <ul>{currentBands.map((band) => <li key={band.key}>
+      {band.bandaSlug ? <a href={`/bandas/${band.bandaSlug}`}>{band.banda}</a> : <strong>{band.banda}</strong>}
+      {band.where.length ? <span>{band.where.join(' · ')}</span> : null}
+    </li>)}</ul>
+  </div> : null
+
   const music = <div id="musica" className={styles.flow}>
+    {bandsToday}
     {slots.ownMusic}
     {slots.musicalHeritage}
     {slots.repertoires}
@@ -120,25 +132,30 @@ export default function BrotherhoodChaptersLayout({
       <div className={`shell ${styles.homeGrid}`}>
         <div className={styles.homeSide}>
           {nextAppointment}
+          {milestone ? <div className={styles.milestone} id="gran-cita">{milestone}</div> : null}
           {leadStory ? <div className={styles.news} aria-labelledby="actualidad-titulo">
             <p className={styles.newsEyebrow} id="actualidad-titulo">Actualidad</p>
-            <div className={styles.newsLead}><HiloMovementCards items={[leadStory]} compact headingLevel={3} /></div>
-            {otherStories.length ? <div className={styles.newsMore}><HiloMovementCards items={otherStories} secondary headingLevel={3} /></div> : null}
+            <div className={styles.newsLead}><HiloMovementCards items={[leadStory]} compact headingLevel={3} hideProtagonist /></div>
+            {otherStories.length ? <div className={styles.newsMore}><HiloMovementCards items={otherStories} secondary headingLevel={3} hideProtagonist /></div> : null}
           </div> : null}
         </div>
         <div className={styles.homeMain}>
           <div className={styles.essentials}>
-            <BrotherhoodQuickFacts brotherhood={h} compact hidePeople heroFactLabels={[...heroFactLabels, 'Pasos']} />
+            <BrotherhoodQuickFacts brotherhood={h} compact hidePeople heroFactLabels={[...heroFactLabels, 'Pasos', 'Titulares']} />
           </div>
           <Disclosure title="Sede, dirección y horarios">
             <BrotherhoodOverviewV2 brotherhood={h} practicalOnly />
           </Disclosure>
+          {/* Vida de hermandad y canales en la misma columna: en ordenador
+              ocupan el hueco junto a Próximamente; en móvil siguen debajo. */}
+          {lifeLinks.length ? <div className={styles.life}>
+            <p className={styles.subhead}>Vida de hermandad{agendaCount > 1 ? <small> · {plural(agendaCount, 'cita próxima', 'citas próximas')}</small> : null}</p>
+            {lifeLinks.map((item) => <Disclosure key={item.title} title={item.title} count={item.count} id={item.id}>{item.body}</Disclosure>)}
+          </div> : null}
+          {slots.officialLinks}
         </div>
       </div>
-      {lifeLinks.length ? <Supplement>
-        <p className={styles.subhead}>Vida de hermandad{agendaCount > 1 ? <small> · {plural(agendaCount, 'cita próxima', 'citas próximas')}</small> : null}</p>
-        {lifeLinks.map((item) => <Disclosure key={item.title} title={item.title} count={item.count} id={item.id}>{item.body}</Disclosure>)}
-      </Supplement> : null}
+
     </>)}
 
     {render(isPenitencia ? 'cortejo' : 'procesion', <>
@@ -168,7 +185,6 @@ export default function BrotherhoodChaptersLayout({
 
     {render('historia', <>
       {slots.history}
-      <BrotherhoodEditorialGuide guide={h.editorialGuide} />
       {(h.viaCrucisCofradias?.length || h.participacionesConsejo?.length || h.curiosidades?.length) ? <Supplement>
         {(h.viaCrucisCofradias?.length || h.participacionesConsejo?.length) ? <Disclosure title="Participaciones institucionales y Vía Crucis">{slots.council}{slots.viaCrucis}</Disclosure> : null}
         {h.curiosidades?.length ? <Disclosure title="Curiosidades" count={h.curiosidades.length}>{slots.curiosities}</Disclosure> : null}
@@ -178,7 +194,6 @@ export default function BrotherhoodChaptersLayout({
     {render('hilo', <>
       {slots.thread}
       <Supplement><Disclosure title="Más rutas para tirar del hilo">{slots.discovery}</Disclosure></Supplement>
-      {slots.officialLinks}
     </>)}
   </div>
 }

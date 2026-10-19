@@ -47,10 +47,38 @@ function guideChapters(value = '') {
   return chapters.filter((chapter) => chapter.title || chapter.paragraphs.length)
 }
 
-export default function BrotherhoodEditorialGuide({ guide }) {
+export default function BrotherhoodEditorialGuide({ guide, variant = 'default' }) {
   if (!guide?.title || !(guide.summary || guide.body)) return null
 
   const chapters = guideChapters(guide.body)
+
+  // Plegada (ficha por capítulos, dentro de Historia): una sola línea que se
+  // abre con la entradilla y las claves completas. Mismo contenido y anclas.
+  if (variant === 'folded') {
+    return <details className={styles.folded} id="conoce-hermandad" data-hilo-section="brotherhood-editorial-guide">
+      <summary>
+        <span>{guide.title}</span>
+        {chapters.length ? <small>{chapters.length === 1 ? '1 clave' : `${chapters.length} claves`}</small> : null}
+        <b aria-hidden="true">+</b>
+      </summary>
+      <div className={styles.foldedBody}>
+        {guide.subtitle ? <p className={styles.subtitle}>{guide.subtitle}</p> : null}
+        {guide.summary ? <p className={styles.lead}>{guide.summary}</p> : null}
+        {chapters.length ? <ol className={styles.chapters}>
+          {chapters.map((chapter, index) => (
+            <li className={styles.chapter} id={chapter.id} key={chapter.id}>
+              <div className={styles.chapterNumber} aria-hidden="true">{String(index + 1).padStart(2, '0')}</div>
+              <div className={styles.chapterCopy}>
+                {chapter.title ? <h3>{chapter.title}</h3> : null}
+                {chapter.paragraphs.map((paragraph, paragraphIndex) => <p key={`${chapter.id}-${paragraphIndex}`}>{paragraph}</p>)}
+              </div>
+            </li>
+          ))}
+        </ol> : null}
+        {guide.authorName ? <p className={styles.byline}>Contenido documentado por {guide.authorName}</p> : null}
+      </div>
+    </details>
+  }
 
   return (
     <section className={styles.section} id="conoce-hermandad" data-hilo-section="brotherhood-editorial-guide">
