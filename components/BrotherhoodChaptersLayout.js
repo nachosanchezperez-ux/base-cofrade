@@ -160,6 +160,8 @@ export default function BrotherhoodChaptersLayout({
 
     {render(isPenitencia ? 'cortejo' : 'procesion', <>
       {slots.steps}
+      {/* Cortejo completo: solo con un orden oficial documentado (hoy, ninguno). */}
+      {slots.fullProcession}
       {isPenitencia ? slots.habit : null}
       {slots.titulars}
       {!isPenitencia && h.salidas?.length ? <Supplement>
