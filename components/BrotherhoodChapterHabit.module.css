@@ -1,0 +1,107 @@
+.section {
+  background: #fff;
+}
+
+.title {
+  margin: 0 0 16px;
+  color: #171b20;
+  font-size: clamp(22px, 5.6vw, 30px);
+  line-height: 1.15;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+}
+
+/* La figura del nazareno, protagonista; las prendas, al lado. */
+.habit {
+  display: grid;
+  grid-template-columns: minmax(120px, 40%) minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  padding: 16px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 6%, #fff);
+}
+
+.habit:not(:has(.figure)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.figure {
+  margin: 0;
+}
+
+.figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 340px;
+  object-fit: contain;
+}
+
+.copy {
+  min-width: 0;
+}
+
+.copy h3 {
+  margin: 0 0 8px;
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 17px;
+  line-height: 1.25;
+}
+
+.copy dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.copy dl div {
+  display: grid;
+  gap: 1px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid color-mix(in srgb, var(--brotherhood-primary, #153b69) 14%, #fff);
+}
+
+.copy dl div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.copy dt {
+  color: #59636e;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.copy dd {
+  margin: 0;
+  color: #23272c;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+@media (max-width: 380px) {
+  .habit {
+    grid-template-columns: 110px minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px;
+  }
+}
+
+@media (min-width: 900px) {
+  .grid[data-count='2'],
+  .grid[data-count='3'] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .habit {
+    grid-template-columns: 200px minmax(0, 1fr);
+    padding: 20px;
+  }
+}

@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from './BrotherhoodChapterProcession.module.css'
@@ -26,7 +27,21 @@ function Music({ items = [], fallback = '' }) {
   </p>
 }
 
-export default function BrotherhoodChapterProcession({ title = 'Pasos', crossGuide = [], steps = [], showCrossGuide = true }) {
+// Tramo de nazarenos: la túnica a la vista dentro del orden del cortejo.
+function Nazarenes({ habit }) {
+  return <li className={`${styles.stop} ${styles.nazarenes}`}>
+    {habit.imagenPath
+      ? <figure className={styles.habitFigure}><Image src={habit.imagenPath} alt="" width={1024} height={1536} sizes="96px" /></figure>
+      : <span className={styles.marker} aria-hidden="true">N</span>}
+    <div className={styles.body}>
+      <small className={styles.kind}>Nazarenos{habit.label ? ` · ${habit.label}` : ''}</small>
+      <p className={styles.habitLine}>{habit.summary}</p>
+      <a href="#tunica" className={styles.habitLink}>Ver la túnica completa <span aria-hidden="true">→</span></a>
+    </div>
+  </li>
+}
+
+export default function BrotherhoodChapterProcession({ title = 'Pasos', crossGuide = [], steps = [], showCrossGuide = true, habitsBefore = {} }) {
   if (!steps.length && !crossGuide.length) return null
   return <section className={`section ${styles.section}`} id="pasos" aria-labelledby="pasos-titulo">
     <div className="shell">
@@ -44,7 +59,9 @@ export default function BrotherhoodChapterProcession({ title = 'Pasos', crossGui
         {steps.map((step, index) => {
           const technical = [step.ejecucion, step.sistemaPortadores, step.materiales].filter(Boolean)
           const hasDetails = step.descripcion || technical.length || step.estadoActual
-          return <li key={step.id} className={styles.stop}>
+          return <Fragment key={step.id}>
+          {(habitsBefore[step.id] || []).map((habit) => <Nazarenes key={habit.id} habit={habit} />)}
+          <li className={styles.stop}>
             {step.media?.path ? <figure className={styles.photo}>
               <Image src={step.media.path} alt={step.media.alt || `Fotografía de ${step.nombre}`} fill sizes="(max-width: 899px) 96px, 160px" style={{ objectPosition: step.framing || 'center' }} />
             </figure> : <span className={styles.marker} aria-hidden="true">{index + 1}</span>}
@@ -70,6 +87,7 @@ export default function BrotherhoodChapterProcession({ title = 'Pasos', crossGui
               </details> : null}
             </div>
           </li>
+          </Fragment>
         })}
       </ol>
     </div>

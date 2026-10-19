@@ -208,7 +208,58 @@
   outline-offset: 2px;
 }
 
+/* Tramo de nazarenos: la figura de la túnica sobre el hilo del cortejo. */
+.habitFigure {
+  position: relative;
+  z-index: 1;
+  justify-self: center;
+  width: 64px;
+  margin: 0;
+  padding: 4px 0;
+  background: #fff;
+}
+
+.habitFigure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.nazarenes .body {
+  align-self: center;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 6%, #fff);
+}
+
+.habitLine {
+  margin: 2px 0 4px;
+  color: #23272c;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.habitLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.habitLink:focus-visible {
+  outline: 3px solid #175f99;
+  outline-offset: 2px;
+}
+
 @media (min-width: 900px) {
+  .habitFigure {
+    width: 84px;
+  }
+
   .order::before {
     left: 79px;
   }

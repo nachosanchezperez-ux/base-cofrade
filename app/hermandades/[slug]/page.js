@@ -35,6 +35,8 @@ import BrotherhoodChapterTitulars from '@/components/BrotherhoodChapterTitulars'
 import BrotherhoodChapterHistory from '@/components/BrotherhoodChapterHistory';
 import BrotherhoodThread from '@/components/BrotherhoodThread';
 import BrotherhoodChapterProcession from '@/components/BrotherhoodChapterProcession';
+import BrotherhoodChapterHabit from '@/components/BrotherhoodChapterHabit';
+import { documentedHabits as habitsWithFields, habitsBeforeSteps } from '@/lib/brotherhood-habits';
 import { brotherhoodThread } from '@/lib/brotherhood-thread';
 import EntitySectionNav from '@/components/EntitySectionNav';
 import FestivalPostersSection from '@/components/FestivalPostersSection';
@@ -509,11 +511,14 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     )}
     {paso.estadoActual && <p className="step-current-state">{paso.estadoActual}</p>}
   </>);
+  // Ficha por capítulos: la túnica, a la vista (solo Penitencia).
+  const chapterHabits = chapters && isPenitencia ? habitsWithFields(h.habitos || []) : [];
   // Ficha por capítulos: el cortejo en orden, de la Cruz de Guía al último paso.
   const chapterStepsSection = chapters ? (
     <BrotherhoodChapterProcession
       title={isPenitencia ? 'Orden del cortejo' : 'La procesión'}
       crossGuide={crossGuideMusic}
+      habitsBefore={habitsBeforeSteps(chapterHabits, steps)}
       steps={steps.map((paso) => {
         const stepImages = paso.imagenesDetalle?.length
           ? paso.imagenesDetalle
@@ -637,7 +642,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   const documentedHabits = (h.habitos || [])
     .map((item) => ({ ...item, fields: habitFields(item) }))
     .filter((item) => item.fields.length > 0);
-  const habitSection = (<>
+  const habitSection = chapters ? <BrotherhoodChapterHabit habits={chapterHabits} /> : (<>
 {documentedHabits.length > 0 && <section className="section brotherhood-dark" id="tunica"><div className="shell">
         <SectionTitle eyebrow="Estación de penitencia" title="Túnica" />
         <div className="habit-grid">{documentedHabits.map((item, index) => (
@@ -843,6 +848,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
               historyEvents: h.cronologia?.length || 0,
               hasHistory: Boolean(publicText(h.historia) || h.cronologia?.length || h.antiguasTitulares?.length || h.editorialGuide),
               threadLength: threadNodes.length,
+              habit: chapterHabits[0]?.tunica || '',
               threadEnd: threadNodes.at(-1)?.label || '',
             },
           })}
