@@ -1,23 +1,12 @@
 import Image from 'next/image'
-import { HABIT_CALLOUTS, habitDifferences, habitShortName } from '@/lib/brotherhood-habits'
+import { habitDifferences, habitShortName } from '@/lib/brotherhood-habits'
 import styles from './BrotherhoodChapterHabit.module.css'
 
 // Túnica de nazareno en la ficha por capítulos (solo Penitencia), pensada para
-// el móvil: la figura grande, con cada prenda señalada sobre ella, y debajo las
-// prendas en fichas. Con varios hábitos (p. ej. cortejo del Cristo y del palio)
+// el móvil: la figura grande y, debajo, las prendas en fichas. Con varios hábitos (p. ej. cortejo del Cristo y del palio)
 // se pasa de uno a otro deslizando o con las pestañas, y se marca lo que cambia.
 // Todo es HTML del servidor (desplazamiento con scroll-snap, sin JavaScript).
 // Solo campos documentados. Conserva #tunica.
-
-// Puntos numerados sobre la figura; el mismo número en la ficha de la prenda.
-function Hotspots({ fields }) {
-  return <ol className={styles.hotspots} aria-hidden="true">
-    {fields.map((field, index) => {
-      const spot = HABIT_CALLOUTS[field.key]
-      return spot ? <li key={field.key} style={{ left: `${spot.x}%`, top: `${spot.y}%` }}>{index + 1}</li> : null
-    })}
-  </ol>
-}
 
 export default function BrotherhoodChapterHabit({ habits = [] }) {
   if (!habits.length) return null
@@ -42,12 +31,11 @@ export default function BrotherhoodChapterHabit({ habits = [] }) {
         {habit.imagenPath ? <div className={styles.stage}>
           <figure className={styles.figure}>
             <Image src={habit.imagenPath} alt={habit.imagenAlt || `Túnica de nazareno: ${habit.nombre}`} width={1024} height={1536} sizes="(max-width: 899px) 70vw, 300px" />
-            <Hotspots fields={habit.fields} />
           </figure>
         </div> : null}
         <dl className={styles.pieces}>
-          {habit.fields.map((field, index) => <div key={field.key} className={changes.has(field.key) ? styles.changed : ''}>
-            <dt>{habit.imagenPath && HABIT_CALLOUTS[field.key] ? <span className={styles.number} aria-hidden="true">{index + 1}</span> : null}{field.label}{changes.has(field.key) ? <span className={styles.badge}>Cambia</span> : null}</dt>
+          {habit.fields.map((field) => <div key={field.key} className={changes.has(field.key) ? styles.changed : ''}>
+            <dt>{field.label}{changes.has(field.key) ? <span className={styles.badge}>Cambia</span> : null}</dt>
             <dd>{field.value}</dd>
           </div>)}
         </dl>
