@@ -325,6 +325,14 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     || (publicText(h.datosJornada?.totalHermanos) && !heroFactLabels.has('Hermanos'))
     || (h.imagenes?.length && !heroFactLabels.has('Titulares'))
   );
+  // «Tira del hilo» (ficha por capítulos): relaciones ya publicadas, sin consultas nuevas.
+  const threadNodes = chapters ? brotherhoodThread({
+    brotherhood: h,
+    titulars: h.imagenes || [],
+    steps,
+    accompaniments: currentMusicItems,
+    marches: musicalHeritage,
+  }) : [];
   const hasMusic = Boolean(documentedCurrentAccompaniments.length || musicalHeritage.length || fallbackMusicalHeritage.length || documentedHistoricalAccompaniments.length || musicalRepertoires.length);
   const description = brotherhoodSeoDescription(h);
   const organizationJsonLdId = `${absoluteUrl(canonicalPath)}#organization`;
@@ -809,6 +817,8 @@ export default async function HermandadDetailPage({ params, reading: readingOver
               hasOutings: Boolean(h.salidas?.length),
               historyEvents: h.cronologia?.length || 0,
               hasHistory: Boolean(publicText(h.historia) || h.cronologia?.length || h.antiguasTitulares?.length || h.editorialGuide),
+              threadLength: threadNodes.length,
+              threadEnd: threadNodes.at(-1)?.label || '',
             },
           })}
           heroFactLabels={programFacts.map((fact) => fact.label)}
@@ -827,13 +837,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
             historicalMusic: historicalMusicSection, heritage: heritageSection, simpecados: simpecadosSection,
             posters: postersSection, habit: habitSection, council: councilSection, viaCrucis: viaCrucisSection,
             outings: outingsSection, crew: crewSection, cults: cultsSection, curiosities: curiositiesSection,
-            thread: <BrotherhoodThread nodes={brotherhoodThread({
-              brotherhood: h,
-              titulars: h.imagenes || [],
-              steps,
-              accompaniments: currentMusicItems,
-              marches: musicalHeritage,
-            })} />,
+            thread: <BrotherhoodThread nodes={threadNodes} />,
             discovery: <BrotherhoodReadingDiscovery brotherhoodId={h.id} />,
             officialLinks: <OfficialLinks links={h.enlacesOficiales} /> }}
         />

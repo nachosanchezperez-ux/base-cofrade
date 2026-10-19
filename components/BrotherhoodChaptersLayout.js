@@ -127,8 +127,10 @@ export default function BrotherhoodChaptersLayout({
 
     {render('patrimonio', <div className={styles.flow}>
       {slots.heritage}
-      {slots.simpecados}
-      {slots.posters}
+      {h.simpecados?.length || h.cartelesFiestas?.length ? <Supplement>
+        {h.simpecados?.length ? <Disclosure title="Simpecados" count={h.simpecados.length}>{slots.simpecados}</Disclosure> : null}
+        {h.cartelesFiestas?.length ? <Disclosure title="Carteles" count={h.cartelesFiestas.length}>{slots.posters}</Disclosure> : null}
+      </Supplement> : null}
       {hasMusic ? music : null}
     </div>)}
 

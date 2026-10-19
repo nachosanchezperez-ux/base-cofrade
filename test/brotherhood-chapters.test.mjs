@@ -129,3 +129,10 @@ test('Segunda tanda: titulares sin huecos, historia con ancla #historia y hilo v
   assert.match(page, /collapseOfficialName=\{chapters\}/);
   assert.match(page, /thread: <BrotherhoodThread nodes=\{brotherhoodThread\(/);
 });
+
+test('El acceso a Hilo resume el recorrido real cuando existe', () => {
+  const chapters = brotherhoodChapters({ types: ['Penitencia'], availability: { titulars: 1, threadLength: 6, threadEnd: 'Cristóbal López Gándara' } });
+  assert.equal(chapters.at(-1).summary, '5 fichas enlazadas, hasta Cristóbal López Gándara');
+  const fallback = brotherhoodChapters({ types: ['Penitencia'], availability: { titulars: 1, threadLength: 2, threadEnd: 'X' } });
+  assert.equal(fallback.at(-1).summary, 'Hermandades, bandas y autores relacionados');
+});

@@ -22,7 +22,7 @@ export default function BrotherhoodThread({ nodes = [] }) {
       <p className={styles.intro}>Un recorrido por fichas enlazadas de Hilo Cofrade, siguiendo relaciones documentadas.</p>
       <ol className={styles.chain}>
         {nodes.map((node, index) => <li key={`${node.kind}-${node.href || index}`} className={styles.node} data-kind={node.kind}>
-          {node.relation ? <span className={styles.relation}>{node.relation}</span> : null}
+          <span className={styles.relation} aria-hidden={node.relation ? undefined : true}>{node.relation || ''}</span>
           <div className={styles.entry}>
             <small className={styles.kind}>{KIND_LABELS[node.kind]}</small>
             {node.current
