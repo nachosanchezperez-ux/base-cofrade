@@ -127,7 +127,7 @@ test('Segunda tanda: titulares sin huecos, historia con ancla #historia y hilo v
   assert.match(history, /id="historia"/);
   assert.match(history, /Anunciado, aún por celebrar/);
   assert.match(page, /collapseOfficialName=\{chapters\}/);
-  assert.match(page, /thread: <BrotherhoodThread nodes=\{brotherhoodThread\(/);
+  assert.match(page, /thread: <BrotherhoodThread nodes=\{threadNodes\}/);
 });
 
 test('El acceso a Hilo resume el recorrido real cuando existe', () => {
