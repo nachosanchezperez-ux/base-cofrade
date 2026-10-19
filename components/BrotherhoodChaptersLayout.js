@@ -114,7 +114,9 @@ export default function BrotherhoodChaptersLayout({
     {render(isPenitencia ? 'cortejo' : 'procesion', <>
       {slots.titulars}
       {slots.steps}
-      {!isPenitencia && h.salidas?.length ? slots.outings : null}
+      {!isPenitencia && h.salidas?.length ? <Supplement>
+        <Disclosure title="La salida · horario y recorrido" count={plural(h.salidas.length, 'salida', 'salidas')} id="archivo-salidas">{slots.outings}</Disclosure>
+      </Supplement> : null}
       {isPenitencia && (hasHeritage || hasHeritageExtras || h.habitos?.length) ? <Supplement>
         {hasHeritage ? <Disclosure title="Patrimonio y estrenos" count={h.patrimonio?.length ? plural(h.patrimonio.length, 'pieza', 'piezas') : ''}>{slots.heritage}</Disclosure> : null}
         {h.simpecados?.length ? <Disclosure title="Simpecados" count={h.simpecados.length}>{slots.simpecados}</Disclosure> : null}
