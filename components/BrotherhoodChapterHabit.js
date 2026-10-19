@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { habitDifferences, habitShortName } from '@/lib/brotherhood-habits'
+import { habitDifferences, habitOtherValues, habitShortName } from '@/lib/brotherhood-habits'
 import styles from './BrotherhoodChapterHabit.module.css'
 
 // Túnica de nazareno en la ficha por capítulos (solo Penitencia), pensada para
@@ -34,10 +34,15 @@ export default function BrotherhoodChapterHabit({ habits = [] }) {
           </figure>
         </div> : null}
         <dl className={styles.pieces}>
-          {habit.fields.map((field) => <div key={field.key} className={changes.has(field.key) ? styles.changed : ''}>
-            <dt>{field.label}{changes.has(field.key) ? <span className={styles.badge}>Cambia</span> : null}</dt>
-            <dd>{field.value}</dd>
-          </div>)}
+          {habit.fields.map((field) => {
+            const changed = changes.has(field.key)
+            const others = changed ? habitOtherValues(habits, habit, field.key) : []
+            return <div key={field.key} className={changed ? styles.changed : ''}>
+              <dt>{field.label}{changed ? <span className={styles.visuallyHidden}> (cambia entre tramos)</span> : null}</dt>
+              <dd>{field.value}</dd>
+              {others.map((other) => <dd key={other.name} className={styles.other}>En el {other.name}: {other.value}</dd>)}
+            </div>
+          })}
         </dl>
       </article>)}
     </div>

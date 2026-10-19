@@ -70,6 +70,8 @@
 
 .card {
   scroll-snap-align: start;
+  /* Al saltar desde el tramo, que el título no quede bajo la cabecera. */
+  scroll-margin-top: calc(var(--chapter-offset, 140px) + 8px);
   min-width: 0;
   padding: 14px 14px 16px;
   border-radius: 20px;
@@ -97,7 +99,7 @@
 .stage {
   display: grid;
   place-items: center;
-  height: min(440px, 112vw);
+  height: min(370px, 94vw);
   margin: 6px 0 14px;
   border-radius: 16px;
   background: radial-gradient(ellipse at 50% 55%, #fff 0%, #fff 42%, transparent 75%);
@@ -147,22 +149,30 @@
   text-transform: uppercase;
 }
 
-.badge {
-  flex: 0 0 auto;
-  padding: 1px 6px;
-  border-radius: 999px;
-  background: var(--brotherhood-secondary, #a71930);
-  color: #fff;
-  font-size: 9px;
-  letter-spacing: .04em;
-}
-
 .pieces dd {
   margin: 2px 0 0;
   color: #23272c;
   font-size: 14px;
   font-weight: 600;
   line-height: 1.35;
+}
+
+.pieces div.changed dd {
+  color: var(--brotherhood-secondary, #a71930);
+}
+
+.pieces div.changed dd.other {
+  margin-top: 4px;
+  color: #59636e;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+@media (max-width: 899px) {
+  .card {
+    scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 64px);
+  }
 }
 
 @media (min-width: 900px) {
