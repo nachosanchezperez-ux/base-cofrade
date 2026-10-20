@@ -1305,9 +1305,8 @@
 @media (min-width: 860px) {
   .embedded .featureCardSlot.discoveryCard:not(:has([data-home-visual-kind="photo"])) > [data-home-visual-kind]:not([data-home-visual-kind="photo"]) {
     position: absolute !important;
-    top: 50%;
-    right: 26px;
-    transform: translateY(-50%);
+    top: 22px;
+    right: 24px;
     display: block !important;
     width: 76px;
     height: 76px;
