@@ -122,3 +122,5 @@
    el tamaño del h4 que lo contiene. */
 :global(#hc-app) h4 > .eventTitle { font-size: inherit; line-height: inherit; }
 .schedule b { font-size: 12px; }
+.directory .cardBody > .schedule > b { font-size: 12px; }
+.directory .periodGrid button > span { font-size: 14px; }

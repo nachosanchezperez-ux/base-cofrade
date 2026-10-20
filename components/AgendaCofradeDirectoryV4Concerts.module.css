@@ -76,3 +76,4 @@
 
 /* Legibilidad (20/10): acciones de concierto a 14 px, como las demás. */
 .concertActions a,.concertActions a span{font-size:14px}
+.quickTypesSix.quickTypesSix button span{font-size:14px;line-height:1.2}
