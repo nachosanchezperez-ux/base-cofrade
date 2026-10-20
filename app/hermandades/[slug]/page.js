@@ -36,6 +36,8 @@ import BrotherhoodChapterTitulars from '@/components/BrotherhoodChapterTitulars'
 import BrotherhoodChapterHistory from '@/components/BrotherhoodChapterHistory';
 import BrotherhoodEditorialGuide from '@/components/BrotherhoodEditorialGuide';
 import BrotherhoodChapterHeritage from '@/components/BrotherhoodChapterHeritage';
+import BrotherhoodProcessionFull from '@/components/BrotherhoodProcessionFull';
+import { getBrotherhoodProcessionOrder } from '@/lib/supabase/procession-order';
 import BrotherhoodThread from '@/components/BrotherhoodThread';
 import BrotherhoodChapterProcession from '@/components/BrotherhoodChapterProcession';
 import BrotherhoodChapterHabit from '@/components/BrotherhoodChapterHabit';
@@ -253,6 +255,8 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   const chapterMilestone = chapters
     ? brotherhoodMilestone(upcomingBrotherhoodActs(upcomingAgendaItems, h.salidas || [], agendaData.today, h.cultos || []))
     : null;
+  // Cortejo completo (Tarea 15): orden procesional documentado; hoy, null para todas.
+  const chapterProcessionOrder = chapters ? await getBrotherhoodProcessionOrder(h.id) : null;
   const milestoneKeys = new Set((chapterMilestone?.day || []).map((item) => item.key || item.href));
   const heroMedia = entityCoverMedia.get(h.id)
     || h.imagenes.map((imagen) => entityCoverMedia.get(imagen.id)).find(Boolean)
@@ -925,6 +929,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
             posters: postersSection, habit: habitSection, council: councilSection, viaCrucis: viaCrucisSection,
             outings: outingsSection, crew: crewSection, cults: cultsSection, curiosities: curiositiesSection,
             thread: <BrotherhoodThread nodes={threadNodes} />,
+            fullProcession: chapterProcessionOrder ? <BrotherhoodProcessionFull order={chapterProcessionOrder} profile={chapterProfile} /> : null,
             discovery: <BrotherhoodReadingDiscovery brotherhoodId={h.id} />,
             officialLinks: h.enlacesOficiales?.length ? <OfficialLinks links={h.enlacesOficiales} compact /> : null }}
         />

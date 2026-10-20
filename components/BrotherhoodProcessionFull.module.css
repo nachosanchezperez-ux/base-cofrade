@@ -1,0 +1,341 @@
+/* Cortejo completo: una línea vertical; tramos como cabeceras discretas,
+   insignias en filas compactas y pasos con un marcador propio. Sin tarjetas. */
+.wrap {
+  padding-block: 4px 16px;
+}
+
+.full {
+  border-top: 1px solid #e3e7eb;
+  border-bottom: 1px solid #e3e7eb;
+}
+
+.full > summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  min-height: 56px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.full > summary::-webkit-details-marker {
+  display: none;
+}
+
+.summaryTitle {
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.full > summary small {
+  color: #59636e;
+  font-size: 14px;
+}
+
+.full > summary b {
+  margin-left: auto;
+  font-size: 22px;
+  color: var(--brotherhood-primary, #153b69);
+}
+
+.full[open] > summary b {
+  transform: rotate(45deg);
+}
+
+.full > summary:focus-visible {
+  outline: 3px solid #175f99;
+  outline-offset: 2px;
+}
+
+.body {
+  padding: 4px 0 16px;
+}
+
+.demo {
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border-left: 3px solid #b26a00;
+  background: #fff7e8;
+  color: #4d3a12;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.sourceLine {
+  margin: 0 0 16px;
+  color: #59636e;
+  font-size: 13px;
+  letter-spacing: .01em;
+}
+
+.sourceLine a {
+  color: var(--brotherhood-primary, #153b69);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+/* La línea del cortejo. */
+.line {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 26px;
+  list-style: none;
+}
+
+.line::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 8px;
+  width: 2px;
+  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 22%, #e3e7eb);
+}
+
+.section,
+.step {
+  position: relative;
+  padding-block: 8px;
+}
+
+.sectionTitle {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 8px;
+  margin: 0 0 4px;
+  color: var(--brotherhood-secondary, #a71930);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.sectionMark {
+  position: absolute;
+  top: 3px;
+  left: -23px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--brotherhood-secondary, #a71930);
+  border-radius: 50%;
+  background: #fff;
+}
+
+.items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  padding: 9px 0;
+}
+
+.item.withPhoto {
+  grid-template-columns: 48px minmax(0, 1fr);
+}
+
+.thumb {
+  position: relative;
+  width: 48px;
+  aspect-ratio: 3 / 4;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #eef0f2;
+}
+
+.thumb img {
+  object-fit: cover;
+}
+
+.copy {
+  min-width: 0;
+}
+
+.name {
+  margin: 0;
+  color: #171b20;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.kind,
+.note {
+  margin: 2px 0 0;
+  color: #59636e;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Los pasos, diferenciados de las insignias. */
+.step {
+  display: flex;
+  gap: 10px;
+  padding-block: 12px;
+}
+
+.stepMark {
+  position: absolute;
+  top: 14px;
+  left: -26px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--brotherhood-primary, #153b69);
+  box-shadow: 0 0 0 4px #fff;
+}
+
+.stepKind {
+  margin: 0;
+  color: var(--brotherhood-secondary, #a71930);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.stepName {
+  margin: 2px 0 0;
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+@media (min-width: 900px) {
+  .line {
+    columns: 2;
+    column-gap: 48px;
+  }
+
+  .section,
+  .step {
+    break-inside: avoid;
+  }
+
+  .line::before {
+    display: none;
+  }
+
+  .sectionMark,
+  .stepMark {
+    left: -24px;
+  }
+}
+
+/* Guía para quien ve pasar el cortejo. */
+.item {
+  position: relative;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Dos cortejos: cada uno es una columna con su paso al pie. */
+.column,
+.columnLine {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 900px) {
+  .line.byCortejo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    column-gap: 48px;
+    columns: auto;
+  }
+
+  /* Cada columna lleva su propia línea. */
+  .column {
+    position: relative;
+  }
+
+  .column::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: -18px;
+    width: 2px;
+    background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 22%, #e3e7eb);
+  }
+}
+
+/* Insignia: número, nombre (enlace a la pieza), cómo se ve y, la primera vez, qué es. */
+.number {
+  position: absolute;
+  top: 11px;
+  left: -27px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 10%, #fff);
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 11px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.name a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.name a:hover,
+.name a:focus-visible {
+  color: var(--brotherhood-primary, #153b69);
+}
+
+.chevron {
+  margin-left: 6px;
+  color: var(--brotherhood-primary, #153b69);
+  font-weight: 800;
+  opacity: .55;
+}
+
+.look {
+  margin: 2px 0 0;
+  color: #3d454e;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.whatIs {
+  margin: 8px 0 2px;
+  padding-left: 10px;
+  border-left: 2px solid color-mix(in srgb, var(--brotherhood-secondary, #a71930) 55%, #fff);
+  color: #3d454e;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.whatIs > span {
+  display: block;
+  margin-bottom: 1px;
+  color: var(--brotherhood-secondary, #a71930);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
