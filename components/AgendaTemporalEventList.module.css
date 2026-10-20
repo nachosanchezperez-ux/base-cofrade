@@ -79,3 +79,8 @@
 @media(max-width:900px){.row{grid-template-columns:95px minmax(0,1fr)}}
 @media(max-width:720px){.row{grid-template-columns:76px minmax(0,1fr)}.copy .actions{grid-column:auto;margin-top:12px}}
 @media(max-width:430px){.row{grid-template-columns:72px minmax(0,1fr)}.copy .actions{padding-left:0}}
+/* Acciones fuera de la columna de contenido: en móvil ocupan toda la fila. */
+.row>.actions{grid-column:2;display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-top:0;padding:0}
+.row>.actions>div{margin-top:0}
+.row>.actions .primary{min-height:44px;padding:0 14px}
+@media(max-width:430px){.row>.actions{grid-column:1/-1;padding-left:0}}

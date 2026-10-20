@@ -111,17 +111,17 @@ export default function AgendaTemporalEventList({ landing }) {
                       </div>
                       {item.summary ? <p>{item.summary}</p> : null}
                       <AgendaEventThread item={item} />
-                      <div className={styles.actions}>
-                        {item.eventHref ? <Link className={styles.primary} href={item.eventHref}>{primaryLabel(item)} <span aria-hidden="true">→</span></Link> : null}
-                        <ShareActions
-                          compact
-                          calendarFirst
-                          share={agendaItemShare(item)}
-                          contentType="agenda"
-                          calendarHref={item.date ? `/calendario/acto/${agendaEventAnchor(item)}.ics` : ''}
-                          analytics={{ event_type: item.category, municipality: item.municipality, agenda_period: landing.period }}
-                        />
-                      </div>
+                    </div>
+                    <div className={styles.actions}>
+                      {item.eventHref ? <Link className={styles.primary} href={item.eventHref}>{primaryLabel(item)} <span aria-hidden="true">→</span></Link> : null}
+                      <ShareActions
+                        compact
+                        calendarFirst
+                        share={agendaItemShare(item)}
+                        contentType="agenda"
+                        calendarHref={item.date ? `/calendario/acto/${agendaEventAnchor(item)}.ics` : ''}
+                        analytics={{ event_type: item.category, municipality: item.municipality, agenda_period: landing.period }}
+                      />
                     </div>
                   </article>
                 ))}
