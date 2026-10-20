@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import ShareActions from '@/components/ShareActions'
+import ShareActions, { CalendarAddLink } from '@/components/ShareActions'
 import AgendaEventThread from '@/components/AgendaEventThread'
 import { agendaItemShare } from '@/lib/share'
 import { agendaEventAnchor, scheduleTimeHint } from '@/lib/agenda-event-presentation'
@@ -95,6 +95,14 @@ export default function AgendaTemporalEventList({ landing }) {
                     <div className={styles.copy}>
                       <div className={styles.topline}>
                         <span>{categoryLabel(item)}</span>
+                        <ShareActions
+                          compact
+                          iconsOnly
+                          className={styles.shareIcons}
+                          share={agendaItemShare(item)}
+                          contentType="agenda"
+                          analytics={{ event_type: item.category, municipality: item.municipality, agenda_period: landing.period }}
+                        />
                       </div>
                       <h4>{item.eventHref ? <Link href={item.eventHref}>{item.title}</Link> : item.title}</h4>
                       <div className={styles.meta}>
@@ -114,12 +122,10 @@ export default function AgendaTemporalEventList({ landing }) {
                     </div>
                     <div className={styles.actions}>
                       {item.eventHref ? <Link className={styles.primary} href={item.eventHref}>{primaryLabel(item)} <span aria-hidden="true">→</span></Link> : null}
-                      <ShareActions
-                        compact
-                        calendarFirst
-                        share={agendaItemShare(item)}
+                      <CalendarAddLink
+                        href={item.date ? `/calendario/acto/${agendaEventAnchor(item)}.ics` : ''}
+                        title={item.title}
                         contentType="agenda"
-                        calendarHref={item.date ? `/calendario/acto/${agendaEventAnchor(item)}.ics` : ''}
                         analytics={{ event_type: item.category, municipality: item.municipality, agenda_period: landing.period }}
                       />
                     </div>

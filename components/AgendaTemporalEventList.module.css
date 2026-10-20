@@ -84,3 +84,10 @@
 .row>.actions>div{margin-top:0}
 .row>.actions .primary{min-height:44px;padding:0 14px}
 @media(max-width:430px){.row>.actions{grid-column:1/-1;padding-left:0}}
+
+/* Compartir como iconos junto al tipo de acto; la acción y el calendario, en
+   una sola línea debajo del hilo. */
+.topline{justify-content:space-between;flex-direction:row!important;align-items:center!important}
+.topline .shareIcons{margin:0 0 0 auto;flex:0 0 auto}
+.row>.actions{flex-wrap:nowrap}
+@media(max-width:340px){.row>.actions{flex-wrap:wrap}}

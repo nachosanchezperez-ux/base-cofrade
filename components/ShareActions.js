@@ -45,7 +45,25 @@ function ShareIcon() {
 // `calendarFirst` (tarjetas de la Agenda): «Añadir al calendario» pasa a ser la
 // acción principal, la primera y con texto; WhatsApp y Compartir quedan como
 // iconos con nombre accesible para que la fila quepa en una línea en el móvil.
-export default function ShareActions({ share, contentType = 'agenda', analytics = {}, compact = false, className = '', calendarHref = '', calendarFirst = false }) {
+// `iconsOnly` (filas de las listas de periodo): solo WhatsApp y Compartir, como
+// iconos con nombre accesible; el calendario va aparte (CalendarAddLink).
+export function CalendarAddLink({ href, title = '', contentType = 'agenda', analytics = {}, className = '' }) {
+  if (!href) return null
+  return (
+    <a
+      className={`${styles.calendar} ${styles.calendarLead} ${styles.calendarStandalone} ${className}`}
+      href={href}
+      aria-label={`Añadir al calendario: ${title}`}
+      onClick={() => trackEvent('calendar_add', { calendar_scope: 'event', content_type: contentType, item_name: title, ...analytics })}
+      data-analytics-skip-entity="true"
+    >
+      <CalendarIcon />
+      <span>Calendario</span>
+    </a>
+  )
+}
+
+export default function ShareActions({ share, contentType = 'agenda', analytics = {}, compact = false, className = '', calendarHref = '', calendarFirst = false, iconsOnly = false }) {
   const [copied, setCopied] = useState(false)
   const timer = useRef(null)
 
@@ -91,8 +109,9 @@ export default function ShareActions({ share, contentType = 'agenda', analytics 
     await copyLink()
   }
 
-  const calendarLead = Boolean(calendarHref && calendarFirst)
-  const calendarLink = calendarHref ? (
+  const calendarLead = Boolean(calendarHref && calendarFirst && !iconsOnly)
+  const icons = calendarLead || iconsOnly
+  const calendarLink = calendarHref && !iconsOnly ? (
     <a
       className={`${styles.calendar} ${calendarLead ? styles.calendarLead : ''}`}
       href={calendarHref}
@@ -107,30 +126,30 @@ export default function ShareActions({ share, contentType = 'agenda', analytics 
   const nativeLabel = copied ? 'Copiado' : 'Compartir'
 
   return (
-    <div className={`${styles.share} ${compact ? styles.compact : ''} ${calendarLead ? styles.calendarFirst : ''} ${className}`} role="group" aria-label={`Compartir: ${share.title}`}>
+    <div className={`${styles.share} ${compact ? styles.compact : ''} ${icons ? styles.calendarFirst : ''} ${className}`} role="group" aria-label={`Compartir: ${share.title}`}>
       {calendarLead ? calendarLink : null}
       <a
-        className={`${styles.whatsapp} ${calendarLead ? styles.iconOnly : ''}`}
+        className={`${styles.whatsapp} ${icons ? styles.iconOnly : ''}`}
         href={whatsappShareHref(share.text)}
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => track('whatsapp')}
         data-analytics-skip-entity="true"
-        aria-label={calendarLead ? 'Compartir por WhatsApp' : undefined}
-        title={calendarLead ? 'WhatsApp' : undefined}
+        aria-label={icons ? 'Compartir por WhatsApp' : undefined}
+        title={icons ? 'WhatsApp' : undefined}
       >
         <MessageIcon />
-        {calendarLead ? null : <span>WhatsApp</span>}
+        {icons ? null : <span>WhatsApp</span>}
       </a>
       <button
         type="button"
-        className={`${styles.native} ${calendarLead ? styles.iconOnly : ''}`}
+        className={`${styles.native} ${icons ? styles.iconOnly : ''}`}
         onClick={handleShare}
-        aria-label={calendarLead ? nativeLabel : undefined}
-        title={calendarLead ? nativeLabel : undefined}
+        aria-label={icons ? nativeLabel : undefined}
+        title={icons ? nativeLabel : undefined}
       >
-        {calendarLead && copied ? <CheckIcon /> : <ShareIcon />}
-        {calendarLead ? null : <span>{nativeLabel}</span>}
+        {icons && copied ? <CheckIcon /> : <ShareIcon />}
+        {icons ? null : <span>{nativeLabel}</span>}
       </button>
       {calendarLead ? null : calendarLink}
       <span className="sr-only" aria-live="polite">{copied ? 'Texto y enlace copiados' : ''}</span>
