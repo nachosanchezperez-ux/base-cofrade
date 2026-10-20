@@ -65,6 +65,22 @@ export default function BrotherhoodProcessionFull({ order, profile = 'penitencia
   const byCortejo = order.scope === 'listing' && order.procession && steps === 2 && sections.length === 4
     && sections[1].kind === 'step' && sections[3].kind === 'step'
 
+  const renderSection = (section) => section.kind === 'step'
+    ? <li key={section.key} className={styles.step}>
+      <span className={styles.stepMark} aria-hidden="true" />
+      <div>
+        <p className={styles.stepKind}>{section.step.note || ITEM_KINDS.step}</p>
+        <p className={styles.stepName}>{section.step.label}</p>
+      </div>
+    </li>
+    : <li key={section.key} className={styles.section}>
+      {section.title ? <p className={styles.sectionTitle}>
+        <span className={styles.sectionMark} aria-hidden="true" />
+        {section.title}
+      </p> : null}
+      {section.items.length ? <ol className={styles.items}>{section.items.map((item, index) => <Item key={item.key || `${item.sequence}-${item.label}`} item={item} number={index + 1} explained={explained} />)}</ol> : null}
+    </li>
+
   return <div className={`shell ${styles.wrap}`}>
     <details className={styles.full} id="cortejo-completo" open={defaultOpen || undefined}>
       <summary>
@@ -84,24 +100,15 @@ export default function BrotherhoodProcessionFull({ order, profile = 'penitencia
           {orderStatusLabel(order)} · {order.source.url ? <a href={order.source.url} target="_blank" rel="noopener noreferrer">{order.source.name}</a> : order.source.name}
           {order.source.accessedAt ? ` · consultado el ${order.source.accessedAt.split('-').reverse().join('/')}` : null}
         </p> : null}
-        {/* Si cada cortejo termina en su paso, en escritorio cada cortejo ocupa su columna. */}
-        <ol className={`${styles.line} ${byCortejo ? styles.byCortejo : ''}`}>
-          {sections.map((section) => section.kind === 'step'
-            ? <li key={section.key} className={styles.step}>
-              <span className={styles.stepMark} aria-hidden="true" />
-              <div>
-                <p className={styles.stepKind}>{section.step.note || ITEM_KINDS.step}</p>
-                <p className={styles.stepName}>{section.step.label}</p>
-              </div>
-            </li>
-            : <li key={section.key} className={styles.section}>
-              {section.title ? <p className={styles.sectionTitle}>
-                <span className={styles.sectionMark} aria-hidden="true" />
-                {section.title}
-              </p> : null}
-              {section.items.length ? <ol className={styles.items}>{section.items.map((item, index) => <Item key={item.key || `${item.sequence}-${item.label}`} item={item} number={index + 1} explained={explained} />)}</ol> : null}
+        {/* Si cada cortejo termina en su paso, en escritorio cada cortejo (con su
+            paso al pie) es una columna independiente: sin huecos entre insignias y paso. */}
+        {byCortejo
+          ? <ol className={`${styles.line} ${styles.byCortejo}`}>
+            {[sections.slice(0, 2), sections.slice(2, 4)].map((column) => <li key={column[0].key} className={styles.column}>
+              <ol className={styles.columnLine}>{column.map(renderSection)}</ol>
             </li>)}
-        </ol>
+          </ol>
+          : <ol className={styles.line}>{sections.map(renderSection)}</ol>}
       </div>
     </details>
   </div>

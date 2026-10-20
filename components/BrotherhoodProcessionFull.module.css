@@ -246,19 +246,36 @@
   white-space: nowrap;
 }
 
+/* Dos cortejos: cada uno es una columna con su paso al pie. */
+.column,
+.columnLine {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 @media (min-width: 900px) {
-  /* Dos cortejos, cada uno con su paso al pie de su columna. */
   .line.byCortejo {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: auto auto;
-    grid-auto-flow: column;
+    align-items: start;
     column-gap: 48px;
     columns: auto;
   }
 
-  .line.byCortejo .step {
-    align-self: end;
+  /* Cada columna lleva su propia línea. */
+  .column {
+    position: relative;
+  }
+
+  .column::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: -18px;
+    width: 2px;
+    background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 22%, #e3e7eb);
   }
 }
 
