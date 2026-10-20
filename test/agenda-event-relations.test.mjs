@@ -78,3 +78,19 @@ test('sin datos no se inventa nada', () => {
   assert.deepEqual(agendaThreadLinks({ category: 'devotions', organizer: 'Entidad organizadora', organizerHref: '' }), [])
   assert.deepEqual(agendaThreadLinks({}), [])
 })
+
+test('versión compacta de la lista: una imagen, un paso y una banda', () => {
+  const item = {
+    category: 'processions', organizer: 'La Macarena', organizerHref: '/hermandades/macarena',
+    relations: [
+      { kind: 'image', name: 'Nuestra Señora del Santo Rosario', href: '/imagenes/rosario-macarena' },
+      { kind: 'image', name: 'Otra imagen', href: '/imagenes/otra' },
+      { kind: 'step', name: 'Paso de palio', href: '/pasos/palio' },
+    ],
+    music: [{ name: 'Centuria Romana Macarena', href: '/bandas/centuria' }, { name: 'Carmen de Salteras', href: '/bandas/carmen' }],
+  }
+  assert.deepEqual(agendaThreadLinks(item, { maxImages: 1, maxSteps: 1, maxBands: 1 }).map((link) => link.name), [
+    'La Macarena', 'Nuestra Señora del Santo Rosario', 'Paso de palio', 'Centuria Romana Macarena',
+  ])
+  assert.equal(agendaThreadLinks(item).length, 6)
+})

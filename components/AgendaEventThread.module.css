@@ -14,3 +14,9 @@
 .thread a[data-kind="step"]{--thread-accent:#9a721d}
 .thread a[data-kind="band"]{--thread-accent:#315d7a}
 .thread a[data-kind="municipality"]{--thread-accent:#397269}
+
+/* Compacto: tipo y nombre en la misma línea; varias piezas por fila si caben. */
+.compact a{display:flex;align-items:baseline;gap:6px;min-height:40px;padding:8px 11px 8px 13px;align-content:normal}
+.compact a::before{width:2px}
+.compact small{flex:0 0 auto}
+.compact span{font-size:14px}

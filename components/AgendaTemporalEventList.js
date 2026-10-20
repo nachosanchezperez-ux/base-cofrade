@@ -110,7 +110,7 @@ export default function AgendaTemporalEventList({ landing }) {
                           : null}
                       </div>
                       {item.summary ? <p>{item.summary}</p> : null}
-                      <AgendaEventThread item={item} />
+                      <AgendaEventThread item={item} compact />
                     </div>
                     <div className={styles.actions}>
                       {item.eventHref ? <Link className={styles.primary} href={item.eventHref}>{primaryLabel(item)} <span aria-hidden="true">→</span></Link> : null}
