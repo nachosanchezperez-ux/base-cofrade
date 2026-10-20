@@ -359,3 +359,19 @@
     left: -26px;
   }
 }
+
+@media (min-width: 900px) {
+  /* Dos cortejos, cada uno con su paso al pie de su columna. */
+  .line.byCortejo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto auto;
+    grid-auto-flow: column;
+    column-gap: 48px;
+    columns: auto;
+  }
+
+  .line.byCortejo .step {
+    align-self: end;
+  }
+}

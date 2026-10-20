@@ -73,6 +73,9 @@ export default function BrotherhoodProcessionFull({ order, profile = 'penitencia
     counts.steps ? plural(counts.steps, 'paso', 'pasos') : '',
   ].filter(Boolean).join(' · ')
   const isProcession = order.scope !== 'listing' || order.procession
+  const steps = sections.filter((section) => section.kind === 'step').length
+  const byCortejo = order.scope === 'listing' && order.procession && steps === 2 && sections.length === 4
+    && sections[1].kind === 'step' && sections[3].kind === 'step'
 
   return <div className={`shell ${styles.wrap}`}>
     <details className={styles.full} id="cortejo-completo" open={defaultOpen || undefined}>
@@ -96,7 +99,8 @@ export default function BrotherhoodProcessionFull({ order, profile = 'penitencia
           {order.source.url ? <a href={order.source.url} target="_blank" rel="noopener noreferrer">{order.source.name}</a> : order.source.name}
           {order.source.accessedAt ? <> · consultado el {order.source.accessedAt.split('-').reverse().join('/')}</> : null}
         </p> : null}
-        <ol className={styles.line}>
+        {/* Si cada cortejo termina en su paso, en escritorio cada cortejo ocupa su columna. */}
+        <ol className={`${styles.line} ${byCortejo ? styles.byCortejo : ''}`}>
           {sections.map((section) => section.kind === 'step'
             ? <li key={section.key} className={styles.step}>
               <span className={styles.stepMark} aria-hidden="true" />
