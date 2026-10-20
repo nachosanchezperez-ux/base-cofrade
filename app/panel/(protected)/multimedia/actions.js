@@ -2,6 +2,7 @@
 
 import { randomUUID } from 'node:crypto'
 import { revalidatePath } from 'next/cache'
+import { revalidateAgendaPhotos } from '@/lib/panel/revalidate-agenda'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
@@ -192,6 +193,7 @@ async function syncLegacyPointer(supabase, entity, linkPayload, asset) {
 }
 
 async function refreshEntity(supabase, entityId) {
+  revalidateAgendaPhotos()
   revalidatePath('/panel')
   revalidatePath('/panel/multimedia')
   revalidatePath('/')

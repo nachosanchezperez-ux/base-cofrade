@@ -25,7 +25,7 @@ function targetLabel(kind, { hasCanonicalImage, hasLegacyImage }) {
   if (hasLegacyImage) return 'Migrar esta imagen al Panel'
   if (kind === 'step') return hasCanonicalImage ? 'Subir otra como principal' : 'Subir fotografía del Paso'
   if (kind === 'image') return hasCanonicalImage ? 'Subir otra como principal' : 'Subir fotografía del Titular'
-  if (kind === 'cult') return hasCanonicalImage ? 'Cambiar la foto de portada' : 'Subir foto de portada del Culto'
+  if (kind === 'cult') return hasCanonicalImage ? 'Cambiar la foto o el cartel' : 'Subir foto o cartel del Culto'
   return hasCanonicalImage ? 'Subir otra imagen principal' : 'Subir imagen del cartel o pieza'
 }
 
@@ -45,7 +45,7 @@ function MediaTargetCard({ target, kind, brotherhoodId }) {
   const targetKind = kind === 'cult' ? 'cult' : 'entity'
   const rightsHelp = 'Para Wikimedia, licencias abiertas o dominio público utiliza la Biblioteca multimedia, que exige Fuente, licencia y atribución completas.'
   const uploadNote = kind === 'cult'
-    ? 'Se mostrará como portada de este culto en la ficha pública.'
+    ? 'Se mostrará como portada de este culto en su ficha y en la Agenda.'
     : 'Se guardará como imagen principal de esta ficha. La fotografía anterior seguirá disponible justo aquí para editarla, recuperarla o desvincularla.'
 
   return (
@@ -90,6 +90,7 @@ function MediaTargetCard({ target, kind, brotherhoodId }) {
           defaultAlt={targetAlt(target, kind)}
           rightsHelp={rightsHelp}
           uploadNote={uploadNote}
+          allowPoster={kind === 'cult'}
         />
       </details>
     </article>

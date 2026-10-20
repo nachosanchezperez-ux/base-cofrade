@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { revalidateAgendaPhotos } from '@/lib/panel/revalidate-agenda'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
@@ -205,6 +206,7 @@ function redirectManaged(context, saved, formData, contextualSaved = saved) {
 }
 
 function revalidateManagedMedia(context) {
+  revalidateAgendaPhotos()
   revalidatePath('/panel')
   revalidatePath('/panel/multimedia')
   revalidatePath(`/panel/hermandades/${context.brotherhoodId}`)

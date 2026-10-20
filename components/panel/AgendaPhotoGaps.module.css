@@ -1,0 +1,18 @@
+/* Aviso del Panel: actos próximos de la Agenda sin foto ni cartel propios. */
+.gaps{display:grid;gap:14px;margin:0 0 24px;padding:18px;border:1px solid #e6dcc9;border-radius:16px;background:#fffaf1}
+.gaps h2{margin:4px 0 0;color:#173047;font-size:20px;line-height:1.2}
+.gaps p{margin:6px 0 0;color:#5f6e7a;font-size:14px;line-height:1.5}
+.gaps ol{display:grid;gap:0;margin:0;padding:0;list-style:none;border-top:1px solid #eee4d3}
+.gaps li{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #eee4d3}
+.gaps time{color:#a61931;font-size:13px;font-weight:850;text-transform:capitalize}
+.gaps li>span{display:grid;gap:2px;min-width:0}
+.gaps strong{color:#173047;font-size:14px;line-height:1.3}
+.gaps small{color:#6b7c89;font-size:12px;line-height:1.35}
+.gaps a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:999px;background:#112339;color:#fff;font-size:14px;font-weight:800;text-decoration:none;white-space:nowrap}
+.gaps a:focus-visible{outline:2px solid #a61931;outline-offset:2px}
+.more{font-size:13px!important}
+@media (max-width:640px){
+  .gaps{padding:14px}
+  .gaps li{grid-template-columns:minmax(0,1fr);gap:6px}
+  .gaps a{justify-self:start}
+}
