@@ -5,6 +5,7 @@ import JsonLd from '@/components/JsonLd'
 import { getGloryDirectory } from '@/lib/supabase/public-directory-cache'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
 import styles from './glory-page.module.css'
+import { pluralWord } from '@/lib/plural'
 
 export const revalidate = 300
 
@@ -93,7 +94,7 @@ export default async function ProcesionesDeGloriaPage() {
             </p>
           </div>
           <div className={styles.stats}>
-            <span><strong>{upcomingCount}</strong> próximas</span>
+            <span><strong>{upcomingCount}</strong> {pluralWord(upcomingCount, 'próxima', 'próximas')}</span>
             <span><strong>{archiveCount}</strong> en archivo</span>
             <span><strong>{capitalCount}</strong> capital · <strong>{provinceCount}</strong> provincia</span>
             <span><strong>{yearOutings.length}</strong> en {currentYear}</span>

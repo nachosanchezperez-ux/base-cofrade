@@ -117,7 +117,7 @@ export default function HermandadesDirectoryV4({ hermandades, navigation }) {
           {hasFilters ? <button type="button" className={styles.clear} onClick={clearFilters}>Limpiar filtros</button> : null}
         </header>
         <p className={styles.resultCount} role="status" aria-live="polite" aria-atomic="true">
-          {filtered.length} {filtered.length === 1 ? 'corporación' : 'corporaciones'}{lookup ? ' encontradas' : ' en el directorio'}
+          {filtered.length} {filtered.length === 1 ? 'corporación' : 'corporaciones'}{lookup ? (filtered.length === 1 ? ' encontrada' : ' encontradas') : ' en el directorio'}
         </p>
         {filtered.length ? (
           <BrotherhoodPublicIndex key={reset} brotherhoods={filtered} navigation={navigation} expand={lookup} />

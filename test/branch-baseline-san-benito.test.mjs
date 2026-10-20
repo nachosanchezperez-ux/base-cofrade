@@ -36,6 +36,7 @@ const homeFeaturedWindowName = '20261012120000_outings_home_featured_window.sql'
 const editorialNewsFieldsName = '20261016090000_editorial_news_fields.sql'
 const editorialNewsEventDateName = '20261017220000_editorial_news_event_date_subject.sql'
 const editorialNewsFeaturedName = '20261018092323_editorial_news_featured_until.sql'
+const outingHeroImageFitName = '20261020170000_outings_hero_image_fit.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
 const membershipStats = readFileSync(new URL(membershipStatsName, migrationsDirectory), 'utf8')
 const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
@@ -75,6 +76,7 @@ test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esq
     editorialNewsFieldsName,
     editorialNewsEventDateName,
     editorialNewsFeaturedName,
+    outingHeroImageFitName,
   ])
 })
 
@@ -151,9 +153,12 @@ test('el DML posterior al baseline permanece íntegro y fuera de la cadena ejecu
     .filter((file) => file.endsWith('.sql'))
     .sort()
 
-  assert.equal(archived.length, 156)
+  assert.equal(archived.length, 160)
   assert.equal(archived[0], '20260831074355_publica_tres_igualas_septiembre_2026.sql')
-  assert.equal(archived.at(-1), '20261012104552_publica_cruceta_rosario_santiponce_puebla_2026.sql')
+  assert.equal(archived.at(-1), '20261019103722_publica_cruceta_rosario_san_julian_guillena_2026.sql')
+  assert.ok(archived.includes('20261019010000_preflight_coletillas_cultos.sql'))
+  assert.ok(archived.includes('20261019010100_apply_coletillas_cultos.sql'))
+  assert.ok(archived.includes('20261019103722_publica_cruceta_rosario_san_julian_guillena_2026.sql'))
   assert.ok(archived.includes('20261012104552_publica_cruceta_rosario_santiponce_puebla_2026.sql'))
   assert.ok(archived.includes('20261008061516_publica_cruceta_merced_ecija_estepa_2026.sql'))
   assert.ok(archived.includes('20261008010014_publica_cruceta_divina_enfermera_paz_malaga_2026.sql'))

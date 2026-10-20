@@ -375,11 +375,7 @@
   text-decoration: none;
 }
 
-.facts dd a:hover,
-.facts dd a:focus-visible {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
+
 
 .credit {
   position: absolute;
