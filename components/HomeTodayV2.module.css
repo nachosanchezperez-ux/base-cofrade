@@ -1220,3 +1220,78 @@
     grid-template-columns: 1fr;
   }
 }
+
+/*
+ * 5 · PC (≥1024 px) en la portada: «Hilo para descubrir» y «Marcha del día»
+ * lado a lado, con la misma altura; el encabezado y el reto, a todo el ancho.
+ * Si falta una de las dos, la otra ocupa todo el ancho, como hasta ahora.
+ */
+@media (min-width: 1024px) {
+  .embedded > div {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 14px;
+    align-items: stretch;
+  }
+
+  .embedded > div > * {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  .embedded > div:has(> .musicCard) > .editorialGrid,
+  .embedded > div:has(> .editorialGrid) > .musicCard {
+    grid-column: auto;
+  }
+
+  .embedded > div:has(> .musicCard) > .editorialGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .embedded > div:has(> .musicCard) > .editorialGrid > .featureCardSlot {
+    align-self: stretch !important;
+    height: 100%;
+  }
+
+  /* La marcha, en media columna: portada y texto arriba; reproductor debajo. */
+  .embedded > div:has(> .editorialGrid) > .musicCard {
+    grid-template-columns: 84px minmax(0, 1fr);
+    align-content: start;
+    margin-top: 0;
+  }
+
+  .embedded > div:has(> .editorialGrid) > .musicCard .musicVisual {
+    margin-left: 22px;
+  }
+
+  .embedded > div:has(> .editorialGrid) > .musicCard .musicCopy {
+    padding: 18px 22px 12px 16px;
+  }
+
+  /* Reproductor y enlace en una fila: «Escuchar aquí» a la izquierda. Al
+     reproducir, el vídeo ocupa toda la fila. */
+  .embedded > div:has(> .editorialGrid) > .musicCard .player {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 18px;
+    padding: 14px 22px 16px;
+    border-left: 0;
+    border-top: 1px solid var(--home-line);
+  }
+
+  .embedded > div:has(> .editorialGrid) > .musicCard .player > div {
+    justify-content: flex-start;
+    padding: 0;
+  }
+
+  .embedded > div:has(> .editorialGrid) > .musicCard .player > div:has(iframe) {
+    flex-basis: 100%;
+  }
+
+  .embedded > div:has(> .editorialGrid) > .musicCard .musicLink {
+    margin: 0;
+  }
+}
