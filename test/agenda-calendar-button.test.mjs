@@ -11,8 +11,8 @@ test('las tarjetas de la Agenda ponen «Añadir al calendario» como acción pri
   const share = read('components/ShareActions.js')
   assert.match(share, /calendarLead \? 'Añadir al calendario' : 'Calendario'/)
   // Los iconos sin texto conservan un nombre accesible.
-  assert.match(share, /aria-label=\{calendarLead \? 'Compartir por WhatsApp' : undefined\}/)
-  assert.match(share, /aria-label=\{calendarLead \? nativeLabel : undefined\}/)
+  assert.match(share, /aria-label=\{icons \? 'Compartir por WhatsApp' : undefined\}/)
+  assert.match(share, /aria-label=\{icons \? nativeLabel : undefined\}/)
   // Va delante de WhatsApp y Compartir.
   assert.ok(share.indexOf('{calendarLead ? calendarLink : null}') < share.indexOf('whatsappShareHref('))
 })
@@ -43,4 +43,14 @@ test('el pie de la Agenda y la etiqueta «Extraordinario» no bajan de 11px', ()
   assert.match(tail, /\.relatedCalendar>a\{font-size:13px\}/)
   assert.match(tail, /\.relatedLinks\{font-size:13px\}/)
   assert.match(tail, /\.relatedLinks>span\{font-size:11px\}/)
+})
+
+test('las listas de periodo llevan «Calendario» junto a la acción y compartir en iconos', () => {
+  const list = read('components/AgendaTemporalEventList.js')
+  assert.match(list, /<CalendarAddLink\s+href=\{item\.date \? `\/calendario\/acto\//)
+  assert.match(list, /iconsOnly/)
+  const share = read('components/ShareActions.js')
+  assert.match(share, /export function CalendarAddLink/)
+  assert.match(share, /aria-label=\{`Añadir al calendario: \$\{title\}`\}/)
+  assert.match(share, /trackEvent\('calendar_add'/)
 })
