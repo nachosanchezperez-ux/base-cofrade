@@ -38,6 +38,11 @@ function groupByDate(items = []) {
   return groups
 }
 
+// En los conciertos `actionLabel` es «Ver banda»: la acción principal abre la cita.
+function primaryLabel(item) {
+  return item.category === 'concerts' ? 'Ver cita' : item.actionLabel || 'Ver cita'
+}
+
 function categoryLabel(item) {
   return item.categoryLabel || item.calendarLabel || item.categoryName || 'Acto'
 }
@@ -89,7 +94,7 @@ export default function AgendaTemporalEventList({ landing }) {
                         <span>{categoryLabel(item)}</span>
                         {item.calendarLabel ? <small>{item.calendarLabel}</small> : null}
                       </div>
-                      <h4>{item.href ? <Link href={item.href}>{item.title}</Link> : item.title}</h4>
+                      <h4>{item.eventHref ? <Link href={item.eventHref}>{item.title}</Link> : item.title}</h4>
                       <div className={styles.meta}>
                         {item.municipality ? (
                           item.municipalityHref
@@ -104,7 +109,7 @@ export default function AgendaTemporalEventList({ landing }) {
                     </div>
 
                     <div className={styles.actions}>
-                      {item.href ? <Link className={styles.primary} href={item.href}>{item.actionLabel || 'Ver cita'} <span aria-hidden="true">→</span></Link> : null}
+                      {item.eventHref ? <Link className={styles.primary} href={item.eventHref}>{primaryLabel(item)} <span aria-hidden="true">→</span></Link> : null}
                       {(item.entityLinks || []).map((link) => <Link href={link.href} key={link.href}>{link.label}</Link>)}
                       {item.municipalityHref ? <Link href={item.municipalityHref}>Guía local</Link> : null}
                     </div>
