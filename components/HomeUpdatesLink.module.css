@@ -366,3 +366,86 @@
     font-size: 16px;
   }
 }
+
+/*
+ * Punto focal del bloque (20/10/2026): la noticia principal va en el azul de
+ * Hilo Cofrade, como la cita del día en la Agenda y la ficha en «Descubre».
+ * Sobre azul, las etiquetas van en rosa claro (el rojo se pierde) y el escudo
+ * sobre blanco para conservar sus colores. Las secundarias siguen en blanco.
+ */
+.lead {
+  border-color: var(--home-ink);
+  background: linear-gradient(140deg, var(--home-blue) 0%, var(--home-ink) 100%);
+  color: #fff;
+}
+
+.lead .meta {
+  color: rgba(255, 255, 255, .72);
+}
+
+.lead .meta b {
+  color: var(--home-pink);
+}
+
+:global(#hc-app #el-hilo-se-mueve) .lead .leadHeadline,
+.lead:hover .leadHeadline {
+  color: #fff;
+}
+
+.lead .summary {
+  color: rgba(255, 255, 255, .82);
+}
+
+.lead .who {
+  color: rgba(255, 255, 255, .9);
+}
+
+.lead .crest {
+  box-sizing: border-box;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.lead .leadBodyNoPhoto {
+  grid-template-columns: 60px minmax(0, 1fr);
+}
+
+.lead .leadBodyNoPhoto > .crest {
+  width: 60px;
+  max-height: none;
+  padding: 7px;
+  border-radius: 12px;
+}
+
+.lead .who .crest {
+  width: 26px;
+  max-height: none;
+  padding: 2px;
+  border-radius: 6px;
+}
+
+.lead:hover {
+  border-color: var(--home-ink);
+}
+
+.lead:has(.storyLink:focus-visible) {
+  outline-color: var(--home-blue);
+}
+
+.lead .discover {
+  border-top-color: rgba(255, 255, 255, .14);
+  background: rgba(255, 255, 255, .07);
+  color: #fff;
+}
+
+.lead .discover::after {
+  color: var(--home-pink);
+}
+
+.lead .discover:hover {
+  background: rgba(255, 255, 255, .13);
+}
+
+.lead .discover:focus-visible {
+  outline-color: var(--home-pink);
+}
