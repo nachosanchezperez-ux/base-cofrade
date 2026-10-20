@@ -406,11 +406,7 @@
   line-height: 1.3;
 }
 
-.facts a {
-  text-decoration: underline;
-  text-decoration-color: rgba(255, 255, 255, .3);
-  text-underline-offset: 3px;
-}
+
 
 .media {
   position: relative;

@@ -172,7 +172,8 @@ export default function HomeTodayV2({ today, content, embedded = false }) {
       <div className={`${styles.copy} ${isFeatured ? styles.featureCopy : ''}`}>
         <div className={styles.topline}>
           <span className={styles.type}>{card.label}</span>
-          <RelationshipTrail value={card.kicker} />
+          {/* En la portada, «Hilo para descubrir» ya dice qué es: sin segunda etiqueta. */}
+          {embedded ? null : <RelationshipTrail value={card.kicker} />}
         </div>
         {card.visual?.kind === 'context-crest' && card.visual.contextName ? (
           <span className={styles.context}>En {card.visual.contextName}</span>

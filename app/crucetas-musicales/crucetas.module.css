@@ -573,8 +573,6 @@
 .workCard h3 a:hover,
 .workCard h3 a:focus-visible {
   color: var(--repertoire-primary);
-  text-decoration: underline;
-  text-decoration-color: var(--repertoire-accent);
 }
 .workRelations {
   display: grid;
@@ -598,9 +596,6 @@
 }
 .workRelations dd a {
   color: var(--repertoire-primary);
-  text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, var(--repertoire-accent) 55%, transparent);
-  text-underline-offset: 3px;
 }
 .workRelations small {
   display: block;
