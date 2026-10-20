@@ -17,17 +17,19 @@ function HeritageDetails({ heritage }) {
   if (!heritage) return null
   const facts = [
     heritage.author ? ['Autor o taller', heritage.author] : null,
-    heritage.date ? ['Ejecución', heritage.date] : null,
+    heritage.date ? ['Año', heritage.date] : null,
     heritage.materials ? ['Materiales y técnica', heritage.materials] : null,
   ].filter(Boolean)
   const hasMore = facts.length || heritage.history || heritage.source
   if (!hasMore) return null
+  // Cerrado si no hay más que el nombre; abierto en el HTML, plegado a la vista.
   return <details className={styles.more}>
     <summary>Sobre la pieza <b aria-hidden="true">+</b></summary>
     {facts.length ? <dl className={styles.facts}>
       {facts.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
     </dl> : null}
     {heritage.history ? <p>{heritage.history}</p> : null}
+    {heritage.review ? <p className={styles.review}>Dato pendiente de confirmar con la Hermandad.</p> : null}
     {heritage.href ? <p><a href={heritage.href}>Ver en el patrimonio de la Hermandad <span aria-hidden="true">›</span></a></p> : null}
     {heritage.source ? <p className={styles.source}>Fuente: {heritage.source}</p> : null}
   </details>
@@ -70,8 +72,15 @@ export default function BrotherhoodProcessionFull({ order, profile = 'penitencia
         {order.demo ? <p className={styles.demo} role="note">
           <strong>Demostración estructural.</strong> Elementos de ejemplo para ver cómo se leería un cortejo completo. No corresponde a ninguna Hermandad.
         </p> : null}
+        {order.draft ? <p className={styles.demo} role="note">
+          <strong>Borrador sin publicar.</strong> Datos tomados de la web oficial y aún no cargados en Hilo Cofrade; pendientes de revisión.
+        </p> : null}
         {order.source?.name ? <p className={styles.sourceLine}>
-          Orden oficial {order.year ? `de ${order.year}` : ''} · {order.source.url ? <a href={order.source.url} target="_blank" rel="noopener noreferrer">{order.source.name}</a> : order.source.name}
+          {order.scope === 'listing'
+            ? <>Insignias en el orden en que las publica la Hermandad. No constan tramos ni la posición exacta de los pasos. · </>
+            : <>Orden oficial {order.year ? `de ${order.year}` : ''} · </>}
+          {order.source.url ? <a href={order.source.url} target="_blank" rel="noopener noreferrer">{order.source.name}</a> : order.source.name}
+          {order.source.accessedAt ? <> · consultado el {order.source.accessedAt.split('-').reverse().join('/')}</> : null}
         </p> : null}
         <ol className={styles.line}>
           {sections.map((section) => section.kind === 'step'

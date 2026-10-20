@@ -51,3 +51,24 @@ test('La demostración está marcada como tal y no lleva fuente', () => {
   assert.equal(PROCESSION_ORDER_DEMO.source, null);
   assert.ok(PROCESSION_ORDER_DEMO.items.every((item) => /ejemplo|^Tramo \d$/i.test(item.label)));
 });
+
+import { readFileSync } from 'node:fs';
+import { orderFromListing } from '../lib/procession-order.js';
+
+test('Insignias del Baratillo (borrador): orden de la web, dos cortejos y bocinas una sola vez', () => {
+  const listing = JSON.parse(readFileSync(new URL('../docs/insignias-baratillo-borrador-2026-10-20.json', import.meta.url), 'utf8'));
+  const order = orderFromListing(listing);
+  assert.equal(order.scope, 'listing');
+  assert.equal(order.source.url, 'https://hermandadelbaratillo.es/insignias/');
+  const sections = markRepeatedHeritage(processionSections(order));
+  assert.deepEqual(sections.map((s) => s.title), ['Cortejo del paso de Cristo', 'Cortejo del paso de palio']);
+  assert.equal(sections[0].items[0].label, 'Cruz de Guía (1956)');
+  assert.equal(sections[0].items.length, 10);
+  assert.equal(sections[1].items.length, 8);
+  const bocinas = sections.flatMap((s) => s.items).filter((i) => i.label.startsWith('Bocinas'));
+  assert.equal(bocinas.length, 2);
+  assert.ok(bocinas[0].heritage.author);
+  assert.equal(bocinas[1].heritage, null);
+  assert.deepEqual(processionCounts(order), { insignias: 17, tramos: 0, steps: 0 });
+  assert.ok(!sections.some((s) => s.kind === 'step'), 'no se colocan pasos que la fuente no sitúa');
+});

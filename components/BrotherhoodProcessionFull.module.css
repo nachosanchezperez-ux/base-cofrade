@@ -177,7 +177,8 @@
 
 .kind,
 .note,
-.source {
+.source,
+.review {
   margin: 2px 0 0;
   color: #59636e;
   font-size: 14px;
@@ -294,4 +295,9 @@
   .stepMark {
     left: -24px;
   }
+}
+
+.review {
+  color: #8a5a12 !important;
+  font-weight: 700;
 }
