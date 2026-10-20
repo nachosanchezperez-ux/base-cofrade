@@ -833,6 +833,7 @@ export default function AgendaCofradeDirectoryV4({
                             {item.music?.length ? <section className={mobileStyles.eventMusic}><h5>Acompañamiento musical</h5>{item.music.map((band, index) => <p key={band.id || index}>{band.href ? <Link href={band.href}>{band.name}</Link> : <strong>{band.name}</strong>}{band.context ? <small>{band.context}</small> : null}</p>)}</section> : null}
                             {agendaDirectionsHref(item.place, item.municipality) ? <a href={agendaDirectionsHref(item.place, item.municipality)} target="_blank" rel="noreferrer">{isOutingEvent(item) ? 'Cómo llegar a la salida' : 'Cómo llegar'} ↗</a> : null}
                             {item.summary && item.summary !== item.routeText ? <p>{item.summary}</p> : null}
+                            {item.imageCredit ? <p className={mobileStyles.photoCredit}>{item.imageKind === 'poster' ? item.imageCredit.replace(/^Fotografía/, 'Cartel') : item.imageCredit}</p> : null}
                             {item.routeText && ['processions', 'transfers', 'rosaries', 'romeries'].includes(item.category) ? <EventRoute item={item} inline /> : null}
                             {item.category === 'concerts' ? <ConcertRepertoire item={item} inline /> : null}
                             <a href={`#${agendaEventAnchor(item)}`}>Enlace a este acto</a>

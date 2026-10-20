@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs'
 import test from 'node:test'
 import { agendaEventDetailHref } from '../lib/agenda-event-url-policy.js'
 import { withProcessionLiveState } from '../lib/procession-live-status.js'
+import { pickAgendaPhoto } from '../lib/agenda-event-photo.js'
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 
@@ -49,6 +50,8 @@ function agendaFixture() {
   dependencies.agendaEventDetailHref = agendaEventDetailHref
   dependencies.withAgendaOutingContext = async (groups) => groups
   dependencies.withAgendaRelations = async (groups) => groups
+  dependencies.withAgendaPhotos = async (groups) => groups
+  dependencies.pickAgendaPhoto = pickAgendaPhoto
   dependencies.withProcessionLiveState = withProcessionLiveState
   dependencies.agendaMunicipalityHref = () => ''
   dependencies.unstable_cache = (loader, keys, options) => {

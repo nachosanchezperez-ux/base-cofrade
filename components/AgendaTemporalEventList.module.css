@@ -121,3 +121,47 @@
   .thread{order:6}
   .row>.actions{order:7;grid-column:auto;margin-top:12px;padding-left:0}
 }
+
+/* Foto por acto (#agenda-fotos). La foto o el cartel del propio acto va en
+   grande; la del titular y el escudo, en miniatura junto al título. Un cartel
+   nunca se recorta (contain). Sin imagen, la cita no reserva hueco. */
+.media{min-width:0;margin:0}
+.mediaFrame{position:relative;display:block;overflow:hidden;border-radius:12px;background:#f3efe9}
+.media[data-variant="feature"] .mediaFrame{aspect-ratio:4/3}
+.media[data-variant="feature"][data-fit="contain"] .mediaFrame{aspect-ratio:4/5;background:#efeae2}
+.media[data-variant="thumb"] .mediaFrame{width:104px;height:104px;border-radius:10px}
+.media[data-crest="true"] .mediaFrame{border:1px solid #e6e9ec;background:#fff}
+.media[data-crest="true"] img{padding:10px!important}
+.media figcaption{margin-top:6px;color:#6b7c89;font-size:12px;font-weight:650;line-height:1.35}
+.copy>.photoCredit{display:block;overflow:visible;-webkit-line-clamp:unset}
+.photoCredit{margin:6px 0 0;color:#6b7c89;font-size:12px!important;font-weight:650;line-height:1.35}
+.mediaFrame:focus-visible{outline:2px solid #a61931;outline-offset:2px}
+
+@media (min-width:721px){
+  .row[data-media]{grid-template-columns:112px minmax(0,1fr) var(--media-w,104px)}
+  .row[data-media="feature"]{--media-w:260px}
+  .row[data-media="feature"]:has(.media[data-fit="contain"]){--media-w:200px}
+  .row[data-media]>.media{grid-column:3;grid-row:1 / span 2;align-self:start}
+}
+@media (min-width:721px) and (max-width:900px){
+  .row[data-media]{grid-template-columns:95px minmax(0,1fr) var(--media-w,96px)}
+  .row[data-media="feature"]{--media-w:200px}
+}
+
+@media (max-width:720px){
+  /* Cuadrícula en vez de columna: la miniatura se sienta junto a hora y título. */
+  .row{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:12px;row-gap:0}
+  .topline{grid-column:1 / -1;grid-row:1}
+  .row>.media{grid-column:1 / -1;grid-row:2;margin-top:12px}
+  .time{grid-column:1;grid-row:3}
+  .title{grid-column:1;grid-row:4}
+  .meta{grid-column:1 / -1;grid-row:5}
+  .summary{grid-column:1 / -1;grid-row:6}
+  .photoCredit{grid-column:1 / -1;grid-row:7}
+  .thread{grid-column:1 / -1;grid-row:8}
+  .row>.actions{grid-column:1 / -1;grid-row:9}
+  .row[data-media="thumb"]>.media{grid-column:2;grid-row:3 / span 2;align-self:start;margin-top:10px}
+  .media[data-variant="thumb"] .mediaFrame{width:76px;height:76px}
+  .media[data-variant="feature"] .mediaFrame{aspect-ratio:16/10}
+  .media[data-variant="feature"][data-fit="contain"] .mediaFrame{aspect-ratio:1/1}
+}

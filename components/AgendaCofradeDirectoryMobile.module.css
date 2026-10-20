@@ -131,3 +131,4 @@
 /* Pulido (20/10): horario sin hora concreta, como texto y sin recuadro. */
 .directory .cardBody > .schedule[data-literal="true"] { padding: 0; background: none; border-radius: 0; }
 .directory .cardBody > .schedule[data-literal="true"] strong { color: #3c5469; font-size: 16px; font-weight: 750; line-height: 1.35; }
+.directory .eventDetailBody > p.photoCredit{color:#6b7c89;font-size:12px;font-weight:650;line-height:1.35}

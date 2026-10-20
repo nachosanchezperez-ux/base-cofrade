@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import ShareActions, { CalendarAddLink } from '@/components/ShareActions'
 import AgendaEventThread from '@/components/AgendaEventThread'
@@ -38,6 +39,47 @@ function groupByDate(items = []) {
   }
 
   return groups
+}
+
+// Foto del acto (#agenda-fotos): la propia del acto va en grande; la del titular
+// o el escudo, en miniatura. Sin imagen, la cita no reserva hueco.
+const OPTIMIZABLE = /^(\/(?!\/)|https:\/\/[a-z0-9-]+\.supabase\.co\/storage\/v1\/object\/public\/)/i
+
+function eventMedia(item) {
+  const photo = item.photo
+  if (photo?.path && photo.source === 'event') {
+    const isPoster = photo.fit === 'contain'
+    return {
+      variant: 'feature', src: photo.path, alt: photo.alt || item.title || '', fit: photo.fit,
+      credit: isPoster ? String(photo.credit || '').replace(/^Fotografía/, 'Cartel') : photo.credit,
+    }
+  }
+  if (photo?.path && photo.source === 'titular') {
+    return { variant: 'thumb', src: photo.path, alt: photo.alt || '', fit: 'cover', credit: photo.credit }
+  }
+  if (item.crestPath) return { variant: 'thumb', src: item.crestPath, alt: '', fit: 'contain', credit: '', crest: true }
+  return null
+}
+
+function EventMedia({ item, media }) {
+  const image = (
+    <Image
+      src={media.src}
+      alt={media.alt}
+      fill
+      sizes={media.variant === 'feature' ? '(max-width: 720px) 100vw, 260px' : '(max-width: 720px) 76px, 104px'}
+      unoptimized={!OPTIMIZABLE.test(media.src) || /\.svg(\?|$)/i.test(media.src)}
+      style={{ objectFit: media.fit === 'contain' ? 'contain' : 'cover' }}
+    />
+  )
+  return (
+    <figure className={styles.media} data-variant={media.variant} data-fit={media.fit} data-crest={media.crest ? 'true' : undefined}>
+      {item.eventHref
+        ? <Link href={item.eventHref} tabIndex={-1} aria-hidden={media.alt ? undefined : true} className={styles.mediaFrame}>{image}</Link>
+        : <span className={styles.mediaFrame}>{image}</span>}
+      {media.variant === 'feature' && media.credit ? <figcaption>{media.credit}</figcaption> : null}
+    </figure>
+  )
 }
 
 // En los conciertos `actionLabel` es «Ver banda»: la acción principal abre la cita.
@@ -81,12 +123,16 @@ export default function AgendaTemporalEventList({ landing }) {
               </header>
 
               <div className={styles.list}>
-                {group.items.map((item) => (
+                {group.items.map((item) => {
+                  const media = eventMedia(item)
+                  return (
                   <article
                     className={styles.row}
                     data-category={item.category || 'other'}
+                    data-media={media?.variant}
                     key={item.displayKey || item.key || item.href || item.id}
                   >
+                    {media ? <EventMedia item={item} media={media} /> : null}
                     <div className={styles.time}>
                       <span className="sr-only">Hora: </span>
                       <strong>{itemTime(item)}</strong>
@@ -123,6 +169,7 @@ export default function AgendaTemporalEventList({ landing }) {
                           : null}
                       </p>
                       {item.summary ? <p className={styles.summary}>{item.summary}</p> : null}
+                      {media?.variant === 'thumb' && media.credit ? <p className={styles.photoCredit}>{item.photo?.name ? `Fotografía de ${item.photo.name}` : 'Fotografía'} · {media.credit.replace(/^Fotografía · /, '')}</p> : null}
                       <AgendaEventThread item={item} compact className={styles.thread} />
                     </div>
                     <div className={styles.actions}>
@@ -135,7 +182,8 @@ export default function AgendaTemporalEventList({ landing }) {
                       />
                     </div>
                   </article>
-                ))}
+                  )
+                })}
               </div>
             </section>
           ))}
