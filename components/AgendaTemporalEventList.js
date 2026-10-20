@@ -105,7 +105,7 @@ export default function AgendaTemporalEventList({ landing }) {
 
                     <div className={styles.actions}>
                       {item.href ? <Link className={styles.primary} href={item.href}>{item.actionLabel || 'Ver cita'} <span aria-hidden="true">→</span></Link> : null}
-                      {item.brotherhoodHref ? <Link href={item.brotherhoodHref}>Hermandad</Link> : null}
+                      {(item.entityLinks || []).map((link) => <Link href={link.href} key={link.href}>{link.label}</Link>)}
                       {item.municipalityHref ? <Link href={item.municipalityHref}>Guía local</Link> : null}
                     </div>
                   </article>
