@@ -18,7 +18,7 @@
   background: #fff;
   color: #17283a;
   font: inherit;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 750;
   line-height: 1;
   text-decoration: none;
@@ -57,9 +57,9 @@
 
 .compact a,
 .compact button {
-  min-height: 36px;
+  min-height: 40px;
   padding: 0 12px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 /* Tarjetas de la Agenda: «Añadir al calendario» delante y con borde azul
@@ -72,7 +72,7 @@
   min-width: 0;
   border-color: #112339;
   color: #112339;
-  font-size: 13px;
+  font-size: 14px;
   white-space: nowrap;
 }
 

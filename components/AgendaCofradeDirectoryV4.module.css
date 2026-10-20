@@ -84,3 +84,10 @@
 .monthNavigation strong{font-size:11px}
 .cardActions a{font-size:13px}
 .cardTopline>b,.cardTopline>small{font-size:11px}
+
+/* Legibilidad (20/10): etiquetas ≥ 12 px y textos de controles a 14 px. */
+.cardTopline>b{font-size:12px}
+.periodGrid button>span{font-size:14px}
+.quickTypes button>span{font-size:14px}
+.cardActions a,.cardActions a span{font-size:14px}
+.monthNavigation strong{font-size:12px}

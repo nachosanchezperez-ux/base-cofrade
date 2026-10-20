@@ -116,3 +116,9 @@
 .eventTimetable small,.eventMusic small { display: block; margin-top: 4px; color: #586777; font-size: 13px; line-height: 1.5; }
 .eventMusic p { margin: 0 0 10px; font-size: 15px; }
 .eventMusic a { font-weight: 700; }
+
+/* Legibilidad (20/10). El título del acto es un botón (abre su detalle) y el
+   suelo global de botones (readability.css, 14 px) lo encogía: se le devuelve
+   el tamaño del h4 que lo contiene. */
+:global(#hc-app) h4 > .eventTitle { font-size: inherit; line-height: inherit; }
+.schedule b { font-size: 12px; }

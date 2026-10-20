@@ -6,3 +6,12 @@
   .nav a::after{grid-row:1;font-size:9px}
   .nav strong{font-size:10px}
 }
+
+/* Legibilidad (20/10): el periodo es un control; 14 px como el resto de botones. */
+.nav strong{font-size:14px}
+.nav small{font-size:12px}
+.nav>div>span{font-size:12px}
+@media(max-width:480px){
+  .nav a{flex:1 0 auto;min-width:96px}
+  .nav strong{font-size:14px;white-space:nowrap}
+}

@@ -215,3 +215,6 @@
 /* Tamaño mínimo de letra en el recorrido (antes 9–11px). */
 .routeSection>strong{font-size:11px}
 .routePoints li{font-size:13px}
+
+/* Legibilidad (20/10): rótulo del recorrido ≥ 12 px. */
+.routeSection>strong{font-size:12px}
