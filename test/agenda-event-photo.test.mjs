@@ -60,3 +60,14 @@ test('la lista muestra la foto propia en grande y la del titular o el escudo en 
   assert.match(css, /\[data-fit="contain"\] \.mediaFrame\{aspect-ratio:4\/5/)
   assert.match(css, /\.photoCredit\{[^}]*font-size:12px/)
 })
+
+test('las salidas pueden marcar su imagen como cartel y la Agenda la lee', () => {
+  assert.equal(pickAgendaPhoto({ heroImagePath: '/c.jpg', heroImageFit: 'contain' }).fit, 'contain')
+  for (const path of ['lib/supabase/rosary-outings.js', 'lib/supabase/extraordinary-directory.js', 'lib/supabase/glory-directory.js', 'lib/supabase/general-public-outings.js']) {
+    assert.match(read(path), /heroImageFit: \w+\.hero_image_fit === 'contain' \? 'contain' : 'cover'/, path)
+  }
+  assert.match(read('app/panel/(protected)/hermandades/[id]/salidas/hero-image-actions.js'), /hero_image_fit: value\(formData, 'presentation'\) === 'contain'/)
+  assert.match(read('app/panel/(protected)/hermandades/[id]/salidas/actions.js'), /formData\.has\('hero_image_fit'\)/)
+  assert.match(read('app/panel/(protected)/extraordinarias/[id]/actions.js'), /hero_image_fit: fit/)
+  assert.match(read('components/panel/DirectImageUpload.js'), /presentationChoice \? \(/)
+})
