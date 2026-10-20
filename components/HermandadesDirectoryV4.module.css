@@ -14,7 +14,7 @@
 .directory a:focus-visible, .directory button:focus-visible, .directory select:focus-visible { outline: 3px solid #123a67; outline-offset: 3px; }
 .primaryNav { display: flex; flex-wrap: wrap; gap: 4px 24px; padding-bottom: 14px; border-bottom: 1px solid #dce4eb; }
 .primaryNav a { display: inline-flex; gap: 8px; align-items: center; min-height: 44px; color: #173a61; font-size: 16px; }
-.primaryNav a:hover strong { text-decoration: underline; text-underline-offset: 4px; }
+
 .primaryNav strong { font-weight: 600; }
 .primaryNav span { color: #617180; font-size: 14px; }
 .indexHeading { display: flex; justify-content: space-between; align-items: start; gap: 16px; }

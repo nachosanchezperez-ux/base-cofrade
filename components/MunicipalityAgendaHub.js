@@ -10,6 +10,7 @@ import MunicipalityTemporalSpotlight from '@/components/MunicipalityTemporalSpot
 import { localityGuideSeo } from '@/lib/locality-seo'
 import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, municipalityPlaceJsonLd } from '@/lib/seo'
 import styles from './MunicipalityAgendaHub.module.css'
+import { pluralWord } from '@/lib/plural'
 
 function EntityGroup({ label, singular, items, hrefFor, nameFor, directoryHref = '' }) {
   if (!items.length) return null
@@ -139,11 +140,15 @@ export default function MunicipalityAgendaHub({ hub }) {
           </nav>
 
           <div className={styles.stats}>
-            <strong><b>{hub.items.length}</b> próximas citas</strong>
-            <strong><b>{hub.brotherhoods.length}</b> Hermandades</strong>
-            <strong><b>{hub.bands.length}</b> Bandas</strong>
-            <strong><b>{hub.images.length}</b> Imágenes</strong>
-            <strong><b>{hub.steps.length}</b> Pasos</strong>
+            {[
+              [hub.items.length, 'próxima cita', 'próximas citas'],
+              [hub.brotherhoods.length, 'Hermandad', 'Hermandades'],
+              [hub.bands.length, 'Banda', 'Bandas'],
+              [hub.images.length, 'Imagen', 'Imágenes'],
+              [hub.steps.length, 'Paso', 'Pasos'],
+            ].filter(([count]) => count > 0).map(([count, singular, pluralForm]) => (
+              <strong key={pluralForm}><b>{count}</b> {pluralWord(count, singular, pluralForm)}</strong>
+            ))}
           </div>
         </div>
       </section>

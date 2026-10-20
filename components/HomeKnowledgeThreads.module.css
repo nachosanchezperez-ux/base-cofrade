@@ -63,7 +63,7 @@
   cursor: pointer;
 }
 
-.allUpdates:hover { text-decoration: underline; }
+
 
 .allUpdates:focus-visible {
   border-radius: 4px;

@@ -149,7 +149,7 @@ export default async function MusicalRepertoireDetailPage({ params }) {
             <div>
               <span>La música de la procesión</span>
               <h2>Repertorio interpretado</h2>
-              <small>{repertoire.worksCount} Marchas vinculadas{listenableCount ? ` · ${listenableCount} con escucha disponible` : ''}</small>
+              <small>{plural(repertoire.worksCount, 'marcha vinculada', 'marchas vinculadas')}{listenableCount ? ` · ${listenableCount} con escucha disponible` : ''}</small>
             </div>
             <p>La cifra indica cuántas veces fue interpretada cada obra según la información facilitada. No se deduce el orden, el lugar ni si las interpretaciones fueron consecutivas.</p>
           </header>

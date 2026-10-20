@@ -22,7 +22,7 @@ export async function generateMetadata({ searchParams } = {}) {
     description,
     alternates: { canonical: '/agenda-cofrade' },
     openGraph: { title: pageTitle(title), description, url: '/agenda-cofrade' },
-    twitter: { title: pageTitle(title), description },
+    twitter: { card: 'summary_large_image', title: pageTitle(title), description },
     ...(robots ? { robots } : {}),
   }
 }
