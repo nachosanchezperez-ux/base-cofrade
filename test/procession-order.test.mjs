@@ -63,7 +63,7 @@ test('Orden procesional del Baratillo (borrador): dos cortejos, cada uno cerrado
   const sections = markRepeatedHeritage(processionSections(order));
   assert.equal(order.procession, true);
   assert.deepEqual(sections.map((s) => s.kind === 'step' ? `paso:${s.step.note}` : s.title), ['Cortejo del paso de Cristo', 'paso:Paso de misterio', 'Cortejo del paso de palio', 'paso:Paso de palio']);
-  assert.equal(sections[0].items[0].label, 'Cruz de Guía (1956)');
+  assert.equal(sections[0].items[0].label, 'Cruz de Guía');
   assert.equal(sections[0].items.length, 10);
   assert.equal(sections[2].items.length, 8);
   const bocinas = sections.flatMap((s) => s.items).filter((i) => i.label.startsWith('Bocinas'));
@@ -93,7 +93,7 @@ test('Glosario de insignias: tipo por nombre y pista de reconocimiento', async (
   assert.equal(insigniaType('Bandera Votiva (1969)').key, 'bandera');
   assert.equal(insigniaType('Banderín de San José').key, 'banderin');
   assert.equal(insigniaType('Guion de la Real Maestranza').key, 'guion');
-  assert.equal(insigniaType('Cruz de Guía (1956)').key, 'cruz-guia');
+  assert.equal(insigniaType('Cruz de Guía').key, 'cruz-guia');
   assert.equal(insigniaType('Elemento sin tipo'), null);
   assert.equal(recognitionHint('Terciopelo burdeos; asta de plata'), 'Terciopelo burdeos');
   assert.equal(recognitionHint(''), '');

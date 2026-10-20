@@ -64,9 +64,10 @@
 }
 
 .sourceLine {
-  margin: 0 0 12px;
+  margin: 0 0 16px;
   color: #59636e;
-  font-size: 14px;
+  font-size: 13px;
+  letter-spacing: .01em;
 }
 
 .sourceLine a {
@@ -113,14 +114,6 @@
   text-transform: uppercase;
 }
 
-.sectionTitle small {
-  color: #59636e;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0;
-  text-transform: none;
-}
-
 .sectionMark {
   position: absolute;
   top: 3px;
@@ -142,7 +135,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 10px;
-  padding: 6px 0;
+  padding: 9px 0;
 }
 
 .item.withPhoto {
@@ -240,46 +233,8 @@
 }
 
 /* Guía para quien ve pasar el cortejo. */
-.howTo {
-  margin: 0 0 6px;
-  color: #23272c;
-  font-size: 15px;
-  line-height: 1.45;
-}
-
 .item {
   position: relative;
-}
-
-.number {
-  position: absolute;
-  top: 6px;
-  left: -26px;
-  display: grid;
-  place-items: center;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brotherhood-primary, #153b69) 35%, #e3e7eb);
-  color: var(--brotherhood-primary, #153b69);
-  font-size: 11px;
-  font-weight: 800;
-  line-height: 1;
-}
-
-.look,
-.whatIs {
-  margin: 4px 0 0;
-  color: #3d454e;
-  font-size: 14px;
-  line-height: 1.45;
-}
-
-.look > span,
-.whatIs > span {
-  color: #23272c;
-  font-weight: 700;
 }
 
 .visuallyHidden {
@@ -289,12 +244,6 @@
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
-}
-
-@media (min-width: 900px) {
-  .number {
-    left: -26px;
-  }
 }
 
 @media (min-width: 900px) {
@@ -313,17 +262,63 @@
   }
 }
 
-.pieceLink {
-  margin: 2px 0 0;
+/* Insignia: número, nombre (enlace a la pieza), cómo se ve y, la primera vez, qué es. */
+.number {
+  position: absolute;
+  top: 11px;
+  left: -27px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 10%, #fff);
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 11px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
 
-.pieceLink a {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  min-height: 40px;
-  color: var(--brotherhood-primary, #153b69);
-  font-size: 14px;
-  font-weight: 700;
+.name a {
+  color: inherit;
   text-decoration: none;
+}
+
+.name a:hover,
+.name a:focus-visible {
+  color: var(--brotherhood-primary, #153b69);
+}
+
+.chevron {
+  margin-left: 6px;
+  color: var(--brotherhood-primary, #153b69);
+  font-weight: 800;
+  opacity: .55;
+}
+
+.look {
+  margin: 2px 0 0;
+  color: #3d454e;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.whatIs {
+  margin: 8px 0 2px;
+  padding-left: 10px;
+  border-left: 2px solid color-mix(in srgb, var(--brotherhood-secondary, #a71930) 55%, #fff);
+  color: #3d454e;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.whatIs > span {
+  display: block;
+  margin-bottom: 1px;
+  color: var(--brotherhood-secondary, #a71930);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
 }

@@ -10,38 +10,37 @@ import styles from './BrotherhoodProcessionFull.module.css'
 // y cada paso cerrando su cortejo. Solo aparece con un orden documentado; si
 // no, no se pinta nada y el cortejo resumido queda igual.
 // Todo va en el HTML del servidor dentro de <details>: indexable y sin JS.
-// La historia de cada pieza vive en Patrimonio: aquí solo un enlace a ella.
+// Sin redundancias: la autoría y la historia viven en Patrimonio (el nombre
+// enlaza a la pieza) y el año no se repite aquí.
 
 function folded(value = '') {
   return String(value || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 }
 
-// La pieza se cuenta en Patrimonio; aquí solo se enlaza (sin repetir sus datos).
-function HeritageLink({ heritage }) {
-  if (!heritage?.href) return null
-  return <p className={styles.pieceLink}><a href={heritage.href}>Ver la pieza en el patrimonio <span aria-hidden="true">›</span></a></p>
-}
-
 function Item({ item, number, explained }) {
   const photo = item.heritage?.photo
   const type = insigniaType(item.label)
-  // Qué es: solo la primera vez que pasa ese tipo de insignia (no se repite en cada bandera).
+  // Qué es: solo la primera vez que pasa ese tipo de insignia.
   const whatIs = type && !explained.has(type.key) ? type : null
   if (whatIs) explained.add(type.key)
-  const hint = item.look || recognitionHint(item.materials)
+  const hint = item.repeatOf ? '' : (item.look || recognitionHint(item.materials))
   const showKind = item.kind !== 'insignia' && item.kind !== 'cross_guide' && !folded(item.label).includes(folded(ITEM_KINDS[item.kind]))
+  // El nombre lleva a la pieza en Patrimonio, donde están su autoría y su historia.
+  const href = item.heritage?.href
   return <li className={`${styles.item} ${photo ? styles.withPhoto : ''}`} data-kind={item.kind}>
     {number ? <span className={styles.number} aria-hidden="true">{number}</span> : null}
     {photo ? <figure className={styles.thumb}>
       <Image src={photo.src} alt={photo.alt || item.label} fill sizes="48px" />
     </figure> : null}
     <div className={styles.copy}>
-      <p className={styles.name}>{number ? <span className={styles.visuallyHidden}>{number}. </span> : null}{item.label}</p>
+      <p className={styles.name}>
+        {number ? <span className={styles.visuallyHidden}>{number}. </span> : null}
+        {href ? <a href={href}>{item.label}<span className={styles.chevron} aria-hidden="true">›</span></a> : item.label}
+      </p>
       {showKind ? <p className={styles.kind}>{ITEM_KINDS[item.kind]}</p> : null}
-      {hint && !item.repeatOf ? <p className={styles.look}><span>Cómo reconocerla:</span> {hint.charAt(0).toLowerCase()}{hint.slice(1)}</p> : null}
-      {whatIs ? <p className={styles.whatIs}><span>Qué es:</span> {whatIs.text}</p> : null}
+      {hint ? <p className={styles.look}>{hint}</p> : null}
       {item.note ? <p className={styles.note}>{item.note}</p> : null}
-      <HeritageLink heritage={item.heritage} />
+      {whatIs ? <p className={styles.whatIs}><span>Qué es</span>{whatIs.text}</p> : null}
     </div>
   </li>
 }
@@ -74,15 +73,13 @@ export default function BrotherhoodProcessionFull({ order, profile = 'penitencia
           <strong>Demostración estructural.</strong> Elementos de ejemplo para ver cómo se leería un cortejo completo. No corresponde a ninguna Hermandad.
         </p> : null}
         {order.draft ? <p className={styles.demo} role="note">
-          <strong>Borrador sin publicar.</strong> Datos tomados de la web oficial y aún no cargados en Hilo Cofrade; pendientes de revisión.
+          <strong>Borrador sin publicar.</strong> Datos de la web oficial, aún sin cargar ni revisar.
         </p> : null}
-        {isProcession ? <p className={styles.howTo}>Las insignias pasan en este orden, de arriba abajo. Cada cortejo termina en su paso.</p> : null}
-        {order.source?.name ? <p className={styles.sourceLine}>
-          {order.scope === 'listing'
-            ? <>{order.procession ? 'Orden procesional publicado por la Hermandad' : 'Insignias en el orden en que las publica la Hermandad'} · </>
-            : <>Orden oficial {order.year ? `de ${order.year}` : ''} · </>}
-          {order.source.url ? <a href={order.source.url} target="_blank" rel="noopener noreferrer">{order.source.name}</a> : order.source.name}
-          {order.source.accessedAt ? <> · consultado el {order.source.accessedAt.split('-').reverse().join('/')}</> : null}
+        {isProcession || order.source?.name ? <p className={styles.sourceLine}>
+          {isProcession ? 'En orden de paso' : 'Insignias de la Hermandad'}
+          {order.source?.name ? <> · {order.source.url ? <a href={order.source.url} target="_blank" rel="noopener noreferrer">{order.source.name}</a> : order.source.name}</> : null}
+          {order.year ? ` · ${order.year}` : ''}
+          {order.source?.accessedAt ? ` · ${order.source.accessedAt.split('-').reverse().join('/')}` : null}
         </p> : null}
         {/* Si cada cortejo termina en su paso, en escritorio cada cortejo ocupa su columna. */}
         <ol className={`${styles.line} ${byCortejo ? styles.byCortejo : ''}`}>
@@ -98,7 +95,6 @@ export default function BrotherhoodProcessionFull({ order, profile = 'penitencia
               {section.title ? <p className={styles.sectionTitle}>
                 <span className={styles.sectionMark} aria-hidden="true" />
                 {section.title}
-                {section.items.length ? <small>{plural(section.items.length, 'insignia', 'insignias')}</small> : null}
               </p> : null}
               {section.items.length ? <ol className={styles.items}>{section.items.map((item, index) => <Item key={item.key || `${item.sequence}-${item.label}`} item={item} number={index + 1} explained={explained} />)}</ol> : null}
             </li>)}
