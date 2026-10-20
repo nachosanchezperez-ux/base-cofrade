@@ -73,3 +73,7 @@
 .concertActions a{font-size:11px}
 }
 @media(max-width:390px){.quickTypesSix{grid-template-columns:repeat(2,minmax(0,1fr))}.quickTypesSix button,.quickTypesSix button:nth-child(n+4){grid-column:auto}.repertoireItem{grid-template-columns:28px minmax(0,1fr);}.repertoireItem>b{grid-column:2;justify-self:start}}
+
+/* Legibilidad (20/10): acciones de concierto a 14 px, como las demás. */
+.concertActions a,.concertActions a span{font-size:14px}
+.quickTypesSix.quickTypesSix button span{font-size:14px;line-height:1.2}

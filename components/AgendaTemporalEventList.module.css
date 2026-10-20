@@ -37,3 +37,35 @@
 /* #1264: el listado sigue a una fila compacta de filtros; sin hueco extra. */
 .section{padding-top:clamp(24px,4vw,48px)}
 @media(max-width:720px){.section{padding-top:20px}.header{margin-bottom:14px}}
+
+/* Legibilidad (20/10): escala tipográfica del sitio (app/typography.css).
+   Hora y título son lo que se busca; etiquetas ≥ 12 px, datos ≥ 13 px y
+   acciones a 14 px (--font-size-button), sin bajar en móvil. */
+.header p{font-size:13px}
+.header>strong{font-size:13px}
+.dayHeading>div>span{font-size:12px;letter-spacing:.08em}
+.dayHeading h3{font-size:16px}
+.dayHeading small{font-size:12px}
+.dayHeading>time span{font-size:12px}
+.time small{font-size:12px;letter-spacing:.06em}
+.time strong{font-size:16px;line-height:1.2}
+.topline span{font-size:12px}
+.topline small{font-size:12px}
+.copy h4{font-size:20px;line-height:1.18}
+.meta a,.meta strong,.meta span{font-size:13px}
+.copy>p{font-size:13px}
+.actions a{font-size:14px}
+.actions .primary{font-size:14px}
+.footer{font-size:14px}
+.footer>span{font-size:12px}
+@media(max-width:720px){
+  .row{grid-template-columns:76px minmax(0,1fr)}
+  .time strong{font-size:15px}
+  .copy h4{font-size:18px}
+}
+@media(max-width:430px){
+  .row{grid-template-columns:72px minmax(0,1fr)}
+  .time strong{font-size:15px}
+  .actions{padding-left:83px}
+}
+.header>div>span{font-size:12px}

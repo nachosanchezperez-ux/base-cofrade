@@ -10,8 +10,8 @@
 .filters{padding:12px 0;border-bottom:1px solid #e3e7ea;background:#f8fafb}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chips a{position:relative;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 12px;overflow:hidden;border:1px solid #dfe4e8;border-radius:999px;color:#173047;background:#fff;text-decoration:none}
-.chips a span{font-size:11px;font-weight:850;white-space:nowrap}
-.chips a strong{display:grid;min-width:22px;height:22px;place-items:center;padding:0 5px;border-radius:999px;background:#f7e9ec;color:#a61931;font-size:10px}
+.chips a span{font-size:14px;font-weight:850;white-space:nowrap}
+.chips a strong{display:grid;min-width:22px;height:22px;place-items:center;padding:0 5px;border-radius:999px;background:#f7e9ec;color:#a61931;font-size:12px}
 .chips a[data-kind="zone"]{border-color:#cfd9e2;background:#edf3f7}
 .chips a[data-kind="zone"] strong{background:#fff;color:#24435e}
 .chips a:hover{border-color:#b9c4cd}
@@ -29,23 +29,23 @@
 /* Sin citas: qué se ha consultado y adónde ir. */
 .empty{padding:34px 0 40px;background:#f8fafb}
 .empty h2{margin:0;color:#102b47;font-family:Georgia,'Times New Roman',serif;font-size:clamp(26px,3.4vw,34px);font-weight:500;line-height:1.08}
-.empty time{display:block;margin-top:8px;color:#a61931;font-size:11px;font-weight:850}
+.empty time{display:block;margin-top:8px;color:#a61931;font-size:13px;font-weight:850}
 .empty p{max-width:640px;margin:10px 0 0;color:#5f6e7a;font-size:13px;line-height:1.55}
 .emptyActions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.emptyActions a{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 15px;border:1px solid #dfe4e8;border-radius:999px;color:#173047;background:#fff;font-size:12px;font-weight:850;text-decoration:none}
+.emptyActions a{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 15px;border:1px solid #dfe4e8;border-radius:999px;color:#173047;background:#fff;font-size:14px;font-weight:850;text-decoration:none}
 .emptyActions a[data-primary="true"]{border-color:#a61931;color:#fff;background:#a61931}
 
 /* Guías locales: continuación secundaria, tras el listado. */
 .localGuides{padding:26px 0 34px;border-top:1px solid #e3e7ea;background:#f8fafb}
 .localGuides header{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 14px;margin-bottom:12px}
-.localGuides header span{flex-basis:100%;color:#a61931;font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+.localGuides header span{flex-basis:100%;color:#a61931;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
 .localGuides h2{margin:0;color:#173047;font-size:17px;line-height:1.2}
 .localGuides>div>div{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}
 .localGuides a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 8px;min-width:0;min-height:54px;padding:11px;border:1px solid #e1e5e8;border-radius:12px;background:#fff;text-decoration:none}
-.localGuides a span{overflow:hidden;color:#173047;font-size:11px;font-weight:850;text-overflow:ellipsis;white-space:nowrap}
-.localGuides a strong{color:#a61931;font-size:12px}
-.localGuides a small{grid-column:1/-1;color:#7b8994;font-size:9px;font-weight:800}
-.scrollHint{display:none;color:#81909b;font-size:9px;font-weight:800}
+.localGuides a span{overflow:hidden;color:#173047;font-size:14px;font-weight:850;text-overflow:ellipsis;white-space:nowrap}
+.localGuides a strong{color:#a61931;font-size:13px}
+.localGuides a small{grid-column:1/-1;color:#7b8994;font-size:12px;font-weight:800}
+.scrollHint{display:none;color:#81909b;font-size:12px;font-weight:800}
 
 @media(max-width:980px){
   .localGuides>div>div{grid-template-columns:repeat(4,minmax(0,1fr))}
