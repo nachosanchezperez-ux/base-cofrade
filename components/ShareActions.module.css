@@ -91,3 +91,6 @@
 .compact .iconOnly {
   width: 36px;
 }
+
+/* «Calendario» suelto (filas de las listas de periodo). */
+.calendarStandalone{display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:0 14px;border:1px solid #112339;border-radius:999px;color:#112339;background:#fff;font-size:14px;font-weight:750;line-height:1;text-decoration:none;white-space:nowrap}

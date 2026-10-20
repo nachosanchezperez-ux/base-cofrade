@@ -42,6 +42,7 @@ function compactAgendaItem(item) {
     routeText: item.routeText,
     schedule: item.schedule,
     music: item.music,
+    relations: item.relations,
     category: item.category,
     categoryLabel: item.categoryLabel,
     categoryHref: item.categoryHref,
@@ -63,6 +64,7 @@ function compactAgendaItem(item) {
     imageKind: item.imageKind,
     imageAlt: item.imageAlt,
     relatedBrotherhoodHref: item.relatedBrotherhoodHref,
+    relatedBrotherhoodName: item.relatedBrotherhoodName,
     repertoireText: item.repertoireText,
     programs: (item.programs || []).map((program) => ({
       id: program.id,
