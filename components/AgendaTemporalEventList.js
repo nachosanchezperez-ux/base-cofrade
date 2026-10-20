@@ -3,7 +3,7 @@ import ShareActions, { CalendarAddLink } from '@/components/ShareActions'
 import AgendaEventThread from '@/components/AgendaEventThread'
 import { agendaItemShare } from '@/lib/share'
 import { agendaEventAnchor, scheduleTimeHint } from '@/lib/agenda-event-presentation'
-import { agendaThreadLinks } from '@/lib/agenda-event-relations'
+import { agendaThreadLinks, repeatsPlace } from '@/lib/agenda-event-relations'
 import styles from './AgendaTemporalEventList.module.css'
 
 function itemTime(item) {
@@ -104,24 +104,29 @@ export default function AgendaTemporalEventList({ landing }) {
                           analytics={{ event_type: item.category, municipality: item.municipality, agenda_period: landing.period }}
                         />
                       </div>
-                      <h4>{item.eventHref ? <Link href={item.eventHref}>{item.title}</Link> : item.title}</h4>
-                      <div className={styles.meta}>
+                      <h4 className={styles.title}>{item.eventHref ? <Link href={item.eventHref}>{item.title}</Link> : item.title}</h4>
+                      {/* Lugar en una línea de texto: el separador va pegado al dato anterior
+                          (espacio duro), así nunca empieza una línea con «·». */}
+                      <p className={styles.meta}>
                         {item.municipality ? (
                           item.municipalityHref
                             ? <Link className={styles.municipality} href={item.municipalityHref} aria-label={`Guía local de ${item.municipality}`}>{item.municipality}</Link>
                             : <strong className={styles.municipality}>{item.municipality}</strong>
                         ) : null}
-                        {item.place ? <span className={styles.place}>{item.place}</span> : null}
-                        {/* Si la entidad tiene ficha, su nombre ya va enlazado en el hilo. */}
-                        {item.organizer && !agendaThreadLinks(item).some((link) => link.kind === 'brotherhood' || link.kind === 'band')
-                          ? <span className={styles.organizer}>{item.organizer}</span>
+                        {item.place ? <span className={styles.place}>{item.municipality ? '\u00a0· ' : ''}{item.place}</span> : null}
+                        {/* Si la entidad tiene ficha, su nombre ya va enlazado en el hilo; si
+                            solo repite el lugar, tampoco se muestra. */}
+                        {item.organizer
+                          && !agendaThreadLinks(item).some((link) => link.kind === 'brotherhood' || link.kind === 'band')
+                          && !repeatsPlace(item.organizer, item.place)
+                          ? <span className={styles.organizer}>{item.municipality || item.place ? '\u00a0· ' : ''}{item.organizer}</span>
                           : null}
-                      </div>
-                      {item.summary ? <p>{item.summary}</p> : null}
-                      <AgendaEventThread item={item} compact />
+                      </p>
+                      {item.summary ? <p className={styles.summary}>{item.summary}</p> : null}
+                      <AgendaEventThread item={item} compact className={styles.thread} />
                     </div>
                     <div className={styles.actions}>
-                      {item.eventHref ? <Link className={styles.primary} href={item.eventHref}>{primaryLabel(item)} <span aria-hidden="true">→</span></Link> : null}
+                      {item.eventHref ? <Link className={styles.primary} href={item.eventHref}>{primaryLabel(item)}<span aria-hidden="true" className={styles.arrow}>→</span></Link> : null}
                       <CalendarAddLink
                         href={item.date ? `/calendario/acto/${agendaEventAnchor(item)}.ics` : ''}
                         title={item.title}

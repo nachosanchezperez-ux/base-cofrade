@@ -962,7 +962,13 @@ export default function AgendaCofradeDirectoryV4({
                             <div><span>Salida</span><strong>{item.startTime || scheduleTimeHint(item.schedule, 'departure') || 'Por confirmar'}</strong><small>{schedulePrecision(item.schedule, 'departure')}</small></div>
                             <div><span>Entrada</span><strong>{item.endTime || scheduleTimeHint(item.schedule, 'arrival') || 'Por confirmar'}</strong><small>{schedulePrecision(item.schedule, 'arrival')}</small></div>
                           </div>
-                        ) : <span className={mobileStyles.schedule}><b>Horario</b><strong>{item.timeText || (item.startTime ? `${item.startTime}${item.endTime ? `–${item.endTime}` : ''} h` : 'Por confirmar')}</strong></span>}
+                        ) : (() => {
+                          // Sin hora concreta («Según calendario anual», «Por confirmar»), el
+                          // horario va como texto normal: no merece el mayor peso de la tarjeta.
+                          const scheduleText = item.timeText || (item.startTime ? `${item.startTime}${item.endTime ? `–${item.endTime}` : ''} h` : 'Por confirmar')
+                          const literal = !/\d{1,2}[:.]\d{2}/.test(scheduleText)
+                          return <span className={mobileStyles.schedule} data-literal={literal ? 'true' : undefined}><b>Horario</b><strong>{scheduleText}</strong></span>
+                        })()}
                         <div className={styles.cardTopline}>
                           <span data-category={item.category}>{item.categoryLabel}</span>
                           {item.isExtraordinary && item.category === 'rosaries' ? <b>Extraordinario</b> : null}

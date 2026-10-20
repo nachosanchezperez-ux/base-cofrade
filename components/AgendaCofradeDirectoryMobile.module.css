@@ -128,3 +128,6 @@
 .directory .periodGrid button > strong { font-size: 12px; }
 .directory .resultSummary span { font-size: 13px; }
 .directory .monthTypeSummary b { font-size: 12px; }
+/* Pulido (20/10): horario sin hora concreta, como texto y sin recuadro. */
+.directory .cardBody > .schedule[data-literal="true"] { padding: 0; background: none; border-radius: 0; }
+.directory .cardBody > .schedule[data-literal="true"] strong { color: #3c5469; font-size: 16px; font-weight: 750; line-height: 1.35; }
