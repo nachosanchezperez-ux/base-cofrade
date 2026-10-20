@@ -165,3 +165,19 @@
   .media[data-variant="feature"] .mediaFrame{aspect-ratio:16/10}
   .media[data-variant="feature"][data-fit="contain"] .mediaFrame{aspect-ratio:1/1}
 }
+
+/* Hoy (#agenda-hoy): lo que está en la calle y los tramos de cada cita. */
+.liveNow{display:grid;gap:8px;margin:0 0 20px;padding:14px 16px;border:1px solid #f0c7cf;border-radius:14px;background:#fff6f7}
+.liveNow h3{display:flex;align-items:center;gap:10px;margin:0;color:#a61931;font-size:16px;line-height:1.3}
+.livePulse{width:10px;height:10px;border-radius:50%;background:#d0263f;box-shadow:0 0 0 0 rgba(208,38,63,.5);animation:livePulse 1.8s ease-out infinite}
+@keyframes livePulse{70%{box-shadow:0 0 0 8px rgba(208,38,63,0)}100%{box-shadow:0 0 0 0 rgba(208,38,63,0)}}
+@media (prefers-reduced-motion:reduce){.livePulse{animation:none}}
+.liveNow ul{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.liveNow li{display:grid;gap:2px;min-height:44px;align-content:center}
+.liveNow li a,.liveNow li strong{color:#173047;font-size:16px;font-weight:800;line-height:1.3;text-decoration:none}
+.liveNow li a:hover{color:#a61931}
+.liveNow small{color:#5f6e7a;font-size:13px;line-height:1.4}
+.steps{display:flex;flex-wrap:wrap;gap:4px 14px;margin:6px 0 0;color:#4e667a;font-size:13px!important;line-height:1.45}
+.copy>.steps{display:flex;overflow:visible;-webkit-line-clamp:unset}
+.steps b{color:#123a67;font-weight:800}
+@media (max-width:720px){.steps{grid-column:1 / -1;grid-row:6}}
