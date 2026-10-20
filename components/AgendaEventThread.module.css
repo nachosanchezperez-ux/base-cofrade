@@ -3,8 +3,8 @@
 .thread{margin-top:10px}
 .thread ul{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
 .thread li{min-width:0;max-width:100%}
-.thread a{position:relative;display:grid;align-content:center;gap:1px;min-height:44px;max-width:100%;padding:5px 12px 5px 14px;overflow:hidden;border:1px solid #dfe4e8;border-radius:12px;color:#173047;background:#fff;text-decoration:none}
-.thread a::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--thread-accent,#a61931)}
+.thread li>a{position:relative;display:grid;align-content:center;gap:1px;min-height:44px;max-width:100%;padding:5px 12px 5px 14px;overflow:hidden;border:1px solid #dfe4e8;border-radius:12px;color:#173047;background:#fff;text-decoration:none}
+.thread li>a::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--thread-accent,#a61931)}
 .thread a:hover{border-color:#b9c4cd;background:#fbfcfd}
 .thread a:focus-visible{outline:2px solid #a61931;outline-offset:2px}
 .thread small{color:var(--thread-accent,#a61931);font-size:12px;font-weight:850;letter-spacing:.04em;line-height:1.2;text-transform:uppercase}
@@ -16,7 +16,7 @@
 .thread a[data-kind="municipality"]{--thread-accent:#397269}
 
 /* Compacto: tipo y nombre en la misma línea; varias piezas por fila si caben. */
-.compact a{display:flex;align-items:baseline;gap:6px;min-height:40px;padding:8px 11px 8px 13px;align-content:normal}
-.compact a::before{width:2px}
+.compact li>a{display:flex;align-items:baseline;gap:6px;min-height:40px;padding:8px 11px 8px 13px;align-content:normal}
+.compact li>a::before{width:2px}
 .compact small{flex:0 0 auto}
 .compact span{font-size:14px}
