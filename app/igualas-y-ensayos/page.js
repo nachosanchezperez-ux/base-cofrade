@@ -17,7 +17,7 @@ export const metadata = {
   description,
   alternates: { canonical: '/igualas-y-ensayos' },
   openGraph: { title: pageTitle(title), description, url: '/igualas-y-ensayos' },
-  twitter: { title: pageTitle(title), description },
+  twitter: { card: 'summary_large_image', title: pageTitle(title), description },
 }
 
 export default async function CrewEventsPage() {
