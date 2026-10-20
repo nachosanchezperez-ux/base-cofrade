@@ -50,3 +50,36 @@ test('la portada ya no duplica el bloque cuando la Agenda muestra la salida', ()
   const row = readFileSync(new URL('../components/HomeAgendaNow.js', import.meta.url), 'utf8')
   assert.match(row, /\{card\.focus \? <LiveFocus focus=\{card\.focus\} \/> : null\}/)
 })
+
+// #1264: el 18/10 la Romería de Valme salía en portada con «Horarios y guía
+// completa» apuntando a la ficha de la Hermandad. La guía debe llevar al acto.
+test('«Horarios y guía completa» lleva al acto en la Agenda cuando el enlace es la ficha de la Hermandad', () => {
+  const romeria = {
+    ...valme, id: 'b7e1', key: 'romeries:b7e1', href: '/hermandades/valme', organizerHref: '/hermandades/valme',
+  }
+  const focus = homeLiveFocus({
+    outing: { id: 'b7e1', date: '2026-10-18', href: '/hermandades/valme', title: romeria.title },
+    briefing: { schedule: [{ id: 's1', time: '08:00', label: 'Salida', itemDate: '2026-10-18' }], bands: [] },
+    now: NOW,
+  })
+  const agenda = buildHomeAgendaNow(buildHomeTemporalAgenda({ items: [romeria], today: '2026-10-18', now: NOW }), { liveFocus: focus })
+  const card = agenda.tabs.find((tab) => tab.key === 'now').cards[0]
+  // Mismo identificador que la tarjeta de /agenda-cofrade (agendaEventAnchor de «romeries:b7e1»).
+  assert.equal(card.focus.guideHref, '/agenda-cofrade#acto-romeries-b7e1')
+  // La cita en sí conserva su enlace; solo cambia el destino de la guía.
+  assert.equal(card.href, '/hermandades/valme')
+})
+
+test('«Horarios y guía completa» conserva la página propia del acto cuando existe', () => {
+  const gloria = {
+    ...valme, id: 'g1', key: 'processions:g1', category: 'processions', categoryLabel: 'Procesión de Gloria',
+    href: '/procesiones-de-gloria/virgen-del-rosario-2026',
+  }
+  const focus = homeLiveFocus({
+    outing: { id: 'g1', date: '2026-10-18', href: gloria.href, title: gloria.title },
+    briefing: { schedule: [], bands: [] },
+    now: NOW,
+  })
+  const agenda = buildHomeAgendaNow(buildHomeTemporalAgenda({ items: [gloria], today: '2026-10-18', now: NOW }), { liveFocus: focus })
+  assert.equal(agenda.tabs.find((tab) => tab.key === 'now').cards[0].focus.guideHref, gloria.href)
+})

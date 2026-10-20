@@ -37,8 +37,6 @@
 
 .actions a {
   color: #9f1730;
-  text-decoration: underline;
-  text-underline-offset: .2em;
 }
 
 .actions :focus-visible {

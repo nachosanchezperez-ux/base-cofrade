@@ -107,7 +107,7 @@
 .editionTags .iconTag { background: color-mix(in srgb, var(--kind-color) 10%, white); color: var(--kind-color); }
 .editionBody h3 { font: 600 18px/1.25 Georgia,serif; letter-spacing: -.02em; margin: 11px 0 10px; text-wrap: balance; }
 .editionBody a { display: inline-block; color: var(--vc-red); font-size: 12px; font-weight: 800; }
-.editionBody a:hover { text-decoration: underline; }
+
 .editionBody > small { display: block; color: #66737d; font-size: 11px; line-height: 1.5; margin-top: 9px; }
 .editionCard[data-kind="crucificado"],.statBarRow[data-kind="crucificado"],.timelineItem[data-kind="crucificado"],.timelineLegend [data-kind="crucificado"] { --kind-color: #b01b32; }
 .editionCard[data-kind="nazareno"],.statBarRow[data-kind="nazareno"],.timelineItem[data-kind="nazareno"],.timelineLegend [data-kind="nazareno"] { --kind-color: #2f5d80; }
@@ -120,7 +120,7 @@
 .exceptionYear { font: 600 48px/1 Georgia,serif; color: #947548; }
 .exception h3 { font: 600 24px/1.2 Georgia,serif; margin: 0 0 8px; }
 .exception p { color: #625f5b; font-size: 13px; line-height: 1.7; margin: 0 0 8px; }
-.exception a { color: #8a522b; text-decoration: underline; font-size: 12px; font-weight: 800; }
+.exception a { color: #8a522b; font-size: 12px; font-weight: 800; }
 .statsColumns { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .barPanel { border: 1px solid var(--vc-border); border-radius: 17px; padding: clamp(16px,3vw,29px); background: #fff; }
 .barPanel h3,.timelineHeading h3,.repeated h3 { font: 600 clamp(22px,2.4vw,30px)/1.18 Georgia,serif; letter-spacing: -.025em; margin: 0; }
@@ -345,7 +345,7 @@
 .chronologyDetailBody .eyebrow { margin-bottom:7px; }
 .chronologyDetailBody h4 { font:600 clamp(20px,2.3vw,27px)/1.15 Georgia,serif; margin:0 0 7px; }
 .chronologyDetailBody p { font-size:12px; color:#687681; margin:0 0 10px; }
-.chronologyDetailBody a { color:var(--vc-red); font-size:12px; font-weight:800; text-decoration:underline; text-underline-offset:3px; }
+.chronologyDetailBody a { color:var(--vc-red); font-size:12px; font-weight:800; }
 .chronologyLegend { display:flex; flex-wrap:wrap; gap:9px 15px; padding-top:15px; }
 .chronologyLegend span { display:inline-flex; align-items:center; gap:6px; font-size:10px; color:#596b79; }
 .chronologyLegend i { width:9px; height:9px; flex:0 0 9px; background:var(--kind-color); border-radius:3px; }
@@ -475,7 +475,7 @@
 .methodology strong { font:600 19px/1.25 Georgia,serif; }
 .methodology p { margin:0; color:#647381; font-size:11px; line-height:1.75; }
 .methodology a { color:var(--vc-red); font-size:11px; font-weight:800; white-space:nowrap; }
-.methodology a:hover { text-decoration:underline; text-underline-offset:3px; }
+
 @media (max-width: 1000px) {
   .hero { grid-template-columns: minmax(0,1.18fr) minmax(245px,.82fr); padding:clamp(24px,3vw,34px); gap:20px; }
   .heroMain h1 { font-size:clamp(40px,5vw,57px); }
@@ -822,8 +822,6 @@
 .archiveIndexFacts a {
   color: var(--vc-red);
   font-weight: 800;
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 .archiveIndexDetails {
   border: 1px solid #dce3e8;
@@ -895,8 +893,6 @@
 }
 .archiveIndexList a:hover {
   color: var(--vc-red);
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 .archiveIndexList small {
   display: block;

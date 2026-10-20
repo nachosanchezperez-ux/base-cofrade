@@ -348,8 +348,6 @@
   flex: 0 0 auto;
   color: #9f1730;
   font-weight: 850;
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 .cardMeta .pending {

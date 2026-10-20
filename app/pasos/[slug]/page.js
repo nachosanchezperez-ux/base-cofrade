@@ -216,7 +216,7 @@ export default async function PasoDetailPage({params}){
         facts={[
           publicText(paso.ejecucion) ? { label: 'Ejecución', value: publicText(paso.ejecucion) } : null,
           publicText(paso.sistemaPortadores) ? { label: 'Sistema de portadores', value: publicText(paso.sistemaPortadores) } : null,
-          { label: 'Imágenes', value: imagenes.length || '' },
+          { label: imagenes.length === 1 ? 'Imagen' : 'Imágenes', value: imagenes.length || '' },
         ]}
         media={{
           photoSrc: coverMedia?.path || '',
