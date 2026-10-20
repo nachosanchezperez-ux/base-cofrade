@@ -1295,3 +1295,34 @@
     margin: 0;
   }
 }
+
+/*
+ * 6 · Escudo de la ficha del día en PC (20/10/2026). La composición de
+ * escritorio ocultaba con !important cualquier visual que no fuera foto, y la
+ * tarjeta azul quedaba sin identidad. En la portada, la ficha de descubrimiento
+ * recupera su escudo sobre blanco en la esquina, como en móvil.
+ */
+@media (min-width: 860px) {
+  .embedded .featureCardSlot.discoveryCard:not(:has([data-home-visual-kind="photo"])) > [data-home-visual-kind]:not([data-home-visual-kind="photo"]) {
+    position: absolute !important;
+    top: 22px;
+    right: 24px;
+    display: block !important;
+    width: 76px;
+    height: 76px;
+    min-height: 76px;
+    max-height: 76px;
+    border-radius: 16px;
+  }
+
+  .embedded .featureCardSlot.discoveryCard:has(> [data-home-visual-kind]:not([data-home-visual-kind="photo"])) .featureCopy {
+    padding-right: 96px;
+  }
+
+  /* Sin la etiqueta de recorrido, la línea superior no necesita reservar el
+     alto del escudo (dejaba un hueco bajo «Hilo para descubrir»). */
+  .embedded .featureCardSlot.discoveryCard .topline {
+    min-height: 0;
+    padding-right: 0;
+  }
+}
