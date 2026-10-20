@@ -73,6 +73,16 @@ function trackCrewBrotherhood(event) {
   })
 }
 
+// Paso y capataz enlazados a su ficha cuando la tienen (hilo de Hilo Cofrade).
+function EntityNames({ items }) {
+  return items.map((item, index) => (
+    <span key={item.id || item.name}>
+      {index ? ' · ' : null}
+      {item.href ? <Link href={item.href} data-analytics-destination-name={item.name}>{item.name}</Link> : item.name}
+    </span>
+  ))
+}
+
 function EventCard({ event, isMine = false }) {
   const time = event.timeText || event.startTime || 'Hora por confirmar'
   const primaryAgent = event.agents.find((item) => item.isPrimary) || event.agents[0]
@@ -96,9 +106,9 @@ function EventCard({ event, isMine = false }) {
           <Link className={styles.brotherhood} href={event.brotherhoodHref} onClick={() => trackCrewBrotherhood(event)} data-analytics-skip-entity="true">{event.brotherhoodName}</Link>
         ) : <strong className={styles.brotherhood}>{event.brotherhoodName}</strong>}
 
-        <div className={styles.relations}>
-          {event.steps.length ? <span><b>Paso</b>{event.steps.map((item) => item.name).join(' · ')}</span> : null}
-          {primaryAgent ? <span><b>{primaryAgent.roleName}</b>{primaryAgent.name}</span> : null}
+        <div className={styles.relations} data-analytics-related-section="iguala_hilo" data-analytics-source-type="iguala">
+          {event.steps.length ? <span><b>Paso</b><EntityNames items={event.steps} /></span> : null}
+          {primaryAgent ? <span><b>{primaryAgent.roleName}</b><EntityNames items={[primaryAgent]} /></span> : null}
         </div>
 
         <div className={styles.cardFooter}>
@@ -223,8 +233,8 @@ export default function CrewEventDirectory({ events }) {
             <div className={styles.featuredFacts}>
               <span><b>Fecha</b>{featured.dateParts.weekdayLabel}</span>
               <span><b>Hora</b>{featured.timeText || featured.startTime || 'Por confirmar'}</span>
-              <span><b>Paso</b>{featured.steps.map((item) => item.name).join(' · ') || 'Por confirmar'}</span>
-              <span><b>Capataz</b>{featured.agents.map((item) => item.name).join(' · ') || 'Por confirmar'}</span>
+              <span><b>Paso</b>{featured.steps.length ? <EntityNames items={featured.steps} /> : 'Por confirmar'}</span>
+              <span><b>Capataz</b>{featured.agents.length ? <EntityNames items={featured.agents} /> : 'Por confirmar'}</span>
             </div>
             {hasCrewEventPage(featured.detailHref) ? <Link className={styles.primaryAction} href={featured.detailHref} onClick={() => trackCrewOpen(featured)}>Ver convocatoria <span>→</span></Link> : <a className={styles.primaryAction} href={`#${featured.anchor}`}>Ver en el calendario <span>→</span></a>}
             <ShareActions share={crewEventShare(featured, { hasPage: hasCrewEventPage(featured.detailHref) })} contentType="iguala" analytics={{ event_type: featured.eventType || featured.eventTypeLabel, municipality: featured.municipality, placement: 'featured' }} />

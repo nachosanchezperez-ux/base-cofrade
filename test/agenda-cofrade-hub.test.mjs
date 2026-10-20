@@ -44,7 +44,8 @@ test('la Agenda pública muestra solo actos próximos y elimina el acceso histó
   assert.match(directory, /Cultos y besamanos/)
   assert.match(directory, /Sevilla capital/)
   assert.match(directory, /Municipios/)
-  assert.match(directory, /Ver Hermandad/)
+  // Hermandad, imágenes, pasos, bandas y guía local van en el hilo de cada acto.
+  assert.match(directory, /<AgendaEventThread item=\{item\} includeMunicipality \/>/)
   assert.match(directory, /Ver calendario/)
 
   assert.doesNotMatch(fromUrl, /'archive'/)

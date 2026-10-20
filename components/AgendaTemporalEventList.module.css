@@ -69,3 +69,13 @@
   .actions{padding-left:83px}
 }
 .header>div>span{font-size:12px}
+
+/* Hilo de la Agenda (20/10): dos columnas (hora · contenido). El hilo de
+   relaciones y, debajo, la acción principal con calendario y compartir. */
+.row{grid-template-columns:112px minmax(0,1fr)}
+.copy .actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-top:12px;padding:0}
+.copy .actions>div{margin-top:0}
+.copy .actions .primary{min-height:44px;padding:0 14px}
+@media(max-width:900px){.row{grid-template-columns:95px minmax(0,1fr)}}
+@media(max-width:720px){.row{grid-template-columns:76px minmax(0,1fr)}.copy .actions{grid-column:auto;margin-top:12px}}
+@media(max-width:430px){.row{grid-template-columns:72px minmax(0,1fr)}.copy .actions{padding-left:0}}

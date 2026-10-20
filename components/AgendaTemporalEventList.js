@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import ShareActions from '@/components/ShareActions'
+import AgendaEventThread from '@/components/AgendaEventThread'
 import { agendaItemShare } from '@/lib/share'
-import { scheduleTimeHint } from '@/lib/agenda-event-presentation'
+import { agendaEventAnchor, scheduleTimeHint } from '@/lib/agenda-event-presentation'
+import { agendaThreadLinks } from '@/lib/agenda-event-relations'
 import styles from './AgendaTemporalEventList.module.css'
 
 function itemTime(item) {
@@ -86,33 +88,40 @@ export default function AgendaTemporalEventList({ landing }) {
                     key={item.displayKey || item.key || item.href || item.id}
                   >
                     <div className={styles.time}>
-                      <small>Hora</small>
+                      <span className="sr-only">Hora: </span>
                       <strong>{itemTime(item)}</strong>
                     </div>
 
                     <div className={styles.copy}>
                       <div className={styles.topline}>
                         <span>{categoryLabel(item)}</span>
-                        {item.calendarLabel ? <small>{item.calendarLabel}</small> : null}
                       </div>
                       <h4>{item.eventHref ? <Link href={item.eventHref}>{item.title}</Link> : item.title}</h4>
                       <div className={styles.meta}>
                         {item.municipality ? (
                           item.municipalityHref
-                            ? <Link className={styles.municipality} href={item.municipalityHref}>{item.municipality}</Link>
+                            ? <Link className={styles.municipality} href={item.municipalityHref} aria-label={`Guía local de ${item.municipality}`}>{item.municipality}</Link>
                             : <strong className={styles.municipality}>{item.municipality}</strong>
                         ) : null}
                         {item.place ? <span className={styles.place}>{item.place}</span> : null}
-                        {item.organizer ? <span className={styles.organizer}>{item.organizer}</span> : null}
+                        {/* Si la entidad tiene ficha, su nombre ya va enlazado en el hilo. */}
+                        {item.organizer && !agendaThreadLinks(item).some((link) => link.kind === 'brotherhood' || link.kind === 'band')
+                          ? <span className={styles.organizer}>{item.organizer}</span>
+                          : null}
                       </div>
                       {item.summary ? <p>{item.summary}</p> : null}
-                      <ShareActions compact share={agendaItemShare(item)} contentType="agenda" analytics={{ event_type: item.category, municipality: item.municipality, agenda_period: landing.period }} />
-                    </div>
-
-                    <div className={styles.actions}>
-                      {item.eventHref ? <Link className={styles.primary} href={item.eventHref}>{primaryLabel(item)} <span aria-hidden="true">→</span></Link> : null}
-                      {(item.entityLinks || []).map((link) => <Link href={link.href} key={link.href}>{link.label}</Link>)}
-                      {item.municipalityHref ? <Link href={item.municipalityHref}>Guía local</Link> : null}
+                      <AgendaEventThread item={item} />
+                      <div className={styles.actions}>
+                        {item.eventHref ? <Link className={styles.primary} href={item.eventHref}>{primaryLabel(item)} <span aria-hidden="true">→</span></Link> : null}
+                        <ShareActions
+                          compact
+                          calendarFirst
+                          share={agendaItemShare(item)}
+                          contentType="agenda"
+                          calendarHref={item.date ? `/calendario/acto/${agendaEventAnchor(item)}.ics` : ''}
+                          analytics={{ event_type: item.category, municipality: item.municipality, agenda_period: landing.period }}
+                        />
+                      </div>
                     </div>
                   </article>
                 ))}

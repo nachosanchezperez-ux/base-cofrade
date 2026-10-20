@@ -10,10 +10,14 @@ test('la Agenda expone Hermandad, localidad y calendario desde cada tarjeta', ()
   const source = read('components/AgendaCofradeDirectoryV4.js')
   const data = read('lib/supabase/agenda-cofrade.js')
 
+  const thread = read('lib/agenda-event-relations.js')
+
   assert.match(data, /municipalityHref: agendaMunicipalityHref/)
-  assert.match(source, /Ver Hermandad/)
-  assert.match(source, /item\.municipalityHref/)
-  assert.match(source, /Ver \{item\.municipality\}/)
+  // El hilo de cada acto enlaza Hermandad, imágenes, pasos, bandas y guía local.
+  assert.match(source, /<AgendaEventThread item=\{item\} includeMunicipality \/>/)
+  assert.match(thread, /brotherhood: 'Hermandad'/)
+  assert.match(thread, /municipality: 'Guía local'/)
+  assert.match(thread, /item\.municipalityHref/)
   assert.match(source, /Ver calendario/)
 })
 

@@ -41,7 +41,7 @@ test('las landings temporales usan cronología propia y navegación responsive',
   assert.doesNotMatch(landing, /Organiza tu visita|De un vistazo/)
   assert.match(events, /groupByDate/)
   assert.match(events, /Hora/)
-  assert.match(events, /Guía local/)
+  assert.match(events, /<AgendaEventThread item=\{item\} \/>/)
   assert.match(landingCss, /overflow-x:auto/)
   assert.match(navCss, /position:sticky/)
   assert.match(navCss, /overflow-x:auto/)

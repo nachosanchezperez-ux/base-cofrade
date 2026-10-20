@@ -33,3 +33,11 @@
 .initialEmpty,.filteredEmpty{display:flex;align-items:center;gap:18px;padding:28px;border:1px dashed #cbd8e1;border-radius:20px;background:#f7fafc}.emptyMark{display:grid;width:58px;height:58px;place-items:center;border-radius:16px;background:#123a67;color:#fff;font-size:.78rem;font-weight:800}.initialEmpty strong,.filteredEmpty strong{display:block;color:#123a67;font-size:1rem}.initialEmpty p{max-width:700px;margin:5px 0 0;color:#657586;line-height:1.55}.filteredEmpty{display:grid;gap:4px;text-align:center}.filteredEmpty span{color:#71808f;font-size:.84rem}
 @media(max-width:900px){.featured{grid-template-columns:180px minmax(0,1fr)}.featuredCopy{padding-right:120px}.featuredCrest{right:22px}.filters{grid-template-columns:repeat(2,minmax(0,1fr))}.monthGroup{grid-template-columns:1fr}.monthHeading{position:static;padding:12px 0}.card{grid-template-columns:76px minmax(0,1fr)}.cardCrest{display:none}}
 @media(max-width:640px){.directory{gap:26px}.featured{grid-template-columns:1fr;background:linear-gradient(155deg,#f2f7fa 0 29%,#fff 29%)}.featuredDate{min-height:auto;padding:26px 24px 10px}.featuredDate strong{font-size:4rem}.featuredCopy{padding:24px}.featuredCrest{right:24px;top:70px;width:88px;transform:none}.featuredFacts{grid-template-columns:1fr}.explorerHead{display:grid;gap:8px}.phaseTabs{width:100%}.phaseTabs button{flex:1;justify-content:center}.filters{grid-template-columns:1fr}.card{grid-template-columns:62px minmax(0,1fr);gap:13px;padding:16px}.dateBlock{padding:5px 8px 5px 0}.dateBlock strong{font-size:1.7rem}.relations{grid-template-columns:1fr}.cardFooter{display:grid;align-items:start}.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.detailLink{min-height:40px}.initialEmpty{align-items:flex-start;padding:22px}.emptyMark{flex:0 0 48px;width:48px;height:48px}}
+
+/* Paso y capataz enlazados (20/10): el nombre interior no hereda la caja. */
+.relations>span span,.featuredFacts>span span{display:inline;padding:0;border:0;border-radius:0;background:none;color:inherit;font:inherit}
+.relations a,.featuredFacts a{color:#123a67;font-weight:800;text-decoration:none}
+.relations a:hover,.featuredFacts a:hover{color:#a61931}
+.relations b{font-size:12px}
+.relations>span{font-size:14px}
+.featuredFacts b,.facts b{font-size:12px}

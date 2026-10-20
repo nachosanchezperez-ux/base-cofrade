@@ -48,6 +48,7 @@ function agendaFixture() {
   }]))
   dependencies.agendaEventDetailHref = agendaEventDetailHref
   dependencies.withAgendaOutingContext = async (groups) => groups
+  dependencies.withAgendaRelations = async (groups) => groups
   dependencies.withProcessionLiveState = withProcessionLiveState
   dependencies.agendaMunicipalityHref = () => ''
   dependencies.unstable_cache = (loader, keys, options) => {

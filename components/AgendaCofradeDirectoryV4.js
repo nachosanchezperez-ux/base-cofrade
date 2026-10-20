@@ -9,7 +9,8 @@ import { isAgendaItemOver } from '@/lib/agenda-clock'
 import { routeSummarySections } from '@/lib/procession-route'
 import { agendaTemporalDateInfo, agendaTemporalRangeDate, withAgendaTemporalDay } from '@/lib/agenda-temporal-display'
 import { agendaEventAnchor, agendaDirectionsHref, isOutingEvent, schedulePrecision, scheduleTimeHint } from '@/lib/agenda-event-presentation'
-import { agendaItemShare } from '@/lib/share'
+import { agendaItemShare, agendaItemSharePath } from '@/lib/share'
+import AgendaEventThread from '@/components/AgendaEventThread'
 import ShareActions from '@/components/ShareActions'
 import HomeDiscoverIcon from '@/components/HomeDiscoverIcon'
 import useFollowedBrotherhoods from '@/components/useFollowedBrotherhoods'
@@ -196,48 +197,18 @@ function trackAgendaEntityClick(item, destinationType, destinationName, linkCont
   })
 }
 
+// Acciones del detalle: la ficha propia del acto, si la tiene, y su calendario
+// especializado. Hermandad, imágenes, pasos, bandas y guía local van en el hilo
+// (AgendaEventThread), con su nombre.
 function EventActions({ item }) {
-  if (item.category === 'concerts') {
-    const visibleBands = (item.bands || []).filter((band) => band.href).slice(0, 3)
-    return (
-      <div className={`${styles.cardActions} ${concertStyles.concertActions}`}>
-        {visibleBands.map((band, index) => (
-          <Link
-            href={band.href}
-            key={band.id}
-            onClick={() => trackAgendaEntityClick(item, 'banda', band.name, 'agenda_event_actions')}
-            data-analytics-skip-entity="true"
-          >{index === 0 ? 'Ver banda' : band.name} {index === 0 ? <span>→</span> : null}</Link>
-        ))}
-        {item.relatedBrotherhoodHref ? (
-          <Link
-            href={item.relatedBrotherhoodHref}
-            onClick={() => trackAgendaEntityClick(item, 'hermandad', item.organizer || 'Hermandad', 'agenda_event_actions')}
-            data-analytics-skip-entity="true"
-          >Ver Hermandad</Link>
-        ) : null}
-      </div>
-    )
-  }
-
+  const ownPage = agendaItemSharePath(item)
+  const hasOwnPage = Boolean(item.href) && ownPage === item.href && !ownPage.startsWith('/agenda-cofrade#')
+  const showCalendar = item.categoryHref && item.categoryHref !== item.href && item.category !== 'concerts'
+  if (!hasOwnPage && !showCalendar) return null
   return (
     <div className={styles.cardActions}>
-      {item.href ? <Link href={item.href} onClick={() => trackAgendaEventOpen(item)}>Ver ficha publicada <span>→</span></Link> : null}
-      {item.organizerHref ? (
-        <Link
-          href={item.organizerHref}
-          onClick={() => trackAgendaEntityClick(item, 'hermandad', item.organizer || 'Hermandad', 'agenda_event_actions')}
-          data-analytics-skip-entity="true"
-        >Ver Hermandad</Link>
-      ) : null}
-      {item.municipalityHref ? (
-        <Link
-          href={item.municipalityHref}
-          onClick={() => trackAgendaEntityClick(item, 'municipio', item.municipality, 'agenda_event_actions')}
-          data-analytics-skip-entity="true"
-        >Ver {item.municipality}</Link>
-      ) : null}
-      {item.categoryHref && item.categoryHref !== item.href && item.categoryHref !== item.organizerHref ? (
+      {hasOwnPage ? <Link href={item.href} onClick={() => trackAgendaEventOpen(item)}>Ver ficha publicada <span>→</span></Link> : null}
+      {showCalendar ? (
         <Link
           href={item.categoryHref}
           onClick={() => trackEvent('related_content_click', {
@@ -859,6 +830,7 @@ export default function AgendaCofradeDirectoryV4({
                             {item.routeText && ['processions', 'transfers', 'rosaries', 'romeries'].includes(item.category) ? <EventRoute item={item} inline /> : null}
                             {item.category === 'concerts' ? <ConcertRepertoire item={item} inline /> : null}
                             <a href={`#${agendaEventAnchor(item)}`}>Enlace a este acto</a>
+                            <AgendaEventThread item={item} includeMunicipality />
                             <EventActions item={item} />
                           </div>
                         </details>
