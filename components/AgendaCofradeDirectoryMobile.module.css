@@ -124,3 +124,7 @@
 .schedule b { font-size: 12px; }
 .directory .cardBody > .schedule > b { font-size: 12px; }
 .directory .periodGrid button > span { font-size: 14px; }
+/* Escritorio: recuentos y resumen de resultados también ≥ 12–13 px. */
+.directory .periodGrid button > strong { font-size: 12px; }
+.directory .resultSummary span { font-size: 13px; }
+.directory .monthTypeSummary b { font-size: 12px; }
