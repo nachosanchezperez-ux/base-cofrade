@@ -28,3 +28,13 @@ test('Hoy en Hilo Cofrade: sin segunda etiqueta y con escudo en PC', () => {
   assert.match(read('components/HomeTodayV2.js'), /\{embedded \? null : <RelationshipTrail value=\{card\.kicker\} \/>\}/)
   assert.match(read('components/HomeTodayV2.module.css'), /\.embedded \.featureCardSlot\.discoveryCard:not\(:has\(\[data-home-visual-kind="photo"\]\)\) > \[data-home-visual-kind\]:not\(\[data-home-visual-kind="photo"\]\) \{\s*position: absolute !important;/)
 })
+
+test('hojas de la portada: comentarios y llaves cerrados', () => {
+  for (const file of ['HomeTodayV2', 'HomeUpdatesLink', 'HomeAgendaNow', 'HomeHero', 'HomeCrewCalls']) {
+    const css = read(`components/${file}.module.css`)
+    const code = css.replace(/\/\*[\s\S]*?\*\//g, '')
+    assert.ok(!code.includes('*/') && !code.includes('/*'), `${file}: comentario sin cerrar`)
+    assert.equal((code.match(/\{/g) || []).length, (code.match(/\}/g) || []).length, `${file}: llaves desparejadas`)
+    assert.ok(!/^\s*\* /m.test(code), `${file}: línea de comentario fuera de un comentario`)
+  }
+})

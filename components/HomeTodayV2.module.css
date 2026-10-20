@@ -1293,7 +1293,10 @@
 
   .embedded > div:has(> .editorialGrid) > .musicCard .musicLink {
     margin: 0;
+  }
+}
 
+/*
  * 6 · Escudo de la ficha del día en PC (20/10/2026). La composición de
  * escritorio ocultaba con !important cualquier visual que no fuera foto, y la
  * tarjeta azul quedaba sin identidad. En la portada, la ficha de descubrimiento
