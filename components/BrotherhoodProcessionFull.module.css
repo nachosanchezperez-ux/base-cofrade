@@ -176,69 +176,11 @@
 }
 
 .kind,
-.note,
-.source,
-.review {
+.note {
   margin: 2px 0 0;
   color: #59636e;
   font-size: 14px;
   line-height: 1.4;
-}
-
-.more summary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 40px;
-  cursor: pointer;
-  list-style: none;
-  color: #2a333c;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.more summary::-webkit-details-marker {
-  display: none;
-}
-
-.more[open] summary b {
-  transform: rotate(45deg);
-}
-
-.more p {
-  margin: 0 0 8px;
-  color: #3d454e;
-  font-size: 15px;
-  line-height: 1.55;
-}
-
-.more a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 32px;
-  color: var(--brotherhood-primary, #153b69);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.facts {
-  display: grid;
-  gap: 6px;
-  margin: 0 0 8px;
-}
-
-.facts dt {
-  color: #59636e;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-}
-
-.facts dd {
-  margin: 0;
-  color: #23272c;
-  font-size: 15px;
 }
 
 /* Los pasos, diferenciados de las insignias. */
@@ -295,11 +237,6 @@
   .stepMark {
     left: -24px;
   }
-}
-
-.review {
-  color: #8a5a12 !important;
-  font-weight: 700;
 }
 
 /* Guía para quien ve pasar el cortejo. */
@@ -374,4 +311,18 @@
   .line.byCortejo .step {
     align-self: end;
   }
+}
+
+.pieceLink {
+  margin: 2px 0 0;
+}
+
+.pieceLink a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
 }

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import BrotherhoodProcessionFull from '@/components/BrotherhoodProcessionFull'
-import { orderFromListing } from '@/lib/procession-order'
+import BrotherhoodChapterHeritage from '@/components/BrotherhoodChapterHeritage'
+import { heritagePiecesFromListing, orderFromListing } from '@/lib/procession-order'
 import listing from '@/docs/insignias-baratillo-borrador-2026-10-20.json'
 
 // Laboratorio de la Tarea 15 con datos reales: las insignias del Baratillo tal
@@ -26,9 +27,11 @@ export default function BaratilloInsigniasLaboratoryPage() {
       <p style={{ margin: 0, color: '#A71930', fontSize: 12, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase' }}>Laboratorio · Tarea 15</p>
       <h1 style={{ margin: '6px 0 8px', fontSize: 28, lineHeight: 1.15 }}>Insignias del Baratillo</h1>
       <p style={{ margin: '0 0 16px', maxWidth: '62ch', color: '#3d454e', fontSize: 16, lineHeight: 1.55 }}>
-        Así quedaría «Ver cortejo completo» en el capítulo Cortejo de El Baratillo con las insignias que publica la Hermandad.
+        Así quedaría «Ver cortejo completo» en el capítulo Cortejo de El Baratillo, con el orden que publica la Hermandad. La historia de cada insignia no se repite: está una sola vez en Patrimonio, más abajo, y el cortejo enlaza a ella.
       </p>
     </div>
     <BrotherhoodProcessionFull order={orderFromListing(listing)} defaultOpen />
+    {/* Simulación del capítulo Patrimonio con las mismas piezas (borrador, sin cargar). */}
+    <BrotherhoodChapterHeritage pieces={heritagePiecesFromListing(listing)} />
   </div>
 }

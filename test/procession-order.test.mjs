@@ -68,9 +68,24 @@ test('Orden procesional del Baratillo (borrador): dos cortejos, cada uno cerrado
   assert.equal(sections[2].items.length, 8);
   const bocinas = sections.flatMap((s) => s.items).filter((i) => i.label.startsWith('Bocinas'));
   assert.equal(bocinas.length, 2);
-  assert.ok(bocinas[0].heritage.author);
+  // La posición enlaza a la pieza en Patrimonio, sin copiar sus datos.
+  assert.equal(bocinas[0].heritage.href, '#pieza-bocinas-1956');
+  assert.equal(bocinas[0].heritage.author, undefined);
   assert.equal(bocinas[1].heritage, null);
   assert.deepEqual(processionCounts(order), { insignias: 17, tramos: 0, steps: 2 });
+});
+
+test('Piezas del Baratillo para Patrimonio: una vez cada una, con el ancla que usa el cortejo', async () => {
+  const { heritagePiecesFromListing } = await import('../lib/procession-order.js');
+  const { heritagePieceAnchor } = await import('../lib/heritage-anchor.js');
+  const listing = JSON.parse(readFileSync(new URL('../docs/insignias-baratillo-borrador-2026-10-20.json', import.meta.url), 'utf8'));
+  const pieces = heritagePiecesFromListing(listing);
+  assert.equal(pieces.length, 17);
+  assert.equal(pieces.filter((p) => p.nombre === 'Bocinas').length, 1);
+  const order = orderFromListing(listing);
+  const anchors = new Set(pieces.map((p) => `#${heritagePieceAnchor(p.id)}`));
+  for (const item of order.items.filter((i) => i.heritage?.href)) assert.ok(anchors.has(item.heritage.href), item.label);
+  assert.equal(heritagePieceAnchor('Senatus|1969'), 'pieza-senatus-1969');
 });
 
 test('Glosario de insignias: tipo por nombre y pista de reconocimiento', async () => {

@@ -10,31 +10,16 @@ import styles from './BrotherhoodProcessionFull.module.css'
 // y cada paso cerrando su cortejo. Solo aparece con un orden documentado; si
 // no, no se pinta nada y el cortejo resumido queda igual.
 // Todo va en el HTML del servidor dentro de <details>: indexable y sin JS.
-// La pieza patrimonial se describe una sola vez, plegada bajo su posición.
+// La historia de cada pieza vive en Patrimonio: aquí solo un enlace a ella.
 
 function folded(value = '') {
   return String(value || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 }
 
-function HeritageDetails({ heritage, label = '' }) {
-  if (!heritage) return null
-  const facts = [
-    heritage.author ? ['Autor o taller', heritage.author] : null,
-    heritage.date && !String(label).includes(heritage.date) ? ['Año', heritage.date] : null,
-    heritage.materials ? ['Materiales y técnica', heritage.materials] : null,
-  ].filter(Boolean)
-  const hasMore = facts.length || heritage.history || heritage.source
-  if (!hasMore) return null
-  return <details className={styles.more}>
-    <summary>Sobre la pieza <b aria-hidden="true">+</b></summary>
-    {facts.length ? <dl className={styles.facts}>
-      {facts.map(([factLabel, value]) => <div key={factLabel}><dt>{factLabel}</dt><dd>{value}</dd></div>)}
-    </dl> : null}
-    {heritage.history ? <p>{heritage.history}</p> : null}
-    {heritage.review ? <p className={styles.review}>Dato pendiente de confirmar con la Hermandad.</p> : null}
-    {heritage.href ? <p><a href={heritage.href}>Ver en el patrimonio de la Hermandad <span aria-hidden="true">›</span></a></p> : null}
-    {heritage.source ? <p className={styles.source}>Fuente: {heritage.source}</p> : null}
-  </details>
+// La pieza se cuenta en Patrimonio; aquí solo se enlaza (sin repetir sus datos).
+function HeritageLink({ heritage }) {
+  if (!heritage?.href) return null
+  return <p className={styles.pieceLink}><a href={heritage.href}>Ver la pieza en el patrimonio <span aria-hidden="true">›</span></a></p>
 }
 
 function Item({ item, number, explained }) {
@@ -56,7 +41,7 @@ function Item({ item, number, explained }) {
       {hint && !item.repeatOf ? <p className={styles.look}><span>Cómo reconocerla:</span> {hint.charAt(0).toLowerCase()}{hint.slice(1)}</p> : null}
       {whatIs ? <p className={styles.whatIs}><span>Qué es:</span> {whatIs.text}</p> : null}
       {item.note ? <p className={styles.note}>{item.note}</p> : null}
-      <HeritageDetails heritage={item.heritage} label={item.label} />
+      <HeritageLink heritage={item.heritage} />
     </div>
   </li>
 }

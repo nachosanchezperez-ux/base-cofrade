@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import BrotherhoodHeritageUpdates from './BrotherhoodHeritageUpdates'
+import { heritagePieceAnchor } from '@/lib/heritage-anchor'
 import styles from './BrotherhoodChapterHeritage.module.css'
 
 // Patrimonio en la ficha por capítulos: una fila por pieza (tipo y fecha,
 // nombre, entradilla) y el resto plegado en «Conocer la pieza». Mismos campos
 // que el catálogo de la ficha clásica, sin recuadros dentro de recuadros.
-// Conserva #patrimonio.
+// Conserva #patrimonio y da a cada pieza su ancla #pieza-… (el cortejo enlaza aquí).
 
 function Facts({ piece }) {
   const facts = [
@@ -27,7 +28,7 @@ function Piece({ piece }) {
     piece.origen && piece.origen.trim() !== piece.contexto?.trim() ? ['Origen y evolución', piece.origen] : null,
   ].filter(Boolean)
   const hasMore = piece.bendicion || piece.procedencia || piece.agentes?.length || story.length || technical.length
-  return <li className={styles.piece}>
+  return <li className={styles.piece} id={heritagePieceAnchor(piece.id) || undefined}>
     {piece.imagen?.src ? <figure className={styles.thumb}>
       <Image src={piece.imagen.src} alt={piece.imagen.alt || piece.nombre} fill sizes="(max-width: 899px) 84px, 112px" />
     </figure> : null}
