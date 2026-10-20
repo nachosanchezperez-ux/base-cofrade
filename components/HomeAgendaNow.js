@@ -93,57 +93,62 @@ export default function HomeAgendaNow({ agenda, children = null }) {
           <Link className={styles.headLink} href="/agenda-cofrade">Agenda completa</Link>
         </div>
 
-        <div className={styles.tabs} role="tablist" aria-label="Periodo de la agenda" data-tabs={agenda.tabs.length}>
-          {agenda.tabs.map((item, index) => (
-            <button
-              key={item.key}
-              ref={(node) => { tabRefs.current[item.key] = node }}
-              type="button"
-              role="tab"
-              id={`agenda-tab-${item.key}`}
-              aria-selected={item.key === current.key}
-              aria-controls="agenda-inmediata-panel"
-              tabIndex={item.key === current.key ? 0 : -1}
-              className={`${styles.tab} ${item.key === current.key ? styles.tabActive : ''} ${item.key === 'now' ? styles.tabNow : ''}`}
-              onClick={() => setActive(item.key)}
-              onKeyDown={(event) => onKeyDown(event, index)}
+        {/* En PC (≥1024 px), periodo e igualás van en dos columnas (data-aside). */}
+        <div className={styles.columns} data-aside={children ? 'true' : undefined}>
+          <div className={styles.period}>
+            <div className={styles.tabs} role="tablist" aria-label="Periodo de la agenda" data-tabs={agenda.tabs.length}>
+              {agenda.tabs.map((item, index) => (
+                <button
+                  key={item.key}
+                  ref={(node) => { tabRefs.current[item.key] = node }}
+                  type="button"
+                  role="tab"
+                  id={`agenda-tab-${item.key}`}
+                  aria-selected={item.key === current.key}
+                  aria-controls="agenda-inmediata-panel"
+                  tabIndex={item.key === current.key ? 0 : -1}
+                  className={`${styles.tab} ${item.key === current.key ? styles.tabActive : ''} ${item.key === 'now' ? styles.tabNow : ''}`}
+                  onClick={() => setActive(item.key)}
+                  onKeyDown={(event) => onKeyDown(event, index)}
+                >
+                  {item.key === 'now' ? <i className={styles.tabDot} aria-hidden="true" /> : null}
+                  <span>{item.label}</span>
+                  <b aria-label={`${item.count} ${item.count === 1 ? 'cita' : 'citas'}`}>{item.count}</b>
+                </button>
+              ))}
+            </div>
+
+            <div
+              className={styles.panel}
+              role="tabpanel"
+              id="agenda-inmediata-panel"
+              aria-labelledby={`agenda-tab-${current.key}`}
             >
-              {item.key === 'now' ? <i className={styles.tabDot} aria-hidden="true" /> : null}
-              <span>{item.label}</span>
-              <b aria-label={`${item.count} ${item.count === 1 ? 'cita' : 'citas'}`}>{item.count}</b>
-            </button>
-          ))}
+              {current.cards.length ? (
+                <ul className={styles.list}>
+                  {current.cards.map((card, index) => <AgendaRow card={card} key={card.key} variant={index === 0 ? 'lead' : undefined} />)}
+                </ul>
+              ) : (
+                <p className={styles.empty}>{EMPTY_TEXT[current.key]}</p>
+              )}
+
+              {showUpcoming ? (
+                <>
+                  <h3 className={styles.upcomingTitle}>Próximas citas</h3>
+                  <ul className={styles.list}>
+                    {agenda.upcoming.map((card, index) => <AgendaRow card={card} key={card.key} variant={index === 0 ? 'lead' : 'compact'} />)}
+                  </ul>
+                </>
+              ) : null}
+            </div>
+
+            {more ? (
+              <Link className={styles.more} href={current.href}>{more}</Link>
+            ) : null}
+          </div>
+
+          {children ? <div className={styles.aside}>{children}</div> : null}
         </div>
-
-        <div
-          className={styles.panel}
-          role="tabpanel"
-          id="agenda-inmediata-panel"
-          aria-labelledby={`agenda-tab-${current.key}`}
-        >
-          {current.cards.length ? (
-            <ul className={styles.list}>
-              {current.cards.map((card, index) => <AgendaRow card={card} key={card.key} variant={index === 0 ? 'lead' : undefined} />)}
-            </ul>
-          ) : (
-            <p className={styles.empty}>{EMPTY_TEXT[current.key]}</p>
-          )}
-
-          {showUpcoming ? (
-            <>
-              <h3 className={styles.upcomingTitle}>Próximas citas</h3>
-              <ul className={styles.list}>
-                {agenda.upcoming.map((card, index) => <AgendaRow card={card} key={card.key} variant={index === 0 ? 'lead' : 'compact'} />)}
-              </ul>
-            </>
-          ) : null}
-        </div>
-
-        {more ? (
-          <Link className={styles.more} href={current.href}>{more}</Link>
-        ) : null}
-
-        {children}
       </div>
     </section>
   )
