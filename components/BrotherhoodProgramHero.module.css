@@ -214,7 +214,6 @@
 .identityCopy small a:hover,
 .identityCopy small a:focus-visible {
   color: #fff;
-  text-decoration: underline;
 }
 
 .identityBody h1 {

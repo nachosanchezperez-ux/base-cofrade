@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import test from 'node:test'
+import { selectAllRows } from '../lib/supabase/query-all.js'
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 
@@ -17,6 +18,7 @@ function loadReader(tables) {
         or(expression) { state.filters.push(['or', expression]); return builder },
         in(column, values) { state.filters.push(['in', column, values]); return builder },
         order() { return builder },
+        range() { return builder },
         then(resolve) {
           calls.push(state)
           let rows = tables[table] || []
@@ -31,7 +33,7 @@ function loadReader(tables) {
       return builder
     },
   }
-  const reader = new Function('createPublicClient', 'console', `${source}\nreturn { getKissingDevotions }`)(() => client, { error() {} })
+  const reader = new Function('createPublicClient', 'console', 'selectAllRows', `${source}\nreturn { getKissingDevotions }`)(() => client, { error() {} }, selectAllRows)
   return { ...reader, calls }
 }
 

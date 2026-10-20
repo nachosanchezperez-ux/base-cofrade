@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { agendaLocationMatches, agendaMunicipalityOptions } from '@/lib/agenda-cofrade-location'
 import { getProcessionLiveState } from '@/lib/procession-live-status'
 import { isAgendaItemOver } from '@/lib/agenda-clock'
@@ -10,6 +10,8 @@ import { routeSummarySections } from '@/lib/procession-route'
 import { agendaTemporalDateInfo, agendaTemporalRangeDate, withAgendaTemporalDay } from '@/lib/agenda-temporal-display'
 import { agendaEventAnchor, agendaDirectionsHref, isOutingEvent, schedulePrecision, scheduleTimeHint } from '@/lib/agenda-event-presentation'
 import { agendaItemShare, agendaItemSharePath } from '@/lib/share'
+import { agendaInitialStateFromParams } from '@/lib/agenda-cofrade-url-state'
+import { AGENDA_VIEW_STATE_KEY, agendaFilterSearch, agendaHashAfterFilterChange, agendaRestoreScrollTop, readAgendaView, serializeAgendaView } from '@/lib/agenda-view-state'
 import AgendaEventThread from '@/components/AgendaEventThread'
 import ShareActions from '@/components/ShareActions'
 import HomeDiscoverIcon from '@/components/HomeDiscoverIcon'
@@ -418,6 +420,23 @@ export default function AgendaCofradeDirectoryV4({
     try { if (new URLSearchParams(window.location.search).get('mis') === '1') setMineOnly(true) } catch {}
   }, [])
 
+  // La URL refleja la selección pública (#1264): Atrás, Adelante, la recarga y un
+  // enlace compartido la conservan. Sin entradas nuevas en el historial.
+  const keepHashOnce = useRef(false)
+  const urlSynced = useRef(false)
+  useEffect(() => {
+    if (!urlSynced.current) { urlSynced.current = true; return }
+    try {
+      const search = agendaFilterSearch(window.location.search, { period, category, territory, municipality, mineOnly })
+      const hash = keepHashOnce.current ? window.location.hash : agendaHashAfterFilterChange(window.location.hash)
+      keepHashOnce.current = false
+      const next = `${window.location.pathname}${search}${hash}`
+      if (next !== `${window.location.pathname}${window.location.search}${window.location.hash}`) {
+        window.history.replaceState(window.history.state, '', next)
+      }
+    } catch {}
+  }, [period, category, territory, municipality, mineOnly])
+
   function openEvent(item) {
     const detail = document.getElementById(`${agendaEventAnchor(item)}-detail`)
     if (detail) { detail.open = true; detail.querySelector('summary')?.focus() }
@@ -429,6 +448,7 @@ export default function AgendaCofradeDirectoryV4({
       if (!id.startsWith('acto-')) return
       const item = items.find((entry) => agendaEventAnchor(entry) === id)
       if (!item) return
+      keepHashOnce.current = true
       setPeriod('upcoming'); setCategory('all'); setTerritory('all'); setMunicipality(''); setMineOnly(false)
       setVisibleCount(Number.POSITIVE_INFINITY)
       window.requestAnimationFrame(() => {
@@ -511,8 +531,153 @@ export default function AgendaCofradeDirectoryV4({
 
   const groups = useMemo(() => groupByMonth(filtered), [filtered])
   const [visibleCount, setVisibleCount] = useState(AGENDA_PAGE_SIZE)
-  // Al cambiar de filtro se vuelve a la primera tanda.
-  useEffect(() => { setVisibleCount((current) => (current === Number.POSITIVE_INFINITY ? current : AGENDA_PAGE_SIZE)) }, [period, category, territory, municipality, mineOnly])
+  // Al cambiar de filtro se vuelve a la primera tanda; no al montar ni cuando el
+  // cambio lo provoca la restauración de la vista al volver.
+  const filterKey = `${period}|${category}|${territory}|${municipality}|${mineOnly}`
+  const lastFilterKey = useRef(null)
+  const restoringFilterKey = useRef('')
+  useEffect(() => {
+    if (lastFilterKey.current === null || lastFilterKey.current === filterKey) { lastFilterKey.current = filterKey; return }
+    lastFilterKey.current = filterKey
+    if (restoringFilterKey.current === filterKey) { restoringFilterKey.current = ''; return }
+    setVisibleCount((current) => (current === Number.POSITIVE_INFINITY ? current : AGENDA_PAGE_SIZE))
+  }, [filterKey])
+
+  // Vuelta con contexto (#1264): «Mis hermandades», tandas, posición y detalle
+  // abierto se guardan en history.state (no en la URL) y se recuperan al volver.
+  const pendingRestore = useRef(null)
+  const [restoreTick, setRestoreTick] = useState(0)
+  const viewRef = useRef({ visibleCount, mineOnly })
+  viewRef.current = { visibleCount, mineOnly }
+
+  // Tras restaurar, el navegador puede aplicar después su propio scroll de
+  // historial (p. ej. Adelante y Atrás seguidos). Durante un instante, si la página
+  // se mueve sin intervención del lector, se vuelve a la posición restaurada.
+  const restoreGuard = useRef(null)
+
+  const keptOpenDetail = () => {
+    const previous = window.history.state?.[AGENDA_VIEW_STATE_KEY]?.openDetailId || ''
+    return previous && document.getElementById(previous)?.open ? previous : ''
+  }
+
+  const saveView = useCallback((extra = {}) => {
+    if (pendingRestore.current) return
+    if (restoreGuard.current && Date.now() < restoreGuard.current.until) return
+    try {
+      const reference = extra.anchor || [...document.querySelectorAll('#agenda article[id^="acto-"]')]
+        .find((card) => card.getBoundingClientRect().bottom > 72)
+      const view = serializeAgendaView({
+        ...viewRef.current,
+        scrollY: window.scrollY,
+        anchorId: reference?.id || '',
+        anchorTop: reference ? reference.getBoundingClientRect().top : 0,
+        // Un guardado por scroll conserva el detalle abierto que ya estaba anotado.
+        openDetailId: extra.openDetailId ?? keptOpenDetail(),
+      })
+      window.history.replaceState({ ...(window.history.state || {}), [AGENDA_VIEW_STATE_KEY]: view }, '')
+    } catch {}
+  }, [])
+
+  useEffect(() => {
+    if (window.location.hash.startsWith('#acto-')) return // el ancla de un acto manda
+    let view = null
+    let fromUrl = null
+    let misInUrl = false
+    try {
+      view = readAgendaView(window.history.state, AGENDA_PAGE_SIZE)
+      const params = new URLSearchParams(window.location.search)
+      fromUrl = agendaInitialStateFromParams((name) => params.get(name))
+      misInUrl = params.get('mis') === '1'
+    } catch {}
+    // Al volver, el router puede reutilizar la página tal como se pintó la primera
+    // vez (sin filtros): la selección se toma de la URL, que es la que manda.
+    if (fromUrl) {
+      const nextMine = Boolean(view?.mineOnly) || misInUrl
+      const target = `${fromUrl.initialPeriod}|${fromUrl.initialCategory}|${fromUrl.initialTerritory}|${fromUrl.initialMunicipality}|${nextMine}`
+      if (target !== filterKey) {
+        restoringFilterKey.current = target
+        setPeriod(fromUrl.initialPeriod)
+        setCategory(fromUrl.initialCategory)
+        setTerritory(fromUrl.initialTerritory)
+        setMunicipality(fromUrl.initialMunicipality)
+        if (nextMine) setMineOnly(true)
+      }
+    }
+    if (!view) return
+    setVisibleCount(view.visibleCount)
+    pendingRestore.current = view
+    setRestoreTick((tick) => tick + 1)
+    // Solo al montar: la vista guardada corresponde a esta entrada del historial.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    const view = pendingRestore.current
+    if (!view) return undefined
+    let frame = 0
+    let timer = 0
+    let tries = 0
+    // Siguiente fotograma o, si la pestaña no pinta (en segundo plano), un instante.
+    const later = (callback) => {
+      let done = false
+      const run = () => { if (!done) { done = true; window.cancelAnimationFrame(frame); window.clearTimeout(timer); callback() } }
+      frame = window.requestAnimationFrame(run)
+      timer = window.setTimeout(run, 60)
+    }
+    const apply = () => {
+      const anchor = view.anchorId ? document.getElementById(view.anchorId) : null
+      // «Mis hermandades» depende del seguimiento guardado en el dispositivo, que
+      // puede tardar un instante: se espera unos fotogramas a que aparezca el acto.
+      if (view.anchorId && !anchor && tries++ < 30) { later(apply); return }
+      const detail = view.openDetailId ? document.getElementById(view.openDetailId) : null
+      if (detail) detail.open = true
+      const top = agendaRestoreScrollTop(view, anchor ? anchor.getBoundingClientRect().top + window.scrollY : null)
+      if (top !== null) {
+        window.scrollTo({ top, behavior: 'instant' })
+        restoreGuard.current = { top, until: Date.now() + 900 }
+      }
+      pendingRestore.current = null
+    }
+    later(apply)
+    return () => { window.cancelAnimationFrame(frame); window.clearTimeout(timer) }
+  }, [restoreTick, filtered])
+
+  useEffect(() => { saveView() }, [visibleCount, mineOnly, saveView])
+
+  useEffect(() => {
+    let timer = 0
+    const onScroll = () => {
+      const guard = restoreGuard.current
+      if (guard && Date.now() < guard.until && Math.abs(window.scrollY - guard.top) > 40) {
+        window.scrollTo({ top: guard.top, behavior: 'instant' })
+        return
+      }
+      window.clearTimeout(timer)
+      timer = window.setTimeout(() => saveView(), 200)
+    }
+    // Antes de salir por un enlace: el acto pulsado y su detalle abierto.
+    const onClick = (event) => {
+      const link = event.target instanceof Element ? event.target.closest('a[href]') : null
+      if (!link) return
+      saveView({ anchor: link.closest('article[id^="acto-"]'), openDetailId: link.closest('details[open]')?.id || '' })
+    }
+    // Cualquier gesto del lector anula la protección: su scroll manda.
+    const release = () => { restoreGuard.current = null }
+    const root = document.getElementById('agenda')
+    window.addEventListener('wheel', release, { passive: true })
+    window.addEventListener('touchstart', release, { passive: true })
+    window.addEventListener('keydown', release)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    root?.addEventListener('click', onClick, true)
+    return () => {
+      window.clearTimeout(timer)
+      window.removeEventListener('wheel', release)
+      window.removeEventListener('touchstart', release)
+      window.removeEventListener('keydown', release)
+      window.removeEventListener('scroll', onScroll)
+      root?.removeEventListener('click', onClick, true)
+    }
+  }, [saveView])
   const shownGroups = useMemo(() => groupByMonth(filtered.slice(0, visibleCount)), [filtered, visibleCount])
   const hiddenCount = Math.max(0, filtered.length - visibleCount)
   const showMonth = (key) => {
