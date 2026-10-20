@@ -27,6 +27,7 @@
 .piece:target {
   scroll-margin-top: 96px;
   background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 6%, #fff);
+  box-shadow: 0 0 0 8px color-mix(in srgb, var(--brotherhood-primary, #153b69) 6%, #fff);
 }
 
 .piece:not(:has(.thumb)) {

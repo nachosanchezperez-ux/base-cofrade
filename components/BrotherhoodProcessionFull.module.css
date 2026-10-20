@@ -320,6 +320,7 @@
 .pieceLink a {
   display: inline-flex;
   align-items: center;
+  gap: 4px;
   min-height: 40px;
   color: var(--brotherhood-primary, #153b69);
   font-size: 14px;

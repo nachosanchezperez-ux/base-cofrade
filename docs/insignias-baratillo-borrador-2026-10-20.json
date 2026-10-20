@@ -1,5 +1,6 @@
 {
   "_estado": "BORRADOR · no cargado en Supabase. Transcripción resumida de la web oficial de la Hermandad para el laboratorio de la Tarea 15.",
+  "_notas": "«note» es de la posición en el cortejo (qué la acompaña); «about» es de la pieza y va solo a Patrimonio.",
   "_alcance": "Orden procesional según la web oficial de la Hermandad (confirmado por el propietario de Hilo Cofrade el 20/10/2026: las hermandades publican sus insignias en orden). La web no separa tramos. Cada cortejo termina en su paso.",
   "_revisar": [
     "Estandarte: el encabezado de la web dice «(1944) (1956)», pero el texto describe estandartes de 1944 y de 1976. Se recoge como 1944 / 1976 y queda pendiente de confirmar con la Hermandad.",
@@ -44,7 +45,7 @@
           "year": "1991",
           "author": "Sobrinos de Caro, sobre diseño de José Manuel Elena Martí; asta y varas de Manuel de los Ríos",
           "materials": "Terciopelo burdeos; asta y varas de plata de ley repujada",
-          "note": "Donado por la Real Maestranza con motivo del hermanamiento."
+          "about": "Donado por la Real Maestranza con motivo del hermanamiento."
         },
         {
           "kind": "insignia",
@@ -66,7 +67,7 @@
           "year": "2018",
           "author": "Diseño de Javier Sánchez de los Reyes; bordados de Luis Miguel Garduño; orfebrería de Ramón León",
           "materials": "Oro fino y sedas; asta de plata repujada",
-          "note": "Una cara reproduce el entierro de Cristo del retablo mayor de San Jorge (Hospital de la Santa Caridad)."
+          "about": "Una cara reproduce el entierro de Cristo del retablo mayor de San Jorge (Hospital de la Santa Caridad)."
         },
         {
           "kind": "insignia",
