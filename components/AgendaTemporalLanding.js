@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import AgendaTemporalNav from '@/components/AgendaTemporalNav'
 import AgendaTemporalEventList from '@/components/AgendaTemporalEventList'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
@@ -7,14 +6,72 @@ import JsonLd from '@/components/JsonLd'
 import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/seo'
 import styles from './AgendaTemporalLanding.module.css'
 
-function queryHref(period, territory) {
-  return `/agenda-cofrade?periodo=${period}&territorio=${territory}#agenda`
+// Con pocas citas no hay nada que filtrar: la lista va directamente tras el periodo.
+const FILTERS_FROM = 4
+
+const PERIOD_LABEL = { today: 'Hoy', tomorrow: 'Mañana', weekend: 'Fin de semana' }
+const PERIOD_PHRASE = { today: 'hoy', tomorrow: 'mañana', weekend: 'este fin de semana' }
+const OTHER_PERIODS = [
+  { key: 'today', href: '/agenda-cofrade/hoy', label: 'Ver hoy' },
+  { key: 'tomorrow', href: '/agenda-cofrade/manana', label: 'Ver mañana' },
+  { key: 'weekend', href: '/agenda-cofrade/fin-de-semana', label: 'Ver el fin de semana' },
+]
+
+function queryHref(period, params) {
+  return `/agenda-cofrade?${new URLSearchParams({ periodo: period, ...params }).toString()}#agenda`
+}
+
+// Selección compacta antes del listado (#1264): zona y tipo en una sola fila. Cada
+// enlace abre la Agenda completa con ese periodo y ese filtro, con el mismo recuento.
+function PeriodFilters({ landing }) {
+  const zones = [
+    { key: 'capital', label: 'Sevilla capital', count: landing.capitalCount },
+    { key: 'province', label: 'Provincia', count: landing.provinceCount },
+  ].filter((zone) => zone.count > 0)
+
+  return (
+    <nav className={styles.filters} aria-label={landing.filterHeading}>
+      <div className="shell">
+        <div className={styles.chips}>
+          {zones.map((zone) => (
+            <Link href={queryHref(landing.queryPeriod, { territorio: zone.key })} data-kind="zone" key={zone.key}>
+              <span>{zone.label}</span><strong>{zone.count}</strong>
+            </Link>
+          ))}
+          {landing.categories.map((category) => (
+            <Link href={queryHref(landing.queryPeriod, { categoria: category.key })} data-category={category.key} key={category.key}>
+              <span>{category.label}</span><strong>{category.count}</strong>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </nav>
+  )
+}
+
+function EmptyPeriod({ landing }) {
+  return (
+    <section className={styles.empty} aria-labelledby="agenda-periodo-vacio">
+      <div className="shell">
+        <h2 id="agenda-periodo-vacio">No hay citas documentadas para {PERIOD_PHRASE[landing.period]}</h2>
+        {landing.dateCaption ? <time>{landing.dateCaption}</time> : null}
+        <p>Prueba con otro día o consulta todos los próximos actos de Sevilla y su provincia.</p>
+        <div className={styles.emptyActions}>
+          {OTHER_PERIODS.filter((item) => item.key !== landing.period).map((item) => (
+            <Link href={item.href} key={item.key}>{item.label}</Link>
+          ))}
+          <Link href="/agenda-cofrade" data-primary="true">Todos los próximos actos <span aria-hidden="true">→</span></Link>
+        </div>
+      </div>
+    </section>
+  )
 }
 
 export default function AgendaTemporalLanding({ landing }) {
   const structuredItems = landing.items
     .filter((item) => item.href)
     .map((item) => ({ name: item.title, path: item.href }))
+  const count = landing.count ?? landing.items.length
 
   return (
     <div className={styles.page}>
@@ -36,111 +93,49 @@ export default function AgendaTemporalLanding({ landing }) {
       }} />
 
       <header className={styles.hero}>
-        <div className={`shell ${styles.heroGrid}`}>
-          <div className={styles.heroCopy}>
-            <SiteBreadcrumb
-              items={[
-                { label: 'Inicio', href: '/' },
-                { label: 'Agenda Cofrade', href: '/agenda-cofrade' },
-                { label: landing.period === 'today' ? 'Hoy' : landing.period === 'tomorrow' ? 'Mañana' : 'Fin de semana' },
-              ]}
-              tone="dark"
-              showAccent={false}
-            />
-            <span className={styles.eyebrow}>{landing.eyebrow}</span>
-            <h1>{landing.heading}</h1>
-            {/* Con actos: frase de hechos del periodo; sin actos: texto general. */}
-            <p>{landing.summary || landing.description}</p>
-            {landing.dateCaption ? <time>{landing.dateCaption}</time> : null}
-            <nav className={styles.heroActions} aria-label="Acciones de esta agenda">
-              <a href="#agenda-del-periodo">Ver todas las citas <span aria-hidden="true">↓</span></a>
-              <Link href="/agenda-cofrade">Agenda completa</Link>
-            </nav>
-          </div>
-
-          <aside className={styles.heroPanel} aria-label="Resumen del periodo">
-            <span>De un vistazo</span>
-            <strong>{landing.items.length}</strong>
-            <p>{landing.items.length === 1 ? 'cita documentada' : 'citas documentadas'} en este periodo.</p>
-            <div className={styles.stats}>
-              <span><b>{landing.capitalCount}</b> Sevilla capital</span>
-              <span><b>{landing.provinceCount}</b> Provincia</span>
-              <span><b>{landing.municipalities.length}</b> {landing.municipalities.length === 1 ? 'localidad' : 'localidades'}</span>
-            </div>
-          </aside>
+        <div className="shell">
+          <SiteBreadcrumb
+            items={[
+              { label: 'Inicio', href: '/' },
+              { label: 'Agenda Cofrade', href: '/agenda-cofrade' },
+              { label: PERIOD_LABEL[landing.period] },
+            ]}
+            tone="dark"
+            showAccent={false}
+          />
+          <h1>{landing.heading}</h1>
+          {/* Con actos: la frase ya lleva la fecha; sin actos, la fecha va en el aviso. */}
+          {count ? <p>{landing.summary}</p> : null}
         </div>
       </header>
 
-      <AgendaCofradeNav activeSection="agenda" sticky={false} />
       <AgendaTemporalNav active={landing.period} />
 
-      <div>
-        <section className={styles.overview}>
+      {count ? (
+        <>
+          {count >= FILTERS_FROM ? <PeriodFilters landing={landing} /> : null}
+          <AgendaTemporalEventList landing={landing} />
+        </>
+      ) : <EmptyPeriod landing={landing} />}
+
+      {landing.municipalities.length ? (
+        <section className={styles.localGuides} aria-labelledby="agenda-temporal-municipios">
           <div className="shell">
-            <header className={styles.overviewHeading}>
-              <div><span>Organiza tu visita</span><h2>{landing.filterHeading}</h2></div>
-              <p>Elige territorio, tipo de acto o municipio. La lista completa queda justo después.</p>
+            <header>
+              <span>Guías locales</span>
+              <h2 id="agenda-temporal-municipios">Municipios con actividad</h2>
+              <small className={styles.scrollHint}>Desliza →</small>
             </header>
-
-            <div className={styles.overviewGrid}>
-              <section className={styles.scope} aria-labelledby="agenda-temporal-donde">
-                <header><span>Dónde</span><h3 id="agenda-temporal-donde">Capital o provincia</h3></header>
-                <div className={styles.territories}>
-                  <Link href={queryHref(landing.queryPeriod, 'capital')}>
-                    <span>Sevilla capital</span><strong>{landing.capitalCount}</strong><small>Ver citas →</small>
-                  </Link>
-                  <Link href={queryHref(landing.queryPeriod, 'province')}>
-                    <span>Provincia</span><strong>{landing.provinceCount}</strong><small>Ver municipios →</small>
-                  </Link>
-                </div>
-              </section>
-
-              {landing.categories.length ? (
-                <section className={styles.categories} aria-labelledby="agenda-temporal-tipos">
-                  <header><span>Qué</span><h3 id="agenda-temporal-tipos">Por tipo de acto</h3><small className={styles.scrollHint}>Desliza →</small></header>
-                  <div>
-                    {landing.categories.map((category) => (
-                      <Link
-                        href={`/agenda-cofrade?periodo=${landing.queryPeriod}&categoria=${category.key}#agenda`}
-                        data-category={category.key}
-                        key={category.key}
-                      >
-                        <span>{category.label}</span><strong>{category.count}</strong>
-                      </Link>
-                    ))}
-                  </div>
-                </section>
-              ) : null}
+            <div>
+              {landing.municipalities.map((municipality) => (
+                <Link href={municipality.href} key={municipality.slug}>
+                  <span>{municipality.label}</span><strong>{municipality.count}</strong><small>Guía local →</small>
+                </Link>
+              ))}
             </div>
-
-            {landing.municipalities.length ? (
-              <section className={styles.municipalities} aria-labelledby="agenda-temporal-municipios">
-                <header><span>Guías locales</span><h3 id="agenda-temporal-municipios">Municipios con actividad</h3><small className={styles.scrollHint}>Desliza →</small></header>
-                <div>
-                  {landing.municipalities.map((municipality) => (
-                    <Link href={municipality.href} key={municipality.slug}>
-                      <span>{municipality.label}</span><strong>{municipality.count}</strong><small>Guía local →</small>
-                    </Link>
-                  ))}
-                </div>
-              </section>
-            ) : null}
           </div>
         </section>
-
-        {landing.items.length ? (
-          <AgendaTemporalEventList landing={landing} />
-        ) : (
-          <section className={styles.empty}>
-            <div className="shell">
-              <span>Agenda abierta</span>
-              <h2>No hay citas publicadas para este periodo</h2>
-              <p>La URL permanece disponible y se actualizará automáticamente cuando exista un nuevo acto documentado.</p>
-              <Link href="/agenda-cofrade">Ver próximos actos →</Link>
-            </div>
-          </section>
-        )}
-      </div>
+      ) : null}
     </div>
   )
 }

@@ -33,3 +33,7 @@
   .row[data-category]{padding-left:11px}
   .row[data-category]::before{top:12px;bottom:12px;width:3px}
 }
+
+/* #1264: el listado sigue a una fila compacta de filtros; sin hueco extra. */
+.section{padding-top:clamp(24px,4vw,48px)}
+@media(max-width:720px){.section{padding-top:20px}.header{margin-bottom:14px}}
