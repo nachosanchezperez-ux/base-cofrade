@@ -16,7 +16,10 @@ import AgendaEventThread from '@/components/AgendaEventThread'
 import ShareActions from '@/components/ShareActions'
 import HomeDiscoverIcon from '@/components/HomeDiscoverIcon'
 import useFollowedBrotherhoods from '@/components/useFollowedBrotherhoods'
-import { brotherhoodSlugFromHref } from '@/lib/followed-brotherhoods'
+import { agendaItemBrotherhoodSlugs, brotherhoodSlugFromHref } from '@/lib/followed-brotherhoods'
+import FollowBrotherhoodButton from '@/components/FollowBrotherhoodButton'
+import CalendarSubscribeLinks from '@/components/CalendarSubscribeLinks'
+import { brotherhoodCalendarPath, followedCalendarPath } from '@/lib/agenda-ics-links'
 import followStyles from './AgendaMyBrotherhoods.module.css'
 import { trackEvent } from '@/lib/analytics/client'
 import styles from './AgendaCofradeDirectoryV4.module.css'
@@ -175,6 +178,21 @@ function EventVisual({ item }) {
         className={kind === 'photo' ? styles.cardPhoto : styles.cardCrest}
         onError={handleError}
       />
+    </div>
+  )
+}
+
+// Seguir la Hermandad del acto y añadir todos sus actos al calendario
+// (#agenda-mi-agenda), desde el detalle de la cita.
+function EventFollow({ item }) {
+  const concert = item.category === 'concerts'
+  const slug = brotherhoodSlugFromHref(concert ? item.relatedBrotherhoodHref : item.organizerHref)
+  const name = concert ? item.relatedBrotherhoodName : item.organizer
+  if (!slug || !name) return null
+  return (
+    <div className={followStyles.eventFollow}>
+      <FollowBrotherhoodButton slug={slug} name={name} municipality={item.municipality || ''} placement="agenda_detalle" compact />
+      <CalendarSubscribeLinks path={brotherhoodCalendarPath(slug)} label={name} scope="brotherhood" className={followStyles.subscribe} />
     </div>
   )
 }
@@ -412,7 +430,8 @@ export default function AgendaCofradeDirectoryV4({
   const { followed } = useFollowedBrotherhoods()
   const [mineOnly, setMineOnly] = useState(false)
   const followedSlugs = useMemo(() => new Set(followed.map((item) => item.slug)), [followed])
-  const isMine = (item) => followedSlugs.has(brotherhoodSlugFromHref(item.organizerHref))
+  // La organizadora o la Hermandad relacionada (conciertos), como su calendario.
+  const isMine = (item) => agendaItemBrotherhoodSlugs(item).some((slug) => followedSlugs.has(slug))
 
   // «Mis hermandades» llega por ?mis=1 (enlace desde la ficha). Solo en el cliente:
   // no altera la URL canónica, la caché ni lo que ve Google.
@@ -518,7 +537,7 @@ export default function AgendaCofradeDirectoryV4({
       belongsToPeriod(item, period, today)
       && (category === 'all' || item.category === category)
       && agendaLocationMatches(item, territory, municipality)
-      && (!mineOnly || followedSlugs.has(brotherhoodSlugFromHref(item.organizerHref)))
+      && (!mineOnly || agendaItemBrotherhoodSlugs(item).some((slug) => followedSlugs.has(slug)))
     ))
     .map((item) => {
       const displayDate = periodDisplayDate(item, period, today)
@@ -881,6 +900,8 @@ export default function AgendaCofradeDirectoryV4({
             <span aria-hidden="true">★</span> Mis hermandades <b>{mineCount}</b>
           </button>
           <p>{mineOnly ? `Solo citas de: ${followed.map((item) => item.name).join(', ')}.` : `Sigues ${followed.length} ${followed.length === 1 ? 'hermandad' : 'hermandades'}. Sus citas llevan una estrella.`}</p>
+          {/* Todas tus hermandades en tu calendario: se actualiza solo. */}
+          <CalendarSubscribeLinks path={followedCalendarPath(followed.map((item) => item.slug))} label="Mis hermandades" scope="followed" className={followStyles.subscribe} />
         </div>
       ) : mineOnly ? (
         <p className={followStyles.hint}>Aún no sigues ninguna hermandad. Pulsa «Seguir hermandad» en su ficha y aquí verás solo sus citas.</p>
@@ -1003,6 +1024,7 @@ export default function AgendaCofradeDirectoryV4({
                             {item.category === 'concerts' ? <ConcertRepertoire item={item} inline /> : null}
                             <a href={`#${agendaEventAnchor(item)}`}>Enlace a este acto</a>
                             <AgendaEventThread item={item} includeMunicipality />
+                            <EventFollow item={item} />
                             <EventActions item={item} />
                           </div>
                         </details>

@@ -2,6 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import ShareActions, { CalendarAddLink } from '@/components/ShareActions'
 import AgendaEventThread from '@/components/AgendaEventThread'
+import AgendaFollowedInPeriod from '@/components/AgendaFollowedInPeriod'
+import { agendaItemBrotherhoodSlugs } from '@/lib/followed-brotherhoods'
 import { agendaItemShare } from '@/lib/share'
 import { agendaEventAnchor, scheduleTimeHint } from '@/lib/agenda-event-presentation'
 import { agendaThreadLinks, repeatsPlace } from '@/lib/agenda-event-relations'
@@ -106,6 +108,17 @@ export default function AgendaTemporalEventList({ landing }) {
           </div>
           <strong>{count} {count === 1 ? 'acto' : 'actos'}</strong>
         </header>
+
+        <AgendaFollowedInPeriod
+          periodLabel={landing.period === 'weekend' ? 'este fin de semana' : landing.period === 'tomorrow' ? 'mañana' : 'hoy'}
+          items={[...new Map(landing.items.map((item) => [item.key || item.displayKey, {
+            key: item.displayKey || item.key,
+            title: item.title,
+            time: itemTime(item) === 'Hora por confirmar' ? '' : itemTime(item),
+            eventHref: item.eventHref || '',
+            slugs: agendaItemBrotherhoodSlugs(item),
+          }])).values()].filter((item) => item.slugs.length)}
+        />
 
         <div className={styles.groups}>
           {groups.map((group) => (
