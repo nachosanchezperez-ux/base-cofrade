@@ -1,6 +1,6 @@
 {
   "_estado": "BORRADOR · no cargado en Supabase. Transcripción resumida de la web oficial de la Hermandad para el laboratorio de la Tarea 15.",
-  "_alcance": "La web agrupa las insignias por cortejo (Cristo y palio) en este orden. No dice que sea el orden procesional exacto ni asigna tramos; no se añaden tramos ni posiciones de los pasos.",
+  "_alcance": "Orden procesional según la web oficial de la Hermandad (confirmado por el propietario de Hilo Cofrade el 20/10/2026: las hermandades publican sus insignias en orden). La web no separa tramos. Cada cortejo termina en su paso.",
   "_revisar": [
     "Estandarte: el encabezado de la web dice «(1944) (1956)», pero el texto describe estandartes de 1944 y de 1976. Se recoge como 1944 / 1976 y queda pendiente de confirmar con la Hermandad.",
     "Bocinas: la web las cita en los dos cortejos como «las mismas cuatro bocinas»; también se mencionan junto a la Cruz de Guía. Se tratan como una sola pieza.",
@@ -16,30 +16,155 @@
     {
       "label": "Cortejo del paso de Cristo",
       "items": [
-        { "kind": "cross_guide", "label": "Cruz de Guía", "year": "1956", "author": "Ramón Seco Velasco", "materials": "Caoba tallada con remates y cantoneras de plata sobredorada", "note": "La acompañan dos faroles de 1956 del mismo autor." },
-        { "kind": "insignia", "label": "Senatus", "year": "1969", "author": "Sobrinos de José Caro (bordado), sobre diseño de José Manuel Elena Martí; asta de Manuel Román Seco", "materials": "Terciopelo rojo bordado en oro fino; asta de metal repujado y plateado" },
-        { "kind": "insignia", "label": "Bandera azul y roja", "year": "2006", "author": "Mariano Martín Santoja; asta de Orfebrería Ramos; varas de Seco Velasco (1941)", "materials": "Tejido azul con cruz roja y escudo primitivo bordado" },
-        { "kind": "insignia", "label": "Guion de la Real Maestranza", "year": "1991", "author": "Sobrinos de Caro, sobre diseño de José Manuel Elena Martí; asta y varas de Manuel de los Ríos", "materials": "Terciopelo burdeos; asta y varas de plata de ley repujada", "note": "Donado por la Real Maestranza con motivo del hermanamiento." },
-        { "kind": "insignia", "label": "Bandera Fundacional", "year": "2008", "author": "Taller de Jesús Rosado (bordados); Hijos de Juan Fernández (orfebrería)", "materials": "Terciopelo negro con cartela en oro fino y cuadro fundacional en sedas; remate y varas de plata de ley" },
-        { "kind": "insignia", "label": "Banderín de San José", "year": "1969", "author": "Sobrinos de José Caro (bordado); García Armenta (asta y varas)", "materials": "Terciopelo burdeos bordado en oro fino; asta de metal plateado rematada con una miniatura de San José" },
-        { "kind": "insignia", "label": "Guion de la Misericordia", "year": "2018", "author": "Diseño de Javier Sánchez de los Reyes; bordados de Luis Miguel Garduño; orfebrería de Ramón León", "materials": "Oro fino y sedas; asta de plata repujada", "note": "Una cara reproduce el entierro de Cristo del retablo mayor de San Jorge (Hospital de la Santa Caridad)." },
-        { "kind": "insignia", "label": "Guion de la Santa Cruz", "year": "1990", "author": "Sobrinos de José Caro; asta y varas de Manuel de los Ríos", "materials": "Terciopelo burdeos con la Cruz Fundacional en oro fino; plata de ley cincelada" },
-        { "kind": "insignia", "label": "Libro de Reglas", "year": "1947", "author": "Jesús Domínguez (orfebrería)", "materials": "Terciopelo rojo con cantoneras y escudo de metal plateado repujado" },
-        { "kind": "insignia", "label": "Bocinas", "year": "1956", "author": "Manuel Román Seco (orfebrería); José Caro (paños)", "materials": "Cuatro bocinas de orfebrería repujada con paños de terciopelo burdeos bordados en oro fino", "pieceKey": "bocinas-1956" }
-      ]
+        {
+          "kind": "cross_guide",
+          "label": "Cruz de Guía",
+          "year": "1956",
+          "author": "Ramón Seco Velasco",
+          "materials": "Caoba tallada con remates y cantoneras de plata sobredorada",
+          "note": "La acompañan dos faroles de 1956 del mismo autor."
+        },
+        {
+          "kind": "insignia",
+          "label": "Senatus",
+          "year": "1969",
+          "author": "Sobrinos de José Caro (bordado), sobre diseño de José Manuel Elena Martí; asta de Manuel Román Seco",
+          "materials": "Terciopelo rojo bordado en oro fino; asta de metal repujado y plateado"
+        },
+        {
+          "kind": "insignia",
+          "label": "Bandera azul y roja",
+          "year": "2006",
+          "author": "Mariano Martín Santoja; asta de Orfebrería Ramos; varas de Seco Velasco (1941)",
+          "materials": "Tejido azul con cruz roja y escudo primitivo bordado"
+        },
+        {
+          "kind": "insignia",
+          "label": "Guion de la Real Maestranza",
+          "year": "1991",
+          "author": "Sobrinos de Caro, sobre diseño de José Manuel Elena Martí; asta y varas de Manuel de los Ríos",
+          "materials": "Terciopelo burdeos; asta y varas de plata de ley repujada",
+          "note": "Donado por la Real Maestranza con motivo del hermanamiento."
+        },
+        {
+          "kind": "insignia",
+          "label": "Bandera Fundacional",
+          "year": "2008",
+          "author": "Taller de Jesús Rosado (bordados); Hijos de Juan Fernández (orfebrería)",
+          "materials": "Terciopelo negro con cartela en oro fino y cuadro fundacional en sedas; remate y varas de plata de ley"
+        },
+        {
+          "kind": "insignia",
+          "label": "Banderín de San José",
+          "year": "1969",
+          "author": "Sobrinos de José Caro (bordado); García Armenta (asta y varas)",
+          "materials": "Terciopelo burdeos bordado en oro fino; asta de metal plateado rematada con una miniatura de San José"
+        },
+        {
+          "kind": "insignia",
+          "label": "Guion de la Misericordia",
+          "year": "2018",
+          "author": "Diseño de Javier Sánchez de los Reyes; bordados de Luis Miguel Garduño; orfebrería de Ramón León",
+          "materials": "Oro fino y sedas; asta de plata repujada",
+          "note": "Una cara reproduce el entierro de Cristo del retablo mayor de San Jorge (Hospital de la Santa Caridad)."
+        },
+        {
+          "kind": "insignia",
+          "label": "Guion de la Santa Cruz",
+          "year": "1990",
+          "author": "Sobrinos de José Caro; asta y varas de Manuel de los Ríos",
+          "materials": "Terciopelo burdeos con la Cruz Fundacional en oro fino; plata de ley cincelada"
+        },
+        {
+          "kind": "insignia",
+          "label": "Libro de Reglas",
+          "year": "1947",
+          "author": "Jesús Domínguez (orfebrería)",
+          "materials": "Terciopelo rojo con cantoneras y escudo de metal plateado repujado"
+        },
+        {
+          "kind": "insignia",
+          "label": "Bocinas",
+          "year": "1956",
+          "author": "Manuel Román Seco (orfebrería); José Caro (paños)",
+          "materials": "Cuatro bocinas de orfebrería repujada con paños de terciopelo burdeos bordados en oro fino",
+          "pieceKey": "bocinas-1956"
+        }
+      ],
+      "closingStep": {
+        "label": "Paso del Santísimo Cristo de la Misericordia y Nuestra Señora de la Piedad",
+        "kind": "Paso de misterio"
+      }
     },
     {
       "label": "Cortejo del paso de palio",
       "items": [
-        { "kind": "insignia", "label": "Cruz parroquial", "year": "1947", "author": "Manuel Román Seco", "materials": "Metal plateado", "note": "Con dos ciriales del mismo orfebre." },
-        { "kind": "insignia", "label": "Simpecado", "year": "1949", "author": "Sobrinos de José Caro (reenriquecido); Inmaculada de Luis Ortega Bru; querubines de Guillermo Bonilla García", "materials": "Bordados de rocalla de una saya del siglo XVIII pasados a terciopelo azul marino con oro y sedas", "history": "Restaurado en 1979 por el mismo taller y en 2009 por el taller de Francisco Carrera, con terciopelo nuevo.", "note": "Lo acompañan dos faroles de metal plateado." },
-        { "kind": "insignia", "label": "Bandera azul y blanca", "year": "2007", "author": "Mariano Martín Santoja (bordado); taller de Seco Velasco (asta y varas, 1941)", "materials": "Tejido azul con cruz blanca y anagrama de María en oro fino" },
-        { "kind": "insignia", "label": "Banderín de la Bolsa de Caridad", "year": "1970", "author": "Esperanza Elena Caro (bordado); Emilio García Armenta (orfebrería)", "materials": "Terciopelo rojo bordado en oro fino con la palabra «Charitas»; remate con una alegoría de la Caridad" },
-        { "kind": "insignia", "label": "Bandera Asuncionista", "year": "1950", "author": "Sobrinos de José Caro (bordado); Emilio García Armenta (orfebrería)", "materials": "Seda blanca con técnica de aplicación y bordado en oro" },
-        { "kind": "insignia", "label": "Bandera Votiva", "year": "1969", "author": "José Antonio Rodríguez Hernández (pinturas); Sobrinos de José Caro (bordado); Manuel Román Seco (orfebrería)", "materials": "Seda blanca con pinturas de la Inmaculada, la Asunción y la Realeza de María" },
-        { "kind": "insignia", "label": "Estandarte", "year": "1944", "author": "Sobrinos de José Caro, sobre diseño de Manuel Caro", "materials": "Terciopelo azul oscuro con flores de lis y escudo en oro fino y sedas", "history": "Restaurado en 1958 y en 2000. Desde 2000 es el que sale en Semana Santa; el estandarte de 1976 (Viuda de Carrasquilla) salió hasta ese año.", "review": true },
-        { "kind": "insignia", "label": "Bocinas", "pieceKey": "bocinas-1956", "note": "Las mismas del cortejo de Cristo." }
-      ]
+        {
+          "kind": "insignia",
+          "label": "Cruz parroquial",
+          "year": "1947",
+          "author": "Manuel Román Seco",
+          "materials": "Metal plateado",
+          "note": "Con dos ciriales del mismo orfebre."
+        },
+        {
+          "kind": "insignia",
+          "label": "Simpecado",
+          "year": "1949",
+          "author": "Sobrinos de José Caro (reenriquecido); Inmaculada de Luis Ortega Bru; querubines de Guillermo Bonilla García",
+          "materials": "Bordados de rocalla de una saya del siglo XVIII pasados a terciopelo azul marino con oro y sedas",
+          "history": "Restaurado en 1979 por el mismo taller y en 2009 por el taller de Francisco Carrera, con terciopelo nuevo.",
+          "note": "Lo acompañan dos faroles de metal plateado."
+        },
+        {
+          "kind": "insignia",
+          "label": "Bandera azul y blanca",
+          "year": "2007",
+          "author": "Mariano Martín Santoja (bordado); taller de Seco Velasco (asta y varas, 1941)",
+          "materials": "Tejido azul con cruz blanca y anagrama de María en oro fino"
+        },
+        {
+          "kind": "insignia",
+          "label": "Banderín de la Bolsa de Caridad",
+          "year": "1970",
+          "author": "Esperanza Elena Caro (bordado); Emilio García Armenta (orfebrería)",
+          "materials": "Terciopelo rojo bordado en oro fino con la palabra «Charitas»; remate con una alegoría de la Caridad"
+        },
+        {
+          "kind": "insignia",
+          "label": "Bandera Asuncionista",
+          "year": "1950",
+          "author": "Sobrinos de José Caro (bordado); Emilio García Armenta (orfebrería)",
+          "materials": "Seda blanca con técnica de aplicación y bordado en oro"
+        },
+        {
+          "kind": "insignia",
+          "label": "Bandera Votiva",
+          "year": "1969",
+          "author": "José Antonio Rodríguez Hernández (pinturas); Sobrinos de José Caro (bordado); Manuel Román Seco (orfebrería)",
+          "materials": "Seda blanca con pinturas de la Inmaculada, la Asunción y la Realeza de María"
+        },
+        {
+          "kind": "insignia",
+          "label": "Estandarte",
+          "year": "1944",
+          "author": "Sobrinos de José Caro, sobre diseño de Manuel Caro",
+          "materials": "Terciopelo azul oscuro con flores de lis y escudo en oro fino y sedas",
+          "history": "Restaurado en 1958 y en 2000. Desde 2000 es el que sale en Semana Santa; el estandarte de 1976 (Viuda de Carrasquilla) salió hasta ese año.",
+          "review": true
+        },
+        {
+          "kind": "insignia",
+          "label": "Bocinas",
+          "pieceKey": "bocinas-1956",
+          "note": "Las mismas del cortejo de Cristo."
+        }
+      ],
+      "closingStep": {
+        "label": "Paso de palio de María Santísima de la Caridad en su Soledad",
+        "kind": "Paso de palio"
+      }
     }
-  ]
+  ],
+  "procession": true
 }

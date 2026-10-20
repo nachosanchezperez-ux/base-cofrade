@@ -55,20 +55,31 @@ test('La demostración está marcada como tal y no lleva fuente', () => {
 import { readFileSync } from 'node:fs';
 import { orderFromListing } from '../lib/procession-order.js';
 
-test('Insignias del Baratillo (borrador): orden de la web, dos cortejos y bocinas una sola vez', () => {
+test('Orden procesional del Baratillo (borrador): dos cortejos, cada uno cerrado por su paso, bocinas una sola vez', () => {
   const listing = JSON.parse(readFileSync(new URL('../docs/insignias-baratillo-borrador-2026-10-20.json', import.meta.url), 'utf8'));
   const order = orderFromListing(listing);
   assert.equal(order.scope, 'listing');
   assert.equal(order.source.url, 'https://hermandadelbaratillo.es/insignias/');
   const sections = markRepeatedHeritage(processionSections(order));
-  assert.deepEqual(sections.map((s) => s.title), ['Cortejo del paso de Cristo', 'Cortejo del paso de palio']);
+  assert.equal(order.procession, true);
+  assert.deepEqual(sections.map((s) => s.kind === 'step' ? `paso:${s.step.note}` : s.title), ['Cortejo del paso de Cristo', 'paso:Paso de misterio', 'Cortejo del paso de palio', 'paso:Paso de palio']);
   assert.equal(sections[0].items[0].label, 'Cruz de Guía (1956)');
   assert.equal(sections[0].items.length, 10);
-  assert.equal(sections[1].items.length, 8);
+  assert.equal(sections[2].items.length, 8);
   const bocinas = sections.flatMap((s) => s.items).filter((i) => i.label.startsWith('Bocinas'));
   assert.equal(bocinas.length, 2);
   assert.ok(bocinas[0].heritage.author);
   assert.equal(bocinas[1].heritage, null);
-  assert.deepEqual(processionCounts(order), { insignias: 17, tramos: 0, steps: 0 });
-  assert.ok(!sections.some((s) => s.kind === 'step'), 'no se colocan pasos que la fuente no sitúa');
+  assert.deepEqual(processionCounts(order), { insignias: 17, tramos: 0, steps: 2 });
+});
+
+test('Glosario de insignias: tipo por nombre y pista de reconocimiento', async () => {
+  const { insigniaType, recognitionHint } = await import('../lib/insignia-glossary.js');
+  assert.equal(insigniaType('Bandera Votiva (1969)').key, 'bandera');
+  assert.equal(insigniaType('Banderín de San José').key, 'banderin');
+  assert.equal(insigniaType('Guion de la Real Maestranza').key, 'guion');
+  assert.equal(insigniaType('Cruz de Guía (1956)').key, 'cruz-guia');
+  assert.equal(insigniaType('Elemento sin tipo'), null);
+  assert.equal(recognitionHint('Terciopelo burdeos; asta de plata'), 'Terciopelo burdeos');
+  assert.equal(recognitionHint(''), '');
 });

@@ -301,3 +301,61 @@
   color: #8a5a12 !important;
   font-weight: 700;
 }
+
+/* Guía para quien ve pasar el cortejo. */
+.howTo {
+  margin: 0 0 6px;
+  color: #23272c;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.item {
+  position: relative;
+}
+
+.number {
+  position: absolute;
+  top: 6px;
+  left: -26px;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brotherhood-primary, #153b69) 35%, #e3e7eb);
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.look,
+.whatIs {
+  margin: 4px 0 0;
+  color: #3d454e;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.look > span,
+.whatIs > span {
+  color: #23272c;
+  font-weight: 700;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (min-width: 900px) {
+  .number {
+    left: -26px;
+  }
+}

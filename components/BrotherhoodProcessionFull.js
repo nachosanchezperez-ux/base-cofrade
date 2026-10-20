@@ -1,16 +1,19 @@
 import Image from 'next/image'
 import { ITEM_KINDS, markRepeatedHeritage, processionCounts, processionSections } from '@/lib/procession-order'
+import { insigniaType, recognitionHint } from '@/lib/insignia-glossary'
 import { plural } from '@/lib/plural'
 import styles from './BrotherhoodProcessionFull.module.css'
 
-// «Ver cortejo completo» (Tarea 15 · prototipo). Solo aparece cuando la
-// Hermandad tiene un orden procesional documentado (hasDocumentedOrder); si no,
-// no se pinta nada y el cortejo resumido queda exactamente igual.
-// Todo va en el HTML del servidor dentro de un <details>: indexable y sin JS.
+// «Ver cortejo completo» (Tarea 15 · prototipo): una guía para quien ve pasar la
+// cofradía. De arriba abajo, en el orden real: cada insignia con su número en
+// su cortejo, cómo reconocerla y qué es (la primera vez que aparece ese tipo),
+// y cada paso cerrando su cortejo. Solo aparece con un orden documentado; si
+// no, no se pinta nada y el cortejo resumido queda igual.
+// Todo va en el HTML del servidor dentro de <details>: indexable y sin JS.
 // La pieza patrimonial se describe una sola vez, plegada bajo su posición.
 
 function folded(value = '') {
-  return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+  return String(value || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 }
 
 function HeritageDetails({ heritage, label = '' }) {
@@ -22,11 +25,10 @@ function HeritageDetails({ heritage, label = '' }) {
   ].filter(Boolean)
   const hasMore = facts.length || heritage.history || heritage.source
   if (!hasMore) return null
-  // Cerrado si no hay más que el nombre; abierto en el HTML, plegado a la vista.
   return <details className={styles.more}>
     <summary>Sobre la pieza <b aria-hidden="true">+</b></summary>
     {facts.length ? <dl className={styles.facts}>
-      {facts.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
+      {facts.map(([factLabel, value]) => <div key={factLabel}><dt>{factLabel}</dt><dd>{value}</dd></div>)}
     </dl> : null}
     {heritage.history ? <p>{heritage.history}</p> : null}
     {heritage.review ? <p className={styles.review}>Dato pendiente de confirmar con la Hermandad.</p> : null}
@@ -35,16 +37,24 @@ function HeritageDetails({ heritage, label = '' }) {
   </details>
 }
 
-function Item({ item }) {
+function Item({ item, number, explained }) {
   const photo = item.heritage?.photo
+  const type = insigniaType(item.label)
+  // Qué es: solo la primera vez que pasa ese tipo de insignia (no se repite en cada bandera).
+  const whatIs = type && !explained.has(type.key) ? type : null
+  if (whatIs) explained.add(type.key)
+  const hint = item.look || recognitionHint(item.materials)
+  const showKind = item.kind !== 'insignia' && item.kind !== 'cross_guide' && !folded(item.label).includes(folded(ITEM_KINDS[item.kind]))
   return <li className={`${styles.item} ${photo ? styles.withPhoto : ''}`} data-kind={item.kind}>
+    {number ? <span className={styles.number} aria-hidden="true">{number}</span> : null}
     {photo ? <figure className={styles.thumb}>
       <Image src={photo.src} alt={photo.alt || item.label} fill sizes="48px" />
     </figure> : null}
     <div className={styles.copy}>
-      <p className={styles.name}>{item.label}</p>
-      {/* El tipo solo si el nombre no lo dice ya («Antepresidencia» no se repite). */}
-      {item.kind !== 'insignia' && !folded(item.label).includes(folded(ITEM_KINDS[item.kind])) ? <p className={styles.kind}>{ITEM_KINDS[item.kind]}</p> : null}
+      <p className={styles.name}>{number ? <span className={styles.visuallyHidden}>{number}. </span> : null}{item.label}</p>
+      {showKind ? <p className={styles.kind}>{ITEM_KINDS[item.kind]}</p> : null}
+      {hint && !item.repeatOf ? <p className={styles.look}><span>Cómo reconocerla:</span> {hint.charAt(0).toLowerCase()}{hint.slice(1)}</p> : null}
+      {whatIs ? <p className={styles.whatIs}><span>Qué es:</span> {whatIs.text}</p> : null}
       {item.note ? <p className={styles.note}>{item.note}</p> : null}
       <HeritageDetails heritage={item.heritage} label={item.label} />
     </div>
@@ -56,10 +66,13 @@ export default function BrotherhoodProcessionFull({ order, profile = 'penitencia
   if (!sections.length) return null
   const counts = processionCounts(order)
   const isGloria = profile === 'gloria'
+  const explained = new Set()
   const summary = [
     counts.insignias ? plural(counts.insignias, 'insignia', 'insignias') : '',
     counts.tramos ? plural(counts.tramos, 'tramo', 'tramos') : '',
+    counts.steps ? plural(counts.steps, 'paso', 'pasos') : '',
   ].filter(Boolean).join(' · ')
+  const isProcession = order.scope !== 'listing' || order.procession
 
   return <div className={`shell ${styles.wrap}`}>
     <details className={styles.full} id="cortejo-completo" open={defaultOpen || undefined}>
@@ -75,9 +88,10 @@ export default function BrotherhoodProcessionFull({ order, profile = 'penitencia
         {order.draft ? <p className={styles.demo} role="note">
           <strong>Borrador sin publicar.</strong> Datos tomados de la web oficial y aún no cargados en Hilo Cofrade; pendientes de revisión.
         </p> : null}
+        {isProcession ? <p className={styles.howTo}>Las insignias pasan en este orden, de arriba abajo. Cada cortejo termina en su paso.</p> : null}
         {order.source?.name ? <p className={styles.sourceLine}>
           {order.scope === 'listing'
-            ? <>Insignias en el orden en que las publica la Hermandad. No constan tramos ni la posición exacta de los pasos. · </>
+            ? <>{order.procession ? 'Orden procesional publicado por la Hermandad' : 'Insignias en el orden en que las publica la Hermandad'} · </>
             : <>Orden oficial {order.year ? `de ${order.year}` : ''} · </>}
           {order.source.url ? <a href={order.source.url} target="_blank" rel="noopener noreferrer">{order.source.name}</a> : order.source.name}
           {order.source.accessedAt ? <> · consultado el {order.source.accessedAt.split('-').reverse().join('/')}</> : null}
@@ -87,18 +101,17 @@ export default function BrotherhoodProcessionFull({ order, profile = 'penitencia
             ? <li key={section.key} className={styles.step}>
               <span className={styles.stepMark} aria-hidden="true" />
               <div>
-                <p className={styles.stepKind}>{ITEM_KINDS.step}</p>
+                <p className={styles.stepKind}>{section.step.note || ITEM_KINDS.step}</p>
                 <p className={styles.stepName}>{section.step.label}</p>
-                {section.step.note ? <p className={styles.note}>{section.step.note}</p> : null}
               </div>
             </li>
             : <li key={section.key} className={styles.section}>
               {section.title ? <p className={styles.sectionTitle}>
                 <span className={styles.sectionMark} aria-hidden="true" />
                 {section.title}
-                {section.tramo?.note ? <small>{section.tramo.note}</small> : null}
+                {section.items.length ? <small>{plural(section.items.length, 'insignia', 'insignias')}</small> : null}
               </p> : null}
-              {section.items.length ? <ul className={styles.items}>{section.items.map((item) => <Item key={item.key || `${item.sequence}-${item.label}`} item={item} />)}</ul> : null}
+              {section.items.length ? <ol className={styles.items}>{section.items.map((item, index) => <Item key={item.key || `${item.sequence}-${item.label}`} item={item} number={index + 1} explained={explained} />)}</ol> : null}
             </li>)}
         </ol>
       </div>
