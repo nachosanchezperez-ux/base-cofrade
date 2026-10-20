@@ -39,3 +39,13 @@ test('los listados del Panel usan concordancia en sus contadores', () => {
   assert.match(read('app/panel/(protected)/hermandades/page.js'), /plural\(brotherhoods\.length, 'hermandad', 'hermandades'\)/)
   assert.doesNotMatch(read('app/panel/(protected)/imagenes/page.js'), /\{images\.length\} imágenes/)
 })
+
+test('el resto de la web pública concuerda y no muestra textos internos', () => {
+  const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
+  assert.doesNotMatch(read('components/MusicDashboard.js'), /\{number\([a-zA-Z.]+\)\} bandas/)
+  assert.match(read('app/semana-santa/2027/cambios-musicales/page.js'), /pluralWord\(changes\.length, 'cambio', 'cambios'\)/)
+  assert.match(read('components/MunicipalityAgendaHub.js'), /filter\(\(\[count\]\) => count > 0\)/)
+  const author = read('app/autores/[slug]/page.js')
+  assert.doesNotMatch(author, /fuera de indexación/)
+  assert.match(author, /filter\(\(item\) => Number\(item\.value\) > 0\)/)
+})

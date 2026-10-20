@@ -292,8 +292,6 @@
 .sources a {
   color: var(--brotherhood-primary, #153b69);
   font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 @media (max-width: 720px) {

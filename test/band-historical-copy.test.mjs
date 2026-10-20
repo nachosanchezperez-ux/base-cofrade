@@ -7,7 +7,8 @@ const rail = readFileSync(new URL('../app/bandas/[slug]/HistoricalAccompaniments
 const migration = readFileSync(new URL('../supabase/migrations_archive/post-first-edition-editorial/20260902090401_normaliza_textos_historicos_bandas.sql', import.meta.url), 'utf8')
 
 test('la microcopia del histórico habla de trayectoria y etapas', () => {
-  assert.match(page, /Un recorrido por las hermandades y los pasos que forman parte de su trayectoria\./)
+  // Sin entradilla: el título «Acompañamientos históricos» ya lo dice.
+  assert.doesNotMatch(page, /Un recorrido por las hermandades y los pasos que forman parte de su trayectoria\./)
   assert.doesNotMatch(page, /relaciones documentadas para explorar/)
   assert.match(rail, /De la etapa más reciente a la más antigua/)
 })

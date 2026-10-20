@@ -16,10 +16,11 @@ test('la fotografía de presentación de una banda nunca deja el icono roto nati
   assert.match(css, /\.featurePhotoFallback/)
 })
 
-test('todas las bandas conservan una portada aunque aún no tengan fotografía', () => {
-  assert.match(page, /<div className=\{styles\.overviewGrid\}>\s*<BandFeaturePhoto/)
+// Criterio del propietario (19/10/2026): sin fotografía no hay hueco ni relleno.
+// El logotipo ya está en la cabecera; la foto solo aparece si existe.
+test('sin fotografía no se pinta la portada de relleno', () => {
+  assert.match(page, /\{band\.heroImagePath \? <BandFeaturePhoto/)
   assert.match(page, /src=\{band\.heroImagePath\}/)
-  assert.match(page, /logoPath=\{band\.logoPath\}/)
+  assert.match(page, /styles\.overviewGridSingle/)
   assert.doesNotMatch(page, /style=\{!band\.heroImagePath/)
-  assert.doesNotMatch(page, /\{band\.heroImagePath \? \(\s*<BandFeaturePhoto/)
 })

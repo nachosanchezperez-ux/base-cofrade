@@ -70,10 +70,7 @@
   transition: transform 160ms ease;
 }
 
-.inlineLink:hover,
-.inlineLink:focus-visible {
-  text-decoration: underline;
-}
+
 
 .inlineLink:hover span,
 .inlineLink:focus-visible span {
@@ -191,7 +188,7 @@
 .personRole { display: block; font-size: 13px; color: #586370; margin-bottom: 6px; }
 .person strong { font-size: 18px; line-height: 1.5; }
 .person a { color: inherit; text-decoration: none; }
-.person a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
 .person strong a { display: inline-block; padding-block: 8px; }
 .personPeriod { display: block; font-size: 13px; color: #586370; line-height: 1.6; }
 .personImages { list-style: none; padding: 0; margin: 10px 0 0; }

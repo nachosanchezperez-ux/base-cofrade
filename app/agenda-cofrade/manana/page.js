@@ -11,7 +11,7 @@ const config = TEMPORAL_AGENDA_PAGES.tomorrow
 export const metadata = {
   title: config.title,
   description: config.description,
-  ...socialMetadata({ title: config.title, description: config.description, path: `/agenda-cofrade/${config.slug}` }),
+  ...socialMetadata({ title: config.title, description: config.description, path: `/agenda-cofrade/${config.slug}`, images: null }),
 }
 
 export default async function TemporalAgendaPage() {

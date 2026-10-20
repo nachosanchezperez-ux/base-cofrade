@@ -57,7 +57,7 @@
 .bandRelation { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 7px; margin-top: 9px; }
 .bandRelation small { color: #89949e; font-size: 9px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
 .bandRelation a,.bandRelation strong { color: var(--bc-blue); font-size: 11px; font-weight: 800; }
-.bandRelation a:hover,.bandRelation a:focus-visible { color: var(--bc-red); text-decoration: underline; text-underline-offset: 3px; }
+.bandRelation a:hover,.bandRelation a:focus-visible { color: var(--bc-red); }
 .listen { display: inline-flex; align-items: center; gap: 5px; min-height: 30px; margin-top: 1px; padding: 0 9px; border: 1px solid rgba(21,59,105,.14); border-radius: 999px; color: var(--bc-blue); background: #f7f9fb; font-size: 9px; font-weight: 900; white-space: nowrap; }
 .listen span { color: var(--bc-red); font-size: 8px; }
 .listen:hover,.listen:focus-visible { border-color: rgba(167,25,48,.28); color: var(--bc-red); background: #fff; }

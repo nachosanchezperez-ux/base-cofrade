@@ -175,7 +175,7 @@ button, input { font: inherit; }
 .detail-hero { background: linear-gradient(135deg, #5f1c2a, #2c0e14); color: white; padding: 50px 0 0; }
 .breadcrumbs { display: flex; gap: 9px; font-size: 12px; color: #8a7f82; margin-bottom: 28px; }
 .detail-hero .breadcrumbs { color: rgba(255,255,255,.58); }
-.breadcrumbs a:hover { text-decoration: underline; }
+
 .detail-hero-grid { display: grid; grid-template-columns: 1fr 180px; gap: 40px; align-items: center; }
 .detail-hero h1 { font-size: clamp(64px, 9vw, 112px); line-height: .86; margin: 18px 0 28px; }
 .official-name { max-width: 830px; color: rgba(255,255,255,.68); font-family: Georgia, serif; font-size: 17px; }
@@ -447,8 +447,7 @@ button, input { font: inherit; }
   text-decoration:none;
   text-transform:uppercase;
 }
-.outing-card-related:hover .outing-guide-link,
-.outing-guide-link:hover{text-decoration:underline}
+
 
 /* CULTOS */
 
@@ -644,7 +643,7 @@ button, input { font: inherit; }
 .release-card-team li{display:grid;gap:3px;padding:11px 12px;border-radius:11px;background:color-mix(in srgb,var(--brotherhood-primary) 5%,#f7f9fa)}
 .release-card-team li strong{color:var(--brotherhood-dark);font-size:13px;line-height:1.3}
 .release-card-team li span{color:#74808a;font-size:11px;line-height:1.35}
-@media(hover:hover){.release-card-team summary:hover span{text-decoration:underline;text-underline-offset:3px}}
+
 @media(prefers-reduced-motion:reduce){.release-card-team summary b{transition:none}}
 
 /* CATÁLOGO PATRIMONIAL */
@@ -1676,7 +1675,7 @@ button, input { font: inherit; }
   font-size:12px;
   font-weight:900;
 }
-.via-crucis-sources a:hover{text-decoration:underline}
+
 
 @media(max-width:900px){
   
@@ -1908,7 +1907,7 @@ button, input { font: inherit; }
   font-weight:800;
   text-decoration:none;
 }
-.essential-source:hover{text-decoration:underline}
+
 
 /* Elimina visualmente la antigua sensaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³n de listado rayado */
 .essential-card dl,
@@ -3309,10 +3308,9 @@ button, input { font: inherit; }
   line-height:1.35;
   font-weight:800;
 }
-.source-row:hover .source-copy strong{text-decoration:underline}
 
-@media(max-width:1100px){
-}
+
+
 
 @media(max-width:900px){
   .brotherhood-nav-shell{gap:0}

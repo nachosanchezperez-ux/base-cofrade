@@ -230,9 +230,6 @@
 
 .rowLink:hover .title {
   color: var(--home-blue);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
 }
 
 .organizer {
@@ -520,4 +517,35 @@
 
 @keyframes agendaPulse {
   50% { box-shadow: 0 0 0 6px rgba(183, 31, 55, 0); }
+}
+
+/*
+ * PC (≥1024 px): el periodo (Hoy, Mañana, Fin de semana) a la izquierda e
+ * Igualás y ensayos a la derecha, en vez de una tarjeta estirada a 1160 px y
+ * las igualás debajo. En móvil y tableta, .columns, .period y .aside son
+ * bloques normales y no cambian nada.
+ */
+.columns,
+.period,
+.aside {
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .columns[data-aside] {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    column-gap: 36px;
+    align-items: start;
+  }
+
+  .columns[data-aside] .aside {
+    padding-left: 32px;
+    border-left: 1px solid var(--home-line);
+  }
+
+  /* La columna lateral es estrecha: las filas, una debajo de otra. */
+  .columns[data-aside] .aside .list {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

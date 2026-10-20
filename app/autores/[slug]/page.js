@@ -33,70 +33,75 @@ function schemaId(agent, canonicalPath) {
   return `${absoluteUrl(canonicalPath)}#${agent.kind === 'person' ? 'person' : 'organization'}`
 }
 
+// Cifra con su etiqueta en singular o plural. Las cifras a cero no se muestran.
+function metric(singular, pluralLabel, value) {
+  return { label: Number(value) === 1 ? singular : pluralLabel, value }
+}
+
 function profileMetrics(agent, categoryKey) {
   const relations = agentRelationBreakdown(agent)
   const sources = agent.sources.length
 
   if (categoryKey === 'music') {
     return [
-      { label: 'Marchas documentadas', value: relations.marches },
-      { label: 'Relaciones totales', value: agent.relationCount },
-      { label: 'Fuentes directas', value: sources },
+      metric('Marcha documentada', 'Marchas documentadas', relations.marches),
+      metric('Relación', 'Relaciones totales', agent.relationCount),
+      metric('Fuente directa', 'Fuentes directas', sources),
     ]
   }
 
   if (categoryKey === 'imagery') {
     return [
-      { label: 'Imágenes documentadas', value: relations.images },
-      { label: 'Intervenciones', value: relations.heritage },
-      { label: 'Fuentes directas', value: sources },
+      metric('Imagen documentada', 'Imágenes documentadas', relations.images),
+      metric('Intervención', 'Intervenciones', relations.heritage),
+      metric('Fuente directa', 'Fuentes directas', sources),
     ]
   }
 
   if (categoryKey === 'restoration') {
     return [
-      { label: 'Intervenciones', value: relations.heritage },
-      { label: 'Obras relacionadas', value: relations.images + relations.steps },
-      { label: 'Fuentes directas', value: sources },
+      metric('Intervención', 'Intervenciones', relations.heritage),
+      metric('Obra relacionada', 'Obras relacionadas', relations.images + relations.steps),
+      metric('Fuente directa', 'Fuentes directas', sources),
     ]
   }
 
   if (categoryKey === 'dressing') {
     return [
-      { label: 'Imágenes vestidas', value: relations.dressings },
-      { label: 'Relaciones totales', value: agent.relationCount },
-      { label: 'Fuentes directas', value: sources },
+      metric('Imagen vestida', 'Imágenes vestidas', relations.dressings),
+      metric('Relación', 'Relaciones totales', agent.relationCount),
+      metric('Fuente directa', 'Fuentes directas', sources),
     ]
   }
 
   if (['textile', 'goldsmith', 'carving'].includes(categoryKey)) {
     return [
-      { label: 'Trabajos documentados', value: relations.heritage + relations.steps },
-      { label: 'Relaciones totales', value: agent.relationCount },
-      { label: 'Fuentes directas', value: sources },
+      metric('Trabajo documentado', 'Trabajos documentados', relations.heritage + relations.steps),
+      metric('Relación', 'Relaciones totales', agent.relationCount),
+      metric('Fuente directa', 'Fuentes directas', sources),
     ]
   }
 
   if (categoryKey === 'visual') {
     return [
-      { label: 'Obras documentadas', value: relations.images + relations.heritage },
-      { label: 'Relaciones totales', value: agent.relationCount },
-      { label: 'Fuentes directas', value: sources },
+      metric('Obra documentada', 'Obras documentadas', relations.images + relations.heritage),
+      metric('Relación', 'Relaciones totales', agent.relationCount),
+      metric('Fuente directa', 'Fuentes directas', sources),
     ]
   }
 
   if (categoryKey === 'patrimony') {
     return [
-      { label: 'Intervenciones', value: relations.heritage },
-      { label: 'Fases de paso', value: relations.steps },
-      { label: 'Fuentes directas', value: sources },
+      metric('Intervención', 'Intervenciones', relations.heritage),
+      metric('Fase de paso', 'Fases de paso', relations.steps),
+      metric('Fuente directa', 'Fuentes directas', sources),
     ]
   }
 
   return [
-    { label: 'Relaciones documentadas', value: agent.relationCount },
-    { label: 'Disciplinas', value: agent.disciplines.length },
-    { label: 'Fuentes directas', value: sources },
+    metric('Relación documentada', 'Relaciones documentadas', agent.relationCount),
+    metric('Disciplina', 'Disciplinas', agent.disciplines.length),
+    metric('Fuente directa', 'Fuentes directas', sources),
   ]
 }
 
@@ -280,7 +285,7 @@ export default async function AuthorPage({ params }) {
           </div>
 
           <dl className={styles.metrics}>
-            {metrics.map((metric) => (
+            {metrics.filter((item) => Number(item.value) > 0).map((metric) => (
               <div key={metric.label}>
                 <dt>{metric.label}</dt>
                 <dd>{metric.value}</dd>
@@ -321,32 +326,28 @@ export default async function AuthorPage({ params }) {
         </div>
       </section>
 
-      <section className={`shell ${styles.directory} ${styles.profileDirectory}`} aria-labelledby="perfil-autor">
-        <header className={styles.directoryHeading}>
-          <div>
-            <span>{category.kicker}</span>
-            <h2 id="perfil-autor">{category.detailTitle}</h2>
-          </div>
-          <p>{category.detailCopy}</p>
-        </header>
-
-        <div className={styles.groups}>
-          {authorWorkOrder(category.key).map((key) => (
-            <WorkGroup
-              categoryKey={category.key}
-              key={key}
-              {...groups[key]}
-            />
-          ))}
-
-          {!agent.relationCount ? (
-            <div className={styles.empty}>
-              <strong>Perfil todavía sin relaciones públicas suficientes.</strong>
-              <p>La ficha se mantiene fuera de indexación hasta ampliar su documentación.</p>
+      {agent.relationCount ? (
+        <section className={`shell ${styles.directory} ${styles.profileDirectory}`} aria-labelledby="perfil-autor">
+          <header className={styles.directoryHeading}>
+            <div>
+              <span>{category.kicker}</span>
+              <h2 id="perfil-autor">{category.detailTitle}</h2>
             </div>
-          ) : null}
-        </div>
-      </section>
+            <p>{category.detailCopy}</p>
+          </header>
+
+          <div className={styles.groups}>
+            {authorWorkOrder(category.key).map((key) => (
+              <WorkGroup
+                categoryKey={category.key}
+                key={key}
+                {...groups[key]}
+              />
+            ))}
+
+          </div>
+        </section>
+      ) : null}
 
       <SourcesBlock sources={agent.sources} />
     </div>
