@@ -27,7 +27,7 @@ export default function BaratilloInsigniasLaboratoryPage() {
       <p style={{ margin: 0, color: '#A71930', fontSize: 12, fontWeight: 800, letterSpacing: '.1em', textTransform: 'uppercase' }}>Laboratorio · Tarea 15</p>
       <h1 style={{ margin: '6px 0 8px', fontSize: 28, lineHeight: 1.15 }}>Insignias del Baratillo</h1>
       <p style={{ margin: '0 0 16px', maxWidth: '62ch', color: '#3d454e', fontSize: 16, lineHeight: 1.55 }}>
-        Así quedaría «Ver cortejo completo» en el capítulo Cortejo de El Baratillo, con el orden que publica la Hermandad. La historia de cada insignia no se repite: está una sola vez en Patrimonio, más abajo, y el cortejo enlaza a ella.
+        Así quedaría «Ver insignias del cortejo» en el capítulo Cortejo de El Baratillo, con el orden que publica la Hermandad. Cada pieza tiene un solo registro en Patrimonio, más abajo, y el cortejo enlaza a él.
       </p>
     </div>
     <BrotherhoodProcessionFull order={orderFromListing(listing)} defaultOpen />
