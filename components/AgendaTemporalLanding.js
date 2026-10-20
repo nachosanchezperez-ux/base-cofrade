@@ -3,7 +3,8 @@ import AgendaTemporalNav from '@/components/AgendaTemporalNav'
 import AgendaTemporalEventList from '@/components/AgendaTemporalEventList'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import JsonLd from '@/components/JsonLd'
-import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/seo'
+import { agendaEventListJsonLd } from '@/lib/agenda-event-jsonld'
+import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/seo'
 import styles from './AgendaTemporalLanding.module.css'
 
 // Con pocas citas no hay nada que filtrar: la lista va directamente tras el periodo.
@@ -68,9 +69,11 @@ function EmptyPeriod({ landing }) {
 }
 
 export default function AgendaTemporalLanding({ landing }) {
-  const structuredItems = landing.items
-    .filter((item) => item.href)
-    .map((item) => ({ name: item.title, path: item.href }))
+  // El enlace visible de cada cita (eventHref), sin repetir los de varios días.
+  const structuredItems = [...new Map(landing.items
+    .filter((item) => item.eventHref)
+    .map((item) => [item.eventHref, { name: item.title, path: item.eventHref }])).values()]
+  const eventList = agendaEventListJsonLd(landing.items, { name: landing.title, url: absoluteUrl(landing.path) })
   const count = landing.count ?? landing.items.length
 
   return (
@@ -91,6 +94,7 @@ export default function AgendaTemporalLanding({ landing }) {
         ...(landing.summaryWithPlaces ? { description: landing.summaryWithPlaces } : {}),
         ...(landing.temporalCoverage ? { temporalCoverage: landing.temporalCoverage } : {}),
       }} />
+      {eventList ? <JsonLd data={eventList} /> : null}
 
       <header className={styles.hero}>
         <div className="shell">
