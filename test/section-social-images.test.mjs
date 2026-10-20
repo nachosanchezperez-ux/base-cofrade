@@ -89,3 +89,16 @@ test('Agenda e Igualás piden la tarjeta grande al compartirse', () => {
   assert.match(read('app/agenda-cofrade/page.js'), /twitter: \{ card: 'summary_large_image'/)
   assert.match(read('app/igualas-y-ensayos/page.js'), /twitter: \{ card: 'summary_large_image'/)
 })
+
+test('Hoy, Mañana y Fin de semana no fijan la imagen genérica y usan la de su sección', async () => {
+  for (const slug of ['hoy', 'manana', 'fin-de-semana']) {
+    assert.match(read(`app/agenda-cofrade/${slug}/page.js`), /images: null/, slug)
+  }
+  const { socialMetadata } = await import('../lib/seo.js')
+  const own = socialMetadata({ title: 'Hoy', description: 'Agenda', path: '/agenda-cofrade/hoy', images: null })
+  assert.equal('images' in own.openGraph, false)
+  assert.equal('images' in own.twitter, false)
+  assert.equal(own.twitter.card, 'summary_large_image')
+  const fallback = socialMetadata({ title: 'Otra', description: 'Página', path: '/otra' })
+  assert.equal(fallback.openGraph.images[0].url, '/opengraph-image')
+})
