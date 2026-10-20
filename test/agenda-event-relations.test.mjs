@@ -94,3 +94,11 @@ test('versión compacta de la lista: una imagen, un paso y una banda', () => {
   ])
   assert.equal(agendaThreadLinks(item).length, 6)
 })
+
+test('no se repite como organizadora lo que ya dice el lugar', async () => {
+  const { repeatsPlace } = await import('../lib/agenda-event-relations.js')
+  assert.equal(repeatsPlace('Convento de Santa Clara de Alcalá de Guadaíra', 'Iglesia del Convento de Santa Clara'), true)
+  assert.equal(repeatsPlace('Hermandad de Pino Montano', 'Parroquia de San Isidro Labrador'), false)
+  assert.equal(repeatsPlace('Las Cigarreras', 'Parque de María Luisa'), false)
+  assert.equal(repeatsPlace('', 'Parroquia'), false)
+})

@@ -91,3 +91,33 @@
 .topline .shareIcons{margin:0 0 0 auto;flex:0 0 auto}
 .row>.actions{flex-wrap:nowrap}
 @media(max-width:340px){.row>.actions{flex-wrap:wrap}}
+
+/* ── Pulido (20/10) ─────────────────────────────────────────────────────────
+   Menos marcos: solo la barra lateral y la píldora del tipo. Lugar como texto,
+   hilo como enlaces con punto de color, botón principal relleno. En móvil, una
+   sola columna (la hora pasa encima del título y gana ~75 px de ancho). */
+.meta{display:block;margin-top:6px;color:#4e667a;font-size:13px;line-height:1.45}
+.meta>*+*::before{content:none}
+/* La línea de lugar es un <p>: no hereda el recorte ni la ocultación del resumen. */
+.copy>.meta{display:block;overflow:visible;-webkit-line-clamp:unset;margin:6px 0 0;color:#4e667a;font-size:13px}
+.meta .municipality{display:inline;min-height:0;padding:0;border-radius:0;background:none;color:#123a67!important;font-size:13px;font-weight:850;text-decoration:none}
+.meta .municipality:hover{color:#a61931!important}
+.meta .place,.meta .organizer{color:#4e667a;font-size:13px;font-weight:650}
+.topline>span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row>.actions .primary{gap:8px;border:1px solid #112339;background:#112339!important;color:#fff!important}
+.row>.actions .primary:hover{background:#1d3654!important;border-color:#1d3654}
+.row>.actions .primary .arrow{color:inherit;font-size:14px}
+.row>.actions .primary:focus-visible{outline:2px solid #a61931;outline-offset:2px}
+
+@media(max-width:720px){
+  .row{display:flex;flex-direction:column;align-items:stretch;gap:0;padding-top:16px;padding-bottom:18px}
+  .copy{display:contents}
+  .topline{order:1}
+  .time{order:2;display:block;margin-top:8px;padding:0}
+  .time strong{display:block;color:#123a67;font-size:16px;font-weight:850;line-height:1.2}
+  .title{order:3;margin-top:4px!important;font-size:19px!important;line-height:1.18!important}
+  .meta{order:4}
+  .summary{order:5}
+  .thread{order:6}
+  .row>.actions{order:7;grid-column:auto;margin-top:12px;padding-left:0}
+}

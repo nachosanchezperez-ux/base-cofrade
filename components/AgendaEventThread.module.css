@@ -20,3 +20,13 @@
 .compact li>a::before{width:2px}
 .compact small{flex:0 0 auto}
 .compact span{font-size:14px}
+
+/* Pulido (20/10): en las listas, el hilo va sin cajas. Punto de color, tipo en
+   pequeño y nombre como enlace; se separa del resto por aire, no por marcos. */
+.compact ul{gap:2px 16px}
+.compact li>a{align-items:center;gap:7px;min-height:36px;padding:4px 0;border:0;border-radius:0;background:none;overflow:visible}
+.compact li>a::before{position:static;flex:0 0 auto;width:8px;height:8px;border-radius:50%;background:var(--thread-accent,#a61931)}
+.compact li>a:hover{background:none}
+.compact li>a:hover span{color:#a61931}
+.compact small{color:#6b7c89;font-size:12px;font-weight:800;letter-spacing:.03em}
+.compact span{color:#123a67;font-size:14px;font-weight:800}
