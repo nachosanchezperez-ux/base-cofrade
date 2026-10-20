@@ -37,3 +37,9 @@ test('Historia larga en un solo bloque: entrada breve y el resto completo', () =
   assert.equal(`${lead} ${rest.join(' ')}`.replace(/\s+/g, ' ').trim(), text);
   assert.deepEqual(historyParagraphs('Breve.\n\nSegundo párrafo.'), { lead: 'Breve.', rest: ['Segundo párrafo.'] });
 });
+
+test('El mismo acto por agenda y por salida aparece una sola vez', () => {
+  const outings = [{ id: 'o1', estado: 'announced', fecha: '2026-11-08', hora: '17:00 h', nombre: 'Solemne Procesión de Alabanzas de la Coronación Canónica de Nuestra Señora del Amparo' }];
+  const milestone = brotherhoodMilestone(upcomingBrotherhoodActs(agenda, outings, '2026-10-19', cults));
+  assert.deepEqual(milestone.day.map((item) => item.time), ['10:00', '17:00']);
+});
