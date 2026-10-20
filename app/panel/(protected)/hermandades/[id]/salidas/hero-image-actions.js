@@ -2,6 +2,7 @@
 
 import { randomUUID } from 'node:crypto'
 import { revalidatePath } from 'next/cache'
+import { revalidateAgendaPhotos } from '@/lib/panel/revalidate-agenda'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import {
   assertStoredImageUpload,
@@ -81,12 +82,13 @@ async function audit(supabase, user, entry) {
 }
 
 function refresh(context) {
+  revalidateAgendaPhotos()
   revalidatePath('/panel')
   revalidatePath(`/panel/hermandades/${context.brotherhoodId}`)
   revalidatePath(`/panel/hermandades/${context.brotherhoodId}/salidas`)
   revalidatePath('/hermandades')
   revalidatePath('/extraordinarias')
-  revalidatePath('/glorias')
+  revalidatePath('/procesiones-de-gloria')
   revalidatePath('/')
   if (context.brotherhood.slug) revalidatePath(`/hermandades/${context.brotherhood.slug}`)
 }

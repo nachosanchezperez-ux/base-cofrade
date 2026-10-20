@@ -51,6 +51,7 @@ export default function QuickMediaUploadForm({
   uploadNote,
   returnSection = 'multimedia',
   selectAsHero = false,
+  allowPoster = false,
 }) {
   const fileInputId = useId()
   const alertRef = useRef(null)
@@ -237,6 +238,15 @@ export default function QuickMediaUploadForm({
         </span>
         <small id={fileHelpId}>{selectAsHero ? 'JPG, PNG, WEBP, GIF o AVIF · máximo 10 MB.' : 'JPG, PNG, WEBP, GIF o AVIF · máximo 10 MB por imagen y 10 imágenes por lote.'} Cada imagen se envía directamente al archivo multimedia.</small>
       </label>
+
+      {allowPoster ? (
+        <fieldset className={mediaStyles.presentationField}>
+          <legend>¿Qué es?</legend>
+          <label><input type="radio" name="presentation" value="photo" defaultChecked /> <span>Fotografía</span></label>
+          <label><input type="radio" name="presentation" value="poster" /> <span>Cartel</span></label>
+          <small>El cartel se muestra entero en la Agenda, sin recortar. En «Crédito» va su autor.</small>
+        </fieldset>
+      ) : null}
 
       <div className={mediaStyles.formGrid}>
         <label>

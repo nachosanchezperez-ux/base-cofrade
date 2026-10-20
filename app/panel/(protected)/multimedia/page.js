@@ -42,8 +42,8 @@ function LinkFields({ item = null }) {
         <span>Ajuste</span>
         <select name="fit_mode" defaultValue={item?.fit_mode || 'auto'}>
           <option value="auto">Automático</option>
-          <option value="cover">Cubrir</option>
-          <option value="contain">Contener</option>
+          <option value="cover">Fotografía: llenar el encuadre</option>
+          <option value="contain">Cartel o pieza: mostrar entera</option>
         </select>
       </label>
       <label><span>Foco X</span><input name="focus_x" type="number" min="0" max="100" step="0.01" defaultValue={item?.focus_x ?? 50} /></label>

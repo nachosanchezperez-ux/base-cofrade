@@ -2,6 +2,7 @@
 
 import { randomUUID } from 'node:crypto'
 import { revalidatePath } from 'next/cache'
+import { revalidateAgendaPhotos } from '@/lib/panel/revalidate-agenda'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
@@ -358,7 +359,8 @@ async function persistBrotherhoodRelatedMedia(formData, context, user, storagePa
         is_cover: true,
         focus_x: 50,
         focus_y: 50,
-        fit_mode: 'cover',
+        // Un cartel no se recorta en la Agenda (lib/agenda-event-photo.js).
+        fit_mode: value(formData, 'presentation') === 'poster' ? 'contain' : 'cover',
       }
     : {
         entity_id: context.targetId,
@@ -428,6 +430,7 @@ async function persistBrotherhoodRelatedMedia(formData, context, user, storagePa
 }
 
 function revalidateUploadedMedia(context) {
+  revalidateAgendaPhotos()
   revalidatePath('/panel')
   revalidatePath('/panel/multimedia')
   revalidatePath(`/panel/hermandades/${context.brotherhoodId}`)

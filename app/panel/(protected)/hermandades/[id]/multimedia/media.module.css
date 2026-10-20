@@ -625,3 +625,10 @@
     animation: none;
   }
 }
+
+/* Foto o cartel (cultos): el cartel se muestra entero en la Agenda. */
+.presentationField{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin:0;padding:12px 14px;border:1px solid #e1e5e8;border-radius:12px}
+.presentationField legend{padding:0 4px;color:#173047;font-size:13px;font-weight:800}
+.presentationField label{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-size:14px;font-weight:700}
+.presentationField input{width:20px;height:20px;accent-color:#112339}
+.presentationField small{flex-basis:100%;color:#6b7c89;font-size:12px}

@@ -2,8 +2,10 @@ import Link from 'next/link'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getPanelDashboard } from '@/lib/panel/data'
 import { getPanelDashboardGroups } from '@/lib/panel/navigation'
+import { getAgendaPhotoGaps } from '@/lib/panel/agenda-photo-gaps'
 import styles from '@/app/panel/panel.module.css'
 import accessStyles from '@/components/panel/PanelDashboardAccess.module.css'
+import gapStyles from '@/components/panel/AgendaPhotoGaps.module.css'
 
 const ACTION_LABELS = {
   create: 'Creación', update: 'Actualización', publish: 'Publicación',
@@ -14,7 +16,8 @@ const ACTION_LABELS = {
 export const metadata = { title: 'Panel de control' }
 
 export default async function PanelDashboardPage() {
-  const [user, dashboard] = await Promise.all([requirePanelUser(), getPanelDashboard()])
+  const [user, dashboard, photoGaps] = await Promise.all([requirePanelUser(), getPanelDashboard(), getAgendaPhotoGaps({ days: 15 })])
+  const canEdit = ['admin', 'editor'].includes(user.role)
   const total = Object.values(dashboard.entities).reduce((sum, value) => sum + value, 0)
   const accessGroups = getPanelDashboardGroups(user.role)
 
@@ -53,6 +56,26 @@ export default async function PanelDashboardPage() {
           ))}
         </div>
       </section>
+
+      {canEdit && photoGaps.length ? (
+        <section className={gapStyles.gaps} aria-labelledby="agenda-photo-gaps-title">
+          <div>
+            <span className={styles.eyebrow}>Agenda · próximos 15 días</span>
+            <h2 id="agenda-photo-gaps-title">{photoGaps.length} {photoGaps.length === 1 ? 'acto sin foto ni cartel' : 'actos sin foto ni cartel'}</h2>
+            <p>Con foto o cartel propios, el acto sale en grande en la Agenda. Sin ellos, se ve la foto del titular o el escudo.</p>
+          </div>
+          <ol>
+            {photoGaps.slice(0, 12).map((gap) => (
+              <li key={`${gap.kind}:${gap.id}:${gap.date}`}>
+                <time dateTime={gap.date}>{new Intl.DateTimeFormat('es-ES', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Europe/Madrid' }).format(new Date(`${gap.date}T12:00:00Z`))}</time>
+                <span><strong>{gap.title}</strong><small>{[gap.organizer, gap.shows === 'titular' ? 'Ahora: foto del titular' : gap.shows === 'crest' ? 'Ahora: escudo' : 'Ahora: sin imagen'].filter(Boolean).join(' · ')}</small></span>
+                {gap.panelHref ? <Link href={gap.panelHref}>Subir foto o cartel<span aria-hidden="true"> →</span></Link> : null}
+              </li>
+            ))}
+          </ol>
+          {photoGaps.length > 12 ? <p className={gapStyles.more}>Y {photoGaps.length - 12} más en las próximas dos semanas.</p> : null}
+        </section>
+      ) : null}
 
       <section className={styles.metricGrid} aria-label="Estado editorial">
         <article className={styles.metricCard}><span>Publicado</span><strong>{dashboard.entities.published}</strong><small>de {total} entidades</small></article>
