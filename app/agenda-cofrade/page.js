@@ -63,6 +63,8 @@ function compactAgendaItem(item) {
     imageFallbackPath: item.imageFallbackPath,
     imageKind: item.imageKind,
     imageAlt: item.imageAlt,
+    // Crédito de la foto (acto o titular); el escudo no lleva.
+    imageCredit: item.photo?.credit || '',
     relatedBrotherhoodHref: item.relatedBrotherhoodHref,
     relatedBrotherhoodName: item.relatedBrotherhoodName,
     repertoireText: item.repertoireText,
