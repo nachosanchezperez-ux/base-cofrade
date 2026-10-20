@@ -1230,8 +1230,9 @@
 @media (min-width: 860px) {
   .embedded .featureCardSlot.discoveryCard:not(:has([data-home-visual-kind="photo"])) > [data-home-visual-kind]:not([data-home-visual-kind="photo"]) {
     position: absolute !important;
-    top: 22px;
-    right: 24px;
+    top: 50%;
+    right: 26px;
+    transform: translateY(-50%);
     display: block !important;
     width: 76px;
     height: 76px;
@@ -1242,5 +1243,12 @@
 
   .embedded .featureCardSlot.discoveryCard:has(> [data-home-visual-kind]:not([data-home-visual-kind="photo"])) .featureCopy {
     padding-right: 96px;
+  }
+
+  /* Sin la etiqueta de recorrido, la línea superior no necesita reservar el
+     alto del escudo (dejaba un hueco bajo «Hilo para descubrir»). */
+  .embedded .featureCardSlot.discoveryCard .topline {
+    min-height: 0;
+    padding-right: 0;
   }
 }
