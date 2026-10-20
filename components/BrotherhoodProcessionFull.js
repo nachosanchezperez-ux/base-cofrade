@@ -13,11 +13,11 @@ function folded(value = '') {
   return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
 }
 
-function HeritageDetails({ heritage }) {
+function HeritageDetails({ heritage, label = '' }) {
   if (!heritage) return null
   const facts = [
     heritage.author ? ['Autor o taller', heritage.author] : null,
-    heritage.date ? ['Año', heritage.date] : null,
+    heritage.date && !String(label).includes(heritage.date) ? ['Año', heritage.date] : null,
     heritage.materials ? ['Materiales y técnica', heritage.materials] : null,
   ].filter(Boolean)
   const hasMore = facts.length || heritage.history || heritage.source
@@ -46,7 +46,7 @@ function Item({ item }) {
       {/* El tipo solo si el nombre no lo dice ya («Antepresidencia» no se repite). */}
       {item.kind !== 'insignia' && !folded(item.label).includes(folded(ITEM_KINDS[item.kind])) ? <p className={styles.kind}>{ITEM_KINDS[item.kind]}</p> : null}
       {item.note ? <p className={styles.note}>{item.note}</p> : null}
-      <HeritageDetails heritage={item.heritage} />
+      <HeritageDetails heritage={item.heritage} label={item.label} />
     </div>
   </li>
 }
