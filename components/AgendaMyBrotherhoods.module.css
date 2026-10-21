@@ -94,3 +94,11 @@
 .badge.badge > span {
   color: #b8860b;
 }
+
+/* Mi agenda (#agenda-mi-agenda): suscripción al calendario y seguir desde la cita. */
+.subscribe{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:8px 0 0;flex-basis:100%}
+.subscribe>span{color:#5f6e7a;font-size:13px;font-weight:700}
+.subscribe a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid #c9d3dc;border-radius:999px;background:#fff;color:#123a67;font-size:14px;font-weight:800;text-decoration:none}
+.subscribe a:hover{border-color:#123a67}
+.subscribe a:focus-visible{outline:2px solid #a61931;outline-offset:2px}
+.eventFollow{display:grid;gap:4px;margin-top:12px;padding-top:12px;border-top:1px solid #e3e7ea}

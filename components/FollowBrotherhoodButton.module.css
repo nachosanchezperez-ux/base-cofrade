@@ -64,3 +64,8 @@
   color: inherit;
   font-weight: 800;
 }
+
+/* Versión de la Agenda (#agenda-mi-agenda): sobre fondo claro, sin sombra. */
+.compact { margin-top: 4px; }
+.compact .button { border-color: #c9d3dc; box-shadow: none; background: #fff; color: #17283a; min-height: 44px; }
+.compact .hint { color: #5f6e7a; font-size: 12px; }

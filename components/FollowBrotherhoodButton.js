@@ -19,26 +19,27 @@ function StarIcon({ filled }) {
 }
 
 // Botón «Seguir» de la ficha de Hermandad. Sin registro: se guarda en el móvil.
-export default function FollowBrotherhoodButton({ slug, name, municipality = '' }) {
+// `compact`: versión para la Agenda, sobre fondo claro y sin texto de ayuda largo.
+export default function FollowBrotherhoodButton({ slug, name, municipality = '', placement = 'ficha_hermandad', compact = false }) {
   const { followed, toggle } = useFollowedBrotherhoods()
   if (!slug) return null
   const isFollowing = followed.some((item) => item.slug === slug)
 
   return (
-    <div className={styles.follow}>
+    <div className={`${styles.follow} ${compact ? styles.compact : ''}`}>
       <button
         type="button"
         className={`${styles.button} ${isFollowing ? styles.active : ''}`}
         aria-pressed={isFollowing}
-        onClick={() => toggle({ slug, name, municipality }, 'ficha_hermandad')}
+        onClick={() => toggle({ slug, name, municipality }, placement)}
       >
         <StarIcon filled={isFollowing} />
-        <span>{isFollowing ? 'Siguiendo' : 'Seguir hermandad'}</span>
+        <span>{isFollowing ? 'Siguiendo' : compact ? 'Seguir esta hermandad' : 'Seguir hermandad'}</span>
       </button>
       <p className={styles.hint} aria-live="polite">
         {isFollowing
-          ? <>Sus citas aparecerán primero en <Link href="/agenda-cofrade?mis=1">tu Agenda</Link>.</>
-          : 'Guárdala en este móvil, sin registrarte.'}
+          ? <>Sus citas llevan una estrella en <Link href="/agenda-cofrade?mis=1">tu Agenda</Link>.</>
+          : compact ? 'Sin registrarte: se guarda en este móvil.' : 'Guárdala en este móvil, sin registrarte.'}
       </p>
     </div>
   )
