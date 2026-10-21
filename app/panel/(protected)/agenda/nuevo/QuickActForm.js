@@ -48,7 +48,7 @@ export default function QuickActForm({ action, brotherhoods, municipalities, pla
         </label>
         <label className={styles.fieldWide}>
           <span>Título <small>(opcional)</small></span>
-          <input name="title" maxLength={160} defaultValue={defaults.title || ''} placeholder={type ? `${type.label.replace(' (ordinaria)', '')} · Hermandad` : 'Se compone con el tipo y la Hermandad'} />
+          <input name="title" maxLength={160} defaultValue={defaults.title || ''} placeholder={type ? `${type.label.replace(/ \(ordinari[ao]\)$/, '')} · Hermandad` : 'Se compone con el tipo y la Hermandad'} />
         </label>
         <label>
           <span>{isCult ? 'Primer día' : 'Fecha'}</span>
