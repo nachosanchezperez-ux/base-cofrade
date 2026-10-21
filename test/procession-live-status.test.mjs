@@ -24,7 +24,7 @@ test('soporta entradas de madrugada sin returnDate explícita', () => {
     date: '2026-09-23',
     startTime: '20:00',
     endTime: '01:30',
-  }, new Date('2026-09-23T23:30:00Z'))
+  }, new Date('2026-09-23T23:29:00Z'))
 
   assert.equal(state.state, 'live')
 })
@@ -88,16 +88,29 @@ test('una salida futura sin horarios sigue siendo próxima', () => {
 })
 
 
-test('activa el directo tras la salida aunque falte la hora de entrada', () => {
+test('no inventa un directo cuando falta la hora de entrada', () => {
   const state = getProcessionLiveState({
     date: '2026-09-26',
     startTime: '18:30',
     endTime: '',
   }, new Date('2026-09-26T17:21:00Z'))
 
-  assert.equal(state.state, 'live')
-  assert.equal(state.isLive, true)
-  assert.equal(state.label, 'En curso')
+  assert.equal(state.state, 'today')
+  assert.equal(state.isLive, false)
+  assert.equal(state.timingLabel, 'Entrada por confirmar')
+})
+
+test('el directo termina exactamente a la hora de entrada, también de madrugada', () => {
+  for (const [startTime, endTime, now] of [
+    ['18:00', '22:30', '2026-09-23T20:30:00Z'],
+    ['20:00', '01:30', '2026-09-23T23:30:00Z'],
+  ]) {
+    assert.equal(getProcessionLiveState({ date: '2026-09-23', startTime, endTime }, new Date(now)).isLive, false)
+  }
+})
+
+test('un horario aproximado no activa un estado confirmado', () => {
+  assert.equal(getProcessionLiveState({ date: '2026-09-23', startTime: 'Sobre las 18:00', endTime: '22:30' }, new Date('2026-09-23T18:00:00Z')).isLive, false)
 })
 
 test('una salida sin hora final no queda indefinidamente en directo', () => {
