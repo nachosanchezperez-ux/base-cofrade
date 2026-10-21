@@ -8,6 +8,7 @@ import { agendaItemShare, agendaPeriodShare } from '@/lib/share'
 import { agendaEventAnchor, scheduleTimeHint } from '@/lib/agenda-event-presentation'
 import { agendaThreadLinks, repeatsPlace } from '@/lib/agenda-event-relations'
 import { agendaScheduleSteps, madridMinutes, nextScheduleStep } from '@/lib/agenda-schedule-steps'
+import { contributionReadiness } from '@/lib/contributions/security'
 import styles from './AgendaTemporalEventList.module.css'
 
 function itemTime(item) {
@@ -250,6 +251,8 @@ export default function AgendaTemporalEventList({ landing }) {
           <Link href="/procesiones-de-gloria">Glorias</Link>
           <Link href="/extraordinarias">Extraordinarias</Link>
           <Link href="/igualas-y-ensayos">Igualás y ensayos</Link>
+          {/* Solo con los envíos públicos abiertos (#agenda-envia). */}
+          {contributionReadiness().enabled ? <Link href="/colabora/acto">¿Falta un acto? Envíalo</Link> : null}
         </nav>
       </div>
     </section>
