@@ -17,7 +17,7 @@ function syncField(scope, name, value) {
   if (!name) return
   const selector = `[name="${name}"]`
   const input = scope?.querySelector(selector) || document.querySelector(selector)
-  if (input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement) input.value = value || ''
+  if (input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement || input instanceof HTMLSelectElement) input.value = value || ''
 }
 
 export default function DirectImageUpload({
@@ -33,6 +33,9 @@ export default function DirectImageUpload({
   showTextFields = true,
   syncFields = null,
   successMessage = 'Imagen actualizada correctamente.',
+  // Foto o cartel (#agenda-fotos): el cartel se muestra entero, sin recortar.
+  presentationChoice = false,
+  currentPresentation = 'cover',
 }) {
   const rootRef = useRef(null)
   const fileRef = useRef(null)
@@ -41,6 +44,7 @@ export default function DirectImageUpload({
   const [selectedFile, setSelectedFile] = useState(null)
   const [alt, setAlt] = useState(currentAlt)
   const [credit, setCredit] = useState(currentCredit)
+  const [presentation, setPresentation] = useState(currentPresentation === 'contain' ? 'contain' : 'cover')
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
   const [phase, setPhase] = useState('idle')
@@ -103,6 +107,7 @@ export default function DirectImageUpload({
     formData.set('file_size', String(selectedFile.size))
     formData.set('alt_text', alt.trim())
     formData.set('credit', credit.trim())
+    if (presentationChoice) formData.set('presentation', presentation)
     setError('')
     setMessage('')
 
@@ -138,6 +143,7 @@ export default function DirectImageUpload({
           syncField(scope, syncFields.path, result.publicUrl)
           syncField(scope, syncFields.alt, alt.trim())
           syncField(scope, syncFields.credit, credit.trim())
+          if (presentationChoice) syncField(scope, syncFields.fit, presentation)
         }
         setPhase('idle')
       } catch (nextError) {
@@ -186,6 +192,15 @@ export default function DirectImageUpload({
               <label className={styles.fieldWide}><span>Texto alternativo</span><input value={alt} onChange={(event) => setAlt(event.target.value)} required={requireAlt} disabled={pending} /></label>
               <label className={styles.fieldWide}><span>Crédito</span><input value={credit} onChange={(event) => setCredit(event.target.value)} disabled={pending} /></label>
             </>
+          ) : null}
+          {presentationChoice ? (
+            <label className={styles.fieldWide}>
+              <span>¿Qué es?</span>
+              <select value={presentation} onChange={(event) => setPresentation(event.target.value)} disabled={pending}>
+                <option value="cover">Fotografía</option>
+                <option value="contain">Cartel (se muestra entero, sin recortar)</option>
+              </select>
+            </label>
           ) : null}
         </div>
         {error ? <div className={styles.readOnlyNotice} role="alert">{error}</div> : null}

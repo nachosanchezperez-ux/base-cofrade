@@ -2,6 +2,7 @@
 
 import { randomUUID } from 'node:crypto'
 import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidateAgendaPhotos } from '@/lib/panel/revalidate-agenda'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
@@ -31,7 +32,7 @@ function relationOne(value) {
 async function loadOuting(supabase, id) {
   const result = await supabase
     .from('outings')
-    .select('id, slug, title, character, hero_image_path, hero_image_alt, hero_image_credit')
+    .select('id, slug, title, character, hero_image_path, hero_image_alt, hero_image_credit, hero_image_fit')
     .eq('id', id)
     .eq('character', 'extraordinary')
     .maybeSingle()
@@ -102,6 +103,7 @@ export async function saveExtraordinaryImageAction(formData) {
   const hasNewFile = file instanceof File && file.size > 0
   const altText = value(formData, 'hero_image_alt')
   const credit = value(formData, 'hero_image_credit') || null
+  const fit = value(formData, 'hero_image_fit') === 'contain' ? 'contain' : 'cover'
 
   if (hasNewFile) validateFile(file)
 
@@ -129,7 +131,7 @@ export async function saveExtraordinaryImageAction(formData) {
 
   const updated = await supabase
     .from('outings')
-    .update({ hero_image_path: nextPath, hero_image_alt: altText || null, hero_image_credit: credit })
+    .update({ hero_image_path: nextPath, hero_image_alt: altText || null, hero_image_credit: credit, hero_image_fit: fit })
     .eq('id', outing.id)
     .select('id')
     .single()
@@ -149,9 +151,11 @@ export async function saveExtraordinaryImageAction(formData) {
     hero_image_path: nextPath,
     hero_image_alt: altText || null,
     hero_image_credit: credit,
+    hero_image_fit: fit,
   })
 
   refresh(outing)
+  revalidateAgendaPhotos()
   redirect(`/panel/extraordinarias/${outing.id}?saved=image#fotografia`)
 }
 

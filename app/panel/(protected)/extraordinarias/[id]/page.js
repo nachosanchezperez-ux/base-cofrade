@@ -166,6 +166,13 @@ export default async function PanelExtraordinaryEditorPage({ params, searchParam
               <span>Crédito de la fotografía</span>
               <input name="hero_image_credit" defaultValue={data.hero_image_credit || ''} placeholder="Fotografía · Autor / Hermandad" disabled={!canEdit} />
             </label>
+            <label className={styles.fieldWide}>
+              <span>¿Qué es?</span>
+              <select name="hero_image_fit" defaultValue={data.hero_image_fit === 'contain' ? 'contain' : 'cover'} disabled={!canEdit}>
+                <option value="cover">Fotografía</option>
+                <option value="contain">Cartel (se muestra entero en la Agenda, sin recortar)</option>
+              </select>
+            </label>
           </div>
           <div className={styles.formActions}>
             <small>La nueva imagen se publica en los tres espacios automáticamente.</small>
