@@ -27,6 +27,8 @@ test('preposiciones: contracciones y artículos', () => {
   assert.equal(withPreposition('de', 'Andas de plata de María Santísima de Setefilla', 'step'), 'de las andas de plata de María Santísima de Setefilla')
   assert.equal(withPreposition('de', 'Santísimo Cristo de la Sed', 'image'), 'del Santísimo Cristo de la Sed')
   assert.equal(withPreposition('de', 'Nuestra Señora del Patrocinio', 'image'), 'de Nuestra Señora del Patrocinio')
+  assert.equal(withPreposition('de', 'Antigua Nuestra Señora de la Piedad', 'image'), 'de la Antigua Nuestra Señora de la Piedad')
+  assert.equal(withPreposition('de', 'Antiguo Cristo de la Expiración', 'image'), 'del Antiguo Cristo de la Expiración')
 })
 
 test('cada tipo de hilo tiene rótulo temático y titular con el dato', () => {
@@ -62,5 +64,7 @@ test('la portada ya no muestra «Hilo para descubrir»', () => {
   const v2 = readFileSync(new URL('../lib/supabase/home-v2.js', import.meta.url), 'utf8')
   assert.match(v2, /const copy = discoveryCopy\(row\)\n  return copy \? \{ \.\.\.card, \.\.\.copy \} : card/)
   const snapshot = readFileSync(new URL('../lib/supabase/home-snapshot.js', import.meta.url), 'utf8')
-  assert.match(snapshot, /label: threadTopicLabel\(thread\.label\),/)
+  assert.match(snapshot, /label: copy\?\.label \|\| threadTopicLabel\(thread\.label\),/)
+  assert.match(snapshot, /title: copy\?\.title \|\| thread\.title,/)
+  assert.match(readFileSync(new URL('../lib/supabase/home.js', import.meta.url), 'utf8'), /copySource: \{\s*activity_kind: row\.activity_kind,/)
 })
