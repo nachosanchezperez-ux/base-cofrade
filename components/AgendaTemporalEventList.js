@@ -4,7 +4,7 @@ import ShareActions, { CalendarAddLink } from '@/components/ShareActions'
 import AgendaEventThread from '@/components/AgendaEventThread'
 import AgendaFollowedInPeriod from '@/components/AgendaFollowedInPeriod'
 import { agendaItemBrotherhoodSlugs } from '@/lib/followed-brotherhoods'
-import { agendaItemShare } from '@/lib/share'
+import { agendaItemShare, agendaPeriodShare } from '@/lib/share'
 import { agendaEventAnchor, scheduleTimeHint } from '@/lib/agenda-event-presentation'
 import { agendaThreadLinks, repeatsPlace } from '@/lib/agenda-event-relations'
 import styles from './AgendaTemporalEventList.module.css'
@@ -97,6 +97,7 @@ export default function AgendaTemporalEventList({ landing }) {
   const groups = groupByDate(landing.items)
   // Actos distintos: el de varios días se lista en cada uno de sus días.
   const count = landing.count ?? landing.items.length
+  const periodShare = agendaPeriodShare(landing)
 
   return (
     <section className={styles.section} id="agenda-del-periodo" aria-labelledby="agenda-periodo-title">
@@ -108,6 +109,13 @@ export default function AgendaTemporalEventList({ landing }) {
           </div>
           <strong>{count} {count === 1 ? 'acto' : 'actos'}</strong>
         </header>
+        {/* Toda la agenda del periodo en un mensaje, para grupos de WhatsApp. */}
+        {periodShare ? (
+          <div className={styles.periodShare}>
+            <span>{landing.period === 'weekend' ? 'Pásala a tu grupo: la agenda del fin de semana' : landing.period === 'tomorrow' ? 'Pásala a tu grupo: la agenda de mañana' : 'Pásala a tu grupo: la agenda de hoy'}</span>
+            <ShareActions share={periodShare} contentType="agenda_period" analytics={{ agenda_period: landing.period, items_count: count }} />
+          </div>
+        ) : null}
 
         <AgendaFollowedInPeriod
           periodLabel={landing.period === 'weekend' ? 'este fin de semana' : landing.period === 'tomorrow' ? 'mañana' : 'hoy'}

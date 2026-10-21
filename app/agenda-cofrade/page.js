@@ -5,7 +5,8 @@ import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import AgendaTemporalNav from '@/components/AgendaTemporalNav'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import JsonLd from '@/components/JsonLd'
-import { breadcrumbJsonLd, collectionPageJsonLd, filteredViewRobots, pageTitle, seoDescription } from '@/lib/seo'
+import { agendaEventListJsonLd } from '@/lib/agenda-event-jsonld'
+import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, filteredViewRobots, pageTitle, seoDescription } from '@/lib/seo'
 import { agendaSeoCopy, madridYear } from '@/lib/seo-calendar'
 import { getAgendaCofrade } from '@/lib/supabase/agenda-cofrade'
 import { agendaInitialStateFromParams } from '@/lib/agenda-cofrade-url-state'
@@ -107,6 +108,7 @@ export default async function AgendaCofradePage({ searchParams } = {}) {
   // «Solo lo que está por venir»: fuera también lo de hoy que ya terminó.
   const upcoming = items.filter((item) => item.isUpcoming && !item.isCancelled && !isAgendaItemOver(item, now))
   const interactiveItems = upcoming.map(compactAgendaItem)
+  const eventList = agendaEventListJsonLd(upcoming, { name: 'Próximos actos cofrades en Sevilla y su provincia', url: absoluteUrl('/agenda-cofrade'), limit: 30 })
   // La página ya se genera en cada petición (connection()): los filtros de la URL se
   // leen aquí. Antes se leían en el navegador dentro de un Suspense cuya reserva
   // repetía el listado completo, que viajaba dos veces en el HTML (~310 KB, 15/10/2026).
@@ -117,6 +119,8 @@ export default async function AgendaCofradePage({ searchParams } = {}) {
     <div className={styles.page}>
       <JsonLd data={breadcrumbJsonLd([{ name: 'Inicio', path: '/' }, { name: 'Agenda Cofrade', path: '/agenda-cofrade' }])} />
       <JsonLd data={collectionPageJsonLd({ path: '/agenda-cofrade', name: pageTitle(title), description, items: upcoming.filter((item) => item.href).map((item) => ({ name: item.title, path: item.href })) })} />
+      {/* Los próximos actos como eventos (#agenda-google). */}
+      {eventList ? <JsonLd data={eventList} /> : null}
 
       <header className={styles.hero}>
         <div className="shell">

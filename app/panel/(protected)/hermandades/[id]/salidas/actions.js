@@ -168,6 +168,8 @@ export async function saveOutingAction(formData) {
     hero_image_path: nullable(formData, 'hero_image_path'),
     hero_image_alt: nullable(formData, 'hero_image_alt'),
     hero_image_credit: nullable(formData, 'hero_image_credit'),
+    // Solo si el formulario lo trae: otros formularios no deben pisarlo.
+    ...(formData.has('hero_image_fit') ? { hero_image_fit: formData.get('hero_image_fit') === 'contain' ? 'contain' : 'cover' } : {}),
   }
 
   const result = outingId

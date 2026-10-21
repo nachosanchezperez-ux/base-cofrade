@@ -165,3 +165,8 @@
   .media[data-variant="feature"] .mediaFrame{aspect-ratio:16/10}
   .media[data-variant="feature"][data-fit="contain"] .mediaFrame{aspect-ratio:1/1}
 }
+
+/* Compartir el periodo entero (#agenda-compartir). */
+.periodShare{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;margin:0 0 18px;padding:12px 14px;border:1px solid #d9e7dc;border-radius:14px;background:#f3f9f4}
+.periodShare>span{color:#173047;font-size:14px;font-weight:800;line-height:1.35}
+@media (max-width:720px){.periodShare{align-items:stretch;flex-direction:column}.periodShare>span{font-size:14px}}
