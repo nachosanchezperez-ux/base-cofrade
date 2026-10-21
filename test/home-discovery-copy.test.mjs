@@ -3,7 +3,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
-import { discoveryCopy, threadTopicLabel, withPreposition } from '../lib/home-discovery-copy.js'
+import { brotherhoodArticle, brotherhoodInPhrase, discoveryCopy, threadTopicLabel, withPreposition } from '../lib/home-discovery-copy.js'
 
 const row = (activity_kind, root_type, root_name, relation_count, secondary_count = 0) =>
   ({ activity_kind, root_type, root_name, relation_count, secondary_count })
@@ -22,7 +22,7 @@ test('patrimonio musical: el dato en el titular, en singular y en plural', () =>
 test('preposiciones: contracciones y artículos', () => {
   assert.equal(withPreposition('a', 'El Museo', 'brotherhood'), 'al Museo')
   assert.equal(withPreposition('de', 'El Museo', 'brotherhood'), 'del Museo')
-  assert.equal(withPreposition('de', 'Los Gitanos', 'brotherhood'), 'de Los Gitanos')
+  assert.equal(withPreposition('de', 'Los Gitanos', 'brotherhood'), 'de los Gitanos')
   assert.equal(withPreposition('de', 'Paso de palio de Nuestra Señora de los Dolores', 'step'), 'del paso de palio de Nuestra Señora de los Dolores')
   assert.equal(withPreposition('de', 'Andas de plata de María Santísima de Setefilla', 'step'), 'de las andas de plata de María Santísima de Setefilla')
   assert.equal(withPreposition('de', 'Santísimo Cristo de la Sed', 'image'), 'del Santísimo Cristo de la Sed')
@@ -33,11 +33,11 @@ test('preposiciones: contracciones y artículos', () => {
 
 test('cada tipo de hilo tiene rótulo temático y titular con el dato', () => {
   const cases = [
-    [row('posters', 'brotherhood', 'Las Siete Palabras', 4), 'Cartelería', 'Los 4 carteles de Las Siete Palabras'],
+    [row('posters', 'brotherhood', 'Las Siete Palabras', 4), 'Cartelería', 'Los 4 carteles de las Siete Palabras'],
     [row('band_brotherhoods', 'band', 'Banda del Sol', 1), 'Música', 'Banda del Sol: la hermandad que acompaña'],
-    [row('step_personnel', 'brotherhood', 'La Carretería', 3, 2), 'Capataces', 'Quién manda los pasos de La Carretería'],
+    [row('step_personnel', 'brotherhood', 'La Carretería', 3, 2), 'Capataces', 'Quién manda los pasos de la Carretería'],
     [row('titularity', 'brotherhood', 'Servitas', 3), 'Titulares', 'Los 3 titulares de Servitas'],
-    [row('brotherhood_steps', 'brotherhood', 'Los Gitanos', 2), 'Pasos', 'Los 2 pasos de Los Gitanos'],
+    [row('brotherhood_steps', 'brotherhood', 'Los Gitanos', 2), 'Pasos', 'Los 2 pasos de los Gitanos'],
     [row('discography', 'band', 'Banda del Sol', 4, 41), 'Discografía', 'Banda del Sol: 4 discos y 41 grabaciones'],
     [row('image_authorship', 'image', 'Santísimo Cristo de la Sed', 2), 'Imaginería', 'La autoría del Santísimo Cristo de la Sed'],
     [row('step_phases', 'step', 'Paso de palio de Nuestra Señora de los Dolores', 5), 'Pasos', 'La historia del paso de palio de Nuestra Señora de los Dolores'],
@@ -67,4 +67,22 @@ test('la portada ya no muestra «Hilo para descubrir»', () => {
   assert.match(snapshot, /label: copy\?\.label \|\| threadTopicLabel\(thread\.label\),/)
   assert.match(snapshot, /title: copy\?\.title \|\| thread\.title,/)
   assert.match(readFileSync(new URL('../lib/supabase/home.js', import.meta.url), 'utf8'), /copySource: \{\s*activity_kind: row\.activity_kind,/)
+})
+
+test('hermandades: siempre con su artículo dentro de la frase', () => {
+  assert.equal(withPreposition('de', 'El Baratillo', 'brotherhood'), 'del Baratillo')
+  assert.equal(withPreposition('a', 'El Baratillo', 'brotherhood'), 'al Baratillo')
+  assert.equal(withPreposition('a', 'Esperanza de Triana', 'brotherhood'), 'a la Esperanza de Triana')
+  assert.equal(withPreposition('de', 'Gran Poder', 'brotherhood'), 'del Gran Poder')
+  assert.equal(withPreposition('de', 'Vera-Cruz de Lebrija', 'brotherhood'), 'de la Vera-Cruz de Lebrija')
+  assert.equal(withPreposition('de', 'Estudiantes', 'brotherhood'), 'de los Estudiantes')
+  assert.equal(withPreposition('de', 'Tres Caídas de Dos Hermanas', 'brotherhood'), 'de las Tres Caídas de Dos Hermanas')
+  assert.equal(withPreposition('a', 'Hermandad de la Humillación', 'brotherhood'), 'a la Hermandad de la Humillación')
+  assert.equal(withPreposition('a', 'San Bernardo', 'brotherhood'), 'a San Bernardo')
+  assert.equal(withPreposition('de', 'Pasión', 'brotherhood'), 'de Pasión')
+  assert.equal(withPreposition('de', 'Jesús Despojado', 'brotherhood'), 'de Jesús Despojado')
+  assert.equal(brotherhoodArticle('Aguas Santas de Villaverde del Río'), '')
+  assert.equal(brotherhoodInPhrase('El Baratillo'), 'el Baratillo')
+  assert.equal(discoveryCopy(row('musical_heritage', 'brotherhood', 'Esperanza de Triana', 1)).title, 'La marcha dedicada a la Esperanza de Triana')
+  assert.match(readFileSync(new URL('../components/HomeTodayV2.js', import.meta.url), 'utf8'), /En \{brotherhoodInPhrase\(card\.visual\.contextName\)\}/)
 })

@@ -6,6 +6,7 @@ import { useState } from 'react'
 import HomeMarchPlayer from '@/components/HomeMarchPlayer'
 import styles from './HomeTodayV2.module.css'
 import gameStyles from './HiddenThreadTeaser.module.css'
+import { brotherhoodInPhrase } from '@/lib/home-discovery-copy'
 
 const MONTH_INDEX = {
   enero: 0,
@@ -176,7 +177,7 @@ export default function HomeTodayV2({ today, content, embedded = false }) {
           {embedded ? null : <RelationshipTrail value={card.kicker} />}
         </div>
         {card.visual?.kind === 'context-crest' && card.visual.contextName ? (
-          <span className={styles.context}>En {card.visual.contextName}</span>
+          <span className={styles.context}>En {brotherhoodInPhrase(card.visual.contextName)}</span>
         ) : null}
         {/* Toda la tarjeta es el enlace (el título se extiende sobre ella), sin una
             llamada «Descubrir →» repetida en cada tarjeta. */}
