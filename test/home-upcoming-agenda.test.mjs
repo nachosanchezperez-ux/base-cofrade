@@ -16,7 +16,7 @@ test('la agenda de Home reúne extraordinarias, Glorias, procesiones generales y
   assert.match(loader, /compareProcessionLiveItems/)
   assert.match(loader, /typeLabel: 'Extraordinaria'/)
   assert.match(loader, /typeLabel: 'Gloria'/)
-  assert.match(loader, /typeLabel: isRomery \? 'Romería' : 'Procesión'/)
+  assert.match(loader, /typeLabel: isRomery \? 'Romería' : isTransfer \? 'Traslado' : 'Procesión'/)
 })
 
 test('la Home conserva una salida nocturna hasta su entrada real', async () => {
