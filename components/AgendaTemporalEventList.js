@@ -2,9 +2,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import ShareActions, { CalendarAddLink } from '@/components/ShareActions'
 import AgendaEventThread from '@/components/AgendaEventThread'
-import { agendaItemShare } from '@/lib/share'
+import AgendaFollowedInPeriod from '@/components/AgendaFollowedInPeriod'
+import { agendaItemBrotherhoodSlugs } from '@/lib/followed-brotherhoods'
+import { agendaItemShare, agendaPeriodShare } from '@/lib/share'
 import { agendaEventAnchor, scheduleTimeHint } from '@/lib/agenda-event-presentation'
 import { agendaThreadLinks, repeatsPlace } from '@/lib/agenda-event-relations'
+import { agendaScheduleSteps, madridMinutes, nextScheduleStep } from '@/lib/agenda-schedule-steps'
 import { contributionReadiness } from '@/lib/contributions/security'
 import styles from './AgendaTemporalEventList.module.css'
 
@@ -83,6 +86,31 @@ function EventMedia({ item, media }) {
   )
 }
 
+// «Ahora en la calle» (#agenda-hoy): en Hoy, lo que está en curso arriba del
+// todo, con hasta cuándo y su próximo tramo. Se calcula en cada petición.
+function LiveNow({ items }) {
+  const seen = new Set()
+  const live = items.filter((item) => item.liveState?.isLive && !seen.has(item.key) && seen.add(item.key))
+  if (!live.length) return null
+  const now = madridMinutes(new Date())
+  return (
+    <section className={styles.liveNow} aria-labelledby="agenda-en-la-calle">
+      <h3 id="agenda-en-la-calle"><span className={styles.livePulse} aria-hidden="true" />Ahora en la calle</h3>
+      <ul>
+        {live.map((item) => {
+          const next = nextScheduleStep(item, now)
+          return (
+            <li key={item.key}>
+              {item.eventHref ? <Link href={item.eventHref}>{item.title}</Link> : <strong>{item.title}</strong>}
+              <small>{[item.liveState.label, item.liveState.timingLabel, next ? `Próximo: ${next.label} ${next.time}` : '', item.municipality].filter(Boolean).join(' · ')}</small>
+            </li>
+          )
+        })}
+      </ul>
+    </section>
+  )
+}
+
 // En los conciertos `actionLabel` es «Ver banda»: la acción principal abre la cita.
 function primaryLabel(item) {
   return item.category === 'concerts' ? 'Ver cita' : item.actionLabel || 'Ver cita'
@@ -96,6 +124,7 @@ export default function AgendaTemporalEventList({ landing }) {
   const groups = groupByDate(landing.items)
   // Actos distintos: el de varios días se lista en cada uno de sus días.
   const count = landing.count ?? landing.items.length
+  const periodShare = agendaPeriodShare(landing)
 
   return (
     <section className={styles.section} id="agenda-del-periodo" aria-labelledby="agenda-periodo-title">
@@ -107,6 +136,26 @@ export default function AgendaTemporalEventList({ landing }) {
           </div>
           <strong>{count} {count === 1 ? 'acto' : 'actos'}</strong>
         </header>
+        {/* Toda la agenda del periodo en un mensaje, para grupos de WhatsApp. */}
+        {periodShare ? (
+          <div className={styles.periodShare}>
+            <span>{landing.period === 'weekend' ? 'Pásala a tu grupo: la agenda del fin de semana' : landing.period === 'tomorrow' ? 'Pásala a tu grupo: la agenda de mañana' : 'Pásala a tu grupo: la agenda de hoy'}</span>
+            <ShareActions share={periodShare} contentType="agenda_period" analytics={{ agenda_period: landing.period, items_count: count }} />
+          </div>
+        ) : null}
+
+        <AgendaFollowedInPeriod
+          periodLabel={landing.period === 'weekend' ? 'este fin de semana' : landing.period === 'tomorrow' ? 'mañana' : 'hoy'}
+          items={[...new Map(landing.items.map((item) => [item.key || item.displayKey, {
+            key: item.displayKey || item.key,
+            title: item.title,
+            time: itemTime(item) === 'Hora por confirmar' ? '' : itemTime(item),
+            eventHref: item.eventHref || '',
+            slugs: agendaItemBrotherhoodSlugs(item),
+          }])).values()].filter((item) => item.slugs.length)}
+        />
+
+        {landing.period === 'today' ? <LiveNow items={landing.items} /> : null}
 
         <div className={styles.groups}>
           {groups.map((group) => (
@@ -169,6 +218,12 @@ export default function AgendaTemporalEventList({ landing }) {
                           ? <span className={styles.organizer}>{item.municipality || item.place ? '\u00a0· ' : ''}{item.organizer}</span>
                           : null}
                       </p>
+                      {/* Tramos (Salida, Carrera oficial, Entrada…), si hay más de uno. */}
+                      {agendaScheduleSteps(item).length > 1 ? (
+                        <p className={styles.steps}>
+                          {agendaScheduleSteps(item).map((step) => <span key={step.label}><b>{step.label}</b> {step.time}</span>)}
+                        </p>
+                      ) : null}
                       {item.summary ? <p className={styles.summary}>{item.summary}</p> : null}
                       {media?.variant === 'thumb' && media.credit ? <p className={styles.photoCredit}>{item.photo?.name ? `Fotografía de ${item.photo.name}` : 'Fotografía'} · {media.credit.replace(/^Fotografía · /, '')}</p> : null}
                       <AgendaEventThread item={item} compact className={styles.thread} />

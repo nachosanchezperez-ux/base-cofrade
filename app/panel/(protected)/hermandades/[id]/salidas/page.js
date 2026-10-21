@@ -64,6 +64,7 @@ function OutingFields({ item = null, data }) {
       <label className={styles.fieldWide}><span>Ruta/URL imagen principal</span><input name="hero_image_path" defaultValue={item?.hero_image_path || ''} placeholder="También puedes subirla después" /></label>
       <label><span>Alt imagen principal</span><input name="hero_image_alt" defaultValue={item?.hero_image_alt || ''} /></label>
       <label><span>Crédito imagen principal</span><input name="hero_image_credit" defaultValue={item?.hero_image_credit || ''} /></label>
+      <label><span>Tipo de imagen principal</span><select name="hero_image_fit" defaultValue={item?.hero_image_fit === 'contain' ? 'contain' : 'cover'}><option value="cover">Fotografía</option><option value="contain">Cartel (entero, sin recortar)</option></select></label>
     </div>
   )
 }
@@ -164,6 +165,7 @@ export default async function BrotherhoodOutingsPage({ params, searchParams }) {
                     currentSrc={outing.hero_image_path || ''}
                     currentAlt={outing.hero_image_alt || outing.title || outing.outing_type}
                     currentCredit={outing.hero_image_credit || ''}
+                    currentFit={outing.hero_image_fit || 'cover'}
                   />
                 </div>
               ) : null}

@@ -98,6 +98,8 @@ export default async function PanelContributionsPage({ searchParams }) {
             {focused.contribution_attachments?.length ? <section className={`${localStyles.detailBlock} ${localStyles.wide}`}><h3>Archivos en cuarentena</h3><ul className={localStyles.attachmentList}>{focused.contribution_attachments.map((attachment) => <li key={attachment.id}>{attachment.signedUrl ? <a href={attachment.signedUrl} target="_blank" rel="noopener noreferrer">Descargar {attachment.original_name}</a> : <strong>Archivo temporalmente no disponible</strong>}<span>{attachment.verified_mime_type} · {(attachment.byte_size / 1024 / 1024).toFixed(2)} MB{attachment.width && attachment.height ? ` · ${attachment.width} × ${attachment.height} px` : ''} · {attachment.status}</span>{attachment.verified_mime_type.startsWith('image/') ? <span>Crédito: {attachment.credit || 'No indicado'} · Texto alternativo: {attachment.alt_text || 'No indicado'}</span> : <span>Documento sin previsualización · descargar solo para la revisión necesaria.</span>}</li>)}</ul></section> : null}
           </div>
 
+          {canEdit ? <p><Link className={styles.secondaryButton} href={`/panel/agenda/nuevo?aportacion=${focused.id}`}>Crear un acto de la Agenda a partir de esta aportación</Link></p> : null}
+
           <p className={localStyles.privacyNote}>Datos restringidos al equipo editorial. No copies el correo ni los archivos fuera del flujo necesario para revisar la aportación.</p>
 
           {canEdit ? (

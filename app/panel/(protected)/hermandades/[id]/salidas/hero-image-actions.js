@@ -142,6 +142,8 @@ export async function saveOutingHeroImageUploadAction(formData) {
       hero_image_path: publicUrl,
       hero_image_alt: alt,
       hero_image_credit: credit,
+      // Cartel: encuadre completo en la Agenda (lib/agenda-event-photo.js).
+      hero_image_fit: value(formData, 'presentation') === 'contain' ? 'contain' : 'cover',
     }
     const updated = await context.supabase
       .from('outings')

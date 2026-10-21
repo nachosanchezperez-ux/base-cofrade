@@ -13,7 +13,7 @@ test('cada salida registrada expone su cargador directo de fotografía', () => {
 
   assert.match(page, /data\.outings\.map/)
   assert.match(page, /<OutingDirectImageUpload/)
-  assert.match(uploader, /Fotografía de esta salida/)
+  assert.match(uploader, /Fotografía o cartel de esta salida/)
   assert.match(uploader, /metadata=\{\{ brotherhood_id: brotherhoodId, outing_id: outingId \}\}/)
   assert.match(actions, /uploadToSignedUrl|createSignedUploadUrl/)
   assert.match(actions, /hero_image_path/)
