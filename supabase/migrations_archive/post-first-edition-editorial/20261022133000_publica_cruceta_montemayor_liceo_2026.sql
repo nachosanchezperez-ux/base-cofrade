@@ -148,20 +148,26 @@ join public.entities image on image.entity_type='image' and image.slug='imagen-m
 where outing.slug='sevilla-montemayor-procesion-2026-10-10'
 on conflict (outing_id,entity_id,role) do update set notes=excluded.notes;
 
-delete from public.outing_music_positions where outing_id=(select id from public.outings where slug='sevilla-montemayor-procesion-2026-10-10');
-
 insert into public.outing_music_positions (outing_id,position_code,position_label,sequence_no,step_entity_id,notes,status)
 select outing.id,'behind_glory','Tras Nuestra Señora de Montemayor',1,step.id,'Acompañamiento musical documentado en la procesión de 2026.','published'
 from public.outings outing
 join public.entities step on step.entity_type='step' and step.slug='paso-montemayor-sevilla'
-where outing.slug='sevilla-montemayor-procesion-2026-10-10';
+where outing.slug='sevilla-montemayor-procesion-2026-10-10'
+and not exists (
+  select 1 from public.outing_music_positions existing
+  where existing.outing_id=outing.id and existing.position_code='behind_glory' and existing.status<>'archived'
+);
 
 insert into public.outing_music_assignments (music_position_id,band_entity_id,participation_mode,sequence_no,notes,status)
 select position.id,band.id,'full_route',1,'Banda de Música Liceo de Sevilla tras Nuestra Señora de Montemayor.','published'
 from public.outing_music_positions position
 join public.outings outing on outing.id=position.outing_id
 join public.entities band on band.entity_type='band' and band.slug='banda-musica-liceo-sevilla'
-where outing.slug='sevilla-montemayor-procesion-2026-10-10' and position.position_code='behind_glory';
+where outing.slug='sevilla-montemayor-procesion-2026-10-10' and position.position_code='behind_glory'
+and not exists (
+  select 1 from public.outing_music_assignments existing
+  where existing.music_position_id=position.id and existing.band_entity_id=band.id and existing.status<>'archived'
+);
 
 insert into public.source_links (source_id,outing_id,scope,notes)
 select source.id,outing.id,'Procesión de Gloria','Documenta fecha, sede y acompañamiento musical.'
