@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import test from 'node:test'
-import { selectAllRows } from '../lib/supabase/query-all.js'
+import { selectAllRows, selectRowsByIds } from '../lib/supabase/query-all.js'
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 
@@ -33,7 +33,7 @@ function loadReader(tables) {
       return builder
     },
   }
-  const reader = new Function('createPublicClient', 'console', 'selectAllRows', `${source}\nreturn { getKissingDevotions }`)(() => client, { error() {} }, selectAllRows)
+  const reader = new Function('createPublicClient', 'console', 'selectAllRows', 'selectRowsByIds', `${source}\nreturn { getKissingDevotions }`)(() => client, { error() {} }, selectAllRows, selectRowsByIds)
   return { ...reader, calls }
 }
 
@@ -83,4 +83,45 @@ test('la Agenda pide todos los cultos y renueva su caché', () => {
   assert.match(agenda, /getKissingDevotions\(\{ throwOnError: true, allCults: true \}\)/)
   assert.match(agenda, /categoryName: 'Cultos y besamanos'/)
   assert.doesNotMatch(agenda, /hilo-cofrade-agenda-sources-v7-hc09/)
+})
+
+test('las consultas de cultos y horarios se dividen en lotes para no desbordar la URL', async () => {
+  const count = 321
+  const largeTables = {
+    ...tables,
+    cults: Array.from({ length: count }, (_, index) => ({
+      id: `c-${String(index).padStart(3, '0')}`,
+      brotherhood_entity_id: 'b1',
+      cult_type: 'Triduo',
+      title: `Triduo ${index}`,
+      status: 'published',
+    })),
+    cult_occurrences: Array.from({ length: count }, (_, index) => ({
+      id: `o-${String(index).padStart(3, '0')}`,
+      cult_id: `c-${String(index).padStart(3, '0')}`,
+      start_date: `2099-11-${String((index % 28) + 1).padStart(2, '0')}`,
+      end_date: null,
+      status: 'published',
+      event_status: 'announced',
+    })),
+  }
+
+  const { getKissingDevotions, calls } = loadReader(largeTables)
+  const items = await getKissingDevotions({ throwOnError: true, allCults: true })
+
+  assert.equal(items.length, count)
+
+  const occurrenceCalls = calls.filter((call) => call.table === 'cult_occurrences')
+  assert.equal(occurrenceCalls.length, 3)
+  assert.ok(occurrenceCalls.every((call) => {
+    const filter = call.filters.find(([kind, column]) => kind === 'in' && column === 'cult_id')
+    return filter && filter[2].length <= 150
+  }))
+
+  const dayCalls = calls.filter((call) => call.table === 'cult_occurrence_days')
+  assert.equal(dayCalls.length, 3)
+  assert.ok(dayCalls.every((call) => {
+    const filter = call.filters.find(([kind, column]) => kind === 'in' && column === 'cult_occurrence_id')
+    return filter && filter[2].length <= 150
+  }))
 })
