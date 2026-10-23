@@ -1,12 +1,16 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { startTransition, useMemo, useRef, useState } from 'react'
+import { unstable_rethrow } from 'next/navigation'
 import { QUICK_ACT_TYPES } from '@/lib/panel/quick-act-core'
 import styles from '@/app/panel/panel.module.css'
 
 // Formulario de alta rápida (#agenda-alta-rapida). La Hermandad propone su
 // localidad y la localidad filtra los lugares; el resto lo decide el editor.
 export default function QuickActForm({ action, brotherhoods, municipalities, places, defaults = {} }) {
+  const [error, setError] = useState('')
+  const [pending, setPending] = useState(false)
+  const submitting = useRef(false)
   const [typeKey, setTypeKey] = useState('')
   const [brotherhoodId, setBrotherhoodId] = useState('')
   const [municipalityId, setMunicipalityId] = useState('')
@@ -24,8 +28,32 @@ export default function QuickActForm({ action, brotherhoods, municipalities, pla
     if (brotherhood?.municipalityId) setMunicipalityId(brotherhood.municipalityId)
   }
 
+  // An event handler keeps uncontrolled fields and the file input intact on error.
+  // A React form action would reset them even when it returns a validation error.
+  function submit(event) {
+    event.preventDefault()
+    if (submitting.current) return
+    const data = new FormData(event.currentTarget)
+    submitting.current = true
+    setPending(true)
+    setError('')
+    startTransition(async () => {
+      try {
+        const result = await action(data)
+        if (result?.error) setError(result.error)
+      } catch (error) {
+        unstable_rethrow(error)
+        setError('No se pudo confirmar el resultado. Revisa la ficha antes de volver a enviar. Los datos siguen en este formulario.')
+      } finally {
+        submitting.current = false
+        setPending(false)
+      }
+    })
+  }
+
   return (
-    <form action={action} className={styles.editorForm}>
+    <form onSubmit={submit} className={styles.editorForm}>
+      {error ? <div className={styles.readOnlyNotice} role="alert">{error}</div> : null}
       <div className={styles.formGrid}>
         <label>
           <span>Tipo de acto</span>
@@ -132,7 +160,7 @@ export default function QuickActForm({ action, brotherhoods, municipalities, pla
       </div>
       <div className={styles.formActions}>
         <small>Se comprueba que no exista ya el mismo acto de la Hermandad ese día.</small>
-        <button className={styles.primaryButton} type="submit">Crear acto</button>
+        <button className={styles.primaryButton} type="submit" disabled={pending}>{pending ? 'Guardando…' : 'Crear acto'}</button>
       </div>
     </form>
   )
