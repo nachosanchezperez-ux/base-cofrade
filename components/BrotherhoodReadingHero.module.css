@@ -33,3 +33,14 @@
 }
 
 .hero :global([class*='__identityCopy']) small, .hero :global([class*='__facts']) dt { color:#d5d7d9 !important; }
+
+/* Título oficial plegable (solo ficha por capítulos). */
+.officialCollapsible summary { display: block; min-height: 0; }
+.officialCollapsible summary span { display: block; }
+@media(max-width:700px) {
+  .officialCollapsible:not([open]) summary span { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+  .officialCollapsible:not([open]) summary::after { content: 'Ver título completo +'; display: block; margin-top: 2px; font-size: 12px; font-weight: 700; color: #d5d7d9; }
+}
+@media(min-width:701px) {
+  .officialCollapsible summary { cursor: text; pointer-events: none; }
+}

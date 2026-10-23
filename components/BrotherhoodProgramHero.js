@@ -38,6 +38,7 @@ export default function BrotherhoodProgramHero({
   media = {},
   compact = false,
   actions = null,
+  collapseOfficialName = false,
 }) {
   const visibleFacts = facts.filter((fact) => fact?.label && fact?.value).slice(0, 4)
   const hasPhoto = Boolean(media.photoSrc)
@@ -128,7 +129,13 @@ export default function BrotherhoodProgramHero({
           </div>
 
           {context ? <p className={styles.context}>{context}</p> : null}
-          {officialName ? <p className={compact ? readingHeroStyles.official : styles.officialName}>{officialName}</p> : null}
+          {officialName && collapseOfficialName ? (
+            // Ficha por capítulos: en móvil el título oficial ocupa dos líneas y
+            // se despliega al tocarlo; el texto completo está siempre en el HTML.
+            <details className={`${readingHeroStyles.official} ${readingHeroStyles.officialCollapsible}`}>
+              <summary><span>{officialName}</span></summary>
+            </details>
+          ) : officialName ? <p className={compact ? readingHeroStyles.official : styles.officialName}>{officialName}</p> : null}
           {actions}
 
           {visibleFacts.length ? (

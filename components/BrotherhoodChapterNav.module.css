@@ -1,0 +1,190 @@
+.wrapper {
+  display: contents;
+}
+
+/* Móvil primero: barra inferior fija, como la de una aplicación. */
+.nav {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 70;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  background: rgba(255, 255, 255, .97);
+  border-top: 1px solid #dde2e7;
+  box-shadow: 0 -6px 18px rgba(13, 41, 73, .07);
+  backdrop-filter: blur(12px) saturate(140%);
+}
+
+.list {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 6px 4px 4px;
+  list-style: none;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: 56px;
+  padding: 2px;
+  color: #59636e;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.1;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* El icono va dentro de una «pastilla» que se rellena en el capítulo activo. */
+.iconWrap {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 30px;
+  border-radius: 999px;
+  transition: background-color .18s ease, color .18s ease;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.link[aria-current] {
+  color: var(--brotherhood-primary, #153b69);
+  font-weight: 800;
+}
+
+.link[aria-current] .iconWrap {
+  background: var(--brotherhood-primary, #153b69);
+  color: var(--brotherhood-light, #fff);
+}
+
+.link:active .iconWrap {
+  transform: scale(.94);
+}
+
+.link:focus-visible {
+  outline: 3px solid #175f99;
+  outline-offset: -3px;
+  border-radius: 10px;
+}
+
+/* Mini cabecera del modo aplicación: aparece al salir la portada de la vista. */
+.miniHeader {
+  position: fixed;
+  top: var(--hc-app-header-height, 70px);
+  inset-inline: 0;
+  z-index: 69;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 6px 16px;
+  background: rgba(255, 255, 255, .97);
+  border-bottom: 1px solid #e3e7eb;
+  box-shadow: 0 4px 14px rgba(13, 41, 73, .06);
+  transform: translateY(-110%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .2s ease, opacity .2s ease;
+}
+
+.miniVisible {
+  transform: none;
+  opacity: 1;
+}
+
+.miniHeader img {
+  width: 28px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.miniHeader span {
+  display: grid;
+  min-width: 0;
+  line-height: 1.15;
+}
+
+.miniHeader strong {
+  overflow: hidden;
+  color: #171b20;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.miniHeader small {
+  color: var(--brotherhood-secondary, #a71930);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* Ordenador: la misma lista, arriba y discreta, adherida bajo la cabecera. */
+@media (min-width: 900px) {
+  .nav {
+    position: sticky;
+    top: var(--hc-app-header-height, 78px);
+    inset-inline: auto;
+    bottom: auto;
+    padding: 0;
+    border-top: 0;
+    border-bottom: 1px solid #e3e7eb;
+    box-shadow: none;
+  }
+
+  .list {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    max-width: 1160px;
+    padding: 6px 20px;
+  }
+
+  .link {
+    flex-direction: row;
+    gap: 6px;
+    min-height: 44px;
+    padding: 0 6px 0 2px;
+    font-size: 15px;
+  }
+
+  .iconWrap {
+    width: 38px;
+    height: 30px;
+  }
+
+  .icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .link:hover {
+    color: #171b20;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav { backdrop-filter: none; }
+  .iconWrap, .miniHeader { transition: none; }
+}
