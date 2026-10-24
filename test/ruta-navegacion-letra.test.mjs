@@ -9,3 +9,15 @@ test('la ruta de navegación no baja de 11px, ni en escritorio ni en móvil', ()
   assert.equal(sizes.length, 2)
   for (const size of sizes) assert.ok(size >= 11, `ruta a ${size}px`)
 })
+
+test('en móvil, los títulos largos se acortan con «…» en la última etiqueta', () => {
+  const mobile = css.slice(css.indexOf('@media (max-width: 620px)'))
+  assert.match(mobile, /\.breadcrumb li:last-child \{[^}]*flex: 0 1 auto;[^}]*min-width: min\(100%, 7\.5rem\)/)
+  assert.match(mobile, /\.breadcrumb li:last-child span\[aria-current="page"\] \{[^}]*text-overflow: ellipsis/)
+})
+
+test('el Vía Crucis tampoco baja de 11px en móvil', () => {
+  const via = readFileSync(new URL('../app/via-crucis-sevilla/via-crucis.module.css', import.meta.url), 'utf8')
+  const mobile = via.slice(via.lastIndexOf('@media (max-width: 620px)'))
+  assert.match(mobile, /span\[aria-current="page"\] \{\s*font-size: 11px;/)
+})

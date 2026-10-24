@@ -943,6 +943,6 @@
   }
   .breadcrumbSpacing[data-site-breadcrumb] a,
   .breadcrumbSpacing[data-site-breadcrumb] span[aria-current="page"] {
-    font-size: 10px;
+    font-size: 11px;
   }
 }
