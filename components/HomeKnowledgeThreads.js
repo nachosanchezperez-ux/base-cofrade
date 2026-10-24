@@ -43,7 +43,7 @@ function Row({ item }) {
           <span className={styles.tag}>{item.tag}</span>
           <span className={styles.names}>
             {item.links.map((link, index) => (
-              <span key={link.id}>
+              <span key={link.id} data-short={link.label.length <= 18 || undefined}>
                 {index ? <span className={styles.sep} aria-hidden="true"> · </span> : null}
                 <Link href={link.href} prefetch={false} title={link.title !== link.label ? link.title : undefined}>{link.label}</Link>
               </span>

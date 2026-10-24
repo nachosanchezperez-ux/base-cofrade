@@ -190,8 +190,9 @@ a.row:focus-visible {
   text-decoration: none;
 }
 
-/* Cada nombre corto, entero en su línea («La Sed», no «La / Sed»). */
-.names > span {
+/* Cada nombre corto, entero en su línea («La Sed», no «La / Sed»); los largos
+   sí pueden partirse, o desbordarían el móvil. */
+.names > span[data-short] {
   white-space: nowrap;
 }
 
