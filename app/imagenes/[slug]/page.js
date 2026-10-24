@@ -11,7 +11,6 @@ import { heritageDirectoryTypePath, heritageTypeForValue } from '@/lib/heritage-
 import { agendaMunicipalityHref } from '@/lib/agenda-relations';
 import JsonLd from '@/components/JsonLd';
 import { imagePageRelationCopy } from '@/lib/brotherhood-image-relations';
-import RelationalThread from '@/components/RelationalThread';
 import SourcesBlock from '@/components/SourcesBlock';
 import { getPublishedEntityMedia } from '@/lib/supabase/entity-media';
 import { getPublishedImageDresser } from '@/lib/supabase/image-dresser';
@@ -131,56 +130,31 @@ export default async function ImagenPage({ params }) {
     && linkedAuthors[0].label === linkedAuthors[0].name
     ? linkedAuthors[0]
     : null;
+  // La autoría aparece una sola vez: en la cabecera si cabe en un único dato
+  // (texto o un solo enlace); en el resumen si hay que enlazar a varios autores.
+  const heroShowsAuthor = Boolean(publicText(imagen.autor)) && (singleLinkedAuthor || !linkedAuthors.length);
+  const summaryShowsAuthor = Boolean(publicText(imagen.autor)) && !heroShowsAuthor;
   const cronologia = buildImageChronology(imagen, restorationCards);
+  // Sin cronología propia ni restauraciones, la única entrada sería la datación,
+  // que ya figura en la cabecera.
+  const hasOwnChronology = (Array.isArray(imagen.cronologia) && imagen.cronologia.some(Boolean))
+    || restorationCards.length > 0;
+  const showChronology = cronologia.length > 0 && hasOwnChronology;
   const otrasImagenes = hermandad?.imagenes?.filter(
-    (otraImagen) => otraImagen.slug !== imagen.slug
+    (otraImagen) => otraImagen.slug && otraImagen.slug !== imagen.slug
   ) || [];
-  const relationalItems = [
-    ...(hermandad ? [{
-      kind: 'Hermandad',
-      relation: 'Pertenece a',
-      title: hermandad.nombrePopular,
-      href: `/hermandades/${hermandad.slug}`,
-      context: 'Ficha matriz de la corporación',
-    }] : []),
-    ...(imagen.sustituidaPor ? [{
-      kind: 'Imagen',
-      relation: 'La sustituyó',
-      title: imagen.sustituidaPor.nombre,
-      href: `/imagenes/${imagen.sustituidaPor.slug}`,
-      context: imagen.sustituidaPor.fecha ? `Desde ${imagen.sustituidaPor.fecha}` : 'Imagen titular actual',
-    }] : []),
-    ...(imagen.sustituyoA || []).map((anterior) => ({
-      kind: 'Imagen',
-      relation: 'Sustituyó a',
-      title: anterior.nombre,
-      href: `/imagenes/${anterior.slug}`,
-      context: anterior.fecha ? `Antigua imagen titular hasta ${anterior.fecha}` : 'Antigua imagen titular',
-    })),
-    ...pasos.map((paso) => ({
-      kind: 'Paso',
-      relation: 'Procesiona en',
-      title: paso.nombre,
-      href: `/pasos/${paso.slug}`,
-      context: paso.tipo || 'Paso procesional relacionado',
-    })),
-    ...otrasImagenes.map((otraImagen) => ({
-      kind: 'Imagen',
-      relation: 'Comparte hermandad',
-      title: otraImagen.nombre,
-      href: `/imagenes/${otraImagen.slug}`,
-      context: [otraImagen.tipo, otraImagen.fecha].filter(Boolean).join(' · '),
-    })),
-  ];
-  const hasRelatedEntities = relationalItems.length > 0;
+  const otherSteps = pasos.filter((paso) => paso.slug && paso !== primaryStep);
   const hasImageOverview = Boolean(
-    hermandad
+    municipalityHubHref
     || publicText(imagen.descripcion)
     || publicText(imagen.estadoActual)
-    || publicText(imagen.autor)
-    || publicText(imagen.fecha)
+    || summaryShowsAuthor
     || publicText(imagen.tipologia || imagen.tipo)
     || dresser?.name
+    || imagen.sustituidaPor
+    || imagen.sustituyoA?.length
+    || otherSteps.length
+    || otrasImagenes.length
     || imagen.coronacionCanonica
   );
   const breadcrumbs = [
@@ -255,7 +229,7 @@ export default async function ImagenPage({ params }) {
           crestSrc: hermandad.escudoPath || '',
         } : null}
         facts={[
-          publicText(imagen.autor) ? {
+          heroShowsAuthor ? {
             label: 'Autoría',
             value: publicText(imagen.autor),
             href: singleLinkedAuthor ? `/autores/${singleLinkedAuthor.slug}` : undefined,
@@ -271,7 +245,6 @@ export default async function ImagenPage({ params }) {
           photoSrc: coverMedia?.path || '',
           photoAlt: coverMedia?.alt || `Fotografía de ${imagen.nombre}`,
           credit: coverMedia?.credit || '',
-          initials: imagen.iniciales,
           width: coverMedia?.width,
           height: coverMedia?.height,
           focusX: coverMedia?.focusX,
@@ -284,11 +257,10 @@ export default async function ImagenPage({ params }) {
 
       <EntitySectionNav items={[
         hasImageOverview && { href: '#resumen', label: 'Resumen' },
-        hasRelatedEntities && { href: '#tira-del-hilo', label: 'Tira del hilo' },
         galleryMedia.length > 0 && { href: '#galeria', label: 'Galería' },
         imagen.restauraciones?.length > 0 && { href: '#restauraciones', label: 'Restauraciones' },
         imagen.acontecimientos?.length > 0 && { href: '#hitos', label: 'Hitos' },
-        cronologia.length > 0 && { href: '#cronologia', label: 'Cronología' },
+        showChronology && { href: '#cronologia', label: 'Cronología' },
         imagen.fuentes?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
       ]} />
 
@@ -307,36 +279,24 @@ export default async function ImagenPage({ params }) {
           </div>
 
           <div className="image-facts-v2">
-            {hermandad ? <article>
-              <small>Hermandad</small>
-              <Link href={`/hermandades/${hermandad.slug}`}>
-                {hermandad.nombrePopular}
-              </Link>
-            </article> : null}
-
             {municipalityHubHref ? <article>
               <small>Localidad</small>
               <Link href={municipalityHubHref}>Guía cofrade de {hermandad.localidad}</Link>
             </article> : null}
 
-            {publicText(imagen.autor) ? <article>
-              <small>Autor</small>
-              {linkedAuthors.length ? <strong>
+            {summaryShowsAuthor ? <article>
+              <small>{imageAuthors.length === 1 ? 'Autor' : 'Autores'}</small>
+              <strong>
                 {imageAuthors.map((author, index) => <span key={author.label}>
                   {index > 0 ? ' · ' : null}
                   {author.slug ? <Link href={`/autores/${author.slug}`} prefetch={false}>{author.label}</Link> : author.label}
                 </span>)}
-              </strong> : <strong>{publicText(imagen.autor)}</strong>}
+              </strong>
             </article> : null}
 
             {dresser?.name ? <article>
               <small>Vestidor actual</small>
               <strong>{dresser.name}</strong>
-            </article> : null}
-
-            {publicText(imagen.fecha) ? <article>
-              <small>Fecha</small>
-              <strong>{publicText(imagen.fecha)}</strong>
             </article> : null}
 
             {imagen.sustituidaPor ? <article>
@@ -348,6 +308,20 @@ export default async function ImagenPage({ params }) {
               <small>Sustituyó a</small>
               {imagen.sustituyoA.map((anterior) => (
                 <Link key={anterior.slug} href={`/imagenes/${anterior.slug}`}>{anterior.nombre}</Link>
+              ))}
+            </article> : null}
+
+            {otherSteps.length ? <article>
+              <small>También procesiona en</small>
+              {otherSteps.map((paso) => (
+                <Link key={paso.slug} href={`/pasos/${paso.slug}`}>{paso.nombre}</Link>
+              ))}
+            </article> : null}
+
+            {otrasImagenes.length ? <article>
+              <small>{otrasImagenes.length === 1 ? 'Otra imagen de la hermandad' : 'Otras imágenes de la hermandad'}</small>
+              {otrasImagenes.map((otraImagen) => (
+                <Link key={otraImagen.slug} href={`/imagenes/${otraImagen.slug}`}>{otraImagen.nombre}</Link>
               ))}
             </article> : null}
 
@@ -380,15 +354,6 @@ export default async function ImagenPage({ params }) {
         </div>
       </section> : null}
 
-      <RelationalThread
-        currentName={imagen.nombre}
-        currentMeta={[imagen.tipologia || imagen.tipo, imagen.fecha].filter(Boolean).join(' · ')}
-        items={relationalItems}
-        priorityProfile="imagen"
-        title="Desde esta imagen, sigue tirando del hilo"
-        description="Salta a su Hermandad, al paso donde procesiona o a otras imágenes vinculadas. La relación permanece visible para que la navegación tenga siempre contexto."
-      />
-
       <EntityMediaGallery items={galleryMedia} id="galeria" />
 
       <ImageRestorationsSection items={restorationCards} />
@@ -411,7 +376,7 @@ export default async function ImagenPage({ params }) {
         </section>
       )}
 
-      {cronologia.length > 0 && (
+      {showChronology && (
         <section className="section image-timeline-section-v2" id="cronologia">
           <div className="shell">
             <span className="eyebrow">Evolución</span>

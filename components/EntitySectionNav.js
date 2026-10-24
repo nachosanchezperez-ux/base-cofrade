@@ -161,7 +161,8 @@ export default function EntitySectionNav({ items = [], discover = true, revealDi
     });
   }
 
-  if (!navigationItems.length) return null;
+  // Un índice con una sola sección no ayuda a navegar.
+  if (navigationItems.length < 2) return null;
 
   return (
     <nav
