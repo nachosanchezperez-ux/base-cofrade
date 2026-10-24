@@ -455,12 +455,13 @@ export default async function BandDetailPage({ params }) {
             <span className={styles.eyebrow}>Dónde suena · Sevilla y provincia</span>
             <h2>Glorias, eucarísticas y cultos externos</h2>
           </div>
-          <div className={styles.gloryTypeSummary} aria-label="Tipos de procesiones documentadas">
+          {/* Con un solo acompañamiento, el resumen por tipos repetiría la cabecera de la tarjeta. */}
+          {gloryAccompaniments.length > 1 ? <div className={styles.gloryTypeSummary} aria-label="Tipos de procesiones documentadas">
             {gloryTypeSummary.map((item) => <article key={item.type}>
               <strong>{item.count}</strong>
               <span>{item.count === 1 ? item.type : item.label}</span>
             </article>)}
-          </div>
+          </div> : null}
           <div className={styles.gloryGroups}>
             {gloryGroups.map((group) => group.items.length === 1 ? (
               // Un único acompañamiento: sin capa de grupo; la tarjeta ya indica la localidad.

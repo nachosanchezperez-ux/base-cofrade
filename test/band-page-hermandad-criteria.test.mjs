@@ -40,6 +40,7 @@ test('las notas de acompañamiento visibles pasan por el mismo filtro', () => {
 
 test('un grupo de glorias con un solo acompañamiento se pinta sin capa de grupo', () => {
   assert.match(page, /group\.items\.length === 1 \?/)
+  assert.match(page, /gloryAccompaniments\.length > 1 \? <div className=\{styles\.gloryTypeSummary\}/)
   const groups = groupGloryAccompaniments([
     { id: 'a', municipalitySlug: 'sevilla', province: 'Sevilla', outingType: 'Procesión de gloria' },
     { id: 'b', municipalitySlug: 'cantillana', province: 'Sevilla', outingType: 'Romería' },
