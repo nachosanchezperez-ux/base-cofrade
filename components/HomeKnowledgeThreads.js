@@ -1,149 +1,104 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import OpenUpdatesButton from './OpenUpdatesButton'
+import { latestThreadsByDay } from '@/lib/home-latest-threads'
 import styles from './HomeKnowledgeThreads.module.css'
-import polishStyles from './HomeResponsivePolish.module.css'
 
-function ThreadVisual({ visual, compact = false }) {
+// «Últimos hilos incorporados» (dentro de «Descubre Hilo Cofrade»): lo que ha
+// entrado en la enciclopedia, por días, una línea por novedad. Cada línea dice
+// qué ha pasado, sobre qué ficha y el dato concreto; el escudo o la foto ayudan
+// a reconocerla de un vistazo. Si el mismo día se actualizan varias fichas del
+// mismo tipo, van juntas en una línea con un enlace a cada una.
+// Jerarquía: solo las fichas nuevas llevan rojo y negrita fuerte; el resto se
+// lee como apuntes del día.
+
+function Visual({ visual }) {
+  // Solo con escudo o foto real: un círculo vacío no ayuda a reconocer nada.
   if (!visual?.path) return null
   const identity = visual.kind !== 'photo'
-  const unoptimized = /\.svg(?:$|\?)/i.test(visual.path)
-
   return (
-    <span
-      className={`${styles.visual} ${compact ? styles.visualCompact : ''}`}
-      data-kind={visual.kind || 'photo'}
-      aria-hidden="true"
-    >
+    <span className={styles.avatar} data-kind={identity ? 'identity' : 'photo'} aria-hidden="true">
       <Image
         src={visual.path}
         alt=""
         fill
-        sizes={compact ? '52px' : '78px'}
-        unoptimized={unoptimized}
+        sizes="44px"
+        unoptimized={/\.svg(?:$|\?)/i.test(visual.path)}
         style={{ objectFit: identity ? 'contain' : 'cover' }}
       />
     </span>
   )
 }
 
-function ThreadStatus({ thread }) {
-  if (!thread.activityStatus && !thread.dateLabel) return null
-
-  return (
-    <span className={styles.activity}>
-      {thread.activityStatus ? (
-        <strong className={styles.status} data-status={thread.activityStatus}>
-          {thread.activityStatus}
-        </strong>
-      ) : null}
-      {thread.dateLabel ? (
-        <time dateTime={thread.dateTime}>
-          {thread.dateVerb ? `${thread.dateVerb} ` : ''}{thread.dateVerb && /^(Hoy|Ayer)$/.test(thread.dateLabel) ? thread.dateLabel.toLowerCase() : thread.dateLabel}
-        </time>
-      ) : null}
-    </span>
-  )
-}
-
-// La etiqueta de relación viene del snapshot como «Banda → hermandades»; en la
-// portada se muestra con un separador neutro para no competir con las flechas
-// de las acciones (fase 1 de la portada, 17/10/2026).
-function relationLabel(label = '') {
-  return String(label).replace(/\s*→\s*/g, ' · ')
-}
-
-function LeadThread({ thread }) {
-  const visualContext = thread.visual?.contextName && thread.visual.contextName !== thread.title
-    ? thread.visual.contextName
-    : ''
-
-  return (
-    <Link className={`${styles.leadCard} ${polishStyles.threadsLead}`} href={thread.href} prefetch={false} data-analytics-destination-name={thread.title} data-platform-update-id={thread.id}>
-      <div className={styles.leadTopline}>
-        <span className={styles.latest}><i aria-hidden="true" /> Más reciente</span>
-        <ThreadStatus thread={thread} />
-      </div>
-
-      <div className={`${styles.leadIdentity} ${thread.visual?.path ? styles.leadIdentityVisual : ''}`}>
-        <ThreadVisual visual={thread.visual} />
-        <div className={styles.leadCopy}>
-          <span className={styles.relation}>{relationLabel(thread.label)}</span>
-          {visualContext ? <span className={styles.context}>En {visualContext}</span> : null}
-          <h3>{thread.title}</h3>
-          <strong className={styles.metric}>{thread.metric}</strong>
+function Row({ item }) {
+  if (item.grouped) {
+    return (
+      <div className={styles.row} data-new={item.isNew || undefined} data-plain={item.visuals.length ? undefined : 'true'}>
+        {item.visuals.length ? (
+          <span className={styles.stack} aria-hidden="true">
+            {item.visuals.map((visual, index) => <Visual key={index} visual={visual} />)}
+          </span>
+        ) : null}
+        <div className={styles.copy}>
+          <span className={styles.tag}>{item.tag}</span>
+          {/* Nombres largos, uno por línea: en una sola, dos bandas parecían una. */}
+          {item.links.some((link) => link.label.length > 18) ? (
+            <ul className={`${styles.names} ${styles.stackedNames}`}>
+              {item.links.map((link) => (
+                <li key={link.id}>
+                  <Link href={link.href} prefetch={false} title={link.title !== link.label ? link.title : undefined}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <span className={styles.names}>
+              {item.links.map((link, index) => (
+                <span key={link.id} data-short="true">
+                  {index ? <span className={styles.sep} aria-hidden="true">{'\u00a0· '}</span> : null}
+                  <Link href={link.href} prefetch={false} title={link.title !== link.label ? link.title : undefined}>{link.label}</Link>
+                </span>
+              ))}
+            </span>
+          )}
+          <span className={styles.detail}>{item.detail}</span>
         </div>
       </div>
+    )
+  }
 
+  return (
+    <Link className={styles.row} href={item.href} prefetch={false} data-new={item.isNew || undefined} data-plain={item.visual?.path ? undefined : 'true'} data-analytics-destination-name={item.title}>
+      <Visual visual={item.visual} />
+      <span className={styles.copy}>
+        <span className={styles.tag}>{item.tag}</span>
+        <strong className={styles.name}>{item.title}</strong>
+        {item.detail ? <span className={styles.detail}>{item.detail}</span> : null}
+      </span>
+      <span className={styles.chevron} aria-hidden="true">›</span>
     </Link>
   )
 }
 
-function CompactThread({ thread }) {
-  const visualContext = thread.visual?.contextName && thread.visual.contextName !== thread.title
-    ? thread.visual.contextName
-    : ''
-
-  return (
-    <Link className={`${styles.compactCard} ${polishStyles.threadsCompact}`} href={thread.href} prefetch={false} data-analytics-destination-name={thread.title} data-platform-update-id={thread.id}>
-      <div className={styles.compactTopline}>
-        <span className={styles.relation}>{relationLabel(thread.label)}</span>
-        <ThreadStatus thread={thread} />
-      </div>
-
-      <div className={`${styles.compactIdentity} ${thread.visual?.path ? styles.compactIdentityVisual : ''}`}>
-        <ThreadVisual visual={thread.visual} compact />
-        <div className={styles.compactCopy}>
-          {visualContext ? <span className={styles.context}>En {visualContext}</span> : null}
-          <h3>{thread.title}</h3>
-          <strong className={styles.compactMetric}>{thread.metric}</strong>
-        </div>
-      </div>
-
-    </Link>
-  )
-}
-
-export default function HomeKnowledgeThreads({ threads = [], embedded = false }) {
+export default function HomeKnowledgeThreads({ threads = [], embedded = true }) {
   if (!threads.length) return null
-
-  const [lead, ...secondary] = threads
-  // Incrustado en «Descubre Hilo Cofrade»: sin sección ni fondo propios.
-  const Wrapper = embedded ? 'div' : 'section'
+  const days = latestThreadsByDay(threads)
 
   return (
-    <Wrapper className={embedded ? styles.embedded : `${styles.section} ${polishStyles.threadsSection}`} id="ultimos-hilos" data-analytics-related-section="ultimos_hilos">
-      <div className={embedded ? undefined : 'shell'}>
-        {embedded ? (
-          <header className={styles.embeddedHeader}>
-            <h3>Últimos hilos incorporados</h3>
-            <OpenUpdatesButton className={styles.allUpdates} />
-          </header>
-        ) : (
-        <header className={`${styles.header} ${polishStyles.threadsHeader}`}>
-          <div>
-            <span className={styles.eyebrow}>Conocimiento en movimiento</span>
-            <h2>Últimos hilos incorporados</h2>
-          </div>
-          <div className={styles.headerActions}>
-            <OpenUpdatesButton className={styles.allUpdates} />
-          </div>
-        </header>
-        )}
-
-        <div className={`${styles.layout} ${polishStyles.threadsLayout}`}>
-          <LeadThread thread={lead} />
-
-          {secondary.length && !embedded ? (
-            <aside className={`${styles.more} ${polishStyles.threadsMore}`} aria-label="Más incorporaciones recientes">
-              <span className={styles.moreLabel}>También incorporado</span>
-              <div className={styles.moreList}>
-                {secondary.map((thread) => <CompactThread thread={thread} key={thread.id} />)}
-              </div>
-            </aside>
-          ) : null}
-        </div>
+    <div className={styles.embedded} id="ultimos-hilos" data-analytics-related-section="ultimos_hilos" data-embedded={embedded || undefined}>
+      <header className={styles.embeddedHeader}>
+        <h3>Últimos hilos incorporados</h3>
+        <OpenUpdatesButton className={styles.allUpdates} />
+      </header>
+      <div className={styles.days}>
+        {days.map((day) => (
+          <section key={day.dayKey} className={styles.day} aria-label={day.label}>
+            <p className={styles.dayName}>{day.label}</p>
+            <ul className={styles.list}>
+              {day.items.map((item) => <li key={item.id}><Row item={item} /></li>)}
+            </ul>
+          </section>
+        ))}
       </div>
-    </Wrapper>
+    </div>
   )
 }

@@ -75,50 +75,6 @@
     display: none;
   }
 
-  .threadsSection {
-    padding: 30px 0 34px;
-  }
-
-  .threadsHeader {
-    gap: 6px;
-    margin-bottom: 14px;
-  }
-
-  .threadsHeader h2 {
-    font-size: 29px;
-  }
-
-  .threadsHeader p {
-    font-size: 12.5px;
-    line-height: 1.5;
-  }
-
-  .threadsLayout {
-    gap: 9px;
-  }
-
-  .threadsLead {
-    min-height: 0;
-    padding: 17px;
-    border-radius: 17px;
-  }
-
-  .threadsLead h3 {
-    font-size: 22px;
-  }
-
-  .threadsMore {
-    padding-top: 14px;
-    border-radius: 17px;
-  }
-
-  .threadsCompact {
-    padding: 14px 48px 14px 15px;
-  }
-
-  .threadsCompact h3 {
-    font-size: 17px;
-  }
 
 }
 
@@ -127,10 +83,5 @@
   .extraordinarySection {
     padding-top: 18px;
     padding-bottom: 32px;
-  }
-
-  .threadsSection {
-    padding-top: 38px;
-    padding-bottom: 40px;
   }
 }
