@@ -87,7 +87,7 @@ function shortDay(dayKey) {
   const [year, month, day] = dayKey.split('-').map(Number)
   return new Intl.DateTimeFormat('es-ES', {
     timeZone: 'Europe/Madrid', weekday: 'short', day: 'numeric', month: 'short',
-  }).format(new Date(Date.UTC(year, month - 1, day, 12)))
+  }).format(new Date(Date.UTC(year, month - 1, day, 12))).replace(',', '')
 }
 
 function ledgerMark(progress) {
@@ -758,7 +758,7 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
                   onClick={() => openChallenge(nextChallenge.dayKey, nextChallenge.mode)}
                 >
                   {nextChallenge.dayKey === dateKey
-                    ? (nextChallenge.mode === 'expert' ? 'Jugar a La última chicotá' : 'Jugar al hilo del día')
+                    ? (nextChallenge.mode === 'expert' ? 'Jugar a La última chicotá' : 'Jugar al hilo del día') + (isArchive ? ' de hoy' : '')
                     : 'Siguiente: ' + MODE_LABEL[nextChallenge.mode] + ' del ' + shortDay(nextChallenge.dayKey)}
                   {' '}<span aria-hidden="true">→</span>
                 </button>

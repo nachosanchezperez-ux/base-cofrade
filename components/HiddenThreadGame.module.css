@@ -878,7 +878,8 @@
   font-weight: var(--font-weight-bold);
 }
 
-.statsGrid dd {
+/* Las reglas de legibilidad de #hc-app fijan dd y h2; aquí se ajustan al juego. */
+:global(#hc-app) .statsGrid dd {
   margin: 2px 0 0;
   color: var(--hg-wine);
   font-family: Georgia, 'Times New Roman', serif;
@@ -887,7 +888,7 @@
   line-height: 1.1;
 }
 
-.statsGrid dd small {
+:global(#hc-app) .statsGrid dd small {
   color: var(--hg-muted);
   font-family: inherit;
   font-size: 13px;
@@ -910,10 +911,11 @@
   gap: 4px 10px;
 }
 
-.archiveTop h2 {
+:global(#hc-app) .archiveTop h2 {
   margin: 0;
   color: var(--hg-ink);
-  font-size: 18px;
+  font-size: 20px;
+  line-height: 1.25;
 }
 
 .archiveTop span {
