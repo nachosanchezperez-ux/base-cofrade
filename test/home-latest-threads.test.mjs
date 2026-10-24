@@ -63,12 +63,25 @@ test('listas de nombres en español', () => {
   assert.equal(listNames(['A', 'B', 'C', 'D']), 'A, B, C y 1 más')
 })
 
-test('marchas nuevas: los títulos, no el recuento repetido', () => {
+test('marchas nuevas: manda el número y los títulos van entre comillas', () => {
   const line = latestFromUpdate({ id: 'm', activityKind: 'march_publications', title: '22 nuevas marchas', metric: '22 fichas incorporadas', marchNames: ['De Rosario, de Esperanza', 'Caridad', 'Piedad'], marchCount: 22, href: '/marchas', dateTime: '2026-10-24T08:00:00Z' })
+  assert.equal(line.title, '22 marchas nuevas')
   // Un título con coma no se parte.
-  assert.equal(line.title, 'De Rosario, de Esperanza · Caridad y 20 más')
-  assert.equal(line.detail, '22 marchas nuevas en el catálogo')
+  assert.equal(line.detail, '«De Rosario, de Esperanza» · «Caridad» y 20 más')
   assert.equal(line.symbol, '♪')
+})
+
+test('las marchas dedicadas a una Hermandad con patrimonio musical ese día van en su línea', () => {
+  const heritage = update('milagrosa', 'musical_heritage', 'La Milagrosa', '22 marchas documentadas', '2026-10-24T08:00:00Z')
+  const marches = { id: 'm', activityKind: 'march_publications', title: '22 nuevas marchas', metric: 'x', summary: 'x', marchNames: ['A', 'B'], marchCount: 22, marchDedicateeIds: ['root-milagrosa'], href: '/marchas', dateTime: '2026-10-24T07:00:00Z' }
+  const items = buildHomeLatestThreads({ now, updates: [heritage, marches] })
+  assert.equal(items.length, 1)
+  assert.equal(items[0].title, 'La Milagrosa')
+  assert.equal(items[0].detail, '22 marchas nuevas en su patrimonio musical')
+
+  // Si las marchas no son todas de esa Hermandad, se anuncian aparte.
+  const apart = buildHomeLatestThreads({ now, updates: [heritage, { ...marches, marchDedicateeIds: [] }] })
+  assert.equal(apart.length, 2)
 })
 
 test('dos fichas nuevas del mismo tipo el mismo día ya van juntas', () => {
