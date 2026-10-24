@@ -51,6 +51,9 @@ test('un grupo de glorias con un solo acompañamiento se pinta sin capa de grupo
 test('los tipos de salida concuerdan en singular y plural', () => {
   assert.equal(pluralizeOutingType('Procesión triunfal y Romería'), 'Procesiones triunfales y Romerías')
   assert.equal(pluralizeOutingType('Procesión de gloria'), 'Procesiones de gloria')
+  assert.equal(pluralizeOutingType('Corpus Christi'), 'Corpus Christi')
+  assert.equal(pluralizeOutingType('Gloria / procesión eucarística'), 'Glorias / procesiones eucarísticas')
+  assert.equal(pluralizeOutingType('Cruz de Mayo'), 'Cruces de Mayo')
   const summary = summarizeGloryTypes([
     { outingType: 'Procesión triunfal y Romería' },
     { outingType: 'Procesión triunfal y Romería' },
