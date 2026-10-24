@@ -740,6 +740,46 @@
   margin-top: 0;
 }
 
+/* Destinos directos: abren la aplicación con el resultado ya escrito, sin portapapeles. */
+.shareTargets {
+  margin-top: 12px;
+}
+
+.shareTargetsLabel {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--hg-muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.shareTargetList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 8px;
+}
+
+.shareTarget {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 1px solid var(--hg-line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--hg-wine);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.shareTarget[data-target='whatsapp'] {
+  border-color: var(--hg-wine);
+}
+
 .shareNote {
   margin: 8px 0 0;
   color: var(--hg-muted);
@@ -835,6 +875,7 @@
 .primaryButton:focus-visible,
 .secondaryButton:focus-visible,
 .resultLink:focus-visible,
+.shareTarget:focus-visible,
 .threadCard:focus-visible,
 .introBack:focus-visible,
 .recommendationCard:focus-visible {

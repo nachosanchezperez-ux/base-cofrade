@@ -9,7 +9,9 @@ import {
 import {
   HILO_SHARE_URL,
   hiddenInviteText,
+  hiddenNativeSharePayload,
   hiddenShareData,
+  hiddenShareTargets,
   hiddenShareSocialLinks,
   hiddenStoryFilename,
 } from '../lib/hilo-hidden-share.js'
@@ -98,4 +100,50 @@ test('la invitación a jugar existe incluso sin haber completado la partida', ()
   for (const answer of ['LLAMADOR','PALIO','COSTAL']) {
     assert.ok(!text.includes(answer),'La invitación no debe revelar palabras')
   }
+})
+
+function finishedDaily(dayKey = '2026-10-24') {
+  const challenge = getHiddenChallenge(dayKey, 'daily')
+  const progress = makeHiddenProgress(challenge)
+  progress.rounds[0] = { status: 'won', guesses: [normalizeHiddenAnswer(challenge.words[0].answer)], hints: [] }
+  progress.finished = true
+  return { challenge, data: hiddenShareData(challenge, progress, { streak: 4 }) }
+}
+
+test('el menú nativo recibe el enlace aparte, sin duplicarlo en el texto', () => {
+  const { data } = finishedDaily()
+  const payload = hiddenNativeSharePayload(data)
+  assert.equal(payload.url, HILO_SHARE_URL)
+  assert.ok(!payload.text.includes(HILO_SHARE_URL))
+  assert.ok(payload.text.includes('Racha: 4 días seguidos'))
+  assert.equal(payload.title, data.title)
+  assert.equal(hiddenNativeSharePayload(null), null)
+})
+
+test('los destinos directos abren cada aplicación con el resultado y el enlace', () => {
+  const { challenge, data } = finishedDaily()
+  const targets = hiddenShareTargets(data)
+  assert.deepEqual(targets.map((item) => item.id), ['whatsapp', 'telegram', 'x', 'facebook', 'email'])
+  const byId = Object.fromEntries(targets.map((item) => [item.id, item.href]))
+  assert.ok(byId.whatsapp.startsWith('https://wa.me/?text='))
+  assert.ok(byId.telegram.startsWith('https://t.me/share/url?url=' + encodeURIComponent(HILO_SHARE_URL)))
+  assert.ok(byId.facebook.endsWith('u=' + encodeURIComponent(HILO_SHARE_URL)))
+  assert.ok(byId.email.startsWith('mailto:?subject='))
+  for (const href of targets.map((item) => decodeURIComponent(item.href))) {
+    assert.ok(href.includes(HILO_SHARE_URL))
+    assert.ok(!href.toUpperCase().includes(challenge.words[0].answer))
+  }
+  assert.deepEqual(hiddenShareTargets(null), [])
+})
+
+test('compartir el resultado nunca copia al portapapeles sin que se elija', () => {
+  const game = readFileSync(new URL('../components/HiddenThreadGame.js', import.meta.url), 'utf8')
+  const shareResult = game.slice(game.indexOf('async function shareResult()'), game.indexOf('async function copyResult()'))
+  assert.ok(shareResult.length > 0)
+  assert.doesNotMatch(shareResult, /clipboard|copyResult\(/)
+  assert.match(shareResult, /hiddenNativeSharePayload\(shareData\)/)
+  assert.match(shareResult, /offerShareTargets/)
+  // Sin menú nativo no se muestra el botón que no puede funcionar.
+  assert.match(game, /canNativeShare !== false \?/)
+  assert.match(game, /Copiar texto/)
 })
