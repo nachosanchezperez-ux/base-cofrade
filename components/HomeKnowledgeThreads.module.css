@@ -122,12 +122,19 @@ a.row:focus-visible {
 .stack {
   display: flex;
   align-items: center;
-  padding-left: 12px;
+  padding-left: 14px;
 }
 
 .stack .avatar {
-  margin-left: -12px;
-  box-shadow: 0 0 0 2px #fff;
+  width: 36px;
+  height: 36px;
+  margin-left: -14px;
+  box-shadow: 0 0 0 2px #f4f6f9;
+}
+
+.stack .avatar[data-empty='true'] {
+  width: 44px;
+  height: 44px;
 }
 
 .copy {

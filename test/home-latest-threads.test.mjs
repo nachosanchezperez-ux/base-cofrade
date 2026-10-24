@@ -66,15 +66,17 @@ test('listas de nombres en español', () => {
 test('marchas nuevas: los títulos, no el recuento repetido', () => {
   const line = latestFromUpdate({ id: 'm', activityKind: 'march_publications', title: '22 nuevas marchas', metric: '22 fichas incorporadas', marchNames: ['De Rosario, de Esperanza', 'Caridad', 'Piedad'], marchCount: 22, href: '/marchas', dateTime: '2026-10-24T08:00:00Z' })
   // Un título con coma no se parte.
-  assert.equal(line.title, 'De Rosario, de Esperanza · Caridad · Piedad y 19 más')
+  assert.equal(line.title, 'De Rosario, de Esperanza · Caridad y 20 más')
   assert.equal(line.detail, '22 marchas nuevas en el catálogo')
   assert.equal(line.symbol, '♪')
 })
 
 test('dos fichas nuevas del mismo tipo el mismo día ya van juntas', () => {
-  const band = (id, h) => ({ id: `new:band:${id}`, entityType: 'band', rootEntityId: id, title: id, href: `/bandas/${id}`, dateTime: `2026-10-23T0${h}:00:00Z` })
-  const items = buildHomeLatestThreads({ now, newEntities: [band('a', 6), band('b', 5)] })
+  const band = (id, h) => ({ id: `new:band:${id}`, entityType: 'band', rootEntityId: id, title: `Banda de Cornetas y Tambores ${id}`, href: `/bandas/${id}`, dateTime: `2026-10-23T0${h}:00:00Z` })
+  const items = buildHomeLatestThreads({ now, newEntities: [band('Vera-Cruz de Los Palacios', 6), band('Cautivo de Málaga', 5)] })
   assert.equal(items.length, 1)
   assert.equal(items[0].tag, 'Bandas nuevas')
-  assert.equal(items[0].detail, '2 fichas nuevas')
+  // El tipo se dice una vez; cada enlace, con lo que distingue a la banda.
+  assert.equal(items[0].detail, '2 fichas nuevas · de cornetas y tambores')
+  assert.deepEqual(items[0].links.map((link) => link.label), ['Vera-Cruz de Los Palacios', 'Cautivo de Málaga'])
 })
