@@ -39,18 +39,29 @@ function Row({ item }) {
             {item.visuals.map((visual, index) => <Visual key={index} visual={visual} />)}
           </span>
         ) : null}
-        <span className={styles.copy}>
+        <div className={styles.copy}>
           <span className={styles.tag}>{item.tag}</span>
-          <span className={styles.names}>
-            {item.links.map((link, index) => (
-              <span key={link.id} data-short={link.label.length <= 18 || undefined}>
-                {index ? <span className={styles.sep} aria-hidden="true">{'\u00a0· '}</span> : null}
-                <Link href={link.href} prefetch={false} title={link.title !== link.label ? link.title : undefined}>{link.label}</Link>
-              </span>
-            ))}
-          </span>
+          {/* Nombres largos, uno por línea: en una sola, dos bandas parecían una. */}
+          {item.links.some((link) => link.label.length > 18) ? (
+            <ul className={`${styles.names} ${styles.stackedNames}`}>
+              {item.links.map((link) => (
+                <li key={link.id}>
+                  <Link href={link.href} prefetch={false} title={link.title !== link.label ? link.title : undefined}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <span className={styles.names}>
+              {item.links.map((link, index) => (
+                <span key={link.id} data-short="true">
+                  {index ? <span className={styles.sep} aria-hidden="true">{'\u00a0· '}</span> : null}
+                  <Link href={link.href} prefetch={false} title={link.title !== link.label ? link.title : undefined}>{link.label}</Link>
+                </span>
+              ))}
+            </span>
+          )}
           <span className={styles.detail}>{item.detail}</span>
-        </span>
+        </div>
       </div>
     )
   }

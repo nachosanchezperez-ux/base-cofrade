@@ -207,6 +207,24 @@ a.row:focus-visible {
   outline-offset: 2px;
 }
 
+.stackedNames {
+  display: grid;
+  gap: 3px;
+  margin: 2px 0 1px;
+  padding: 0;
+  list-style: none;
+}
+
+/* Cada ficha en su línea, con una marca a la izquierda que las separa. */
+.stackedNames li {
+  padding-left: 10px;
+  border-left: 2px solid #dfe6ed;
+}
+
+.row[data-new] .stackedNames li {
+  border-left-color: var(--home-red);
+}
+
 .sep {
   color: #9aa6b4;
   font-weight: 600;
