@@ -73,6 +73,9 @@ function analyticsEntityType(value = '') {
   return 'otro';
 }
 
+const MIN_SEARCH_LENGTH = 1;
+const MIN_FULL_SEARCH_LENGTH = 2;
+
 function looksLikeQuestion(value = '') {
   const text = normalize(value);
   return /^(quien|que|cual|cuales|cuanto|cuantos|cuantas|donde|como|por que|cuando|dime|cuentame|ensename|muestrame|hay|tiene|tienen|busca)\b/.test(text)
@@ -316,6 +319,16 @@ export default function HiloSearch({
   }, []);
   const searchOrigin = universal ? 'global_search' : fullPage ? 'conversation_search' : 'home_search';
   const orderedResults = prioritizeHiloNavigationItems(results);
+  // Con una sola letra solo se buscan fichas cuyo nombre es esa letra («O» → La O).
+  // Mientras se escribe la primera letra no se muestra «Buscando…» ni «Sin
+  // coincidencias»: el panel aparece únicamente si hay una ficha que enseñar.
+  const trimmedQuery = query.trim();
+  const singleLetterQuery = trimmedQuery.length < MIN_FULL_SEARCH_LENGTH;
+  const resultsVisible = trimmedQuery.length >= MIN_SEARCH_LENGTH
+    && !looksLikeQuestion(query)
+    && (singleLetterQuery
+      ? results.length > 0
+      : (results.length > 0 || searching || searchComplete));
   const inputId = universal ? 'hilo-search-universal' : fullPage ? 'hilo-search-full' : 'hilo-search';
   const resultsId = `${inputId}-results`;
 
@@ -369,7 +382,7 @@ export default function HiloSearch({
 
   useEffect(() => {
     const term = query.trim();
-    if (term.length < 2 || looksLikeQuestion(query)) {
+    if (term.length < MIN_SEARCH_LENGTH || looksLikeQuestion(query)) {
       setResults([]);
       setSearching(false);
       setSearchComplete(false);
@@ -607,7 +620,7 @@ export default function HiloSearch({
             disabled={loading}
             role="combobox"
             aria-autocomplete="list"
-            aria-expanded={Boolean(query.trim().length > 1 && !looksLikeQuestion(query) && (orderedResults.length || searching || searchComplete))}
+            aria-expanded={resultsVisible}
             aria-controls={resultsId}
             aria-activedescendant={activeResultIndex >= 0 ? `${inputId}-result-${activeResultIndex}` : undefined}
           />
@@ -629,7 +642,7 @@ export default function HiloSearch({
         </div>
       ) : null}
 
-      {showComposer && query.trim().length > 1 && !looksLikeQuestion(query) && (results.length > 0 || searching || searchComplete) ? (
+      {showComposer && resultsVisible ? (
         <div className={styles.results} aria-label="Fichas y coincidencias del grafo" aria-live="polite">
           <div className={styles.resultsHead}>
             <span>{searching ? 'Buscando…' : orderedResults.length ? plural(orderedResults.length, 'resultado', 'resultados') : 'Sin coincidencias directas'}</span>
