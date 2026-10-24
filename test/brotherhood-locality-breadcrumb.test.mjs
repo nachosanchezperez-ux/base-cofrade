@@ -21,6 +21,7 @@ test('la ficha usa el listado en la miga visible y en el JSON-LD, con respaldo a
   assert.match(page, /brotherhoodLocalityDirectoryHref\(h, indexableBrotherhoods\) \|\| municipalityHubHref/)
   assert.match(page, /href: localityBreadcrumbHref \|\| undefined/)
   assert.match(page, /path: localityBreadcrumbHref/)
-  // La localidad de la cabecera sigue llevando a la guía cofrade.
-  assert.match(page, /localityHref=\{municipalityHubHref\}/)
+  // La localidad de la cabecera lleva al mismo destino que la miga (24/10/2026).
+  assert.match(page, /localityHref=\{localityBreadcrumbHref\}/)
+  assert.doesNotMatch(page, /localityHref=\{municipalityHubHref\}/)
 })
