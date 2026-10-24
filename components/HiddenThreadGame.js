@@ -373,6 +373,26 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
     )
   }
 
+  // Destinos directos: sin menú nativo van delante (son la acción principal); con él, debajo.
+  const shareTargetsBlock = shareData ? (
+    <div className={styles.shareTargets} ref={targetsRef} role="group" aria-label="Compartir el resultado en">
+      <span className={styles.shareTargetsLabel}>{canNativeShare === false ? 'Compártelo en' : 'O directamente en'}</span>
+      <div className={styles.shareTargetList}>
+        {shareTargets.map((target) => (
+          <a
+            key={target.id}
+            className={styles.shareTarget}
+            data-target={target.id}
+            href={target.href}
+            {...(target.id === 'email' ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+          >
+            {target.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  ) : null
+
   const isDaily = mode === 'daily'
   const isFinalRound = progress.stage === challenge.words.length - 1
   const usedErrors = roundErrors(round)
@@ -584,6 +604,7 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
                 <span className={styles.shareInvite}>¿Lo superas? hilocofrade.es</span>
               </div>
 
+              {canNativeShare === false ? shareTargetsBlock : null}
               <div className={styles.shareActions}>
                 {canNativeShare !== false ? (
                   <button type="button" className={styles.primaryButton} onClick={shareResult}>
@@ -595,22 +616,7 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
                 </button>
                 <button type="button" className={styles.secondaryButton} onClick={copyResult}>Copiar texto</button>
               </div>
-              <div className={styles.shareTargets} ref={targetsRef} role="group" aria-label="Compartir el resultado en">
-                <span className={styles.shareTargetsLabel}>{canNativeShare === false ? 'Compártelo en' : 'O directamente en'}</span>
-                <div className={styles.shareTargetList}>
-                  {shareTargets.map((target) => (
-                    <a
-                      key={target.id}
-                      className={styles.shareTarget}
-                      data-target={target.id}
-                      href={target.href}
-                      {...(target.id === 'email' ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
-                    >
-                      {target.label}
-                    </a>
-                  ))}
-                </div>
-              </div>
+              {canNativeShare === false ? null : shareTargetsBlock}
               {shareStatus ? <p className={styles.status} role="status">{shareStatus}</p> : null}
               <p className={styles.shareNote}>Sin respuestas ni pistas. Para Instagram, usa «Historia 9:16».</p>
 
