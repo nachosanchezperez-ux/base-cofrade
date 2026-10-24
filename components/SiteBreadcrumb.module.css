@@ -146,6 +146,9 @@
   .breadcrumb span[aria-current="page"],
   .breadcrumb li > span:not([aria-current]) {
     font-size: 11px;
+    /* En móvil los enlaces van a 14px (regla global de legibilidad para los
+       enlaces de navegación); con menos espaciado la ruta sigue cabiendo. */
+    letter-spacing: .03em;
   }
 
   .breadcrumb span[aria-current="page"] {
