@@ -123,13 +123,15 @@ test('el menú nativo recibe el enlace aparte, sin duplicarlo en el texto', () =
 test('los destinos directos abren cada aplicación con el resultado y el enlace', () => {
   const { challenge, data } = finishedDaily()
   const targets = hiddenShareTargets(data)
-  assert.deepEqual(targets.map((item) => item.id), ['whatsapp', 'telegram', 'x', 'facebook', 'email'])
+  assert.deepEqual(targets.map((item) => item.id), ['whatsapp', 'instagram', 'telegram', 'x', 'facebook', 'email'])
   const byId = Object.fromEntries(targets.map((item) => [item.id, item.href]))
   assert.ok(byId.whatsapp.startsWith('https://wa.me/?text='))
   assert.ok(byId.telegram.startsWith('https://t.me/share/url?url=' + encodeURIComponent(HILO_SHARE_URL)))
   assert.ok(byId.facebook.endsWith('u=' + encodeURIComponent(HILO_SHARE_URL)))
   assert.ok(byId.email.startsWith('mailto:?subject='))
-  for (const href of targets.map((item) => decodeURIComponent(item.href))) {
+  // Instagram no tiene enlace: se comparte la imagen desde el componente.
+  assert.equal(byId.instagram, '')
+  for (const href of targets.filter((item) => item.id !== 'instagram').map((item) => decodeURIComponent(item.href))) {
     assert.ok(href.includes(HILO_SHARE_URL))
     assert.ok(!href.toUpperCase().includes(challenge.words[0].answer))
   }
@@ -146,4 +148,16 @@ test('compartir el resultado nunca copia al portapapeles sin que se elija', () =
   // Sin menú nativo no se muestra el botón que no puede funcionar.
   assert.match(game, /canNativeShare !== false \?/)
   assert.match(game, /Copiar texto/)
+})
+
+test('Instagram recibe la imagen del resultado y nunca el portapapeles', () => {
+  const game = readFileSync(new URL('../components/HiddenThreadGame.js', import.meta.url), 'utf8')
+  const fn = game.slice(game.indexOf('async function shareInstagram()'), game.indexOf('function downloadStory()'))
+  assert.ok(fn.length > 0)
+  assert.match(fn, /navigator\.share\(\{ files: \[image\] \}\)/)
+  assert.match(fn, /saveHiddenStoryFile\(image\)/)
+  assert.match(fn, /https:\/\/www\.instagram\.com\//)
+  assert.doesNotMatch(fn, /clipboard/)
+  assert.match(game, /target\.id === 'instagram' \?/)
+  assert.match(game, /onClick=\{shareInstagram\}/)
 })
