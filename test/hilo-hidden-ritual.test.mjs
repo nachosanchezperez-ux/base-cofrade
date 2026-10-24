@@ -99,5 +99,5 @@ test('el tablero muestra la racha y la solución enlaza la ficha del día', () =
   assert.match(game, /styles\.threadCard/)
   // La ficha del servidor solo vale para su día; si cambia sin recargar, queda el listado general.
   assert.match(game, /challenge\?\.dateKey === initialDayKey/)
-  assert.match(game, /hiddenShareData\(challenge, progress, \{ streak \}\)/)
+  assert.match(game, /hiddenShareData\(challenge, progress, \{ streak: isArchive \? 0 : streak \}\)/)
 })
