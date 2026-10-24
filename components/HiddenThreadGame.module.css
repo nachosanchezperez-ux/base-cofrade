@@ -740,6 +740,10 @@
   margin-top: 0;
 }
 
+.shareActions .secondaryButton {
+  padding: 0 10px;
+}
+
 /* Destinos directos: abren la aplicación con el resultado ya escrito, sin portapapeles. */
 .shareTargets {
   margin-top: 12px;
@@ -774,7 +778,8 @@
   background: #fff;
   color: var(--hg-wine);
   font-size: 14px;
-  font-weight: 800;
+  /* Mismo peso que el resto de botones de la web (typography.css), sea enlace o botón. */
+  font-weight: var(--font-weight-bold);
   text-decoration: none;
 }
 

@@ -645,8 +645,8 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
                     Compartir resultado <span aria-hidden="true">↗</span>
                   </button>
                 ) : null}
-                <button type="button" className={styles.secondaryButton} onClick={downloadStory}>
-                  Descargar imagen
+                <button type="button" className={styles.secondaryButton} onClick={downloadStory} aria-label="Guardar la imagen del resultado (formato 9:16)">
+                  Guardar imagen
                 </button>
                 <button type="button" className={styles.secondaryButton} onClick={copyResult}>Copiar texto</button>
               </div>
