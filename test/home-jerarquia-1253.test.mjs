@@ -51,7 +51,8 @@ test('Descubre: la ficha del día es el único bloque azul; marcha y juego en bl
   // «Más en Hilo Cofrade»: etiquetas ligeras; no se retira ningún acceso.
   assert.match(read('components/HomeDiscover.module.css'), /\.moreLink \{\s*display: inline-flex;[\s\S]*border-radius: 999px;/)
   assert.match(read('lib/home-discover.js'), /'\/igualas-y-ensayos'/)
-  assert.match(read('components/HomeKnowledgeThreads.module.css'), /\.embedded \.leadCard::before \{\s*display: none;/)
+  // Últimos hilos: filas ligeras por días, sin tarjetas con sombra.
+  assert.doesNotMatch(read('components/HomeKnowledgeThreads.module.css'), /box-shadow: 0 \d+px/)
   // Sin bloques nuevos: los mismos cinco de la portada.
   const home = read('components/HomePageV2.js')
   assert.equal((home.match(/<(HomeHero|HomeAgendaNow|section|HomeUpdatesLink|HomeDiscover)\b/g) || []).length, 5)

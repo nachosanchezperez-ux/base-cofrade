@@ -16,13 +16,13 @@ test('Hoy rota Dato Cofrade y Curiosidad según la fecha sin ocultar una selecci
   assert.match(editorial, /pinnedEditorialType: type/)
 })
 
-test('Hoy incorpora un hilo adicional sin duplicar los tres hilos del bloque inferior', () => {
+test('Hoy incorpora un hilo adicional sin duplicar ninguna ficha de «Últimos hilos»', () => {
   const snapshot = read('lib/supabase/home-snapshot.js')
   const component = read('components/HomeTodayV2.js')
 
   assert.match(snapshot, /getDiverseHomeDiscoveryThreads\(4\)/)
-  assert.match(snapshot, /enrichedDiscoveryThreads\.slice\(0, 3\)/)
-  assert.match(snapshot, /todayCardFromThread\(enrichedDiscoveryThreads\[3\]\)/)
+  assert.match(snapshot, /buildHomeLatestThreads\(/)
+  assert.match(snapshot, /\.find\(\(thread\) => !listedHrefs\.has\(thread\.href\)\)/)
   assert.match(component, /content\?\.discoverySecondary/)
 })
 
