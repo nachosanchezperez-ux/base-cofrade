@@ -7,6 +7,7 @@ import { agendaItemBrotherhoodSlugs } from '@/lib/followed-brotherhoods'
 import { agendaItemShare, agendaPeriodShare } from '@/lib/share'
 import { agendaEventAnchor, scheduleTimeHint } from '@/lib/agenda-event-presentation'
 import { agendaThreadLinks, repeatsPlace } from '@/lib/agenda-event-relations'
+import { cultTimeParts } from '@/lib/agenda-cult-time'
 import { isSecondaryCult } from '@/lib/agenda-priority'
 import { agendaScheduleSteps, madridMinutes, nextScheduleStep } from '@/lib/agenda-schedule-steps'
 import { contributionReadiness } from '@/lib/contributions/security'
@@ -120,15 +121,19 @@ function DayCults({ items }) {
     <div className={styles.cults}>
       <h4>Cultos <small>{items.length}</small></h4>
       <ul>
-        {items.map((item) => (
+        {items.map((item) => {
+          const time = cultTimeParts(itemTime(item))
+          return (
           <li key={item.displayKey || item.key}>
-            <time>{itemTime(item) === 'Hora por confirmar' ? '—' : itemTime(item)}</time>
+            <time>{time.lead}</time>
             <div>
               {item.eventHref ? <Link href={item.eventHref}>{item.title}</Link> : <strong>{item.title}</strong>}
+              {time.detail ? <span className={styles.cultSchedule}>{time.detail}</span> : null}
               <small>{[item.organizer && !String(item.title).includes(item.organizer) ? item.organizer : '', item.place, item.municipality].filter(Boolean).join(' · ')}</small>
             </div>
           </li>
-        ))}
+          )
+        })}
       </ul>
     </div>
   )
