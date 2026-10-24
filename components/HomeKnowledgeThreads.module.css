@@ -176,6 +176,11 @@ a.row:focus-visible {
   text-decoration: none;
 }
 
+/* Cada nombre corto, entero en su línea («La Sed», no «La / Sed»). */
+.names > span {
+  white-space: nowrap;
+}
+
 .names a:hover {
   color: var(--home-blue);
 }
