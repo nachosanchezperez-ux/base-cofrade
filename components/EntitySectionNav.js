@@ -134,12 +134,10 @@ export default function EntitySectionNav({ items = [], discover = true, revealDi
   useEffect(() => {
     const element = scrollRef.current;
     const activeLink = element?.querySelector(`a[href="${activeHref}"]`);
-    if (revealDisclosures && activeLink && element) {
+    if (activeLink && element) {
       element.scrollTo({ left: activeLink.offsetLeft - element.clientWidth / 2 + activeLink.offsetWidth / 2, behavior: 'smooth' });
-    } else {
-      activeLink?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
-  }, [activeHref, revealDisclosures]);
+  }, [activeHref]);
 
   function moveFocus(event, currentIndex) {
     const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
