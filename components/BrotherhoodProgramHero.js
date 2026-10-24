@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import BrotherhoodDirectoryCrestImage from './BrotherhoodDirectoryCrestImage'
 import EntityVisualFallback from './EntityVisualFallback'
+import HeroTopRow from './HeroTopRow'
 import SiteBreadcrumb from './SiteBreadcrumb'
 import styles from './BrotherhoodProgramHero.module.css'
 import corporateStyles from './BrotherhoodProgramHeroCorporate.module.css'
@@ -38,6 +39,7 @@ export default function BrotherhoodProgramHero({
   media = {},
   compact = false,
   actions = null,
+  editHref = '',
 }) {
   const visibleFacts = facts.filter((fact) => fact?.label && fact?.value).slice(0, 4)
   const hasPhoto = Boolean(media.photoSrc)
@@ -95,7 +97,9 @@ export default function BrotherhoodProgramHero({
       <span className={styles.texture} aria-hidden="true" />
 
       <div className={`shell ${styles.shell}`}>
-        <SiteBreadcrumb items={breadcrumbItems} tone="dark" ariaLabel="Ruta de navegación" />
+        <HeroTopRow editHref={editHref}>
+          <SiteBreadcrumb items={breadcrumbItems} tone="dark" ariaLabel="Ruta de navegación" />
+        </HeroTopRow>
 
         <div className={styles.content}>
           <div className={styles.identityLockup}>

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getPublishedBrotherhoodCrestPathBySlug } from '@/lib/supabase/brotherhood-public-authority';
 import BrotherhoodDirectoryCrestImage from './BrotherhoodDirectoryCrestImage';
 import EntityVisualFallback from './EntityVisualFallback';
+import HeroTopRow from './HeroTopRow';
 import RelationalEntityHeroMedia from './RelationalEntityHeroMedia';
 import SiteBreadcrumb from './SiteBreadcrumb';
 import styles from './RelationalEntityHero.module.css';
@@ -131,6 +132,7 @@ export default async function RelationalEntityHero({
   titleContext = '',
   subtitle = '',
   breadcrumbItems = [],
+  editHref = '',
   badges = [],
   relation = null,
   facts = [],
@@ -181,7 +183,9 @@ export default async function RelationalEntityHero({
     >
       <div className={styles.texture} aria-hidden="true" />
       <div className="shell">
-        <SiteBreadcrumb items={breadcrumbItems} tone="dark" ariaLabel="Ruta de navegación" />
+        <HeroTopRow editHref={editHref}>
+          <SiteBreadcrumb items={breadcrumbItems} tone="dark" ariaLabel="Ruta de navegación" />
+        </HeroTopRow>
 
         <div className={`${styles.grid} ${polishStyles.grid} ${isBand ? `${bandStyles.bandGrid} ${bandStyles.bandGridIdentityOnly}` : ''}`}>
           <div className={`${styles.copy} ${polishStyles.copy} ${isBand ? `${bandStyles.bandCopy} ${bandStyles.bandCopyIdentityOnly}` : ''}`}>
