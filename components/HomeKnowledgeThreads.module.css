@@ -191,8 +191,9 @@ a.row:focus-visible {
 }
 
 /* Cada nombre corto, entero en su línea («La Sed», no «La / Sed»); los largos
-   sí pueden partirse, o desbordarían el móvil. */
-.names > span[data-short] {
+   sí pueden partirse, o desbordarían el móvil. El separador queda al final
+   de la línea, nunca al principio de la siguiente. */
+.names > span[data-short] a {
   white-space: nowrap;
 }
 
