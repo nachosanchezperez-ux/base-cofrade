@@ -6,6 +6,7 @@ import JsonLd from '@/components/JsonLd'
 import SourcesBlock from '@/components/SourcesBlock'
 import OfficialLinks from '@/components/OfficialLinks'
 import RelationalEntityHero from '@/components/RelationalEntityHero'
+import { panelEditHref } from '@/lib/panel-session-cookie'
 import EntitySectionNav from '@/components/EntitySectionNav'
 import EntityLastUpdated from '@/components/EntityLastUpdated'
 import BandDiscographySection from '@/components/bands/BandDiscographySection'
@@ -277,6 +278,7 @@ export default async function BandDetailPage({ params }) {
       <RelationalEntityHero
         variant="band"
         entityType="Banda"
+        editHref={panelEditHref('band', band.id)}
         title={band.popularName}
         subtitle={band.officialName}
         breadcrumbItems={[

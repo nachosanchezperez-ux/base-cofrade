@@ -1,0 +1,40 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.row > nav {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.link {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, .45);
+  border-radius: 999px;
+  background: rgba(17, 35, 57, .35);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background .15s ease, border-color .15s ease;
+}
+
+.link:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, .14);
+}
+
+.link:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, .5);
+  outline-offset: 2px;
+}

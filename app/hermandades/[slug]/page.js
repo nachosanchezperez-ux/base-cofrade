@@ -18,6 +18,7 @@ import BrotherhoodOverviewV2 from '@/components/BrotherhoodOverviewV2';
 import BrotherhoodViaCrucisSection from '@/components/BrotherhoodViaCrucisSection';
 import BrotherhoodOutingsSection from '@/components/BrotherhoodOutingsSection';
 import BrotherhoodProgramHero from '@/components/BrotherhoodProgramHero';
+import { panelEditHref } from '@/lib/panel-session-cookie';
 import FollowBrotherhoodButton from '@/components/FollowBrotherhoodButton';
 import BrotherhoodSimpecadosSection from '@/components/BrotherhoodSimpecadosSection';
 import {
@@ -723,6 +724,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
           { label: h.nombrePopular },
         ]}
         facts={heroFacts}
+        editHref={panelEditHref('brotherhood', h.id)}
         actions={<FollowBrotherhoodButton slug={slug} name={h.nombrePopular} municipality={publicText(h.localidad)} />}
         media={{
           photoSrc: heroMedia?.path || '',
