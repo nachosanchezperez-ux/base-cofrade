@@ -6,12 +6,15 @@ function read(path) {
   return readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 }
 
-test('las fichas de Hermandad enlazan su guía cofrade municipal desde la portada', () => {
+test('las fichas de Hermandad enlazan su localidad desde la cabecera, con la guía municipal de respaldo', () => {
   const page = read('app/hermandades/[slug]/page.js')
   const hero = read('components/BrotherhoodProgramHero.js')
+  const listing = read('app/hermandades/localidad/[localidad]/page.js')
 
   assert.match(page, /agendaMunicipalityHref\(h\.localidad\)/)
-  assert.match(page, /localityHref=\{municipalityHubHref\}/)
+  assert.match(page, /localityHref=\{localityBreadcrumbHref\}/)
+  // La guía sigue enlazada desde el listado de hermandades de la localidad.
+  assert.match(listing, /Guía cofrade de \$\{data\.label\}/)
   assert.match(hero, /localityHref = ''/)
   assert.match(hero, /<Link href=\{localityHref\}>\{locality\}<\/Link>/)
 })

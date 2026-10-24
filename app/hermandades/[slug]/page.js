@@ -209,7 +209,8 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       return [];
     }),
   ]);
-  // Miga: «Sevilla» lleva a las hermandades de la localidad; si no hay listado, a su guía.
+  // Miga y cabecera: «Sevilla» lleva a las hermandades de la localidad; si no hay
+  // listado, a su guía cofrade (que también se enlaza desde ese listado).
   const localityBreadcrumbHref = brotherhoodLocalityDirectoryHref(h, indexableBrotherhoods) || municipalityHubHref;
   const upcomingAgendaItems = brotherhoodUpcomingAgenda({
     agendaItems: agendaData.items,
@@ -716,7 +717,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
         title={h.nombrePopular}
         officialName={h.nombreOficial}
         locality={publicText(h.localidad)}
-        localityHref={municipalityHubHref}
+        localityHref={localityBreadcrumbHref}
         seat={publicText(h.sede)}
         breadcrumbItems={[
           { label: 'Hermandades', href: '/hermandades' },
