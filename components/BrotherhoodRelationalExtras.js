@@ -8,6 +8,7 @@ import { futureMusicAccompanimentPeriodIds } from '@/lib/music-accompaniment-eff
 import { accompanimentStartLabel, findDocumentedPredecessor, predecessorLabel, resolvePredecessor } from '@/lib/music-lineage'
 import styles from '@/components/BrotherhoodCurrentMusic.module.css'
 import discoveryStyles from '@/components/BrotherhoodRelationalDiscovery.module.css'
+import ownBandRows from '@/components/BrotherhoodOwnBandRows.module.css'
 import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media'
 import { createPublicClient } from '@/lib/supabase/public'
 
@@ -419,6 +420,16 @@ export async function BrotherhoodTitularCount({ brotherhoodId, imageCount = 0 })
   }
 }
 
+// Datos de los titulares devocionales (sin imagen física) para otras vistas.
+export async function getBrotherhoodConceptualTitulars(brotherhoodId) {
+  try {
+    return await loadConceptualTitulars(createPublicClient(), brotherhoodId)
+  } catch (error) {
+    console.error('[Hilo Cofrade] No se pudieron leer los titulares devocionales', error)
+    return []
+  }
+}
+
 export async function BrotherhoodConceptualTitulars({ brotherhoodId }) {
   try {
     const supabase = createPublicClient()
@@ -588,7 +599,14 @@ function CurrentMusicSequence({ items, nested = false }) {
 // directas (imágenes, pasos) ya tienen su sección en la ficha y las rutas de
 // segundo grado se muestran al cierre (BrotherhoodReadingDiscovery).
 // excludeAccompanimentIds: periodos que la ficha ya muestra en sus pasos.
-export async function BrotherhoodOwnBands({ brotherhoodId, musicOnly = false, excludeAccompanimentIds = [] }) {
+// Descripción en dos tiempos: la primera frase a la vista y el resto plegado.
+function splitFirstSentence(value = '') {
+  const text = String(value || '').trim()
+  const match = text.match(/^(.{40,220}?[.!?])\s+(.+)$/s)
+  return match ? [match[1], match[2]] : [text, '']
+}
+
+export async function BrotherhoodOwnBands({ brotherhoodId, musicOnly = false, excludeAccompanimentIds = [], variant = 'cards' }) {
   try {
     const supabase = createPublicClient()
     const [bands, allCurrentAccompaniments] = await Promise.all([
@@ -601,7 +619,24 @@ export async function BrotherhoodOwnBands({ brotherhoodId, musicOnly = false, ex
 
     return (
       <>
-        {bands.length ? (
+        {bands.length && variant === 'rows' ? (
+          // Ficha por capítulos: filas como el resto de la ficha, sin tarjetas.
+          <section className={`section ${ownBandRows.section}`} id="bandas-propias" aria-labelledby="bandas-propias-titulo">
+            <div className="shell">
+              <h3 className={ownBandRows.title} id="bandas-propias-titulo">{bands.length === 1 ? 'Banda de la Hermandad' : 'Bandas de la Hermandad'}</h3>
+              <ul className={ownBandRows.list}>
+                {bands.map((band) => {
+                  const [first, rest] = splitFirstSentence(band.descripcion)
+                  return <li key={band.id}>
+                    <p className={ownBandRows.name}><Link href={`/bandas/${band.slug}`}>{band.nombre}</Link>{band.tipo ? <span>{band.tipo}</span> : null}</p>
+                    {first ? <p className={ownBandRows.text}>{first}</p> : null}
+                    {rest ? <details className={ownBandRows.more}><summary>Seguir leyendo <b aria-hidden="true">+</b></summary><p>{rest}</p></details> : null}
+                  </li>
+                })}
+              </ul>
+            </div>
+          </section>
+        ) : bands.length ? (
           <section className="section brotherhood-soft" id="bandas-propias">
             <div className="shell">
               <span className="eyebrow">Vínculo institucional</span>

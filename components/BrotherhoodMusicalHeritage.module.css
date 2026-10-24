@@ -99,3 +99,8 @@
   .listen,.marchCompact .listen { grid-row: auto; width: fit-content; margin-top: 4px; }
   .fieldLabel,.year small { display: block; }
 }
+
+/* Ficha por capítulos: grupos con zona táctil completa y recuento legible. */
+.chapterMode .groupSummary { min-height: 52px; grid-template-columns: 36px minmax(0, 1fr) 32px; }
+.chapterMode .groupHeading small { font-size: 12px !important; letter-spacing: .04em; }
+.chapterMode .groupToggle { display: inline-grid; place-items: center; min-width: 32px; min-height: 32px; font-size: 18px; }

@@ -151,3 +151,6 @@
 .secondaryNoPhoto .crest { object-fit: contain; width: 30px; height: 36px; flex-shrink: 0; }
 .list .secondaryNoPhoto .identity { justify-content: start; }
 .list .secondaryNoPhoto .identity > div { flex: 1; }
+
+/* Ficha propia: sin escudo ni nombre repetidos, solo el tipo de movimiento. */
+.kindOnly { margin: 0 0 8px; }

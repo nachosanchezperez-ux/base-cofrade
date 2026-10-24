@@ -38,10 +38,14 @@ export default function BrotherhoodProgramHero({
   media = {},
   compact = false,
   actions = null,
+  collapseOfficialName = false,
+  localityOnce = false,
 }) {
   const visibleFacts = facts.filter((fact) => fact?.label && fact?.value).slice(0, 4)
   const hasPhoto = Boolean(media.photoSrc)
-  const context = [seat, locality].filter(Boolean).join(' · ')
+  // localityOnce (ficha por capítulos): la localidad ya va junto al tipo; la
+  // línea de contexto queda solo para la sede.
+  const context = (localityOnce ? [seat] : [seat, locality]).filter(Boolean).join(' · ')
   const width = Number(media.width)
   const height = Number(media.height)
   const hasDimensions = width > 0 && height > 0
@@ -128,7 +132,13 @@ export default function BrotherhoodProgramHero({
           </div>
 
           {context ? <p className={styles.context}>{context}</p> : null}
-          {officialName ? <p className={compact ? readingHeroStyles.official : styles.officialName}>{officialName}</p> : null}
+          {officialName && collapseOfficialName ? (
+            // Ficha por capítulos: en móvil el título oficial ocupa dos líneas y
+            // se despliega al tocarlo; el texto completo está siempre en el HTML.
+            <details className={`${readingHeroStyles.official} ${readingHeroStyles.officialCollapsible}`}>
+              <summary><span>{officialName}</span></summary>
+            </details>
+          ) : officialName ? <p className={compact ? readingHeroStyles.official : styles.officialName}>{officialName}</p> : null}
           {actions}
 
           {visibleFacts.length ? (

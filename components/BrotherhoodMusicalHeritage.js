@@ -123,7 +123,7 @@ function MarchStyleGroups({ items }) {
   );
 }
 
-export default function BrotherhoodMusicalHeritage({ items = [], id = 'musica', headingLevel = 2, compact = false }) {
+export default function BrotherhoodMusicalHeritage({ items = [], id = 'musica', headingLevel = 2, compact = false, chapter = false }) {
   if (!items.length) return null;
 
   const groups = GROUPS.map((group) => ({
@@ -132,7 +132,7 @@ export default function BrotherhoodMusicalHeritage({ items = [], id = 'musica', 
   })).filter((group) => group.items.length);
 
   return (
-    <section className={`section ${styles.section}`} id={id}>
+    <section className={`section ${styles.section} ${chapter ? styles.chapterMode : ''}`} id={id}>
       <div className="shell">
         <div className={styles.intro}>
           <SectionTitle
@@ -141,10 +141,11 @@ export default function BrotherhoodMusicalHeritage({ items = [], id = 'musica', 
             title="Patrimonio musical"
             description="Marchas y otras obras dedicadas a la Hermandad y a sus Titulares."
           />
-          <div className={styles.summary} aria-label={plural(items.length, 'composición documentada', 'composiciones documentadas')}>
+          {/* Ficha por capítulos: con un solo grupo, su recuento ya da el total. */}
+          {chapter && groups.length === 1 ? null : <div className={styles.summary} aria-label={plural(items.length, 'composición documentada', 'composiciones documentadas')}>
             <strong>{items.length}</strong>
             <span>{pluralWord(items.length, 'composición documentada', 'composiciones documentadas')}</span>
-          </div>
+          </div>}
         </div>
 
         <div className={styles.groups}>
