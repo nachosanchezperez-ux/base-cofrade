@@ -12,7 +12,7 @@ test('la ruta de navegación no baja de 11px, ni en escritorio ni en móvil', ()
 
 test('en móvil, los títulos largos se acortan con «…» en la última etiqueta', () => {
   const mobile = css.slice(css.indexOf('@media (max-width: 620px)'))
-  assert.match(mobile, /\.breadcrumb li:last-child \{[^}]*flex: 0 1 auto;[^}]*min-width: min\(100%, 7\.5rem\)/)
+  assert.match(mobile, /\.breadcrumb li:last-child \{[^}]*flex: 0 1 auto;[^}]*min-width: 0;/)
   assert.match(mobile, /\.breadcrumb li:last-child span\[aria-current="page"\] \{[^}]*text-overflow: ellipsis/)
 })
 
