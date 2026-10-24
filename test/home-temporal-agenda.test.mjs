@@ -88,6 +88,7 @@ test('un acto multidia usa la fecha y horario de la jornada actual', () => {
       item({
         key: 'sed',
         category: 'devotions',
+        categoryLabel: 'Besamanos',
         date: '2026-09-25',
         endDate: '2026-09-27',
         daySchedules: [
@@ -121,4 +122,23 @@ test('la Home da jerarquía visual a fecha y hora de la Agenda en móvil', () =>
   assert.match(styles, /\.time \{[^}]*font-size: 22px/)
   assert.match(styles, /font-variant-numeric: tabular-nums/)
   assert.match(styles, /min-height: 44px/)
+})
+
+test('la portada antepone besamanos, certámenes y salidas al resto de cultos del día', () => {
+  const temporal = buildHomeTemporalAgenda({
+    today: '2026-10-24',
+    now: new Date('2026-10-24T06:00:00Z'),
+    items: [
+      item({ key: 'triduo', title: 'Solemne Triduo', categoryLabel: 'Triduo', date: '2026-10-24', startTime: '09:30' }),
+      item({ key: 'funcion', title: 'Función Principal', categoryLabel: 'Función', date: '2026-10-24', startTime: '12:00' }),
+      item({ key: 'besamanos', title: 'Besamanos a la Virgen', categoryLabel: 'Besamanos', date: '2026-10-24', startTime: '10:30' }),
+      item({ key: 'certamen', category: 'concerts', title: 'Certamen', date: '2026-10-24', startTime: '12:30' }),
+      item({ key: 'procesion', category: 'processions', date: '2026-10-24', startTime: '18:00' }),
+      item({ key: 'manana', category: 'processions', date: '2026-10-25', startTime: '08:00' }),
+    ],
+  })
+  assert.deepEqual(temporal.remainingTodayItems.map((entry) => entry.key), ['besamanos', 'certamen', 'procesion', 'triduo', 'funcion'])
+  assert.deepEqual(temporal.focusItems.map((entry) => entry.key), ['besamanos', 'certamen', 'procesion', 'triduo'])
+  // Nunca se mezcla un día con otro.
+  assert.deepEqual(temporal.closestItems.map((entry) => entry.key), ['besamanos', 'certamen', 'procesion'])
 })
