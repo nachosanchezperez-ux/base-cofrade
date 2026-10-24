@@ -747,3 +747,61 @@
     min-height: 32px;
   }
 }
+
+/* Discografía plegada por décadas (24/10/2026): un solo punto focal, el
+   rótulo de años; sin recuadros añadidos, solo una línea de separación. */
+.releaseGroups {
+  display: grid;
+  margin-top: 1.1rem;
+  border-top: 1px solid color-mix(in srgb, var(--band-primary) 14%, #ddd7d0);
+}
+
+.releaseGroup {
+  border-bottom: 1px solid color-mix(in srgb, var(--band-primary) 14%, #ddd7d0);
+}
+
+.releaseGroupSummary {
+  display: flex;
+  min-height: 52px;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 0.15rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.releaseGroupSummary::-webkit-details-marker {
+  display: none;
+}
+
+.releaseGroupSummary strong {
+  color: var(--band-secondary);
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.releaseGroupSummary span {
+  color: var(--band-muted, #6b6560);
+  font-size: 0.82rem;
+}
+
+.releaseGroupSummary b {
+  margin-left: auto;
+  color: var(--band-primary);
+  font-size: 1.2rem;
+  font-weight: 500;
+  transition: transform 0.16s ease;
+}
+
+.releaseGroup[open] .releaseGroupSummary b {
+  transform: rotate(45deg);
+}
+
+.releaseGroup > .releaseList {
+  padding-bottom: 0.9rem;
+}
+
+.releaseGroupSummary:focus-visible {
+  outline: 2px solid var(--band-primary);
+  outline-offset: 2px;
+}
