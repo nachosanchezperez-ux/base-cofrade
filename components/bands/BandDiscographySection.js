@@ -218,6 +218,8 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
 
         {groups.length ? (
           <div className={styles.releaseGroups}>
+            {/* Los grupos son trabajos anteriores a los visibles, aunque compartan año. */}
+            <p className={styles.foldedTitle}>Trabajos anteriores</p>
             {groups.map((group) => group.releases.length === 1 ? (
               // Un único trabajo (p. ej. sin fecha): sin capa de grupo.
               <div className={styles.releaseList} key={group.key}>
