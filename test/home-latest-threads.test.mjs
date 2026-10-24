@@ -64,8 +64,9 @@ test('listas de nombres en español', () => {
 })
 
 test('marchas nuevas: los títulos, no el recuento repetido', () => {
-  const line = latestFromUpdate({ id: 'm', activityKind: 'march_publications', title: '22 nuevas marchas', metric: '22 fichas incorporadas', summary: 'El catálogo suma Amparo, Caridad y Piedad y 19 más, ya disponibles para seguir sus autores.', href: '/marchas', dateTime: '2026-10-24T08:00:00Z' })
-  assert.equal(line.title, 'Amparo, Caridad, Piedad y 19 más')
+  const line = latestFromUpdate({ id: 'm', activityKind: 'march_publications', title: '22 nuevas marchas', metric: '22 fichas incorporadas', marchNames: ['De Rosario, de Esperanza', 'Caridad', 'Piedad'], marchCount: 22, href: '/marchas', dateTime: '2026-10-24T08:00:00Z' })
+  // Un título con coma no se parte.
+  assert.equal(line.title, 'De Rosario, de Esperanza · Caridad · Piedad y 19 más')
   assert.equal(line.detail, '22 marchas nuevas en el catálogo')
   assert.equal(line.symbol, '♪')
 })

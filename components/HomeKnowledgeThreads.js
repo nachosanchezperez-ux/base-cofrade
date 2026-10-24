@@ -36,7 +36,7 @@ function Row({ item }) {
         <span className={styles.stack} aria-hidden="true">
           {item.visuals.length
             ? item.visuals.map((visual, index) => <Visual key={index} visual={visual} title="" />)
-            : <Visual visual={null} title={item.links[0]?.label} />}
+            : <span className={styles.avatar} data-empty="true">{item.count}</span>}
         </span>
         <span className={styles.copy}>
           <span className={styles.tag}>{item.tag}</span>
