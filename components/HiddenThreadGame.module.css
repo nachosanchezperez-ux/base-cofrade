@@ -890,7 +890,7 @@
 
 :global(#hc-app) .statsGrid dd small {
   color: var(--hg-muted);
-  font-family: inherit;
+  font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 600;
 }
@@ -911,7 +911,8 @@
   gap: 4px 10px;
 }
 
-:global(#hc-app) .archiveTop h2 {
+/* La regla de títulos de página lleva dos ID (#hc-app … :not(#hc-panel) h2): se iguala con el id del título. */
+:global(#hc-app) .archiveTop :global(#hilo-archivo-titulo) {
   margin: 0;
   color: var(--hg-ink);
   font-size: 20px;
