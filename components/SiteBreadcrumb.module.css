@@ -156,4 +156,20 @@
     padding: 0 10px;
     border-radius: 8px;
   }
+
+  /* Títulos largos (rosarios, igualás…): la última etiqueta se acorta con «…»
+     en vez de obligar a deslizar la ruta; el título completo es el H1 de
+     debajo. Solo encoge cuando no cabe: los nombres cortos no cambian. */
+  .breadcrumb li:last-child {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  .breadcrumb li:last-child span[aria-current="page"] {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 31px;
+  }
 }
