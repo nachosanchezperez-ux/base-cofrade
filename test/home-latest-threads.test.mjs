@@ -62,3 +62,18 @@ test('listas de nombres en español', () => {
   assert.equal(listNames(['A', 'B']), 'A y B')
   assert.equal(listNames(['A', 'B', 'C', 'D']), 'A, B, C y 1 más')
 })
+
+test('marchas nuevas: los títulos, no el recuento repetido', () => {
+  const line = latestFromUpdate({ id: 'm', activityKind: 'march_publications', title: '22 nuevas marchas', metric: '22 fichas incorporadas', summary: 'El catálogo suma Amparo, Caridad y Piedad y 19 más, ya disponibles para seguir sus autores.', href: '/marchas', dateTime: '2026-10-24T08:00:00Z' })
+  assert.equal(line.title, 'Amparo, Caridad, Piedad y 19 más')
+  assert.equal(line.detail, '22 marchas nuevas en el catálogo')
+  assert.equal(line.symbol, '♪')
+})
+
+test('dos fichas nuevas del mismo tipo el mismo día ya van juntas', () => {
+  const band = (id, h) => ({ id: `new:band:${id}`, entityType: 'band', rootEntityId: id, title: id, href: `/bandas/${id}`, dateTime: `2026-10-23T0${h}:00:00Z` })
+  const items = buildHomeLatestThreads({ now, newEntities: [band('a', 6), band('b', 5)] })
+  assert.equal(items.length, 1)
+  assert.equal(items[0].tag, 'Bandas nuevas')
+  assert.equal(items[0].detail, '2 fichas nuevas')
+})
