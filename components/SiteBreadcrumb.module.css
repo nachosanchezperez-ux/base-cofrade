@@ -50,13 +50,15 @@
   gap: 9px;
 }
 
+/* Letra mínima de 11px (antes 10px, y 9px en móvil). El espaciado entre
+   letras baja un poco para que la ruta ocupe casi lo mismo. */
 .breadcrumb a,
 .breadcrumb span[aria-current="page"],
 .breadcrumb li > span:not([aria-current]) {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 850;
   line-height: 1.2;
-  letter-spacing: .11em;
+  letter-spacing: .08em;
   text-transform: uppercase;
 }
 
@@ -143,7 +145,7 @@
   .breadcrumb a,
   .breadcrumb span[aria-current="page"],
   .breadcrumb li > span:not([aria-current]) {
-    font-size: 9px;
+    font-size: 11px;
   }
 
   .breadcrumb span[aria-current="page"] {
