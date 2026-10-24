@@ -76,6 +76,9 @@ test('recupera candidatos sin tildes y por la clave de la consulta', () => {
   // Una clave de una letra solo vale como igualdad, nunca como subcadena.
   assert.equal(searchNameCandidateMatch('La Soledad', 'Hermandad de la O'), false)
   assert.equal(searchNameCandidateMatch('Oliva de Salteras', 'Hermandad de la O'), false)
+  // La clave se busca como palabra completa.
+  assert.equal(searchNameCandidateMatch('Nuestra Señora de la Soledad', 'Banda del Sol'), false)
+  assert.ok(searchNameCandidateMatch('Hermandad del Sol', 'Banda del Sol'))
 })
 
 test('el ámbito solo manda cuando la consulta no nombra nada más', () => {
