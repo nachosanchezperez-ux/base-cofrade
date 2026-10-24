@@ -16,6 +16,7 @@ import AgendaEventThread from '@/components/AgendaEventThread'
 import ShareActions from '@/components/ShareActions'
 import HomeDiscoverIcon from '@/components/HomeDiscoverIcon'
 import useFollowedBrotherhoods from '@/components/useFollowedBrotherhoods'
+import { agendaPriorityTier } from '@/lib/agenda-priority'
 import { agendaItemBrotherhoodSlugs, brotherhoodSlugFromHref } from '@/lib/followed-brotherhoods'
 import FollowBrotherhoodButton from '@/components/FollowBrotherhoodButton'
 import CalendarSubscribeLinks from '@/components/CalendarSubscribeLinks'
@@ -90,9 +91,11 @@ function periodDisplayDate(item, period, today) {
   return ''
 }
 
+// Día, después prioridad (besamanos, certámenes y salidas antes que el resto
+// de cultos, #agenda-prioridad) y después hora.
 function compareDisplayItems(first, second) {
-  return `${first?.temporalDate || first?.date || '9999-12-31'}T${first?.startTime || '23:59'}`
-    .localeCompare(`${second?.temporalDate || second?.date || '9999-12-31'}T${second?.startTime || '23:59'}`)
+  return `${first?.temporalDate || first?.date || '9999-12-31'}|${agendaPriorityTier(first)}|${first?.startTime || '23:59'}`
+    .localeCompare(`${second?.temporalDate || second?.date || '9999-12-31'}|${agendaPriorityTier(second)}|${second?.startTime || '23:59'}`)
 }
 
 function groupByMonth(items) {

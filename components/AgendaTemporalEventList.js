@@ -7,6 +7,7 @@ import { agendaItemBrotherhoodSlugs } from '@/lib/followed-brotherhoods'
 import { agendaItemShare, agendaPeriodShare } from '@/lib/share'
 import { agendaEventAnchor, scheduleTimeHint } from '@/lib/agenda-event-presentation'
 import { agendaThreadLinks, repeatsPlace } from '@/lib/agenda-event-relations'
+import { isSecondaryCult } from '@/lib/agenda-priority'
 import { agendaScheduleSteps, madridMinutes, nextScheduleStep } from '@/lib/agenda-schedule-steps'
 import { contributionReadiness } from '@/lib/contributions/security'
 import styles from './AgendaTemporalEventList.module.css'
@@ -111,6 +112,28 @@ function LiveNow({ items }) {
   )
 }
 
+// Cultos del día (#agenda-prioridad): después de besamanos, certámenes y
+// salidas, en una lista compacta (hora, culto, Hermandad y lugar).
+function DayCults({ items }) {
+  if (!items.length) return null
+  return (
+    <div className={styles.cults}>
+      <h4>Cultos <small>{items.length}</small></h4>
+      <ul>
+        {items.map((item) => (
+          <li key={item.displayKey || item.key}>
+            <time>{itemTime(item) === 'Hora por confirmar' ? '—' : itemTime(item)}</time>
+            <div>
+              {item.eventHref ? <Link href={item.eventHref}>{item.title}</Link> : <strong>{item.title}</strong>}
+              <small>{[item.organizer && !String(item.title).includes(item.organizer) ? item.organizer : '', item.place, item.municipality].filter(Boolean).join(' · ')}</small>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
 // En los conciertos `actionLabel` es «Ver banda»: la acción principal abre la cita.
 function primaryLabel(item) {
   return item.category === 'concerts' ? 'Ver cita' : item.actionLabel || 'Ver cita'
@@ -172,8 +195,9 @@ export default function AgendaTemporalEventList({ landing }) {
                 </div>
               </header>
 
+              {group.items.some((item) => !isSecondaryCult(item)) ? (
               <div className={styles.list}>
-                {group.items.map((item) => {
+                {group.items.filter((item) => !isSecondaryCult(item)).map((item) => {
                   const media = eventMedia(item)
                   return (
                   <article
@@ -241,6 +265,8 @@ export default function AgendaTemporalEventList({ landing }) {
                   )
                 })}
               </div>
+              ) : null}
+              <DayCults items={group.items.filter(isSecondaryCult)} />
             </section>
           ))}
         </div>
