@@ -24,8 +24,12 @@ test('las fichas de Bandas sevillanas enlazan directorio y guía municipal', () 
 
   assert.match(page, /band\.province === 'Sevilla'/)
   assert.match(page, /agendaMunicipalityHref\(band\.municipality\)/)
-  assert.match(page, /href: municipalityHubHref \|\| undefined/)
+  // La localidad de la cabecera lleva a las bandas de esa localidad; la guía queda de respaldo.
+  assert.match(page, /`\/bandas\/localidad\/\$\{band\.municipalitySlug\}`/)
+  assert.match(page, /href: municipalityBandsHref \|\| municipalityHubHref \|\| undefined/)
   assert.match(page, /Guía cofrade de \{band\.municipality\}/)
+  // Sin enlace «Bandas de X» repetido en el resumen.
+  assert.doesNotMatch(page, />Bandas de \{band\.municipality\}/)
 })
 
 test('Imágenes y Pasos conectan el patrimonio con la guía territorial', () => {
