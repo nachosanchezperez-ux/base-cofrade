@@ -9,11 +9,12 @@ import styles from './HomeKnowledgeThreads.module.css'
 // qué ha pasado, sobre qué ficha y el dato concreto; el escudo o la foto ayudan
 // a reconocerla de un vistazo. Si el mismo día se actualizan varias fichas del
 // mismo tipo, van juntas en una línea con un enlace a cada una.
+// Jerarquía: solo las fichas nuevas llevan rojo y negrita fuerte; el resto se
+// lee como apuntes del día.
 
-function Visual({ visual, title, symbol = '' }) {
-  if (!visual?.path) {
-    return <span className={styles.avatar} data-empty="true" aria-hidden="true">{symbol || String(title || '·').trim().charAt(0)}</span>
-  }
+function Visual({ visual }) {
+  // Solo con escudo o foto real: un círculo vacío no ayuda a reconocer nada.
+  if (!visual?.path) return null
   const identity = visual.kind !== 'photo'
   return (
     <span className={styles.avatar} data-kind={identity ? 'identity' : 'photo'} aria-hidden="true">
@@ -32,12 +33,12 @@ function Visual({ visual, title, symbol = '' }) {
 function Row({ item }) {
   if (item.grouped) {
     return (
-      <div className={styles.row} data-new={item.isNew || undefined}>
-        <span className={styles.stack} aria-hidden="true">
-          {item.visuals.length
-            ? item.visuals.map((visual, index) => <Visual key={index} visual={visual} title="" />)
-            : <span className={styles.avatar} data-empty="true">{item.count}</span>}
-        </span>
+      <div className={styles.row} data-new={item.isNew || undefined} data-plain={item.visuals.length ? undefined : 'true'}>
+        {item.visuals.length ? (
+          <span className={styles.stack} aria-hidden="true">
+            {item.visuals.map((visual, index) => <Visual key={index} visual={visual} />)}
+          </span>
+        ) : null}
         <span className={styles.copy}>
           <span className={styles.tag}>{item.tag}</span>
           <span className={styles.names}>
@@ -55,8 +56,8 @@ function Row({ item }) {
   }
 
   return (
-    <Link className={styles.row} href={item.href} prefetch={false} data-new={item.isNew || undefined} data-analytics-destination-name={item.title}>
-      <Visual visual={item.visual} title={item.title} symbol={item.symbol} />
+    <Link className={styles.row} href={item.href} prefetch={false} data-new={item.isNew || undefined} data-plain={item.visual?.path ? undefined : 'true'} data-analytics-destination-name={item.title}>
+      <Visual visual={item.visual} />
       <span className={styles.copy}>
         <span className={styles.tag}>{item.tag}</span>
         <strong className={styles.name}>{item.title}</strong>

@@ -85,6 +85,17 @@ div.row {
   grid-template-columns: auto minmax(0, 1fr);
 }
 
+/* Sin escudo ni foto: la línea empieza por el texto. */
+.row[data-plain] {
+  grid-template-columns: minmax(0, 1fr) 16px;
+  min-height: 52px;
+  padding-left: 10px;
+}
+
+div.row[data-plain] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 a.row:hover {
   background: #eef2f7;
 }
@@ -113,11 +124,6 @@ a.row:focus-visible {
   padding: 5px;
 }
 
-.avatar[data-empty='true'] {
-  border-color: transparent;
-  background: #e7edf4;
-}
-
 /* Varias fichas en una línea: los escudos se solapan. */
 .stack {
   display: flex;
@@ -132,22 +138,23 @@ a.row:focus-visible {
   box-shadow: 0 0 0 2px #f4f6f9;
 }
 
-.stack .avatar[data-empty='true'] {
-  width: 44px;
-  height: 44px;
-}
-
 .copy {
   display: grid;
   min-width: 0;
   gap: 1px;
 }
 
+/* Qué ha pasado, discreto; solo lo nuevo va en rojo. */
 .tag {
-  color: var(--home-red);
+  color: #6b7785;
   font-size: 12.5px;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.3;
+}
+
+.row[data-new] .tag {
+  color: var(--home-red);
+  font-weight: 800;
 }
 
 /* Las fichas nuevas, con su punto: es lo que más interesa de un vistazo. */
@@ -165,10 +172,17 @@ a.row:focus-visible {
 .name,
 .names {
   color: #15212e;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+/* La ficha nueva es la noticia: la única con peso fuerte. */
+.row[data-new] .name,
+.row[data-new] .names {
   font-size: 16px;
   font-weight: 800;
-  line-height: 1.25;
-  overflow-wrap: anywhere;
 }
 
 .names a {
@@ -197,8 +211,8 @@ a.row:focus-visible {
 }
 
 .detail {
-  color: #5b6876;
-  font-size: 14px;
+  color: #6b7785;
+  font-size: 13.5px;
   line-height: 1.4;
 }
 
@@ -208,10 +222,10 @@ a.row:focus-visible {
   line-height: 1;
 }
 
-/* En ordenador, las filas de un mismo día en dos columnas. */
+/* En ordenador, una sola columna estrecha: se lee como lista, no como tablero. */
 @media (min-width: 900px) {
-  .list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 18px;
+  .embeddedHeader,
+  .days {
+    max-width: 720px;
   }
 }
