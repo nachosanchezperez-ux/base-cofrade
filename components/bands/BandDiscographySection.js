@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { externalReleaseLinkLabel, presentReleaseType } from '@/lib/bands/discography'
+import { externalReleaseLinkLabel, groupReleasesForDisplay, presentReleaseType } from '@/lib/bands/discography'
 import BandReleaseCover from './BandReleaseCover'
 import styles from './BandDiscographySection.module.css'
 
@@ -96,6 +96,68 @@ function TrackList({ tracks }) {
   )
 }
 
+function ReleaseItem({ release }) {
+  return (
+    <details className={styles.release}>
+      <summary
+        className={styles.releaseSummary}
+        data-hilo-event="discography_open"
+        data-hilo-section="discography"
+        data-hilo-scope="release"
+      >
+        <div className={styles.cover}>
+          <BandReleaseCover
+            src={release.coverImagePath}
+            alt={release.coverImageAlt || `Portada de ${release.title}`}
+            year={release.year}
+          />
+        </div>
+        <div className={styles.summaryCopy}>
+          <h3>{release.title}</h3>
+          <div className={styles.meta}>
+            {release.year ? <strong>{release.year}</strong> : null}
+            {presentReleaseType(release.type) ? <span>{presentReleaseType(release.type)}</span> : null}
+            {ordinalLabel(release.ordinalNumber) ? <span>{ordinalLabel(release.ordinalNumber)}</span> : null}
+            {release.tracks.length ? (
+              <span>{release.tracks.length} {release.tracks.length === 1 ? 'pista' : 'pistas'}</span>
+            ) : null}
+          </div>
+        </div>
+        <span className={styles.releaseToggle}>
+          <em className={styles.toggleClosed}>Abrir</em>
+          <em className={styles.toggleOpen}>Cerrar</em>
+          <b aria-hidden="true">+</b>
+        </span>
+      </summary>
+
+      <div className={styles.releaseDetail}>
+        <div className={styles.releaseInfo}>
+          {release.description ? <p>{release.description}</p> : null}
+          {release.dateText ? <small className={styles.dateText}>{release.dateText}</small> : null}
+          {release.coverImageCredit ? <small>{release.coverImageCredit}</small> : null}
+          {(release.spotifyUrl || release.externalUrl) ? (
+            <div className={styles.actions}>
+              {release.spotifyUrl ? (
+                <a
+                  href={release.spotifyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.secondaryLink}
+                  data-hilo-event="spotify_click"
+                  data-hilo-section="discography"
+                  data-hilo-scope="release"
+                >Álbum completo en Spotify ↗</a>
+              ) : null}
+              {release.externalUrl ? <a href={release.externalUrl} target="_blank" rel="noopener noreferrer" className={styles.secondaryLink}>{externalReleaseLinkLabel(release.externalUrl)}</a> : null}
+            </div>
+          ) : null}
+        </div>
+        <TrackList tracks={release.tracks} />
+      </div>
+    </details>
+  )
+}
+
 export default function BandDiscographySection({ releases = [], artistSpotifyUrl = '', bandName = '', logoPath = '' }) {
   if (!releases.length) return null
 
@@ -103,6 +165,8 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
   const displayBandName = bandName || releases[0]?.bandName || ''
   const displayLogoPath = logoPath || releases[0]?.bandLogoPath || ''
   const catalog = catalogLabel(releases)
+  // Listas largas plegadas: últimos trabajos visibles y el resto por décadas.
+  const { recent, groups } = groupReleasesForDisplay(releases)
 
   return (
     <section className={styles.section} id="discografia" data-hilo-section="discography">
@@ -149,66 +213,37 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
         </header>
 
         <div className={styles.releaseList}>
-          {releases.map((release) => (
-            <details className={styles.release} key={release.id}>
-              <summary
-                className={styles.releaseSummary}
-                data-hilo-event="discography_open"
-                data-hilo-section="discography"
-                data-hilo-scope="release"
-              >
-                <div className={styles.cover}>
-                  <BandReleaseCover
-                    src={release.coverImagePath}
-                    alt={release.coverImageAlt || `Portada de ${release.title}`}
-                    year={release.year}
-                  />
-                </div>
-                <div className={styles.summaryCopy}>
-                  <h3>{release.title}</h3>
-                  <div className={styles.meta}>
-                    {release.year ? <strong>{release.year}</strong> : null}
-                    {presentReleaseType(release.type) ? <span>{presentReleaseType(release.type)}</span> : null}
-                    {ordinalLabel(release.ordinalNumber) ? <span>{ordinalLabel(release.ordinalNumber)}</span> : null}
-                    {release.tracks.length ? (
-                      <span>{release.tracks.length} {release.tracks.length === 1 ? 'pista' : 'pistas'}</span>
-                    ) : null}
-                  </div>
-                </div>
-                <span className={styles.releaseToggle}>
-                  <em className={styles.toggleClosed}>Abrir</em>
-                  <em className={styles.toggleOpen}>Cerrar</em>
-                  <b aria-hidden="true">+</b>
-                </span>
-              </summary>
-
-              <div className={styles.releaseDetail}>
-                <div className={styles.releaseInfo}>
-                  {release.description ? <p>{release.description}</p> : null}
-                  {release.dateText ? <small className={styles.dateText}>{release.dateText}</small> : null}
-                  {release.coverImageCredit ? <small>{release.coverImageCredit}</small> : null}
-                  {(release.spotifyUrl || release.externalUrl) ? (
-                    <div className={styles.actions}>
-                      {release.spotifyUrl ? (
-                        <a
-                          href={release.spotifyUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={styles.secondaryLink}
-                          data-hilo-event="spotify_click"
-                          data-hilo-section="discography"
-                          data-hilo-scope="release"
-                        >Álbum completo en Spotify ↗</a>
-                      ) : null}
-                      {release.externalUrl ? <a href={release.externalUrl} target="_blank" rel="noopener noreferrer" className={styles.secondaryLink}>{externalReleaseLinkLabel(release.externalUrl)}</a> : null}
-                    </div>
-                  ) : null}
-                </div>
-                <TrackList tracks={release.tracks} />
-              </div>
-            </details>
-          ))}
+          {recent.map((release) => <ReleaseItem release={release} key={release.id} />)}
         </div>
+
+        {groups.length ? (
+          <div className={styles.releaseGroups}>
+            {/* Los grupos son trabajos anteriores a los visibles, aunque compartan año. */}
+            <p className={styles.foldedTitle}>Trabajos anteriores</p>
+            {groups.map((group) => group.releases.length === 1 ? (
+              // Un único trabajo (p. ej. sin fecha): sin capa de grupo.
+              <div className={styles.releaseList} key={group.key}>
+                <ReleaseItem release={group.releases[0]} />
+              </div>
+            ) : (
+              <details className={styles.releaseGroup} key={group.key}>
+                <summary
+                  className={styles.releaseGroupSummary}
+                  data-hilo-event="discography_group_open"
+                  data-hilo-section="discography"
+                  data-hilo-scope="group"
+                >
+                  <strong>{group.label}</strong>
+                  <span>{group.releases.length} {group.releases.length === 1 ? 'trabajo' : 'trabajos'}</span>
+                  <b aria-hidden="true">+</b>
+                </summary>
+                <div className={styles.releaseList}>
+                  {group.releases.map((release) => <ReleaseItem release={release} key={release.id} />)}
+                </div>
+              </details>
+            ))}
+          </div>
+        ) : null}
       </div>
     </section>
   )
