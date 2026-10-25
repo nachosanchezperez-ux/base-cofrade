@@ -116,7 +116,8 @@ export default function BrotherhoodProgramHero({
                 />
               </span>
             ) : (
-              <EntityVisualFallback className={styles.crest} />
+              // Sin escudo: en móvil no se pinta el relleno (ver .crestFallback).
+              <EntityVisualFallback className={`${styles.crest} ${styles.crestFallback}`} />
             )}
             <div className={styles.identityBody}>
               <div className={styles.identityCopy}>
