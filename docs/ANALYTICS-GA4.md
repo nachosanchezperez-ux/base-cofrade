@@ -73,6 +73,30 @@ Los `page_view` se emiten manualmente desde la capa central cuando cambia el `pa
 | `entity_click` | navegación entre entidades | `source_entity_type`, `source_entity_name`, `destination_entity_type`, `destination_entity_name`, `link_context` |
 | `related_content_click` | contenido relacionado | `source_type`, `destination_type`, `destination_name`, `section_name` |
 | `external_link_click` | salida a un dominio externo | `destination_domain`, `link_text`, `source_page_type` |
+| `content_share` | compartir un contenido (también el juego) | `share_method`, `content_type`, `item_name` |
+| `game_complete` | partida terminada de El hilo escondido | `game_mode`, `game_origin`, `game_day`, `days_ago`, `game_result`, `score`, `max_score`, `words_won`, `words_total`, `hints_used`, `perfect`, `streak` |
+| `game_open` | abrir otra partida | `game_mode`, `game_origin`, `game_day`, `days_ago`, `open_source` |
+| `game_hint` | pedir una pista | `game_mode`, `game_origin`, `game_day`, `days_ago`, `hint_number`, `word_position` |
+
+### El hilo escondido (`/juegos/el-hilo-escondido`)
+
+Nunca se envía la palabra del reto: sería un destripe en los informes.
+
+- `game_mode`: `hilo_del_dia` o `ultima_chicota`.
+- `game_origin`: `hoy` o `archivo` (retos anteriores). `days_ago` es 0 para hoy.
+- `game_result`: `acertado`, `parcial` (solo en la última chicotá) o `fallado`.
+- `streak`: solo en el hilo del día jugado en su día; es la racha tras terminar.
+- `open_source`: `siguiente` (botón tras terminar), `archivo` (lista de retos anteriores), `volver_hoy` o `pestana` (cambio de modalidad).
+- `content_share` con `content_type: juego` (resultado) o `juego_invitacion` («Compartir juego»). `share_method`: `native`, `whatsapp`, `instagram`, `telegram`, `x`, `facebook`, `email`, `copy`, `image_download`. Los enlaces directos e Instagram cuentan la intención (el clic); el menú nativo cuenta solo si se completa.
+- La tarjeta «Sigue el hilo» lleva `data-analytics-context="juego_sigue_el_hilo"`: su clic llega como navegación relacional normal.
+
+Preguntas que responden:
+- ¿Vuelven? Usuarios con `game_complete` en días distintos y `streak` alto.
+- ¿Se quedan? `game_open` con `open_source = siguiente | archivo` por usuario y sesión; `game_complete` con `game_origin = archivo`.
+- ¿Se pican? Distribución de `score`, `perfect`, `hints_used`.
+- ¿Dónde se comparte? `content_share` con `content_type = juego` por `share_method`.
+
+Dimensiones a registrar en GA4 para estos informes: `game_mode`, `game_origin`, `game_result`, `open_source`, `share_method`; métricas personalizadas: `score`, `streak`, `days_ago`.
 
 ### Valores de `agenda_type`
 
