@@ -20,7 +20,7 @@ import {
   normalizeHiddenAnswer,
   validHiddenProgress,
 } from '@/lib/hilo-hidden-game'
-import { HILO_SHARE_URL, hiddenInviteText, hiddenShareData, hiddenShareSocialLinks, hiddenStoryFilename } from '@/lib/hilo-hidden-share'
+import { HILO_SHARE_URL, hiddenInviteText, hiddenNativeSharePayload, hiddenShareData, hiddenShareTargets, hiddenStoryFilename } from '@/lib/hilo-hidden-share'
 import { createHiddenStoryFile, saveHiddenStoryFile } from '@/lib/hilo-hidden-share-card'
 import styles from './HiddenThreadGame.module.css'
 
@@ -86,9 +86,16 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
   const [shareStatus, setShareStatus] = useState('')
   const [streak, setStreak] = useState(0)
   const [minutesLeft, setMinutesLeft] = useState(0)
+  // null hasta hidratar: el menú nativo solo existe en algunos navegadores (sobre todo móviles).
+  const [canNativeShare, setCanNativeShare] = useState(null)
+  const targetsRef = useRef(null)
   const riddleRef = useRef(null)
   const resultRef = useRef(null)
   const pendingTimer = useRef(0)
+
+  useEffect(() => {
+    setCanNativeShare(typeof navigator.share === 'function')
+  }, [])
 
   useEffect(() => {
     const updateDay = () => setDateKey(madridHiddenDayKey())
@@ -137,7 +144,7 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
     () => completed ? hiddenShareData(challenge, progress, { streak }) : null,
     [challenge, progress, completed, streak]
   )
-  const socialLinks = useMemo(() => hiddenShareSocialLinks(shareData), [shareData])
+  const shareTargets = useMemo(() => hiddenShareTargets(shareData), [shareData])
 
   useEffect(() => {
     if (mode !== 'daily' || !progress?.finished || !dateKey) return
@@ -301,18 +308,26 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
     }
   }
 
+  function offerShareTargets(message) {
+    setShareStatus(message)
+    window.requestAnimationFrame(() => targetsRef.current?.querySelector('a')?.focus({ preventScroll: false }))
+  }
+
+  // Nunca termina en el portapapeles sin avisar: si no hay menú nativo o falla, se ofrecen
+  // las aplicaciones directamente. Copiar queda como opción explícita.
   async function shareResult() {
     if (!shareData) return
-    if (typeof navigator.share === 'function') {
-      try {
-        await navigator.share({ title: shareData.title, text: shareData.text })
-        setShareStatus('Resultado compartido.')
-        return
-      } catch (error) {
-        if (error?.name === 'AbortError') return
-      }
+    if (typeof navigator.share !== 'function') {
+      offerShareTargets('Elige dónde compartirlo.')
+      return
     }
-    await copyResult()
+    try {
+      await navigator.share(hiddenNativeSharePayload(shareData))
+      setShareStatus('Resultado compartido.')
+    } catch (error) {
+      if (error?.name === 'AbortError') return
+      offerShareTargets('No se ha podido abrir el menú. Elige dónde compartirlo.')
+    }
   }
 
   async function copyResult() {
@@ -321,28 +336,52 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
       await navigator.clipboard.writeText(shareData.text)
       setShareStatus('Resultado copiado. Pégalo en tu red social o conversación.')
     } catch {
-      setShareStatus('Tu navegador no permite copiar. Usa WhatsApp o X.')
+      offerShareTargets('Tu navegador no permite copiar. Elige dónde compartirlo.')
     }
   }
 
-  async function shareStory() {
+  function storyImage() {
+    // Se genera dentro del mismo gesto para no perder el permiso del menú nativo.
+    return createHiddenStoryFile(shareData, hiddenStoryFilename(challenge))
+  }
+
+  // Instagram no admite enlaces para compartir desde la web: se le envía la imagen 9:16.
+  // Con menú nativo, Instagram aparece entre las aplicaciones (historia, publicación o
+  // mensaje). Sin él, se descarga la imagen y se abre Instagram para subirla.
+  async function shareInstagram() {
     if (!shareData || !challenge) return
+    let image
     try {
-      // Se genera dentro del mismo gesto para no perder el permiso del menú nativo.
-      const image = createHiddenStoryFile(shareData, hiddenStoryFilename(challenge))
-      if (typeof navigator.share === 'function'
-        && typeof navigator.canShare === 'function'
-        && navigator.canShare({ files: [image] })) {
-        try {
-          await navigator.share({ files: [image], title: shareData.title, text: '¿Superas mi resultado? ' + shareData.url })
-          setShareStatus('Imagen enviada a la aplicación elegida.')
-          return
-        } catch (error) {
-          if (error?.name === 'AbortError') return
-        }
+      image = storyImage()
+    } catch {
+      setShareStatus('No se ha podido crear la imagen. Elige otra aplicación.')
+      return
+    }
+    const canShareFile = typeof navigator.share === 'function'
+      && typeof navigator.canShare === 'function'
+      && navigator.canShare({ files: [image] })
+    if (canShareFile) {
+      try {
+        await navigator.share({ files: [image] })
+        setShareStatus('Imagen lista. Si no la has publicado, elige Instagram en el menú.')
+        return
+      } catch (error) {
+        if (error?.name === 'AbortError') return
       }
       saveHiddenStoryFile(image)
-      setShareStatus('Imagen descargada. Súbela a tu historia desde la galería.')
+      setShareStatus('Imagen descargada. Abre Instagram y súbela desde tu galería.')
+      return
+    }
+    saveHiddenStoryFile(image)
+    window.open('https://www.instagram.com/', '_blank', 'noopener,noreferrer')
+    setShareStatus('Imagen descargada. Súbela en Instagram desde tu galería.')
+  }
+
+  function downloadStory() {
+    if (!shareData || !challenge) return
+    try {
+      saveHiddenStoryFile(storyImage())
+      setShareStatus('Imagen descargada (formato 9:16).')
     } catch {
       setShareStatus('No se ha podido crear la imagen. Comparte el resultado como texto.')
     }
@@ -357,6 +396,36 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
       </section>
     )
   }
+
+  // Destinos directos: sin menú nativo van delante (son la acción principal); con él, debajo.
+  const shareTargetsBlock = shareData ? (
+    <div className={styles.shareTargets} ref={targetsRef} role="group" aria-label="Compartir el resultado en">
+      <span className={styles.shareTargetsLabel}>{canNativeShare === false ? 'Compártelo en' : 'O directamente en'}</span>
+      <div className={styles.shareTargetList}>
+        {shareTargets.map((target) => target.id === 'instagram' ? (
+          <button
+            key={target.id}
+            type="button"
+            className={styles.shareTarget}
+            data-target={target.id}
+            onClick={shareInstagram}
+          >
+            {target.label}
+          </button>
+        ) : (
+          <a
+            key={target.id}
+            className={styles.shareTarget}
+            data-target={target.id}
+            href={target.href}
+            {...(target.id === 'email' ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+          >
+            {target.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  ) : null
 
   const isDaily = mode === 'daily'
   const isFinalRound = progress.stage === challenge.words.length - 1
@@ -569,19 +638,21 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
                 <span className={styles.shareInvite}>¿Lo superas? hilocofrade.es</span>
               </div>
 
+              {canNativeShare === false ? shareTargetsBlock : null}
               <div className={styles.shareActions}>
-                <button type="button" className={styles.primaryButton} onClick={shareResult}>
-                  Compartir resultado <span aria-hidden="true">↗</span>
+                {canNativeShare !== false ? (
+                  <button type="button" className={styles.primaryButton} onClick={shareResult}>
+                    Compartir resultado <span aria-hidden="true">↗</span>
+                  </button>
+                ) : null}
+                <button type="button" className={styles.secondaryButton} onClick={downloadStory} aria-label="Guardar la imagen del resultado (formato 9:16)">
+                  Guardar imagen
                 </button>
-                <button type="button" className={styles.secondaryButton} onClick={shareStory} aria-label="Imagen para historias de Instagram">
-                  Historia 9:16
-                </button>
-                <a className={styles.secondaryButton} href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Compartir en WhatsApp">WhatsApp</a>
-                <a className={styles.secondaryButton} href={socialLinks.x} target="_blank" rel="noopener noreferrer" aria-label="Compartir en X">X</a>
-                <button type="button" className={styles.secondaryButton} onClick={copyResult} aria-label="Copiar resultado">Copiar</button>
+                <button type="button" className={styles.secondaryButton} onClick={copyResult}>Copiar texto</button>
               </div>
+              {canNativeShare === false ? null : shareTargetsBlock}
               {shareStatus ? <p className={styles.status} role="status">{shareStatus}</p> : null}
-              <p className={styles.shareNote}>Sin respuestas ni pistas. Para Instagram, usa «Historia 9:16».</p>
+              <p className={styles.shareNote}>Sin respuestas ni pistas. A Instagram se envía como imagen.</p>
 
               <p className={styles.comeBack}>
                 {isDaily ? (
