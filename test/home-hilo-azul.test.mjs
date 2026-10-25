@@ -17,11 +17,11 @@ test('la grabación no repite «marcha · banda»', () => {
   assert.match(read('lib/supabase/home-v2.js'), /releaseTitle: informativeReleaseTitle\(release\?\.title \|\| recording\?\.title, entity\.name, band\?\.name\)/)
 })
 
-test('El Hilo se mueve: la principal en azul, con etiquetas en rosa', () => {
+test('El Hilo se mueve: la principal en azul, con etiquetas en azul claro', () => {
   const css = read('components/HomeUpdatesLink.module.css')
   assert.match(css, /\.lead \{\s*border-color: var\(--home-ink\);\s*background: linear-gradient\(140deg, var\(--home-blue\) 0%, var\(--home-ink\) 100%\);/)
-  assert.match(css, /\.lead \.meta b \{\s*color: var\(--home-pink\);/)
-  assert.match(css, /\.lead \.discover::after \{\s*color: var\(--home-pink\);/)
+  assert.match(css, /\.lead \.meta b \{\s*color: var\(--home-on-blue\);/)
+  assert.match(css, /\.lead \.discover::after \{\s*color: var\(--home-on-blue\);/)
 })
 
 test('Hoy en Hilo Cofrade: sin segunda etiqueta y con escudo en PC', () => {

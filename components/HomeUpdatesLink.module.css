@@ -370,7 +370,7 @@
 /*
  * Punto focal del bloque (20/10/2026): la noticia principal va en el azul de
  * Hilo Cofrade, como la cita del día en la Agenda y la ficha en «Descubre».
- * Sobre azul, las etiquetas van en rosa claro (el rojo se pierde) y el escudo
+ * Sobre azul, las etiquetas van en azul claro (el rojo se pierde) y el escudo
  * sobre blanco para conservar sus colores. Las secundarias siguen en blanco.
  */
 .lead {
@@ -384,7 +384,7 @@
 }
 
 .lead .meta b {
-  color: var(--home-pink);
+  color: var(--home-on-blue);
 }
 
 :global(#hc-app #el-hilo-se-mueve) .lead .leadHeadline,
@@ -439,7 +439,7 @@
 }
 
 .lead .discover::after {
-  color: var(--home-pink);
+  color: var(--home-on-blue);
 }
 
 .lead .discover:hover {
@@ -447,5 +447,5 @@
 }
 
 .lead .discover:focus-visible {
-  outline-color: var(--home-pink);
+  outline-color: var(--home-on-blue);
 }

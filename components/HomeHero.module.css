@@ -34,7 +34,7 @@
 :global(#hc-app #inicio) .place {
   display: block;
   margin: 0 0 6px;
-  color: #f3c8d0;
+  color: var(--home-on-blue);
   font-size: 13px;
   font-weight: 700;
   line-height: 1.4;
@@ -76,7 +76,7 @@
    se gana a la escala global de H2 (#hc-app > main > :not(#hc-panel) h2). */
 :global(#hc-app #tiradelhilo) .searchTitle {
   margin: 0 0 8px;
-  color: #f3c8d0;
+  color: var(--home-on-blue);
   font-size: 15px;
   font-weight: 750;
   line-height: 1.3;
