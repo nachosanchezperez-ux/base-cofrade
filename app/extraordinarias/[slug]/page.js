@@ -95,10 +95,18 @@ function entryLabel(item) {
   return item.returnTime || entry?.time || entry?.timeText || ''
 }
 
-function statusLabel(status) {
-  if (status === 'held') return 'Celebrada'
-  if (status === 'cancelled') return 'Cancelada'
-  return 'Anunciada'
+// Como en Glorias: una salida anunciada cuya fecha ya pasó dice «Fecha pasada»,
+// no «Anunciada» (no se afirma que se celebrara si no consta).
+function statusLabel(item) {
+  if (item.eventStatus === 'held') return 'Celebrada'
+  if (item.eventStatus === 'cancelled') return 'Cancelada'
+  if (item.date && !item.isUpcoming) return 'Fecha pasada'
+  return item.urgencyLabel || 'Anunciada'
+}
+
+function statusKey(item) {
+  if (item.eventStatus === 'announced' && item.date && !item.isUpcoming) return 'past'
+  return item.eventStatus
 }
 
 function musicTitle(section) {
@@ -295,12 +303,12 @@ export default async function ExtraordinaryDetailPage({ params }) {
       {item.date ? <JsonLd data={eventJsonLd} /> : null}
 
       <section className={styles.hero}>
-        <div className={`shell ${styles.heroGrid}`}>
+        <div className={`shell ${styles.heroGrid}${item.heroImagePath ? '' : ` ${styles.heroGridText}`}`}>
           <div className={styles.heroCopy}>
             <Link className={styles.backLink} href="/extraordinarias">← Todas las extraordinarias</Link>
             <div className={styles.heroTopline}>
               <span>{item.municipality || 'Sevilla y provincia'}</span>
-              <span data-status={item.eventStatus}>{statusLabel(item.eventStatus)}</span>
+              <span data-status={statusKey(item)}>{statusLabel(item)}</span>
             </div>
             <h1>{item.title}</h1>
             {item.brotherhoodHref
@@ -322,27 +330,21 @@ export default async function ExtraordinaryDetailPage({ params }) {
             </div>
           </div>
 
-          <div className={styles.heroMedia}>
-            {item.heroImagePath ? (
-              <>
-                <Image
-                  src={item.heroImagePath}
-                  alt={item.heroImageAlt}
-                  fill
-                  priority
-                  sizes="(max-width: 860px) calc(100vw - 40px), 42vw"
-                />
-                <span className={styles.heroShade} aria-hidden="true" />
-                {item.heroImageCredit ? <small>{item.heroImageCredit}</small> : null}
-              </>
-            ) : (
-              <div className={styles.datePoster}>
-                <span>{formatShortDate(item.date) || item.year || ''}</span>
-                <strong>{item.municipality || 'Sevilla'}</strong>
-                <small>Extraordinaria</small>
-              </div>
-            )}
-          </div>
+          {/* Sin fotografía, la cabecera se ajusta al texto: el recuadro con la fecha y
+              la localidad repetía lo que ya dicen el título y los datos (#1305). */}
+          {item.heroImagePath ? (
+            <div className={styles.heroMedia}>
+              <Image
+                src={item.heroImagePath}
+                alt={item.heroImageAlt}
+                fill
+                priority
+                sizes="(max-width: 860px) calc(100vw - 40px), 42vw"
+              />
+              <span className={styles.heroShade} aria-hidden="true" />
+              {item.heroImageCredit ? <small>{item.heroImageCredit}</small> : null}
+            </div>
+          ) : null}
         </div>
       </section>
 

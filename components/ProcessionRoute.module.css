@@ -23,7 +23,7 @@
 
 .placeCard > span {
   color: #b71f37;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 900;
   letter-spacing: .13em;
   text-transform: uppercase;
@@ -53,7 +53,7 @@
 .phasesHead span,
 .legHead span {
   color: #778896;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 900;
   letter-spacing: .11em;
   text-transform: uppercase;
@@ -67,7 +67,7 @@
 
 .routeOverview > small {
   color: #6d7e8d;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
 }
 
@@ -113,7 +113,7 @@
   border-radius: 50%;
   background: #edf4f8;
   color: #123a67;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 900;
 }
 
@@ -125,7 +125,7 @@
   display: block;
   margin-bottom: 3px;
   color: #b71f37;
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 900;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -142,7 +142,7 @@
   display: block;
   margin-top: 5px;
   color: #123a67;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .phase p,
@@ -150,7 +150,7 @@
   display: block;
   margin: 6px 0 0;
   color: #687988;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.45;
 }
 
@@ -249,7 +249,7 @@
   background: #eef3f6;
   color: #657b8d;
   box-shadow: 0 0 0 1px #d5e0e7;
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 900;
 }
 
@@ -293,7 +293,7 @@
   border-radius: 999px;
   background: #eaf1f7;
   color: #123a67;
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 900;
   letter-spacing: .07em;
   text-transform: uppercase;
@@ -308,7 +308,7 @@
   display: block;
   margin-top: 3px;
   color: #7f8e9a;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.4;
 }
 
@@ -328,7 +328,7 @@
   border-radius: 8px;
   background: #f3f7fa;
   color: #536b7f;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -339,7 +339,7 @@
 
 .annotation b {
   color: inherit;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .legCard[data-dense="true"] .routePoint {
@@ -391,7 +391,7 @@
   border-radius: 999px;
   background: #fff;
   color: #61788b;
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 900;
 }
 
@@ -426,7 +426,7 @@
   border-radius: 13px;
   background: #edf5fb;
   color: #315a78;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -465,7 +465,7 @@
   }
 
   .placeCard > span {
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .placeCard > strong {
@@ -483,7 +483,7 @@
 
   .routeOverview > small {
     padding-top: 2px;
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .phaseGrid {
@@ -527,7 +527,7 @@
   .legCard[data-dense="true"] .node {
     width: 26px;
     height: 26px;
-    font-size: 8px;
+    font-size: 12px;
   }
 
   .pointCopy strong,
@@ -539,20 +539,20 @@
   .pointBadge {
     min-height: 24px;
     padding: 0 7px;
-    font-size: 8px;
+    font-size: 12px;
   }
 
   .pointCopy > small {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .annotation {
     min-height: 29px;
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .annotation b {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .summaryFallback {
@@ -563,7 +563,7 @@
   .mapHint {
     align-items: flex-start;
     flex-direction: column;
-    font-size: 10px;
+    font-size: 12px;
   }
 }
 
