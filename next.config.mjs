@@ -1,3 +1,5 @@
+import { unifiedAuthorRedirects } from './lib/unified-author-redirects.mjs'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
@@ -61,6 +63,7 @@ const nextConfig = {
         destination: '/imagenes/nuestra-senora-aguas-santas-villaverde-del-rio',
         permanent: true,
       },
+      ...unifiedAuthorRedirects(),
     ]
   },
   images: {
