@@ -95,10 +95,18 @@ function entryLabel(item) {
   return item.returnTime || entry?.time || entry?.timeText || ''
 }
 
-function statusLabel(status) {
-  if (status === 'held') return 'Celebrada'
-  if (status === 'cancelled') return 'Cancelada'
-  return 'Anunciada'
+// Como en Glorias: una salida anunciada cuya fecha ya pasó dice «Fecha pasada»,
+// no «Anunciada» (no se afirma que se celebrara si no consta).
+function statusLabel(item) {
+  if (item.eventStatus === 'held') return 'Celebrada'
+  if (item.eventStatus === 'cancelled') return 'Cancelada'
+  if (item.date && !item.isUpcoming) return 'Fecha pasada'
+  return item.urgencyLabel || 'Anunciada'
+}
+
+function statusKey(item) {
+  if (item.eventStatus === 'announced' && item.date && !item.isUpcoming) return 'past'
+  return item.eventStatus
 }
 
 function musicTitle(section) {
@@ -300,7 +308,7 @@ export default async function ExtraordinaryDetailPage({ params }) {
             <Link className={styles.backLink} href="/extraordinarias">← Todas las extraordinarias</Link>
             <div className={styles.heroTopline}>
               <span>{item.municipality || 'Sevilla y provincia'}</span>
-              <span data-status={item.eventStatus}>{statusLabel(item.eventStatus)}</span>
+              <span data-status={statusKey(item)}>{statusLabel(item)}</span>
             </div>
             <h1>{item.title}</h1>
             {item.brotherhoodHref
