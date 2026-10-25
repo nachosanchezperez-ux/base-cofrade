@@ -16,5 +16,5 @@
   --home-line: #e3e9ef;     /* separadores */
   --home-border: #dce5ed;   /* bordes de tarjeta */
   --home-surface: #f6f8fa;  /* fondos suaves */
-  --home-pink: #f0a5b0;     /* etiquetas sobre azul */
+  --home-on-blue: #b9d3ee;  /* etiquetas sobre azul (el rojo y el rosa se pierden) */
 }
