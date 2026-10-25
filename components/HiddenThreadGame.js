@@ -22,6 +22,7 @@ import {
 } from '@/lib/hilo-hidden-game'
 import { HILO_SHARE_URL, hiddenInviteText, hiddenNativeSharePayload, hiddenShareData, hiddenShareTargets, hiddenStoryFilename } from '@/lib/hilo-hidden-share'
 import { createHiddenStoryFile, saveHiddenStoryFile } from '@/lib/hilo-hidden-share-card'
+import { hiddenArchiveDays, hiddenNextChallenge, hiddenPlayerStats, hiddenRoundMark } from '@/lib/hilo-hidden-archive'
 import styles from './HiddenThreadGame.module.css'
 
 const GAME_STORAGE = 'hc-hilo-escondido-v2:'
@@ -43,10 +44,36 @@ function getProgress(challenge, storageKey) {
 function getStreak() {
   try {
     const value = JSON.parse(window.localStorage.getItem(STREAK_STORAGE) || 'null')
-    return Number.isInteger(value?.count) && value.count >= 0 ? value : { date: '', count: 0 }
+    if (!Number.isInteger(value?.count) || value.count < 0) return { date: '', count: 0, best: 0 }
+    return { ...value, best: Math.max(value.count, Number.isInteger(value.best) ? value.best : 0) }
   } catch {
-    return { date: '', count: 0 }
+    return { date: '', count: 0, best: 0 }
   }
+}
+
+// Partida terminada guardada en este navegador para un día y una modalidad (o null).
+function getFinished(dayKey, mode) {
+  try {
+    const challenge = getHiddenChallenge(dayKey, mode)
+    const raw = window.localStorage.getItem(GAME_STORAGE + challenge.id)
+    if (!raw) return null
+    const progress = JSON.parse(raw)
+    return validHiddenProgress(progress, challenge) && progress.finished ? progress : null
+  } catch {
+    return null
+  }
+}
+
+// Todo lo jugado: hoy y el archivo. Solo en el navegador; nunca se envía a ningún sitio.
+function readLedger(todayKey) {
+  const ledger = {}
+  for (const dayKey of [todayKey, ...hiddenArchiveDays(todayKey)]) {
+    for (const mode of ['daily', 'expert']) {
+      const progress = getFinished(dayKey, mode)
+      if (progress) ledger[mode + ':' + dayKey] = progress
+    }
+  }
+  return ledger
 }
 
 function readableDay(dayKey) {
@@ -55,6 +82,20 @@ function readableDay(dayKey) {
     timeZone: 'Europe/Madrid', weekday: 'long', day: 'numeric', month: 'long',
   }).format(new Date(Date.UTC(year, month - 1, day, 12)))
 }
+
+function shortDay(dayKey) {
+  const [year, month, day] = dayKey.split('-').map(Number)
+  return new Intl.DateTimeFormat('es-ES', {
+    timeZone: 'Europe/Madrid', weekday: 'short', day: 'numeric', month: 'short',
+  }).format(new Date(Date.UTC(year, month - 1, day, 12))).replace(',', '')
+}
+
+function ledgerMark(progress) {
+  if (!progress) return ''
+  return progress.rounds.map(hiddenRoundMark).join('')
+}
+
+const MODE_LABEL = { daily: 'El hilo del día', expert: 'La última chicotá' }
 
 function countdownLabel(minutes) {
   const hours = Math.floor(minutes / 60)
@@ -74,6 +115,11 @@ function prefersReducedMotion() {
 export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
   const [dateKey, setDateKey] = useState(initialDayKey)
   const [mode, setMode] = useState('daily')
+  // Día que se está jugando: null es hoy; una fecha pasada es una partida del archivo.
+  const [playDay, setPlayDay] = useState(null)
+  // Lo jugado en este navegador (hoy y archivo). Se lee tras hidratar para no desajustar el HTML.
+  const [ledger, setLedger] = useState(null)
+  const [streakRecord, setStreakRecord] = useState(null)
   // La adivinanza existe ya en el HTML del servidor; el progreso local se reconcilia al hidratar.
   const [state, setState] = useState(() => initialDayKey ? {
     key: GAME_STORAGE + 'daily-' + initialDayKey,
@@ -112,9 +158,11 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
     }
   }, [])
 
+  const activeDay = playDay && playDay !== dateKey ? playDay : dateKey
+  const isArchive = Boolean(dateKey && activeDay !== dateKey)
   const challenge = useMemo(
-    () => (dateKey ? getHiddenChallenge(dateKey, mode) : null),
-    [dateKey, mode]
+    () => (activeDay ? getHiddenChallenge(activeDay, mode) : null),
+    [activeDay, mode]
   )
   const storageKey = challenge ? GAME_STORAGE + challenge.id : ''
 
@@ -125,8 +173,8 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
     setPending('')
     setFeedback('')
     setShareStatus('')
-    setStreak(hiddenEffectiveStreak(getStreak(), challenge.dateKey))
-  }, [challenge, storageKey])
+    setStreak(hiddenEffectiveStreak(getStreak(), dateKey))
+  }, [challenge, storageKey, dateKey])
 
   const progress = state?.key === storageKey ? state.progress : null
   const round = progress?.rounds[progress.stage] || null
@@ -141,13 +189,14 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
     [challenge, progress?.stage]
   )
   const shareData = useMemo(
-    () => completed ? hiddenShareData(challenge, progress, { streak }) : null,
-    [challenge, progress, completed, streak]
+    () => completed ? hiddenShareData(challenge, progress, { streak: isArchive ? 0 : streak }) : null,
+    [challenge, progress, completed, streak, isArchive]
   )
   const shareTargets = useMemo(() => hiddenShareTargets(shareData), [shareData])
 
   useEffect(() => {
-    if (mode !== 'daily' || !progress?.finished || !dateKey) return
+    // La racha solo cuenta el hilo del día jugado en su día: el archivo no la toca.
+    if (mode !== 'daily' || isArchive || !progress?.finished || !dateKey) return
     const previous = getStreak()
     if (previous.date === dateKey) {
       setStreak(previous.count)
@@ -159,12 +208,21 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
       ? (previous.date === hiddenPriorDayKey(dateKey) ? previous.count + 1 : 1)
       : 0
     try {
-      window.localStorage.setItem(STREAK_STORAGE, JSON.stringify({ date: dateKey, count }))
+      window.localStorage.setItem(STREAK_STORAGE, JSON.stringify({ date: dateKey, count, best: Math.max(previous.best, count) }))
     } catch {
       // La partida sigue funcionando si el navegador bloquea el almacenamiento.
     }
     setStreak(count)
-  }, [mode, dateKey, progress?.finished, progress?.rounds])
+    setStreakRecord({ count, best: Math.max(previous.best, count) })
+  }, [mode, isArchive, dateKey, progress?.finished, progress?.rounds])
+
+  // Archivo y estadísticas: se recalculan al cambiar de día o al guardar una partida.
+  useEffect(() => {
+    if (!dateKey) return
+    setLedger(readLedger(dateKey))
+    const saved = getStreak()
+    setStreakRecord({ count: hiddenEffectiveStreak(saved, dateKey), best: saved.best })
+  }, [dateKey, state])
 
   useEffect(() => {
     if (!completed) return undefined
@@ -274,9 +332,11 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
     })
   }
 
-  function changeMode(nextMode) {
-    if (mode === nextMode) return
+  function openChallenge(nextDay, nextMode) {
+    const day = nextDay && nextDay !== dateKey ? nextDay : null
+    if (day === (isArchive ? activeDay : null) && nextMode === mode) return
     window.clearTimeout(pendingTimer.current)
+    setPlayDay(day)
     setMode(nextMode)
     setFeedback('')
     setShareStatus('')
@@ -284,6 +344,10 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
       behavior: prefersReducedMotion() ? 'auto' : 'smooth',
       block: 'start',
     }))
+  }
+
+  function changeMode(nextMode) {
+    openChallenge(activeDay, nextMode)
   }
 
   async function shareInvitation() {
@@ -428,6 +492,22 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
   ) : null
 
   const isDaily = mode === 'daily'
+  // Encadenado: al terminar, la siguiente partida pendiente (hoy primero, luego el archivo).
+  const nextChallenge = ledger && completed
+    ? hiddenNextChallenge({
+      todayKey: dateKey,
+      current: { dayKey: activeDay, mode },
+      isFinished: (dayKey, item) => Boolean(ledger[item + ':' + dayKey]),
+    })
+    : null
+  const stats = ledger
+    ? hiddenPlayerStats({
+      records: Object.values(ledger).map((item) => ({ progress: item })),
+      streak: streakRecord,
+      todayKey: dateKey,
+    })
+    : null
+  const archiveDays = ledger ? hiddenArchiveDays(dateKey) : []
   const isFinalRound = progress.stage === challenge.words.length - 1
   const usedErrors = roundErrors(round)
   const attemptsLeft = Math.max(0, HILO_GAME_MAX_ERRORS - usedErrors)
@@ -466,10 +546,10 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
 
         <article className={styles.board} id="partida-del-hilo" aria-labelledby="hilo-reto-titulo">
           <header className={styles.boardTop}>
-            <h2 id="hilo-reto-titulo" className={styles.srOnly}>{challenge.title} · {readableDay(dateKey)}</h2>
+            <h2 id="hilo-reto-titulo" className={styles.srOnly}>{challenge.title} · {readableDay(activeDay)}</h2>
             <span className={styles.boardMeta}>
-              <span className={styles.boardDate} aria-hidden="true">{readableDay(dateKey)}</span>
-              {isDaily && streak > 0 ? (
+              <span className={styles.boardDate} aria-hidden="true">{readableDay(activeDay)}</span>
+              {isDaily && !isArchive && streak > 0 ? (
                 <span className={styles.streak} aria-label={'Racha: ' + streak + (streak === 1 ? ' día' : ' días') + ' seguidos acertando'}>
                   <span aria-hidden="true">🔥</span> {streak} {streak === 1 ? 'día' : 'días'}
                 </span>
@@ -479,6 +559,13 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
               <span aria-hidden="true">↗</span> Compartir juego
             </button>
           </header>
+
+          {isArchive ? (
+            <p className={styles.archiveBanner}>
+              <span>Reto del archivo · no cuenta para la racha</span>
+              <button type="button" onClick={() => openChallenge(dateKey, 'daily')}>Volver al de hoy</button>
+            </p>
+          ) : null}
 
           <div className={styles.scoreboard} aria-label="Marcador">
             <span className={styles.scorePoints}>
@@ -655,7 +742,7 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
               <p className={styles.shareNote}>Sin respuestas ni pistas. A Instagram se envía como imagen.</p>
 
               <p className={styles.comeBack}>
-                {isDaily ? (
+                {isArchive ? <>Partida del archivo: no cuenta para la racha. </> : isDaily ? (
                   progress.rounds[0]?.status === 'won'
                     ? (streak > 1
                       ? <>Llevas <strong>{streak} días</strong> seguidos acertando. </>
@@ -664,12 +751,75 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
                 ) : null}
                 {minutesLeft ? <>Nuevo reto en <strong>{countdownLabel(minutesLeft)}</strong>.</> : 'Nuevo reto mañana.'}
               </p>
-              <button type="button" className={styles.secondaryButton} onClick={() => changeMode(isDaily ? 'expert' : 'daily')}>
-                {isDaily ? 'Jugar a La última chicotá' : 'Volver al hilo del día'} <span aria-hidden="true">→</span>
-              </button>
+              {nextChallenge ? (
+                <button
+                  type="button"
+                  className={styles.primaryButton}
+                  onClick={() => openChallenge(nextChallenge.dayKey, nextChallenge.mode)}
+                >
+                  {nextChallenge.dayKey === dateKey
+                    ? (nextChallenge.mode === 'expert' ? 'Jugar a La última chicotá' : 'Jugar al hilo del día') + (isArchive ? ' de hoy' : '')
+                    : 'Siguiente: ' + MODE_LABEL[nextChallenge.mode] + ' del ' + shortDay(nextChallenge.dayKey)}
+                  {' '}<span aria-hidden="true">→</span>
+                </button>
+              ) : ledger ? (
+                <p className={styles.allDone}>Has desenredado todos los hilos publicados. Mañana, uno nuevo.</p>
+              ) : null}
+              {isArchive ? (
+                <button type="button" className={styles.secondaryButton + ' ' + styles.backToday} onClick={() => openChallenge(dateKey, 'daily')}>
+                  Volver al reto de hoy
+                </button>
+              ) : null}
+
+              {stats && stats.played ? (
+                <div className={styles.stats} aria-label="Tus números en El hilo escondido">
+                  <span className={styles.statsTitle}>Tus números</span>
+                  <dl className={styles.statsGrid}>
+                    <div><dt>Retos</dt><dd>{stats.played}<small>/{stats.available}</small></dd></div>
+                    <div><dt>Aciertos</dt><dd>{stats.winRate}<small>%</small></dd></div>
+                    <div><dt>Racha</dt><dd>{stats.currentStreak}<small> · mejor {stats.bestStreak}</small></dd></div>
+                    <div><dt>Perfectas</dt><dd>{stats.perfect}<small> ✦</small></dd></div>
+                  </dl>
+                </div>
+              ) : null}
             </section>
           ) : null}
         </article>
+
+        {archiveDays.length ? (
+          <section className={styles.archive} aria-labelledby="hilo-archivo-titulo">
+            <header className={styles.archiveTop}>
+              <h2 id="hilo-archivo-titulo">Retos anteriores</h2>
+              {stats ? <span>{stats.played} de {stats.available} completados</span> : null}
+            </header>
+            <p className={styles.archiveNote}>Juega los días que te perdiste. No cuentan para la racha.</p>
+            <ol className={styles.archiveList}>
+              {archiveDays.map((dayKey) => (
+                <li key={dayKey}>
+                  <span className={styles.archiveDay}>{shortDay(dayKey)}</span>
+                  {['daily', 'expert'].map((item) => {
+                    const done = ledger?.[item + ':' + dayKey]
+                    const current = isArchive && activeDay === dayKey && mode === item
+                    return (
+                      <button
+                        key={item}
+                        type="button"
+                        className={styles.archiveItem}
+                        data-done={done ? 'true' : 'false'}
+                        aria-current={current ? 'true' : undefined}
+                        aria-label={MODE_LABEL[item] + ' del ' + shortDay(dayKey) + (done ? ', jugado: ' + ledgerMark(done) : ', pendiente')}
+                        onClick={() => openChallenge(dayKey, item)}
+                      >
+                        <small>{item === 'daily' ? 'Del día' : 'Chicotá'}</small>
+                        <strong>{done ? ledgerMark(done) : 'Jugar'}</strong>
+                      </button>
+                    )
+                  })}
+                </li>
+              ))}
+            </ol>
+          </section>
+        ) : null}
 
         <p className={styles.privacy}>Una partida nueva cada día. Tu progreso se guarda solo en este navegador.</p>
       </div>
