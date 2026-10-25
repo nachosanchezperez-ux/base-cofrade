@@ -1,0 +1,46 @@
+/* Cabecera compacta de los calendarios (Igualás, Extraordinarias, Glorias).
+   Revisión de calidad en móvil (25/10/2026): título, entradilla y recuadros
+   ocupaban la primera pantalla y la primera cita empezaba a 780–1.280 px.
+   En móvil: menos aire arriba, título de dos líneas y los recuentos en una
+   sola línea de texto. En escritorio no cambia. */
+.introStats {
+  margin: 12px 0 0;
+  color: #536a7e;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.introStats strong {
+  color: #0f2742;
+  font-weight: 800;
+}
+
+@media (max-width: 720px) {
+  :global(.page-top).compactPage {
+    padding-top: 22px;
+    min-height: 0;
+  }
+
+  .compactIntro.compactIntro {
+    gap: 8px;
+    margin-bottom: 14px;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .compactIntro.compactIntro h1 {
+    font-size: 34px;
+    line-height: 1.02;
+    letter-spacing: -.04em;
+  }
+
+  .compactIntro.compactIntro p {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .introStats {
+    margin-top: 6px;
+    font-size: 13px;
+  }
+}

@@ -4,6 +4,7 @@ import ExtraordinaryDirectory from '@/components/ExtraordinaryDirectory'
 import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import styles from '@/components/ExtraordinaryDirectory.module.css'
 import seoStyles from '@/components/ExtraordinarySeo.module.css'
+import introStyles from '@/components/CalendarIntro.module.css'
 import JsonLd from '@/components/JsonLd'
 import { getExtraordinaryDirectory } from '@/lib/supabase/public-directory-cache'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
@@ -76,7 +77,7 @@ export default async function ExtraordinariasPage() {
   })
 
   return (
-    <section className={`section page-top ${styles.page}`}>
+    <section className={`section page-top ${styles.page} ${introStyles.compactPage}`}>
       <JsonLd data={breadcrumbJsonLd([
         { name: 'Inicio', path: '/' },
         { name: 'Extraordinarias', path: '/extraordinarias' },
@@ -84,7 +85,7 @@ export default async function ExtraordinariasPage() {
       <JsonLd data={directoryJsonLd} />
 
       <div className="shell">
-        <header className={styles.pageIntro}>
+        <header className={`${styles.pageIntro} ${introStyles.compactIntro}`}>
           <div>
             <span className="eyebrow">Sevilla capital y provincia</span>
             <h1>Procesiones y salidas extraordinarias de Sevilla {currentYear}</h1>
