@@ -227,7 +227,7 @@ export default function ExtraordinaryDirectory({ outings }) {
                           <small data-status={outing.eventStatus} data-next={outing.id === nextId ? 'true' : undefined}>{outing.id === nextId ? (outing.urgencyLabel || 'PRÓXIMA') : statusLabel(outing)}</small>
                         </div>
 
-                        <h4><Link href={`/extraordinarias/${outing.slug}`} onClick={() => trackExtraordinaryOpen(outing)}>{outing.title}</Link></h4>
+                        <h4><Link href={outing.detailHref} onClick={() => trackExtraordinaryOpen(outing)}>{outing.title}</Link></h4>
                         {outing.brotherhoodName ? (
                           outing.brotherhoodHref ? (
                             <Link className={styles.organizer} href={outing.brotherhoodHref} prefetch={false} onClick={() => trackExtraordinaryBrotherhood(outing)} data-analytics-skip-entity="true">{outing.brotherhoodName}</Link>
@@ -248,7 +248,7 @@ export default function ExtraordinaryDirectory({ outings }) {
                           </div>
                         ) : null}
 
-                        <Link className={styles.cardDetailLink} href={`/extraordinarias/${outing.slug}`} onClick={() => trackExtraordinaryOpen(outing)}>
+                        <Link className={styles.cardDetailLink} href={outing.detailHref} onClick={() => trackExtraordinaryOpen(outing)}>
                           Ver detalles <span>→</span>
                         </Link>
                       </div>

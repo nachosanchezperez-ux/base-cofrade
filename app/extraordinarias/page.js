@@ -7,6 +7,7 @@ import seoStyles from '@/components/ExtraordinarySeo.module.css'
 import JsonLd from '@/components/JsonLd'
 import { getExtraordinaryDirectory } from '@/lib/supabase/public-directory-cache'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
+import { isStandaloneExtraordinaryPath } from '@/lib/agenda-event-url-policy'
 import { extraordinarySeoCopy, madridYear } from '@/lib/seo-calendar'
 import { plural, pluralWord } from '@/lib/plural'
 
@@ -69,10 +70,13 @@ export default async function ExtraordinariasPage() {
     path: '/extraordinarias',
     name: title,
     description,
-    items: visibleOutings.map((outing) => ({
-      name: `${outing.title} · ${outing.municipality}`,
-      path: outing.slug ? `/extraordinarias/${outing.slug}` : outing.anchorHref,
-    })),
+    // Solo fichas propias: sin anclas ni URL que redirigen a la Agenda.
+    items: visibleOutings
+      .filter((outing) => isStandaloneExtraordinaryPath(outing.detailHref))
+      .map((outing) => ({
+        name: `${outing.title} · ${outing.municipality}`,
+        path: outing.detailHref,
+      })),
   })
 
   return (
@@ -122,7 +126,7 @@ export default async function ExtraordinariasPage() {
                   </summary>
                   <div className={seoStyles.monthLinks}>
                     {group.items.map((outing) => (
-                      <Link href={`/extraordinarias/${outing.slug}`} key={outing.id}>
+                      <Link href={outing.detailHref} key={outing.id}>
                         <span>{outing.dateParts?.day ? `${outing.dateParts.day} · ` : ''}{outing.title}</span>
                         <small>{outing.municipality}</small>
                       </Link>
@@ -142,7 +146,7 @@ export default async function ExtraordinariasPage() {
             </header>
             <div className={seoStyles.coronationLinks}>
               {coronations.map((outing) => (
-                <Link href={`/extraordinarias/${outing.slug}`} key={outing.id}>
+                <Link href={outing.detailHref} key={outing.id}>
                   <strong>{outing.title}</strong>
                   <span>{outing.dateParts?.label || outing.monthLabel} · {outing.municipality}</span>
                 </Link>
