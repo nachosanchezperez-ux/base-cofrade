@@ -56,10 +56,10 @@
   .hero h1{margin-top:10px;font-size:32px}
   .hero p{font-size:12px}
   .filters{padding:9px 0}
-  .chips{flex-wrap:nowrap;overflow-x:auto;margin-right:-16px;padding-right:16px;scrollbar-width:none;overscroll-behavior-inline:contain;scroll-snap-type:x proximity}
+  .chips{flex-wrap:nowrap;overflow-x:auto;margin-right:-14px;padding-right:14px;scrollbar-width:none;overscroll-behavior-inline:contain;scroll-snap-type:x proximity}
   .chips::-webkit-scrollbar{display:none}
   .chips a{flex:0 0 auto;scroll-snap-align:start}
-  .localGuides>div>div{display:flex;overflow-x:auto;margin-right:-16px;padding-right:16px;padding-bottom:3px;scrollbar-width:none;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory}
+  .localGuides>div>div{display:flex;overflow-x:auto;margin-right:-14px;padding-right:14px;padding-bottom:3px;scrollbar-width:none;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory}
   .localGuides>div>div::-webkit-scrollbar{display:none}
   .localGuides a{flex:0 0 150px;scroll-snap-align:start}
   .scrollHint{display:inline-flex;margin-left:auto}

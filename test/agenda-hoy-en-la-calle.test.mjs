@@ -18,14 +18,15 @@ const item = {
 test('los tramos salen con hora, en orden, sin repetir ni mezclar el día siguiente', () => {
   assert.deepEqual(agendaScheduleSteps(item), [
     { label: 'Salida', time: '18:00' },
-    { label: 'Carrera oficial', time: '19:30' },
+    { label: 'Carrera oficial', time: 'Sobre las 19.30', approximate: true },
+    { label: 'Misa', time: 'Al terminar', approximate: true },
     { label: 'Entrada', time: '23:15' },
   ])
   assert.deepEqual(agendaScheduleSteps({}), [])
 })
 
 test('el próximo tramo depende de la hora de Madrid', () => {
-  assert.deepEqual(nextScheduleStep(item, 19 * 60), { label: 'Carrera oficial', time: '19:30' })
+  assert.deepEqual(nextScheduleStep(item, 19 * 60), { label: 'Entrada', time: '23:15' })
   assert.equal(nextScheduleStep(item, 23 * 60 + 30), null)
   // 20/10/2026 22:00 UTC = 00:00 en Madrid (+02:00).
   assert.equal(madridMinutes(new Date('2026-10-20T22:00:00Z')), 0)

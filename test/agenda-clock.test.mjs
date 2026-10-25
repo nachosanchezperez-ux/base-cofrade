@@ -8,6 +8,7 @@ const night = new Date('2026-10-17T20:00:00Z')
 test('un besamanos de 09:00 a 21:00 ya terminó a las 22:00', () => {
   assert.equal(isAgendaItemOver({ date: '2026-10-17', timeText: '09:00–21:00' }, night), true)
   assert.equal(isAgendaItemOver({ date: '2026-10-17', startTime: '21:00' }, night), false)
+  assert.equal(isAgendaItemOver({ date: '2026-10-17', startTime: '10:00' }, night), false)
   assert.equal(isAgendaItemOver({ date: '2026-10-17', startTime: '19:00', endTime: '01:30' }, night), false)
   assert.equal(isAgendaItemOver({ date: '2026-10-17', endDate: '2026-10-18', timeText: '09:00–21:00' }, night), false)
   assert.equal(isAgendaItemOver({ date: '2026-10-17' }, night), false)
