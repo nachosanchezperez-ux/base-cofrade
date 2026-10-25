@@ -405,7 +405,7 @@
 }
 
 .musicCopy .type {
-  color: var(--home-pink);
+  color: var(--home-on-blue);
 }
 
 .musicCopy h3 {
@@ -446,7 +446,7 @@
 }
 
 .musicContext small {
-  color: var(--home-pink);
+  color: var(--home-on-blue);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: .12em;
@@ -468,7 +468,7 @@
 .whyToday {
   margin-top: 14px;
   padding: 11px 12px;
-  border-left: 3px solid var(--home-pink);
+  border-left: 3px solid var(--home-on-blue);
   border-radius: 0 12px 12px 0;
   background: rgba(255, 255, 255, .075);
 }
@@ -476,7 +476,7 @@
 .whyToday span {
   display: block;
   margin-bottom: 3px;
-  color: var(--home-pink);
+  color: var(--home-on-blue);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: .12em;
@@ -899,7 +899,7 @@
 }
 
 .embedded .featureCard .type {
-  color: var(--home-pink);
+  color: var(--home-on-blue);
 }
 
 .embedded .featureCard .kicker {
@@ -940,7 +940,7 @@
 }
 
 .embedded .featureCard:has(.cardLink:focus-visible) {
-  outline-color: var(--home-pink);
+  outline-color: var(--home-on-blue);
 }
 
 /* Marcha del día: tarjeta blanca; mismo reproductor y enlaces. */
@@ -1359,5 +1359,50 @@
   .embedded .featureCardSlot.discoveryCard .topline {
     min-height: 0;
     padding-right: 0;
+  }
+}
+
+/*
+ * 7 · Rótulos en minúscula (25/10/2026). En la portada, los rótulos de «Hoy en
+ * Hilo Cofrade» siguen el estilo del resto de bloques: frase normal, sin
+ * mayúsculas espaciadas.
+ */
+.embedded .date,
+.embedded .type,
+.embedded .musicContext small,
+.embedded .whyToday span {
+  font-size: 13px;
+  font-weight: 750;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/*
+ * 8 · PC (≥1024 px), 25/10/2026: la marcha y el reto comparten la columna
+ * derecha, junto a la ficha del día. Antes la marcha se estiraba hasta la
+ * altura de la ficha y dejaba un hueco blanco bajo «Escuchar aquí», y el reto
+ * ocupaba una fila propia a todo el ancho.
+ */
+@media (min-width: 1024px) {
+  .embedded > div:has(> .editorialGrid):has(> .musicCard):has(> aside) {
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+
+  .embedded > div:has(> .musicCard):has(> aside) > .editorialGrid {
+    grid-column: 1;
+    grid-row: 2 / span 2;
+  }
+
+  .embedded > div:has(> .editorialGrid):has(> aside) > .musicCard {
+    grid-column: 2;
+    grid-row: 2;
+    /* Texto arriba y reproductor abajo, sin hueco al final de la tarjeta. */
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .embedded > div:has(> .editorialGrid):has(> .musicCard) > aside {
+    grid-column: 2;
+    grid-row: 3;
+    align-self: end;
   }
 }
