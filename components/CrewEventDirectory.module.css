@@ -7,7 +7,7 @@
 .featuredDate time span{margin-top:6px;color:var(--hc-red,#b71f37);font-size:.82rem;font-weight:800;letter-spacing:.14em}
 .featuredDate time small{margin-top:7px;color:#71808f;font-size:.76rem;font-weight:700}
 .status{display:inline-flex;width:max-content;align-items:center;min-height:28px;padding:0 10px;border-radius:999px;background:#eaf1f7;color:#123a67;font-size:.67rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
-.status[data-status="cancelled"]{background:#f6e8ea;color:#9f2335}.status[data-status="postponed"]{background:#fff2d8;color:#7d5712}.status[data-status="held"]{background:#eaf4ee;color:#286b43}
+.status[data-status="cancelled"]{background:#f6e8ea;color:#9f2335}.status[data-status="postponed"]{background:#fff2d8;color:#7d5712}.status[data-status="held"]{background:#eaf4ee;color:#286b43}.status[data-status="past"]{background:#eef1f4;color:#5b6876}
 .featuredCopy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:clamp(30px,5vw,58px);padding-right:clamp(110px,14vw,180px)}
 .featuredCopy h2{max-width:760px;margin:10px 0 9px;font-size:clamp(2rem,4vw,3.55rem);line-height:.98;letter-spacing:-.045em}
 .featuredCopy h2 a,.card h3 a{color:inherit;text-decoration:none}

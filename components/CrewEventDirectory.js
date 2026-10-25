@@ -8,7 +8,7 @@ import { brotherhoodSlugFromHref } from '@/lib/followed-brotherhoods'
 import followStyles from './AgendaMyBrotherhoods.module.css'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
-import { CREW_EVENT_TYPES, crewEventStatusLabel } from '@/lib/crew-events'
+import { CREW_EVENT_TYPES, crewEventDisplayStatus } from '@/lib/crew-events'
 import { trackEvent } from '@/lib/analytics/client'
 import styles from './CrewEventDirectory.module.css'
 import { hasCrewEventPage } from '@/lib/crew-event-url-policy'
@@ -49,8 +49,8 @@ function SelectFilter({ label, value, onChange, options, allLabel }) {
 }
 
 function EventStatus({ event }) {
-  const label = event.urgencyLabel || crewEventStatusLabel(event.eventStatus)
-  return <span className={styles.status} data-status={event.eventStatus}>{label}</span>
+  const { status, label } = crewEventDisplayStatus(event)
+  return <span className={styles.status} data-status={status}>{label}</span>
 }
 
 function trackCrewOpen(event) {

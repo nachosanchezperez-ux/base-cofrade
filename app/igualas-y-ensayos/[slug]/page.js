@@ -5,7 +5,7 @@ import JsonLd from '@/components/JsonLd'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import AgendaRelationLinks from '@/components/AgendaRelationLinks'
-import { crewEventStatusLabel } from '@/lib/crew-events'
+import { crewEventDisplayStatus } from '@/lib/crew-events'
 import {
   absoluteUrl,
   breadcrumbJsonLd,
@@ -180,7 +180,7 @@ export default async function CrewEventDetailPage({ params }) {
         <header className={styles.hero}>
           <div className={styles.datePanel}>
             <time dateTime={event.date}><strong>{event.dateParts.day}</strong><span>{event.dateParts.month}</span><small>{event.dateParts.year}</small></time>
-            <span className={styles.status} data-status={event.eventStatus}>{event.urgencyLabel || crewEventStatusLabel(event.eventStatus)}</span>
+            <span className={styles.status} data-status={crewEventDisplayStatus(event).status}>{crewEventDisplayStatus(event).label}</span>
           </div>
           <div className={styles.heroCopy}>
             <span className="eyebrow">{event.eventTypeLabel} · {event.municipality}</span>
