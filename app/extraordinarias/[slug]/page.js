@@ -303,7 +303,7 @@ export default async function ExtraordinaryDetailPage({ params }) {
       {item.date ? <JsonLd data={eventJsonLd} /> : null}
 
       <section className={styles.hero}>
-        <div className={`shell ${styles.heroGrid}`}>
+        <div className={`shell ${styles.heroGrid}${item.heroImagePath ? '' : ` ${styles.heroGridText}`}`}>
           <div className={styles.heroCopy}>
             <Link className={styles.backLink} href="/extraordinarias">← Todas las extraordinarias</Link>
             <div className={styles.heroTopline}>
@@ -330,27 +330,21 @@ export default async function ExtraordinaryDetailPage({ params }) {
             </div>
           </div>
 
-          <div className={styles.heroMedia}>
-            {item.heroImagePath ? (
-              <>
-                <Image
-                  src={item.heroImagePath}
-                  alt={item.heroImageAlt}
-                  fill
-                  priority
-                  sizes="(max-width: 860px) calc(100vw - 40px), 42vw"
-                />
-                <span className={styles.heroShade} aria-hidden="true" />
-                {item.heroImageCredit ? <small>{item.heroImageCredit}</small> : null}
-              </>
-            ) : (
-              <div className={styles.datePoster}>
-                <span>{formatShortDate(item.date) || item.year || ''}</span>
-                <strong>{item.municipality || 'Sevilla'}</strong>
-                <small>Extraordinaria</small>
-              </div>
-            )}
-          </div>
+          {/* Sin fotografía, la cabecera se ajusta al texto: el recuadro con la fecha y
+              la localidad repetía lo que ya dicen el título y los datos (#1305). */}
+          {item.heroImagePath ? (
+            <div className={styles.heroMedia}>
+              <Image
+                src={item.heroImagePath}
+                alt={item.heroImageAlt}
+                fill
+                priority
+                sizes="(max-width: 860px) calc(100vw - 40px), 42vw"
+              />
+              <span className={styles.heroShade} aria-hidden="true" />
+              {item.heroImageCredit ? <small>{item.heroImageCredit}</small> : null}
+            </div>
+          ) : null}
         </div>
       </section>
 
