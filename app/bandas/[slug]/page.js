@@ -6,13 +6,13 @@ import JsonLd from '@/components/JsonLd'
 import SourcesBlock from '@/components/SourcesBlock'
 import OfficialLinks from '@/components/OfficialLinks'
 import RelationalEntityHero from '@/components/RelationalEntityHero'
+import { panelEditHref } from '@/lib/panel-session-cookie'
 import EntitySectionNav from '@/components/EntitySectionNav'
 import EntityLastUpdated from '@/components/EntityLastUpdated'
 import BandDiscographySection from '@/components/bands/BandDiscographySection'
 import BandFeaturePhoto from '@/components/BandFeaturePhoto'
 import MusicalRepertoiresSection from '@/components/MusicalRepertoiresSection'
 import ContextAgendaSection from '@/components/ContextAgendaSection'
-import HiloMovementsSection from '@/components/HiloMovementsSection'
 import HistoricalAccompanimentsRail from './HistoricalAccompanimentsRail'
 import { getBandBySlug as getBandBySlugUncached, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { getBandDiscography } from '@/lib/supabase/bandDiscography'
@@ -47,6 +47,7 @@ import {
   sortHolyWeekAccompaniments,
   splitCurrentAccompaniments,
   summarizeGloryTypes,
+  withoutInternalNotes,
 } from '@/lib/bands/accompaniments'
 import styles from '../bandas.module.css'
 
@@ -98,7 +99,20 @@ function accompanimentHeaderLabel(item) {
   return label || 'Acompañamiento'
 }
 
+function isLinkedBrotherhood(item, band) {
+  if (!band.linkedBrotherhood && !band.linkedBrotherhoodSlug) return false
+  if (band.linkedBrotherhoodSlug && item.brotherhoodSlug) return item.brotherhoodSlug === band.linkedBrotherhoodSlug
+  return item.brotherhoodName === band.linkedBrotherhood
+}
+
+function linkedBrotherhoodLabel(band) {
+  return band.linkedBrotherhoodRelationType === 'associated_with_brotherhood'
+    ? 'Hermandad asociada'
+    : 'Vínculo institucional'
+}
+
 function AccompanimentCard({ item, band, showLocation = false }) {
+  const linked = isLinkedBrotherhood(item, band)
   const step = presentAccompanimentStep(item)
   const hasStepDetail = step.type || step.name || step.position
   const period = yearRange(item)
@@ -114,6 +128,7 @@ function AccompanimentCard({ item, band, showLocation = false }) {
         <strong>{location}</strong>
       </div> : null}
       <div className={styles.relationshipIdentity}>
+        {linked ? <span className={styles.relationshipBond}>{linkedBrotherhoodLabel(band)}</span> : null}
         <h3>{item.brotherhoodName}</h3>
       </div>
       {hasStepDetail ? <div className={styles.relationshipStep}>
@@ -125,7 +140,7 @@ function AccompanimentCard({ item, band, showLocation = false }) {
         ) : null}
         {step.position ? <small className={styles.relationshipStepPosition}>{step.position}</small> : null}
       </div> : null}
-      {publicText(item.notes) && item.brotherhoodName !== band.linkedBrotherhood ? <p className={styles.relationshipNote}>{publicText(item.notes)}</p> : null}
+      {publicText(item.notes) && !linked ? <p className={styles.relationshipNote}>{publicText(item.notes)}</p> : null}
       {item.brotherhoodSlug && item.brotherhoodPageReady ? <div className={styles.relationshipLinks}>
         <Link href={`/hermandades/${item.brotherhoodSlug}`}>Ver ficha de la hermandad <span>→</span></Link>
       </div> : null}
@@ -186,6 +201,10 @@ export default async function BandDetailPage({ params }) {
   const municipalityHubHref = band.province === 'Sevilla'
     ? agendaMunicipalityHref(band.municipality)
     : ''
+  // Como en Hermandad: la localidad lleva al listado de bandas de esa localidad;
+  // si no hay listado, a su guía cofrade.
+  const municipalityBandsHref = band.municipalitySlug ? `/bandas/localidad/${band.municipalitySlug}` : ''
+  const bandDescription = withoutInternalNotes(publicText(band.description))
   const artistSpotifyUrl = band.interestLinks.find((link) => link.platform === 'spotify')?.url || ''
   const [discography, colors, outingLinks, musicalRepertoires, concertEvents] = await Promise.all([
     getBandDiscography(band.id, {
@@ -277,6 +296,7 @@ export default async function BandDetailPage({ params }) {
       <RelationalEntityHero
         variant="band"
         entityType="Banda"
+        editHref={panelEditHref('band', band.id)}
         title={band.popularName}
         subtitle={band.officialName}
         breadcrumbItems={[
@@ -284,9 +304,7 @@ export default async function BandDetailPage({ params }) {
           { label: band.popularName },
         ]}
         relation={band.linkedBrotherhoodSlug ? {
-          label: band.linkedBrotherhoodRelationType === 'associated_with_brotherhood'
-            ? 'Hermandad asociada'
-            : 'Vínculo institucional',
+          label: linkedBrotherhoodLabel(band),
           name: band.linkedBrotherhood,
           href: `/hermandades/${band.linkedBrotherhoodSlug}`,
         } : null}
@@ -295,7 +313,7 @@ export default async function BandDetailPage({ params }) {
           publicText(band.municipality) ? {
             label: 'Localidad',
             value: publicText(band.municipality),
-            href: municipalityHubHref || undefined,
+            href: municipalityBandsHref || municipalityHubHref || undefined,
           } : null,
           publicText(band.foundation) ? { label: 'Fundación', value: publicText(band.foundation) } : null,
         ]}
@@ -338,22 +356,19 @@ export default async function BandDetailPage({ params }) {
                 <h2>{band.popularName}, de un vistazo</h2>
                 <EntityLastUpdated value={band.updatedAt} />
               </div>
-              {publicText(band.description) ? <p>{publicText(band.description)}</p> : null}
+              {bandDescription ? <p>{bandDescription}</p> : null}
               {publicText(band.headquarters) && band.headquarters !== band.municipality ? (
                 <p className={styles.overviewFact}><span>Sede y local de ensayo</span> {band.headquarters}</p>
               ) : null}
-              {(band.municipalitySlug || municipalityHubHref) ? (
+              {municipalityHubHref ? (
                 <nav className={styles.exploreLinks} aria-label="Seguir explorando">
-                  {band.municipalitySlug ? <Link href={`/bandas/localidad/${band.municipalitySlug}`}>Bandas de {band.municipality} →</Link> : null}
-                  {municipalityHubHref ? <Link href={municipalityHubHref}>Guía cofrade de {band.municipality} →</Link> : null}
+                  <Link href={municipalityHubHref}>Guía cofrade de {band.municipality} →</Link>
                 </nav>
               ) : null}
             </div>
           </div>
         </div>
       </section>
-
-      <HiloMovementsSection entityId={band.id} entityName={band.popularName} />
 
       <ContextAgendaSection
         id="agenda"
@@ -437,20 +452,26 @@ export default async function BandDetailPage({ params }) {
             <span className={styles.eyebrow}>Dónde suena · Sevilla y provincia</span>
             <h2>Glorias, eucarísticas y cultos externos</h2>
           </div>
-          <div className={styles.gloryTypeSummary} aria-label="Tipos de procesiones documentadas">
+          {/* Con un solo acompañamiento, el resumen por tipos repetiría la cabecera de la tarjeta. */}
+          {gloryAccompaniments.length > 1 ? <div className={styles.gloryTypeSummary} aria-label="Tipos de procesiones documentadas">
             {gloryTypeSummary.map((item) => <article key={item.type}>
               <strong>{item.count}</strong>
               <span>{item.count === 1 ? item.type : item.label}</span>
             </article>)}
-          </div>
+          </div> : null}
           <div className={styles.gloryGroups}>
-            {gloryGroups.map((group) => <section className={styles.gloryGroup} key={group.key}>
+            {gloryGroups.map((group) => group.items.length === 1 ? (
+              // Un único acompañamiento: sin capa de grupo; la tarjeta ya indica la localidad.
+              <div className={`${styles.relationshipGrid} ${styles.gloryRelationshipGrid}`} key={group.key}>
+                <AccompanimentCard item={group.items[0]} band={band} showLocation />
+              </div>
+            ) : <section className={styles.gloryGroup} key={group.key}>
               <header className={styles.gloryGroupHeading}>
                 <div>
                   <h3>{group.label}</h3>
                   <p>{group.detail}</p>
                 </div>
-                <strong>{group.items.length}</strong>
+                <strong aria-label={`${group.items.length} acompañamientos`}>{group.items.length}</strong>
               </header>
               <div className={`${styles.relationshipGrid} ${styles.gloryRelationshipGrid}`}>
                 {group.items.map((item) => (

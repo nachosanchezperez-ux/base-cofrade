@@ -18,6 +18,7 @@ import BrotherhoodOverviewV2 from '@/components/BrotherhoodOverviewV2';
 import BrotherhoodViaCrucisSection from '@/components/BrotherhoodViaCrucisSection';
 import BrotherhoodOutingsSection from '@/components/BrotherhoodOutingsSection';
 import BrotherhoodProgramHero from '@/components/BrotherhoodProgramHero';
+import { panelEditHref } from '@/lib/panel-session-cookie';
 import FollowBrotherhoodButton from '@/components/FollowBrotherhoodButton';
 import BrotherhoodSimpecadosSection from '@/components/BrotherhoodSimpecadosSection';
 import {
@@ -26,6 +27,7 @@ import {
   BrotherhoodReadingDiscovery,
 } from '@/components/BrotherhoodRelationalExtras';
 import EntitySectionNav from '@/components/EntitySectionNav';
+import { isExtraordinaryEvent } from '@/lib/brotherhood-extraordinary-events';
 import FestivalPostersSection from '@/components/FestivalPostersSection';
 import { notFound } from 'next/navigation';
 import JsonLd from '@/components/JsonLd';
@@ -208,7 +210,8 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       return [];
     }),
   ]);
-  // Miga: «Sevilla» lleva a las hermandades de la localidad; si no hay listado, a su guía.
+  // Miga y cabecera: «Sevilla» lleva a las hermandades de la localidad; si no hay
+  // listado, a su guía cofrade (que también se enlaza desde ese listado).
   const localityBreadcrumbHref = brotherhoodLocalityDirectoryHref(h, indexableBrotherhoods) || municipalityHubHref;
   const upcomingAgendaItems = brotherhoodUpcomingAgenda({
     agendaItems: agendaData.items,
@@ -715,7 +718,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
         title={h.nombrePopular}
         officialName={h.nombreOficial}
         locality={publicText(h.localidad)}
-        localityHref={municipalityHubHref}
+        localityHref={localityBreadcrumbHref}
         seat={publicText(h.sede)}
         breadcrumbItems={[
           { label: 'Hermandades', href: '/hermandades' },
@@ -723,6 +726,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
           { label: h.nombrePopular },
         ]}
         facts={heroFacts}
+        editHref={panelEditHref('brotherhood', h.id)}
         actions={<FollowBrotherhoodButton slug={slug} name={h.nombrePopular} municipality={publicText(h.localidad)} />}
         media={{
           photoSrc: heroMedia?.path || '',
@@ -765,10 +769,12 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       <EntitySectionNav items={[
         hasPracticalOverview && { href: '#resumen', label: 'Resumen' },
         h.imagenes?.length > 0 && { href: '#titulares', label: 'Titulares' },
-        (publicText(h.historia) || h.cronologia?.length > 0 || h.antiguasTitulares?.length > 0) && { href: '#historia', label: 'Historia' },
+        h.pasos?.length > 0 && { href: '#pasos', label: 'Pasos' },
         (musicalHeritage.length > 0 || fallbackMusicalHeritage.length > 0) && { href: '#musica', label: 'Música' },
-        h.patrimonio?.length > 0 && { href: '#patrimonio', label: 'Patrimonio' },
+        (publicText(h.historia) || h.cronologia?.length > 0 || h.antiguasTitulares?.length > 0) && { href: '#historia', label: 'Historia' },
+        h.salidas?.some((outing) => !isExtraordinaryEvent(outing)) && { href: '#salidas', label: 'Salidas' },
         h.cultos?.length > 0 && { href: '#cultos', label: 'Cultos' },
+        (h.patrimonio?.length > 0 || h.estrenos?.length > 0) && { href: '#patrimonio', label: 'Patrimonio' },
       ]} />
 
       <BrotherhoodOverviewV2

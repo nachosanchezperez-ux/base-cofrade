@@ -415,3 +415,13 @@
     font-size: 31px;
   }
 }
+
+/* Sin fotografía: la cabecera se ajusta al texto, sin hueco ni relleno para la foto. */
+.hero.heroNoMedia {
+  min-height: 0;
+}
+
+.hero .grid.gridNoMedia {
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 0;
+}

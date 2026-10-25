@@ -246,6 +246,8 @@
 .relationshipCard h3,
 .directionGrid h3 { margin: 8px 0 0; color: var(--band-secondary); font-size: 21px; line-height: 1.15; }
 .relationshipIdentity h3 { margin-top: 0; }
+/* Hermandad asociada: la distinción con un contrato la da la etiqueta, no un aviso en el texto. */
+.relationshipBond { display: block; margin-bottom: 6px; color: var(--band-primary); font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
 .relationshipStep { display: grid; gap: 5px; margin: 0 20px; padding: 14px 0 16px; border-top: 1px solid var(--band-line); }
 .relationshipStep span { color: var(--band-muted); font-size: 8px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
 .relationshipStep .relationshipStepType { min-height: 0; padding: 0; border: 0; border-radius: 0; color: var(--band-primary); background: none; font-size: 13px; font-weight: 800; letter-spacing: 0; line-height: 1.2; text-transform: none; }

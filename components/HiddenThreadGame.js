@@ -20,8 +20,11 @@ import {
   normalizeHiddenAnswer,
   validHiddenProgress,
 } from '@/lib/hilo-hidden-game'
-import { HILO_SHARE_URL, hiddenInviteText, hiddenShareData, hiddenShareSocialLinks, hiddenStoryFilename } from '@/lib/hilo-hidden-share'
+import { HILO_SHARE_URL, hiddenInviteText, hiddenNativeSharePayload, hiddenShareData, hiddenShareTargets, hiddenStoryFilename } from '@/lib/hilo-hidden-share'
 import { createHiddenStoryFile, saveHiddenStoryFile } from '@/lib/hilo-hidden-share-card'
+import { hiddenArchiveDays, hiddenNextChallenge, hiddenPlayerStats, hiddenRoundMark } from '@/lib/hilo-hidden-archive'
+import { hiddenGameCompleteParams, hiddenGameContext, hiddenShareParams } from '@/lib/hilo-hidden-analytics'
+import { trackEvent } from '@/lib/analytics/client'
 import styles from './HiddenThreadGame.module.css'
 
 const GAME_STORAGE = 'hc-hilo-escondido-v2:'
@@ -43,10 +46,36 @@ function getProgress(challenge, storageKey) {
 function getStreak() {
   try {
     const value = JSON.parse(window.localStorage.getItem(STREAK_STORAGE) || 'null')
-    return Number.isInteger(value?.count) && value.count >= 0 ? value : { date: '', count: 0 }
+    if (!Number.isInteger(value?.count) || value.count < 0) return { date: '', count: 0, best: 0 }
+    return { ...value, best: Math.max(value.count, Number.isInteger(value.best) ? value.best : 0) }
   } catch {
-    return { date: '', count: 0 }
+    return { date: '', count: 0, best: 0 }
   }
+}
+
+// Partida terminada guardada en este navegador para un día y una modalidad (o null).
+function getFinished(dayKey, mode) {
+  try {
+    const challenge = getHiddenChallenge(dayKey, mode)
+    const raw = window.localStorage.getItem(GAME_STORAGE + challenge.id)
+    if (!raw) return null
+    const progress = JSON.parse(raw)
+    return validHiddenProgress(progress, challenge) && progress.finished ? progress : null
+  } catch {
+    return null
+  }
+}
+
+// Todo lo jugado: hoy y el archivo. Solo en el navegador; nunca se envía a ningún sitio.
+function readLedger(todayKey) {
+  const ledger = {}
+  for (const dayKey of [todayKey, ...hiddenArchiveDays(todayKey)]) {
+    for (const mode of ['daily', 'expert']) {
+      const progress = getFinished(dayKey, mode)
+      if (progress) ledger[mode + ':' + dayKey] = progress
+    }
+  }
+  return ledger
 }
 
 function readableDay(dayKey) {
@@ -55,6 +84,20 @@ function readableDay(dayKey) {
     timeZone: 'Europe/Madrid', weekday: 'long', day: 'numeric', month: 'long',
   }).format(new Date(Date.UTC(year, month - 1, day, 12)))
 }
+
+function shortDay(dayKey) {
+  const [year, month, day] = dayKey.split('-').map(Number)
+  return new Intl.DateTimeFormat('es-ES', {
+    timeZone: 'Europe/Madrid', weekday: 'short', day: 'numeric', month: 'short',
+  }).format(new Date(Date.UTC(year, month - 1, day, 12))).replace(',', '')
+}
+
+function ledgerMark(progress) {
+  if (!progress) return ''
+  return progress.rounds.map(hiddenRoundMark).join('')
+}
+
+const MODE_LABEL = { daily: 'El hilo del día', expert: 'La última chicotá' }
 
 function countdownLabel(minutes) {
   const hours = Math.floor(minutes / 60)
@@ -74,6 +117,11 @@ function prefersReducedMotion() {
 export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
   const [dateKey, setDateKey] = useState(initialDayKey)
   const [mode, setMode] = useState('daily')
+  // Día que se está jugando: null es hoy; una fecha pasada es una partida del archivo.
+  const [playDay, setPlayDay] = useState(null)
+  // Lo jugado en este navegador (hoy y archivo). Se lee tras hidratar para no desajustar el HTML.
+  const [ledger, setLedger] = useState(null)
+  const [streakRecord, setStreakRecord] = useState(null)
   // La adivinanza existe ya en el HTML del servidor; el progreso local se reconcilia al hidratar.
   const [state, setState] = useState(() => initialDayKey ? {
     key: GAME_STORAGE + 'daily-' + initialDayKey,
@@ -86,9 +134,16 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
   const [shareStatus, setShareStatus] = useState('')
   const [streak, setStreak] = useState(0)
   const [minutesLeft, setMinutesLeft] = useState(0)
+  // null hasta hidratar: el menú nativo solo existe en algunos navegadores (sobre todo móviles).
+  const [canNativeShare, setCanNativeShare] = useState(null)
+  const targetsRef = useRef(null)
   const riddleRef = useRef(null)
   const resultRef = useRef(null)
   const pendingTimer = useRef(0)
+
+  useEffect(() => {
+    setCanNativeShare(typeof navigator.share === 'function')
+  }, [])
 
   useEffect(() => {
     const updateDay = () => setDateKey(madridHiddenDayKey())
@@ -105,9 +160,11 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
     }
   }, [])
 
+  const activeDay = playDay && playDay !== dateKey ? playDay : dateKey
+  const isArchive = Boolean(dateKey && activeDay !== dateKey)
   const challenge = useMemo(
-    () => (dateKey ? getHiddenChallenge(dateKey, mode) : null),
-    [dateKey, mode]
+    () => (activeDay ? getHiddenChallenge(activeDay, mode) : null),
+    [activeDay, mode]
   )
   const storageKey = challenge ? GAME_STORAGE + challenge.id : ''
 
@@ -118,8 +175,8 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
     setPending('')
     setFeedback('')
     setShareStatus('')
-    setStreak(hiddenEffectiveStreak(getStreak(), challenge.dateKey))
-  }, [challenge, storageKey])
+    setStreak(hiddenEffectiveStreak(getStreak(), dateKey))
+  }, [challenge, storageKey, dateKey])
 
   const progress = state?.key === storageKey ? state.progress : null
   const round = progress?.rounds[progress.stage] || null
@@ -134,13 +191,14 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
     [challenge, progress?.stage]
   )
   const shareData = useMemo(
-    () => completed ? hiddenShareData(challenge, progress, { streak }) : null,
-    [challenge, progress, completed, streak]
+    () => completed ? hiddenShareData(challenge, progress, { streak: isArchive ? 0 : streak }) : null,
+    [challenge, progress, completed, streak, isArchive]
   )
-  const socialLinks = useMemo(() => hiddenShareSocialLinks(shareData), [shareData])
+  const shareTargets = useMemo(() => hiddenShareTargets(shareData), [shareData])
 
   useEffect(() => {
-    if (mode !== 'daily' || !progress?.finished || !dateKey) return
+    // La racha solo cuenta el hilo del día jugado en su día: el archivo no la toca.
+    if (mode !== 'daily' || isArchive || !progress?.finished || !dateKey) return
     const previous = getStreak()
     if (previous.date === dateKey) {
       setStreak(previous.count)
@@ -152,12 +210,21 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
       ? (previous.date === hiddenPriorDayKey(dateKey) ? previous.count + 1 : 1)
       : 0
     try {
-      window.localStorage.setItem(STREAK_STORAGE, JSON.stringify({ date: dateKey, count }))
+      window.localStorage.setItem(STREAK_STORAGE, JSON.stringify({ date: dateKey, count, best: Math.max(previous.best, count) }))
     } catch {
       // La partida sigue funcionando si el navegador bloquea el almacenamiento.
     }
     setStreak(count)
-  }, [mode, dateKey, progress?.finished, progress?.rounds])
+    setStreakRecord({ count, best: Math.max(previous.best, count) })
+  }, [mode, isArchive, dateKey, progress?.finished, progress?.rounds])
+
+  // Archivo y estadísticas: se recalculan al cambiar de día o al guardar una partida.
+  useEffect(() => {
+    if (!dateKey) return
+    setLedger(readLedger(dateKey))
+    const saved = getStreak()
+    setStreakRecord({ count: hiddenEffectiveStreak(saved, dateKey), best: saved.best })
+  }, [dateKey, state])
 
   useEffect(() => {
     if (!completed) return undefined
@@ -186,6 +253,27 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
     if (!canPlay || round.hints.includes(index)) return
     patchRound({ ...round, hints: [...round.hints, index] })
     setFeedback('')
+    trackEvent('game_hint', {
+      ...hiddenGameContext({ mode, dayKey: activeDay, todayKey: dateKey }),
+      hint_number: round.hints.length + 1,
+      word_position: progress.stage + 1,
+    })
+  }
+
+  // Racha que quedará tras terminar el hilo del día de hoy (la misma regla que la guarda).
+  function streakAfter(won) {
+    if (mode !== 'daily' || isArchive) return 0
+    const previous = getStreak()
+    if (previous.date === dateKey) return previous.count
+    if (!won) return 0
+    return previous.date === hiddenPriorDayKey(dateKey) ? previous.count + 1 : 1
+  }
+
+  function share(method, contentType) {
+    trackEvent('content_share', {
+      ...hiddenShareParams({ method, mode, dayKey: activeDay, todayKey: dateKey }),
+      ...(contentType ? { content_type: contentType } : {}),
+    })
   }
 
   function bringResultIntoView() {
@@ -213,9 +301,18 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
     if (!result.nextRound) return
 
     setShareStatus('')
-    patchRound(result.nextRound, {
-      finished: result.nextRound.status !== 'playing' && progress.stage === challenge.words.length - 1,
-    })
+    const finishing = result.nextRound.status !== 'playing' && progress.stage === challenge.words.length - 1
+    patchRound(result.nextRound, { finished: finishing })
+    if (finishing) {
+      const rounds = progress.rounds.map((item, index) => (index === progress.stage ? result.nextRound : item))
+      const finalProgress = { ...progress, finished: true, rounds }
+      trackEvent('game_complete', hiddenGameCompleteParams({
+        challenge,
+        progress: finalProgress,
+        todayKey: dateKey,
+        streak: streakAfter(rounds.every((item) => item.status === 'won')),
+      }))
+    }
     setAnswer('')
     if (result.kind === 'won') {
       setFeedback(
@@ -267,9 +364,16 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
     })
   }
 
-  function changeMode(nextMode) {
-    if (mode === nextMode) return
+  // `source`: desde dónde se abre (pestana, siguiente, archivo, volver_hoy) para medir retención.
+  function openChallenge(nextDay, nextMode, source = 'pestana') {
+    const day = nextDay && nextDay !== dateKey ? nextDay : null
+    if (day === (isArchive ? activeDay : null) && nextMode === mode) return
+    trackEvent('game_open', {
+      ...hiddenGameContext({ mode: nextMode, dayKey: day || dateKey, todayKey: dateKey }),
+      open_source: source,
+    })
     window.clearTimeout(pendingTimer.current)
+    setPlayDay(day)
     setMode(nextMode)
     setFeedback('')
     setShareStatus('')
@@ -277,6 +381,10 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
       behavior: prefersReducedMotion() ? 'auto' : 'smooth',
       block: 'start',
     }))
+  }
+
+  function changeMode(nextMode) {
+    openChallenge(activeDay, nextMode)
   }
 
   async function shareInvitation() {
@@ -288,6 +396,7 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
           url: HILO_SHARE_URL,
         })
         setShareStatus('Invitación compartida.')
+        share('native', 'juego_invitacion')
         return
       } catch (error) {
         if (error?.name === 'AbortError') return
@@ -296,23 +405,33 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
     try {
       await navigator.clipboard.writeText(hiddenInviteText())
       setShareStatus('Invitación copiada. Pégala donde quieras.')
+      share('copy', 'juego_invitacion')
     } catch {
       setShareStatus('Comparte este enlace: ' + HILO_SHARE_URL)
     }
   }
 
+  function offerShareTargets(message) {
+    setShareStatus(message)
+    window.requestAnimationFrame(() => targetsRef.current?.querySelector('a')?.focus({ preventScroll: false }))
+  }
+
+  // Nunca termina en el portapapeles sin avisar: si no hay menú nativo o falla, se ofrecen
+  // las aplicaciones directamente. Copiar queda como opción explícita.
   async function shareResult() {
     if (!shareData) return
-    if (typeof navigator.share === 'function') {
-      try {
-        await navigator.share({ title: shareData.title, text: shareData.text })
-        setShareStatus('Resultado compartido.')
-        return
-      } catch (error) {
-        if (error?.name === 'AbortError') return
-      }
+    if (typeof navigator.share !== 'function') {
+      offerShareTargets('Elige dónde compartirlo.')
+      return
     }
-    await copyResult()
+    try {
+      await navigator.share(hiddenNativeSharePayload(shareData))
+      setShareStatus('Resultado compartido.')
+      share('native')
+    } catch (error) {
+      if (error?.name === 'AbortError') return
+      offerShareTargets('No se ha podido abrir el menú. Elige dónde compartirlo.')
+    }
   }
 
   async function copyResult() {
@@ -320,29 +439,56 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
     try {
       await navigator.clipboard.writeText(shareData.text)
       setShareStatus('Resultado copiado. Pégalo en tu red social o conversación.')
+      share('copy')
     } catch {
-      setShareStatus('Tu navegador no permite copiar. Usa WhatsApp o X.')
+      offerShareTargets('Tu navegador no permite copiar. Elige dónde compartirlo.')
     }
   }
 
-  async function shareStory() {
+  function storyImage() {
+    // Se genera dentro del mismo gesto para no perder el permiso del menú nativo.
+    return createHiddenStoryFile(shareData, hiddenStoryFilename(challenge))
+  }
+
+  // Instagram no admite enlaces para compartir desde la web: se le envía la imagen 9:16.
+  // Con menú nativo, Instagram aparece entre las aplicaciones (historia, publicación o
+  // mensaje). Sin él, se descarga la imagen y se abre Instagram para subirla.
+  async function shareInstagram() {
     if (!shareData || !challenge) return
+    let image
     try {
-      // Se genera dentro del mismo gesto para no perder el permiso del menú nativo.
-      const image = createHiddenStoryFile(shareData, hiddenStoryFilename(challenge))
-      if (typeof navigator.share === 'function'
-        && typeof navigator.canShare === 'function'
-        && navigator.canShare({ files: [image] })) {
-        try {
-          await navigator.share({ files: [image], title: shareData.title, text: '¿Superas mi resultado? ' + shareData.url })
-          setShareStatus('Imagen enviada a la aplicación elegida.')
-          return
-        } catch (error) {
-          if (error?.name === 'AbortError') return
-        }
+      image = storyImage()
+    } catch {
+      setShareStatus('No se ha podido crear la imagen. Elige otra aplicación.')
+      return
+    }
+    share('instagram')
+    const canShareFile = typeof navigator.share === 'function'
+      && typeof navigator.canShare === 'function'
+      && navigator.canShare({ files: [image] })
+    if (canShareFile) {
+      try {
+        await navigator.share({ files: [image] })
+        setShareStatus('Imagen lista. Si no la has publicado, elige Instagram en el menú.')
+        return
+      } catch (error) {
+        if (error?.name === 'AbortError') return
       }
       saveHiddenStoryFile(image)
-      setShareStatus('Imagen descargada. Súbela a tu historia desde la galería.')
+      setShareStatus('Imagen descargada. Abre Instagram y súbela desde tu galería.')
+      return
+    }
+    saveHiddenStoryFile(image)
+    window.open('https://www.instagram.com/', '_blank', 'noopener,noreferrer')
+    setShareStatus('Imagen descargada. Súbela en Instagram desde tu galería.')
+  }
+
+  function downloadStory() {
+    if (!shareData || !challenge) return
+    try {
+      saveHiddenStoryFile(storyImage())
+      setShareStatus('Imagen descargada (formato 9:16).')
+      share('image_download')
     } catch {
       setShareStatus('No se ha podido crear la imagen. Comparte el resultado como texto.')
     }
@@ -358,7 +504,54 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
     )
   }
 
+  // Destinos directos: sin menú nativo van delante (son la acción principal); con él, debajo.
+  const shareTargetsBlock = shareData ? (
+    <div className={styles.shareTargets} ref={targetsRef} role="group" aria-label="Compartir el resultado en">
+      <span className={styles.shareTargetsLabel}>{canNativeShare === false ? 'Compártelo en' : 'O directamente en'}</span>
+      <div className={styles.shareTargetList}>
+        {shareTargets.map((target) => target.id === 'instagram' ? (
+          <button
+            key={target.id}
+            type="button"
+            className={styles.shareTarget}
+            data-target={target.id}
+            onClick={shareInstagram}
+          >
+            {target.label}
+          </button>
+        ) : (
+          <a
+            key={target.id}
+            className={styles.shareTarget}
+            data-target={target.id}
+            href={target.href}
+            onClick={() => share(target.id)}
+            {...(target.id === 'email' ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+          >
+            {target.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  ) : null
+
   const isDaily = mode === 'daily'
+  // Encadenado: al terminar, la siguiente partida pendiente (hoy primero, luego el archivo).
+  const nextChallenge = ledger && completed
+    ? hiddenNextChallenge({
+      todayKey: dateKey,
+      current: { dayKey: activeDay, mode },
+      isFinished: (dayKey, item) => Boolean(ledger[item + ':' + dayKey]),
+    })
+    : null
+  const stats = ledger
+    ? hiddenPlayerStats({
+      records: Object.values(ledger).map((item) => ({ progress: item })),
+      streak: streakRecord,
+      todayKey: dateKey,
+    })
+    : null
+  const archiveDays = ledger ? hiddenArchiveDays(dateKey) : []
   const isFinalRound = progress.stage === challenge.words.length - 1
   const usedErrors = roundErrors(round)
   const attemptsLeft = Math.max(0, HILO_GAME_MAX_ERRORS - usedErrors)
@@ -397,10 +590,10 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
 
         <article className={styles.board} id="partida-del-hilo" aria-labelledby="hilo-reto-titulo">
           <header className={styles.boardTop}>
-            <h2 id="hilo-reto-titulo" className={styles.srOnly}>{challenge.title} · {readableDay(dateKey)}</h2>
+            <h2 id="hilo-reto-titulo" className={styles.srOnly}>{challenge.title} · {readableDay(activeDay)}</h2>
             <span className={styles.boardMeta}>
-              <span className={styles.boardDate} aria-hidden="true">{readableDay(dateKey)}</span>
-              {isDaily && streak > 0 ? (
+              <span className={styles.boardDate} aria-hidden="true">{readableDay(activeDay)}</span>
+              {isDaily && !isArchive && streak > 0 ? (
                 <span className={styles.streak} aria-label={'Racha: ' + streak + (streak === 1 ? ' día' : ' días') + ' seguidos acertando'}>
                   <span aria-hidden="true">🔥</span> {streak} {streak === 1 ? 'día' : 'días'}
                 </span>
@@ -410,6 +603,13 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
               <span aria-hidden="true">↗</span> Compartir juego
             </button>
           </header>
+
+          {isArchive ? (
+            <p className={styles.archiveBanner}>
+              <span>Reto del archivo · no cuenta para la racha</span>
+              <button type="button" onClick={() => openChallenge(dateKey, 'daily', 'volver_hoy')}>Volver al de hoy</button>
+            </p>
+          ) : null}
 
           <div className={styles.scoreboard} aria-label="Marcador">
             <span className={styles.scorePoints}>
@@ -534,7 +734,7 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
               <h3>{word.answer}</h3>
               <p>{word.definition}</p>
               {thread ? (
-                <Link className={styles.threadCard} href={thread.href}>
+                <Link className={styles.threadCard} href={thread.href} data-analytics-context="juego_sigue_el_hilo">
                   <small>{thread.label}</small>
                   <strong>{thread.name}</strong>
                   {thread.context ? <span>{thread.context}</span> : null}
@@ -569,22 +769,24 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
                 <span className={styles.shareInvite}>¿Lo superas? hilocofrade.es</span>
               </div>
 
+              {canNativeShare === false ? shareTargetsBlock : null}
               <div className={styles.shareActions}>
-                <button type="button" className={styles.primaryButton} onClick={shareResult}>
-                  Compartir resultado <span aria-hidden="true">↗</span>
+                {canNativeShare !== false ? (
+                  <button type="button" className={styles.primaryButton} onClick={shareResult}>
+                    Compartir resultado <span aria-hidden="true">↗</span>
+                  </button>
+                ) : null}
+                <button type="button" className={styles.secondaryButton} onClick={downloadStory} aria-label="Guardar la imagen del resultado (formato 9:16)">
+                  Guardar imagen
                 </button>
-                <button type="button" className={styles.secondaryButton} onClick={shareStory} aria-label="Imagen para historias de Instagram">
-                  Historia 9:16
-                </button>
-                <a className={styles.secondaryButton} href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Compartir en WhatsApp">WhatsApp</a>
-                <a className={styles.secondaryButton} href={socialLinks.x} target="_blank" rel="noopener noreferrer" aria-label="Compartir en X">X</a>
-                <button type="button" className={styles.secondaryButton} onClick={copyResult} aria-label="Copiar resultado">Copiar</button>
+                <button type="button" className={styles.secondaryButton} onClick={copyResult}>Copiar texto</button>
               </div>
+              {canNativeShare === false ? null : shareTargetsBlock}
               {shareStatus ? <p className={styles.status} role="status">{shareStatus}</p> : null}
-              <p className={styles.shareNote}>Sin respuestas ni pistas. Para Instagram, usa «Historia 9:16».</p>
+              <p className={styles.shareNote}>Sin respuestas ni pistas. A Instagram se envía como imagen.</p>
 
               <p className={styles.comeBack}>
-                {isDaily ? (
+                {isArchive ? <>Partida del archivo: no cuenta para la racha. </> : isDaily ? (
                   progress.rounds[0]?.status === 'won'
                     ? (streak > 1
                       ? <>Llevas <strong>{streak} días</strong> seguidos acertando. </>
@@ -593,12 +795,75 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
                 ) : null}
                 {minutesLeft ? <>Nuevo reto en <strong>{countdownLabel(minutesLeft)}</strong>.</> : 'Nuevo reto mañana.'}
               </p>
-              <button type="button" className={styles.secondaryButton} onClick={() => changeMode(isDaily ? 'expert' : 'daily')}>
-                {isDaily ? 'Jugar a La última chicotá' : 'Volver al hilo del día'} <span aria-hidden="true">→</span>
-              </button>
+              {nextChallenge ? (
+                <button
+                  type="button"
+                  className={styles.primaryButton}
+                  onClick={() => openChallenge(nextChallenge.dayKey, nextChallenge.mode, 'siguiente')}
+                >
+                  {nextChallenge.dayKey === dateKey
+                    ? (nextChallenge.mode === 'expert' ? 'Jugar a La última chicotá' : 'Jugar al hilo del día') + (isArchive ? ' de hoy' : '')
+                    : 'Siguiente: ' + MODE_LABEL[nextChallenge.mode] + ' del ' + shortDay(nextChallenge.dayKey)}
+                  {' '}<span aria-hidden="true">→</span>
+                </button>
+              ) : ledger ? (
+                <p className={styles.allDone}>Has desenredado todos los hilos publicados. Mañana, uno nuevo.</p>
+              ) : null}
+              {isArchive ? (
+                <button type="button" className={styles.secondaryButton + ' ' + styles.backToday} onClick={() => openChallenge(dateKey, 'daily', 'volver_hoy')}>
+                  Volver al reto de hoy
+                </button>
+              ) : null}
+
+              {stats && stats.played ? (
+                <div className={styles.stats} aria-label="Tus números en El hilo escondido">
+                  <span className={styles.statsTitle}>Tus números</span>
+                  <dl className={styles.statsGrid}>
+                    <div><dt>Retos</dt><dd>{stats.played}<small>/{stats.available}</small></dd></div>
+                    <div><dt>Aciertos</dt><dd>{stats.winRate}<small>%</small></dd></div>
+                    <div><dt>Racha</dt><dd>{stats.currentStreak}<small> · mejor {stats.bestStreak}</small></dd></div>
+                    <div><dt>Perfectas</dt><dd>{stats.perfect}<small> ✦</small></dd></div>
+                  </dl>
+                </div>
+              ) : null}
             </section>
           ) : null}
         </article>
+
+        {archiveDays.length ? (
+          <section className={styles.archive} aria-labelledby="hilo-archivo-titulo">
+            <header className={styles.archiveTop}>
+              <h2 id="hilo-archivo-titulo">Retos anteriores</h2>
+              {stats ? <span>{stats.played} de {stats.available} completados</span> : null}
+            </header>
+            <p className={styles.archiveNote}>Juega los días que te perdiste. No cuentan para la racha.</p>
+            <ol className={styles.archiveList}>
+              {archiveDays.map((dayKey) => (
+                <li key={dayKey}>
+                  <span className={styles.archiveDay}>{shortDay(dayKey)}</span>
+                  {['daily', 'expert'].map((item) => {
+                    const done = ledger?.[item + ':' + dayKey]
+                    const current = isArchive && activeDay === dayKey && mode === item
+                    return (
+                      <button
+                        key={item}
+                        type="button"
+                        className={styles.archiveItem}
+                        data-done={done ? 'true' : 'false'}
+                        aria-current={current ? 'true' : undefined}
+                        aria-label={MODE_LABEL[item] + ' del ' + shortDay(dayKey) + (done ? ', jugado: ' + ledgerMark(done) : ', pendiente')}
+                        onClick={() => openChallenge(dayKey, item, 'archivo')}
+                      >
+                        <small>{item === 'daily' ? 'Del día' : 'Chicotá'}</small>
+                        <strong>{done ? ledgerMark(done) : 'Jugar'}</strong>
+                      </button>
+                    )
+                  })}
+                </li>
+              ))}
+            </ol>
+          </section>
+        ) : null}
 
         <p className={styles.privacy}>Una partida nueva cada día. Tu progreso se guarda solo en este navegador.</p>
       </div>

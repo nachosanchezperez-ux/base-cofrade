@@ -43,7 +43,7 @@ test('Bandas reserva la cabecera para logotipo y nombre', () => {
   const page = source('app/bandas/[slug]/page.js')
 
   assert.match(hero, /bandStyles\.identityLockup/)
-  assert.match(hero, /!isBand \? \(/)
+  assert.match(hero, /const showMedia = !isBand && /)
   assert.doesNotMatch(hero, /RelationalEntityHeroMedia variant="band"/)
   assert.match(hero, /bandStyles\.bandGridIdentityOnly/)
   assert.match(css, /\.identityLockup \{/)

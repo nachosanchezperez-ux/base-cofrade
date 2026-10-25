@@ -58,3 +58,15 @@ test('las publicaciones antiguas dejan de competir como novedad', () => {
 
   assert.equal(thread, null)
 })
+
+test('las marchas nuevas dicen a qué Hermandad están dedicadas todas', () => {
+  const now = new Date('2026-10-24T10:00:00Z')
+  const row = (id) => ({ id, name: `Marcha ${id}`, slug: id, status: 'published', entity_type: 'march', created_at: '2026-10-23T22:34:27Z' })
+  const dedications = [
+    { march_entity_id: 'a', dedicatee_entity_id: 'milagrosa' },
+    { march_entity_id: 'b', dedicatee_entity_id: 'milagrosa' },
+    { march_entity_id: 'a', dedicatee_entity_id: 'rosario' },
+  ]
+  const thread = buildRecentMarchPublicationThread([row('a'), row('b')], { now, dedications })
+  assert.deepEqual(thread.marchDedicateeIds, ['milagrosa'])
+})

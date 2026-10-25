@@ -50,13 +50,15 @@
   gap: 9px;
 }
 
+/* Letra mínima de 11px (antes 10px, y 9px en móvil). El espaciado entre
+   letras baja un poco para que la ruta ocupe casi lo mismo. */
 .breadcrumb a,
 .breadcrumb span[aria-current="page"],
 .breadcrumb li > span:not([aria-current]) {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 850;
   line-height: 1.2;
-  letter-spacing: .11em;
+  letter-spacing: .08em;
   text-transform: uppercase;
 }
 
@@ -143,12 +145,31 @@
   .breadcrumb a,
   .breadcrumb span[aria-current="page"],
   .breadcrumb li > span:not([aria-current]) {
-    font-size: 9px;
+    font-size: 11px;
+    /* En móvil los enlaces van a 14px (regla global de legibilidad para los
+       enlaces de navegación); con menos espaciado la ruta sigue cabiendo. */
+    letter-spacing: .03em;
   }
 
   .breadcrumb span[aria-current="page"] {
     min-height: 31px;
     padding: 0 10px;
     border-radius: 8px;
+  }
+
+  /* Títulos largos (rosarios, igualás…): la última etiqueta se acorta con «…»
+     en vez de obligar a deslizar la ruta; el título completo es el H1 de
+     debajo. Solo encoge cuando no cabe: los nombres cortos no cambian. */
+  .breadcrumb li:last-child {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  .breadcrumb li:last-child span[aria-current="page"] {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 31px;
   }
 }

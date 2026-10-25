@@ -1,441 +1,6 @@
-.section {
-  scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 18px);
-  padding: 36px 0 42px;
-  border-top: 1px solid var(--home-line);
-  border-bottom: 1px solid var(--home-line);
-  background: radial-gradient(circle at 86% 10%, rgba(18, 58, 103, .045), transparent 30%), var(--home-surface);
-}
-
-.header {
-  display: grid;
-  gap: 8px;
-  margin-bottom: 18px;
-}
-
-.eyebrow,
-.moreLabel,
-.relation {
-  display: inline-block;
-  color: var(--home-red);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-}
-
-.header h2 {
-  margin: 6px 0 0;
-  color: var(--home-blue);
-  font-size: 31px;
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -.035em;
-}
-
-.header p {
-  margin: 0;
-  max-width: 720px;
-  color: #647484;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.headerActions {
-  display: grid;
-  justify-items: start;
-  gap: 8px;
-  min-width: 0;
-}
-
-.allUpdates {
-  display: inline-flex;
-  min-height: 44px;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 0;
-  border: 0;
-  color: var(--home-blue);
-  background: transparent;
-  font: inherit;
-  font-size: 16px;
-  font-weight: 700;
-  text-align: left;
-  cursor: pointer;
-}
-
-
-
-.allUpdates:focus-visible {
-  border-radius: 4px;
-  outline: 3px solid var(--home-blue);
-  outline-offset: 4px;
-}
-
-.layout {
-  display: grid;
-  gap: 12px;
-}
-
-.leadCard,
-.more {
-  min-width: 0;
-  border: 1px solid #dbe4ec;
-  border-radius: 22px;
-  background: #fff;
-  box-shadow: 0 12px 32px rgba(15, 39, 66, .045);
-}
-
-.leadCard {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  padding: 21px;
-  color: inherit;
-  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
-}
-
-.leadCard::before {
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 4px;
-  background: linear-gradient(180deg, var(--home-red) 0%, var(--home-blue) 78%);
-}
-
-.leadCard:hover,
-.leadCard:focus-visible {
-  transform: translateY(-2px);
-  border-color: #c6d6e3;
-  box-shadow: 0 18px 42px rgba(15, 39, 66, .085);
-  outline: none;
-}
-
-.leadTopline,
-.compactTopline {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-
-.latest {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--home-blue);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: .09em;
-  text-transform: uppercase;
-}
-
-.latest i {
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
-  background: var(--home-red);
-  box-shadow: 0 0 0 4px rgba(183, 31, 55, .08);
-}
-
-.activity {
-  display: inline-flex;
-  flex: 0 0 auto;
-  align-items: center;
-  gap: 7px;
-  color: #768594;
-  font-size: 9px;
-  font-weight: 700;
-  line-height: 1;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.status {
-  display: inline-flex;
-  min-height: 24px;
-  align-items: center;
-  padding: 0 8px;
-  border-radius: 999px;
-  color: var(--home-blue);
-  background: #eaf1f7;
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: .04em;
-}
-
-.status[data-status="NUEVO"] {
-  color: #9e1730;
-  background: #fbe9ed;
-}
-
-.status[data-status="NUEVA RELACIÓN"] {
-  color: #16527f;
-  background: #e7f1f8;
-}
-
-.status[data-status="ACTUALIZADO"] {
-  color: #4e5e6d;
-  background: #edf1f4;
-}
-
-.activity time { color: #788796; }
-
-.leadIdentity {
-  min-width: 0;
-  margin-top: 24px;
-}
-
-.leadIdentityVisual {
-  display: grid;
-  grid-template-columns: 78px minmax(0, 1fr);
-  gap: 15px;
-  align-items: center;
-}
-
-.visual {
-  position: relative;
-  overflow: hidden;
-  width: 78px;
-  height: 78px;
-  border: 1px solid var(--home-border);
-  border-radius: 18px;
-  background: #eef3f7;
-  box-shadow: 0 8px 22px rgba(15, 39, 66, .07);
-}
-
-.visual[data-kind="crest"],
-.visual[data-kind="logo"],
-.visual[data-kind="context-crest"] { background: #fff; }
-
-.visual[data-kind="crest"] img,
-.visual[data-kind="logo"] img,
-.visual[data-kind="context-crest"] img { padding: 10px; }
-
-.visualCompact {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  box-shadow: none;
-}
-
-.visualCompact[data-kind="crest"] img,
-.visualCompact[data-kind="logo"] img,
-.visualCompact[data-kind="context-crest"] img { padding: 7px; }
-
-.leadCopy,
-.compactCopy { min-width: 0; }
-
-.relation {
-  color: var(--home-red);
-  line-height: 1.35;
-}
-
-.context {
-  display: block;
-  margin-top: 5px;
-  overflow: hidden;
-  color: #7a8997;
-  font-size: 9px;
-  font-weight: 750;
-  letter-spacing: .07em;
-  line-height: 1.3;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.leadCard h3 {
-  margin: 7px 0 6px;
-  max-width: 760px;
-  color: var(--home-ink);
-  font-size: 27px;
-  font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: -.035em;
-}
-
-.metric {
-  display: block;
-  color: var(--home-blue);
-  font-size: 16px;
-  font-weight: 750;
-  line-height: 1.35;
-}
-
-.path {
-  display: flex;
-  gap: 5px 8px;
-  flex-wrap: wrap;
-  margin-top: 15px;
-  color: #607487;
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1.35;
-}
-
-.path > span {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.path i {
-  color: var(--home-red);
-  font-style: normal;
-}
-
-.more {
-  overflow: hidden;
-  padding: 18px 0 0;
-}
-
-.moreLabel {
-  padding: 0 18px 14px;
-  color: #6f7f8e;
-}
-
-.moreList {
-  border-top: 1px solid var(--home-line);
-}
-
-.compactCard {
-  position: relative;
-  display: block;
-  min-width: 0;
-  padding: 17px 54px 17px 18px;
-  color: inherit;
-  background: #fff;
-  transition: background .18s ease;
-}
-
-.compactCard + .compactCard { border-top: 1px solid var(--home-line); }
-
-.compactCard:hover,
-.compactCard:focus-visible {
-  background: #f8fafc;
-  outline: none;
-}
-
-.compactTopline { align-items: center; }
-
-.compactTopline .relation {
-  overflow: hidden;
-  max-width: 55%;
-  color: #6f8090;
-  font-size: 9px;
-  letter-spacing: .1em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.compactIdentity {
-  min-width: 0;
-  margin-top: 12px;
-}
-
-.compactIdentityVisual {
-  display: grid;
-  grid-template-columns: 52px minmax(0, 1fr);
-  gap: 11px;
-  align-items: center;
-}
-
-.compactCard h3 {
-  display: -webkit-box;
-  margin: 0 0 4px;
-  overflow: hidden;
-  color: var(--home-ink);
-  font-size: 18px;
-  font-weight: 800;
-  line-height: 1.16;
-  letter-spacing: -.02em;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
-.compactMetric {
-  display: block;
-  color: #657585;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.35;
-}
-
-@media (max-width: 560px) {
-  .leadTopline,
-.compactTopline {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .activity { white-space: normal; }
-
-  .compactTopline .relation {
-    max-width: 100%;
-    white-space: normal;
-  }
-
-  .leadIdentityVisual {
-    grid-template-columns: 64px minmax(0, 1fr);
-    gap: 12px;
-  }
-
-  .leadIdentityVisual .visual {
-    width: 64px;
-    height: 64px;
-  }
-
-  .leadCard h3 { font-size: 23px; }
-}
-
-@media (min-width: 860px) {
-  .section { padding: 46px 0 52px; }
-
-  .header {
-    grid-template-columns: minmax(0, .85fr) minmax(420px, 1.15fr);
-    column-gap: 42px;
-    align-items: end;
-    margin-bottom: 22px;
-  }
-
-  .header h2 { font-size: 38px; }
-  .header p { justify-self: end; }
-
-  .layout {
-    grid-template-columns: minmax(0, 1.25fr) minmax(330px, .75fr);
-    gap: 14px;
-    align-items: stretch;
-  }
-
-  .leadCard {
-    padding: 25px 27px 24px;
-  }
-
-  .leadCard h3 { font-size: 31px; }
-
-  .more {
-    display: flex;
-    flex-direction: column;
-    padding-top: 20px;
-  }
-
-  .moreList {
-    display: grid;
-    flex: 1;
-    grid-auto-rows: minmax(0, 1fr);
-  }
-
-  .compactCard {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 18px 56px 18px 20px;
-  }
-}
-
-/* Incrustado en «Descubre Hilo Cofrade» (portada de 5 bloques): sin fondo ni
-   márgenes propios; un filete separa el apartado del anterior. */
+/* «Últimos hilos incorporados» dentro de «Descubre Hilo Cofrade»: una lista
+   corta por días, con el escudo o la foto de cada ficha. Sin tarjetas grandes:
+   filas táctiles de una línea con su dato debajo. */
 .embedded {
   scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 18px);
   margin-top: 26px;
@@ -449,7 +14,7 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 4px 12px;
-  margin-bottom: 14px;
+  margin-bottom: 6px;
 }
 
 .embeddedHeader h3 {
@@ -461,32 +26,226 @@
   letter-spacing: -.02em;
 }
 
-/* «Últimos hilos» dentro de «Descubre» de la portada (#1253): tarjeta ligera,
-   sin sombra ni filete de color, con titular a tamaño de lectura. */
-.embedded .leadCard {
-  min-height: 0;
-  padding: 14px 16px;
+.allUpdates {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border: 0;
+  color: var(--home-blue);
+  background: transparent;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.allUpdates:focus-visible {
+  border-radius: 4px;
+  outline: 3px solid var(--home-blue);
+  outline-offset: 4px;
+}
+
+.days {
+  display: grid;
+  gap: 14px;
+}
+
+.dayName {
+  margin: 0 0 4px;
+  color: #5b6876;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.list {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 16px;
+  gap: 12px;
+  align-items: center;
+  min-height: 64px;
+  padding: 10px 10px 10px 4px;
   border-radius: 14px;
-  box-shadow: none;
+  color: inherit;
+  text-decoration: none;
 }
 
-.embedded .leadCard::before {
-  display: none;
+div.row {
+  grid-template-columns: auto minmax(0, 1fr);
 }
 
-.embedded .leadCard:hover,
-.embedded .leadCard:focus-visible {
-  transform: none;
-  box-shadow: none;
+/* Sin escudo ni foto: la línea empieza por el texto. */
+.row[data-plain] {
+  grid-template-columns: minmax(0, 1fr) 16px;
+  min-height: 52px;
+  padding-left: 10px;
 }
 
-.embedded .leadCard:focus-visible {
+div.row[data-plain] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+a.row:hover {
+  background: #eef2f7;
+}
+
+a.row:focus-visible {
   outline: 3px solid var(--home-blue);
   outline-offset: 2px;
 }
 
-.embedded .leadCard h3 {
-  margin: 4px 0 4px;
-  font-size: 18px;
-  line-height: 1.25;
+.avatar {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1px solid #dfe6ed;
+  background: #fff;
+  color: var(--home-blue);
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.avatar[data-kind='identity'] img {
+  padding: 5px;
+}
+
+/* Varias fichas en una línea: los escudos se solapan. */
+.stack {
+  display: flex;
+  align-items: center;
+  padding-left: 14px;
+}
+
+.stack .avatar {
+  width: 36px;
+  height: 36px;
+  margin-left: -14px;
+  box-shadow: 0 0 0 2px #f4f6f9;
+}
+
+.copy {
+  display: grid;
+  min-width: 0;
+  gap: 1px;
+}
+
+/* Qué ha pasado, discreto; solo lo nuevo va en rojo. */
+.tag {
+  color: #6b7785;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.row[data-new] .tag {
+  color: var(--home-red);
+  font-weight: 800;
+}
+
+/* Las fichas nuevas, con su punto: es lo que más interesa de un vistazo. */
+.row[data-new] .tag::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin: 0 6px 1px 0;
+  border-radius: 50%;
+  background: var(--home-red);
+  vertical-align: middle;
+}
+
+.name,
+.names {
+  color: #15212e;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+/* La ficha nueva es la noticia: la única con peso fuerte. */
+.row[data-new] .name,
+.row[data-new] .names {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.names a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Cada nombre corto, entero en su línea («La Sed», no «La / Sed»); los largos
+   sí pueden partirse, o desbordarían el móvil. El separador queda al final
+   de la línea, nunca al principio de la siguiente. */
+.names > span[data-short] a {
+  white-space: nowrap;
+}
+
+.names a:hover {
+  color: var(--home-blue);
+}
+
+.names a:focus-visible {
+  border-radius: 3px;
+  outline: 3px solid var(--home-blue);
+  outline-offset: 2px;
+}
+
+.stackedNames {
+  display: grid;
+  gap: 3px;
+  margin: 2px 0 1px;
+  padding: 0;
+  list-style: none;
+}
+
+/* Cada ficha en su línea, con una marca a la izquierda que las separa. */
+.stackedNames li {
+  padding-left: 10px;
+  border-left: 2px solid #dfe6ed;
+}
+
+.row[data-new] .stackedNames li {
+  border-left-color: var(--home-red);
+}
+
+.sep {
+  color: #9aa6b4;
+  font-weight: 600;
+}
+
+.detail {
+  color: #6b7785;
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+
+.chevron {
+  color: #9aa6b4;
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* En ordenador, una sola columna estrecha: se lee como lista, no como tablero. */
+@media (min-width: 900px) {
+  .embeddedHeader,
+  .days {
+    max-width: 720px;
+  }
 }

@@ -654,3 +654,23 @@
     transition: none;
   }
 }
+
+/* Sin fotografía: la cabecera se ajusta al texto. No se reserva el hueco de la foto
+   ni se pinta un relleno (iniciales) en su lugar. */
+.hero.noPhoto {
+  min-height: 0;
+}
+
+.noPhoto .shell {
+  min-height: 0;
+}
+
+.noPhoto .content {
+  padding-top: 40px;
+}
+
+@media (max-width: 780px) {
+  .noPhoto .content {
+    padding-top: 24px;
+  }
+}

@@ -188,6 +188,8 @@
   .detailScope :global(#glorias) {
     padding-top: 48px;
     padding-bottom: 50px;
+    /* El carril de tipos sangra hacia el borde; se recorta aquí para que la página no se desplace en horizontal. */
+    overflow-x: clip;
   }
 
   .detailScope :global(#glorias) > :global(.shell) > div:first-child {

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getPublishedBrotherhoodCrestPathBySlug } from '@/lib/supabase/brotherhood-public-authority';
 import BrotherhoodDirectoryCrestImage from './BrotherhoodDirectoryCrestImage';
 import EntityVisualFallback from './EntityVisualFallback';
+import HeroTopRow from './HeroTopRow';
 import RelationalEntityHeroMedia from './RelationalEntityHeroMedia';
 import SiteBreadcrumb from './SiteBreadcrumb';
 import styles from './RelationalEntityHero.module.css';
@@ -131,6 +132,7 @@ export default async function RelationalEntityHero({
   titleContext = '',
   subtitle = '',
   breadcrumbItems = [],
+  editHref = '',
   badges = [],
   relation = null,
   facts = [],
@@ -141,6 +143,9 @@ export default async function RelationalEntityHero({
   const isBrotherhood = variant === 'brotherhood';
   const isBand = variant === 'band';
   const visibleRelation = isBand ? await withBrotherhoodCrest(relation) : relation;
+  // Un paso sin fotografía no pinta un relleno (escudo o logotipo) en su lugar:
+  // la cabecera se queda con el texto.
+  const showMedia = !isBand && (variant !== 'step' || Boolean(media.photoSrc));
 
   const heading = (
     <div className={styles.titleBody}>
@@ -176,14 +181,16 @@ export default async function RelationalEntityHero({
 
   return (
     <section
-      className={`${styles.hero} ${styles[`hero_${variant}`] || ''} ${polishStyles.hero} ${polishStyles[`hero_${variant}`] || ''} ${isBand ? bandStyles.heroBand : ''}`}
+      className={`${styles.hero} ${styles[`hero_${variant}`] || ''} ${polishStyles.hero} ${polishStyles[`hero_${variant}`] || ''} ${isBand ? bandStyles.heroBand : ''} ${!isBand && !showMedia ? polishStyles.heroNoMedia : ''}`}
       aria-labelledby="entity-hero-title"
     >
       <div className={styles.texture} aria-hidden="true" />
       <div className="shell">
-        <SiteBreadcrumb items={breadcrumbItems} tone="dark" ariaLabel="Ruta de navegación" />
+        <HeroTopRow editHref={editHref}>
+          <SiteBreadcrumb items={breadcrumbItems} tone="dark" ariaLabel="Ruta de navegación" />
+        </HeroTopRow>
 
-        <div className={`${styles.grid} ${polishStyles.grid} ${isBand ? `${bandStyles.bandGrid} ${bandStyles.bandGridIdentityOnly}` : ''}`}>
+        <div className={`${styles.grid} ${polishStyles.grid} ${isBand ? `${bandStyles.bandGrid} ${bandStyles.bandGridIdentityOnly}` : ''} ${!isBand && !showMedia ? polishStyles.gridNoMedia : ''}`}>
           <div className={`${styles.copy} ${polishStyles.copy} ${isBand ? `${bandStyles.bandCopy} ${bandStyles.bandCopyIdentityOnly}` : ''}`}>
             {identityHeading}
 
@@ -203,7 +210,7 @@ export default async function RelationalEntityHero({
             ) : null}
           </div>
 
-          {!isBand ? (
+          {showMedia ? (
             <RelationalEntityHeroMedia variant={variant} {...media} />
           ) : null}
         </div>

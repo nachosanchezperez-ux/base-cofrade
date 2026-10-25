@@ -350,7 +350,7 @@
 
 .row[data-variant="compact"] .leafWeekday,
 .row[data-variant="compact"] .leafMonth {
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .row[data-variant="compact"] .leafDay {

@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import AgendaClockRefresh from '@/components/AgendaClockRefresh'
 import Link from 'next/link'
 import ShareActions, { CalendarAddLink } from '@/components/ShareActions'
 import AgendaEventThread from '@/components/AgendaEventThread'
@@ -7,7 +8,9 @@ import { agendaItemBrotherhoodSlugs } from '@/lib/followed-brotherhoods'
 import { agendaItemShare, agendaPeriodShare } from '@/lib/share'
 import { agendaEventAnchor, scheduleTimeHint } from '@/lib/agenda-event-presentation'
 import { agendaThreadLinks, repeatsPlace } from '@/lib/agenda-event-relations'
-import { agendaScheduleSteps, madridMinutes, nextScheduleStep } from '@/lib/agenda-schedule-steps'
+import { cultTimeParts } from '@/lib/agenda-cult-time'
+import { isSecondaryCult } from '@/lib/agenda-priority'
+import { agendaScheduleSteps, nextScheduleStepAt } from '@/lib/agenda-schedule-steps'
 import { contributionReadiness } from '@/lib/contributions/security'
 import styles from './AgendaTemporalEventList.module.css'
 
@@ -92,22 +95,48 @@ function LiveNow({ items }) {
   const seen = new Set()
   const live = items.filter((item) => item.liveState?.isLive && !seen.has(item.key) && seen.add(item.key))
   if (!live.length) return null
-  const now = madridMinutes(new Date())
+  const now = new Date()
   return (
     <section className={styles.liveNow} aria-labelledby="agenda-en-la-calle">
       <h3 id="agenda-en-la-calle"><span className={styles.livePulse} aria-hidden="true" />Ahora en la calle</h3>
       <ul>
         {live.map((item) => {
-          const next = nextScheduleStep(item, now)
+          const next = nextScheduleStepAt(item, now)
           return (
             <li key={item.key}>
               {item.eventHref ? <Link href={item.eventHref}>{item.title}</Link> : <strong>{item.title}</strong>}
-              <small>{[item.liveState.label, item.liveState.timingLabel, next ? `Próximo: ${next.label} ${next.time}` : '', item.municipality].filter(Boolean).join(' · ')}</small>
+              <small>{['Según horario publicado', item.liveState.timingLabel, next ? `Próximo: ${next.label} ${next.time}` : '', item.municipality].filter(Boolean).join(' · ')}</small>
             </li>
           )
         })}
       </ul>
     </section>
+  )
+}
+
+// Cultos del día (#agenda-prioridad): después de besamanos, certámenes y
+// salidas, en una lista compacta (hora, culto, Hermandad y lugar).
+function DayCults({ items }) {
+  if (!items.length) return null
+  return (
+    <div className={styles.cults}>
+      <h4>Cultos <small>{items.length}</small></h4>
+      <ul>
+        {items.map((item) => {
+          const time = cultTimeParts(itemTime(item))
+          return (
+          <li key={item.displayKey || item.key}>
+            <time>{time.lead}</time>
+            <div>
+              {item.eventHref ? <Link href={item.eventHref}>{item.title}</Link> : <strong>{item.title}</strong>}
+              {time.detail ? <span className={styles.cultSchedule}>{time.detail}</span> : null}
+              <small>{[item.organizer && !String(item.title).includes(item.organizer) ? item.organizer : '', item.place, item.municipality].filter(Boolean).join(' · ')}</small>
+            </div>
+          </li>
+          )
+        })}
+      </ul>
+    </div>
   )
 }
 
@@ -129,6 +158,7 @@ export default function AgendaTemporalEventList({ landing }) {
   return (
     <section className={styles.section} id="agenda-del-periodo" aria-labelledby="agenda-periodo-title">
       <div className="shell">
+        <AgendaClockRefresh />
         <header className={styles.header}>
           <div>
             <span>{landing.period === 'today' ? 'Hoy' : landing.period === 'tomorrow' ? 'Mañana' : 'Fin de semana'}</span>
@@ -172,8 +202,9 @@ export default function AgendaTemporalEventList({ landing }) {
                 </div>
               </header>
 
+              {group.items.some((item) => !isSecondaryCult(item)) ? (
               <div className={styles.list}>
-                {group.items.map((item) => {
+                {group.items.filter((item) => !isSecondaryCult(item)).map((item) => {
                   const media = eventMedia(item)
                   return (
                   <article
@@ -241,6 +272,8 @@ export default function AgendaTemporalEventList({ landing }) {
                   )
                 })}
               </div>
+              ) : null}
+              <DayCults items={group.items.filter(isSecondaryCult)} />
             </section>
           ))}
         </div>

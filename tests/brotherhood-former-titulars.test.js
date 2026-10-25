@@ -166,7 +166,8 @@ test('la ficha de imagen enlaza la sucesión en ambos sentidos', () => {
   const page = read('app/imagenes/[slug]/page.js')
   assert.match(page, /<small>Sustituida por\{/)
   assert.match(page, /<small>Sustituyó a<\/small>/)
-  assert.match(page, /relation: 'La sustituyó'/)
+  // La sucesión vive en el resumen; ya no se repite en un bloque «Tira del hilo».
+  assert.doesNotMatch(page, /RelationalThread/)
 })
 
 test('el panel no lanza consultas «in» con cientos de identificadores en una sola petición', () => {

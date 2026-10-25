@@ -7,7 +7,8 @@ export const dynamic = 'force-dynamic'
 
 export async function GET(request) {
   const rawTerm = String(request.nextUrl.searchParams.get('q') || '').trim()
-  if (rawTerm.length < 2) {
+  // Una letra se admite («O» → La O); la búsqueda la limita a coincidencias exactas.
+  if (rawTerm.length < 1) {
     return NextResponse.json({ items: [] }, { headers: { 'Cache-Control': 'no-store' } })
   }
 
