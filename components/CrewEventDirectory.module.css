@@ -63,4 +63,8 @@
   .facts b,.relations b{display:inline;margin:0 5px 0 0;letter-spacing:.04em}
   .detailLink{display:none}
   .cardShare{margin-top:8px}
+  .explorerHead p{display:none}
+  .filters{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:10px}
+  .months{gap:18px}
+  .monthHeading{padding:8px 0}
 }
