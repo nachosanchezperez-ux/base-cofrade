@@ -119,7 +119,7 @@ function EventCard({ event, isMine = false }) {
           </div>
           {hasPage ? <Link className={styles.detailLink} href={event.detailHref} onClick={() => trackCrewOpen(event)}>Ver convocatoria <span>→</span></Link> : null}
         </div>
-        <ShareActions compact share={crewEventShare(event, { hasPage })} contentType="iguala" analytics={{ event_type: event.eventType || event.eventTypeLabel, municipality: event.municipality }} />
+        <ShareActions compact iconsOnly className={styles.cardShare} share={crewEventShare(event, { hasPage })} contentType="iguala" analytics={{ event_type: event.eventType || event.eventTypeLabel, municipality: event.municipality }} />
       </div>
 
       {event.crestPath ? (

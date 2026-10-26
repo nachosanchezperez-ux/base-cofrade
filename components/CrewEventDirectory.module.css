@@ -41,3 +41,26 @@
 .relations b{font-size:12px}
 .relations>span{font-size:14px}
 .featuredFacts b,.facts b{font-size:12px}
+
+
+/* Lista compacta en móvil (26/10/2026): cada convocatoria medía ~460 px (cajas
+   para Paso, capataz, hora y localidad, enlace repetido y botones). Ahora es una
+   fila: fecha, tipo y estado, título, y los datos en líneas de texto. El título
+   sigue llevando a la ficha. */
+@media(max-width:720px){
+  .list{gap:8px}
+  .card{gap:12px;padding:12px 14px;border-radius:14px;box-shadow:none}
+  .dateBlock{padding:2px 10px 2px 0}
+  .dateBlock strong{font-size:1.5rem}
+  .dateBlock small{display:none}
+  .card h3{margin:3px 0 2px;font-size:1.05rem;line-height:1.25}
+  .brotherhood{font-size:13px}
+  .relations{display:flex;flex-wrap:wrap;gap:2px 12px;margin-top:6px}
+  .relations>span,.relations span{padding:0;border-radius:0;background:none;font-size:13px;line-height:1.4}
+  .cardFooter{display:block;margin-top:2px;padding-top:0;border-top:0}
+  .facts{display:flex;flex-wrap:wrap;gap:2px 12px}
+  .facts span{font-size:13px;line-height:1.4}
+  .facts b,.relations b{display:inline;margin:0 5px 0 0;letter-spacing:.04em}
+  .detailLink{display:none}
+  .cardShare{margin-top:8px}
+}
