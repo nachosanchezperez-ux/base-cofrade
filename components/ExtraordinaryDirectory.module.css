@@ -16,6 +16,7 @@
 
 
 /* Cabecera compacta (25/10/2026): en móvil los meses van en una fila deslizable
-   (antes rejilla de 2 columnas, ~160 px) y los filtros son más bajos, para que
-   la primera extraordinaria se vea antes. */
-@media(max-width:720px){.explorerHead>div>span{display:none}.monthNav{display:flex;overflow-x:auto;gap:5px;padding:5px;scrollbar-width:none}.monthNav::-webkit-scrollbar{display:none}.monthNav a{flex:0 0 auto;min-height:38px;white-space:nowrap}.segmented button{min-height:40px}}
+   (antes rejilla de 2 columnas, ~160 px), los filtros son más bajos y el título
+   «Próximas extraordinarias» queda solo para lectores de pantalla (repetía el
+   de la página), para que la primera extraordinaria se vea antes. */
+@media(max-width:720px){.explorerHead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.monthNav{display:flex;overflow-x:auto;gap:5px;padding:5px;scrollbar-width:none}.monthNav::-webkit-scrollbar{display:none}.monthNav a{flex:0 0 auto;min-height:38px;white-space:nowrap}.segmented button{min-height:40px}.territoryTabs button{flex-direction:row;flex-wrap:wrap;gap:4px 6px;min-height:44px;line-height:1.1}}
