@@ -23,9 +23,15 @@ test('los recuentos van en una línea de la cabecera, sin recuadro aparte', () =
   assert.doesNotMatch(read('components/ExtraordinaryDirectory.js'), /Elige el ámbito que quieras consultar/)
 })
 
-test('en móvil la cabecera reduce aire y título', () => {
+test('en móvil la cabecera reduce el aire superior', () => {
   const css = read('components/CalendarIntro.module.css')
   const mobile = css.slice(css.indexOf('@media (max-width: 720px)'))
   assert.match(mobile, /:global\(\.page-top\)\.compactPage \{\s*padding-top: 22px;/)
-  assert.match(mobile, /\.compactIntro\.compactIntro h1 \{\s*font-size: 34px;/)
+})
+
+test('extraordinarias: meses en una fila y filtros más bajos en móvil', () => {
+  const css = read('components/ExtraordinaryDirectory.module.css')
+  const block = css.slice(css.lastIndexOf('/* Cabecera compacta'))
+  assert.match(block, /\.monthNav\{display:flex;overflow-x:auto/)
+  assert.match(block, /\.segmented button\{min-height:40px/)
 })
