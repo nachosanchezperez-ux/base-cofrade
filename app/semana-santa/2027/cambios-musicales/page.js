@@ -259,8 +259,6 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
               qué acompañamientos cambian y cuáles han renovado expresamente su continuidad para 2027.
             </p>
             <div className={styles.heroMeta} aria-label="Resumen del archivo musical de 2027">
-              <span><strong>{changes.length}</strong> {pluralWord(changes.length, 'cambio', 'cambios')}</span>
-              <span><strong>{renewals.length}</strong> {pluralWord(renewals.length, 'renovación', 'renovaciones')}</span>
               <span><strong>{brotherhoodCount}</strong> {pluralWord(brotherhoodCount, 'corporación', 'corporaciones')} con cambios</span>
               {lastUpdated ? <span>Actualizado <strong>{lastUpdated}</strong></span> : null}
             </div>
@@ -277,20 +275,12 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
 
       <div className={`shell ${styles.content}`}>
         <section className={styles.seoIntro} id="cambios-musicales" aria-labelledby="guia-cambios-musicales-2027">
+          {/* La entradilla de la cabecera ya explica la guía; los recuentos van en
+              «Cambios» / «Renovaciones» y en el listado (sin repetirlos aquí). */}
           <h2 id="guia-cambios-musicales-2027">Cambios de bandas en la Semana Santa de Sevilla 2027</h2>
-          <p>
-            Hilo Cofrade reúne en esta guía los cambios de acompañamiento musical confirmados para 2027.
-            El listado relaciona cada Hermandad con su jornada, municipio, Paso y formación musical,
-            y permite consultar tanto los relevos de banda como las nuevas incorporaciones.
-          </p>
         </section>
 
         <section className={styles.summaryStrip} aria-label="Resumen de cambios musicales 2027">
-          <div className={styles.totalChanges}>
-            <strong>{changes.length}</strong>
-            <span>cambios confirmados</span>
-          </div>
-
           <div className={styles.municipalitySummary}>
             <div className={styles.summaryHeading}>
               <span>Municipios con más cambios</span>

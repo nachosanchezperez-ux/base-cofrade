@@ -1,5 +1,6 @@
 import { agendaEventPerformers, agendaEventSeoDescription, agendaEventSeoTitle, hasPublishedRoute } from '@/lib/agenda-event-seo'
 import Image from 'next/image'
+import { isActOnStreet } from '@/lib/procession-live-status'
 import Link from 'next/link'
 import { cache } from 'react'
 import { notFound, permanentRedirect } from 'next/navigation'
@@ -97,14 +98,25 @@ function entryLabel(item) {
 
 // Como en Glorias: una salida anunciada cuya fecha ya pasó dice «Fecha pasada»,
 // no «Anunciada» (no se afirma que se celebrara si no consta).
+function onStreet(item) {
+  return item.eventStatus === 'announced' && isActOnStreet({
+    date: item.date,
+    returnDate: item.returnDate,
+    departureTime: item.departureTime,
+    returnTime: item.returnTime,
+  })
+}
+
 function statusLabel(item) {
   if (item.eventStatus === 'held') return 'Celebrada'
   if (item.eventStatus === 'cancelled') return 'Cancelada'
+  if (onStreet(item)) return 'En la calle'
   if (item.date && !item.isUpcoming) return 'Fecha pasada'
   return item.urgencyLabel || 'Anunciada'
 }
 
 function statusKey(item) {
+  if (onStreet(item)) return 'live'
   if (item.eventStatus === 'announced' && item.date && !item.isUpcoming) return 'past'
   return item.eventStatus
 }
