@@ -119,7 +119,7 @@ function EventCard({ event, isMine = false }) {
           </div>
           {hasPage ? <Link className={styles.detailLink} href={event.detailHref} onClick={() => trackCrewOpen(event)}>Ver convocatoria <span>→</span></Link> : null}
         </div>
-        <ShareActions compact share={crewEventShare(event, { hasPage })} contentType="iguala" analytics={{ event_type: event.eventType || event.eventTypeLabel, municipality: event.municipality }} />
+        <ShareActions compact iconsOnly className={styles.cardShare} share={crewEventShare(event, { hasPage })} contentType="iguala" analytics={{ event_type: event.eventType || event.eventTypeLabel, municipality: event.municipality }} />
       </div>
 
       {event.crestPath ? (
@@ -269,8 +269,8 @@ export default function CrewEventDirectory({ events }) {
         ) : null}
 
         <div className={styles.filters}>
-          <SelectFilter label="Mes" value={month} onChange={(value) => setTrackedFilter(setMonth, 'mes', value)} options={months} allLabel="Todos los meses" />
-          <SelectFilter label="Tipo" value={type} onChange={(value) => setTrackedFilter(setType, 'tipo_evento', value)} options={typeOptions} allLabel="Todas las citas" />
+          <SelectFilter label="Mes" value={month} onChange={(value) => setTrackedFilter(setMonth, 'mes', value)} options={months} allLabel="Todos" />
+          <SelectFilter label="Tipo" value={type} onChange={(value) => setTrackedFilter(setType, 'tipo_evento', value)} options={typeOptions} allLabel="Todas" />
           <SelectFilter label="Hermandad" value={brotherhood} onChange={(value) => setTrackedFilter(setBrotherhood, 'hermandad', brotherhoods.find((item) => item.value === value)?.label || value)} options={brotherhoods} allLabel="Todas" />
           <SelectFilter label="Paso" value={step} onChange={(value) => setTrackedFilter(setStep, 'paso', steps.find((item) => item.value === value)?.label || value)} options={steps} allLabel="Todos" />
           <SelectFilter label="Capataz" value={agent} onChange={(value) => setTrackedFilter(setAgent, 'capataz', agents.find((item) => item.value === value)?.label || value)} options={agents} allLabel="Todos" />
