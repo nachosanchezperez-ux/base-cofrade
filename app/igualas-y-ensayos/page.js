@@ -5,6 +5,7 @@ import JsonLd from '@/components/JsonLd'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
 import { getCrewEventDirectory } from '@/lib/supabase/public-directory-cache'
 import styles from './crew-events-page.module.css'
+import introStyles from '@/components/CalendarIntro.module.css'
 import { pluralWord } from '@/lib/plural'
 
 export const revalidate = 300
@@ -34,38 +35,34 @@ export default async function CrewEventsPage() {
   })
 
   return (
-    <section className={`section page-top ${styles.page}`}>
+    <section className={`section page-top ${styles.page} ${introStyles.compactPage}`}>
       <JsonLd data={breadcrumbJsonLd([
         { name: 'Inicio', path: '/' },
         { name: title, path: '/igualas-y-ensayos' },
       ])} />
       <JsonLd data={directoryJsonLd} />
       <div className="shell">
-        <header className={styles.intro}>
+        <header className={`${styles.intro} ${introStyles.compactIntro}`}>
           <div><span className="eyebrow">Costaleros · Sevilla y provincia</span><h1>Calendario de Igualás y Ensayos</h1></div>
-          <p>Una agenda estructurada de las convocatorias de cuadrilla, conectada con cada Hermandad, sus Pasos y los capataces responsables.</p>
+          <div>
+            <p>Una agenda estructurada de las convocatorias de cuadrilla, conectada con cada Hermandad, sus Pasos y los capataces responsables.</p>
+            <p className={introStyles.introStats}>
+              <strong>{upcoming.length}</strong> {pluralWord(upcoming.length, 'próxima', 'próximas')} · <strong>{events.length}</strong> {pluralWord(events.length, 'documentada', 'documentadas')} · <strong>{brotherhoodCount}</strong> {pluralWord(brotherhoodCount, 'Hermandad', 'Hermandades')} · <strong>{stepCount}</strong> {pluralWord(stepCount, 'Paso', 'Pasos')}
+            </p>
+          </div>
         </header>
       </div>
 
       <AgendaCofradeNav activeSection="crew" />
 
       <div className="shell">
-        <div className={styles.summary} aria-label="Resumen del calendario de igualás y ensayos">
-          <div><span className="eyebrow">Archivo vivo</span><p>Las citas futuras aparecen primero y, una vez celebradas, permanecen disponibles en el histórico.</p></div>
-          <div className={styles.stats}>
-            <span><strong>{upcoming.length}</strong> {pluralWord(upcoming.length, 'próxima', 'próximas')}</span>
-            <span><strong>{events.length}</strong> {pluralWord(events.length, 'documentada', 'documentadas')}</span>
-            <span><strong>{brotherhoodCount}</strong> {pluralWord(brotherhoodCount, 'Hermandad', 'Hermandades')}</span>
-            <span><strong>{stepCount}</strong> {pluralWord(stepCount, 'Paso', 'Pasos')}</span>
-          </div>
-        </div>
-
         <CrewEventDirectory events={events} />
 
         <section className={styles.scope} aria-labelledby="que-incluye-calendario-costaleros">
           <span className="eyebrow">Alcance</span>
           <h2 id="que-incluye-calendario-costaleros">Qué recoge este calendario</h2>
           <p>Igualás, ensayos, mudás, retranqueos, desarmás, reuniones de cuadrilla y otros actos costaleros comunicados por las corporaciones o sus equipos de capataces.</p>
+          <p>Las citas futuras aparecen primero y, una vez celebradas, permanecen disponibles en el histórico.</p>
           <p>Cada convocatoria se conserva como una ficha propia, con sus relaciones y Fuentes, para que el paso del tiempo no convierta la agenda en información perdida.</p>
         </section>
       </div>
