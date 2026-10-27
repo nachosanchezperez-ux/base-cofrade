@@ -302,3 +302,8 @@
     grid-template-columns: 64px minmax(0, 1fr);
   }
 }
+
+/* Contraste de la ruta sobre el fondo blanco de esta página. */
+.page nav {
+  --breadcrumb-link: #5a6b7c;
+}
