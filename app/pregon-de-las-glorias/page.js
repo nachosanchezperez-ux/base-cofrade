@@ -31,9 +31,31 @@ function Presidency({ item }) {
   return label
 }
 
+function PresidencyList({ groups }) {
+  if (!groups.length) return null
+  return (
+    <ol className={styles.presidencies}>
+      {groups.map((group) => (
+        <li key={group.key}>
+          <div>
+            {group.href ? <Link href={group.href}>{group.name}</Link> : <span>{group.name}</span>}
+            <small>
+              {group.years.map((entry) => (entry.isAnnounced ? `${entry.year} (próximo)` : entry.year)).join(', ')}
+            </small>
+          </div>
+          <strong aria-label={`${group.count} ${pluralWord(group.count, 'vez', 'veces')}`}>{group.count}</strong>
+        </li>
+      ))}
+    </ol>
+  )
+}
+
 export default async function PregonGloriasPage() {
   await connection()
   const { next, presidencies, decades, stats } = await getPregonGlorias()
+  // Lista larga plegada por grupos: a la vista, quienes lo han presidido varias veces.
+  const repeated = presidencies.filter((group) => group.count > 1)
+  const singles = presidencies.filter((group) => group.count === 1)
 
   return (
     <section className={`section page-top ${styles.page}`}>
@@ -103,21 +125,18 @@ export default async function PregonGloriasPage() {
         <section className={styles.block} aria-labelledby="hermandades-pregon-glorias">
           <div className={styles.blockHead}>
             <h2 id="hermandades-pregon-glorias">Hermandades que lo han presidido</h2>
-            <p>Ordenadas por número de veces. Enlazamos la ficha de cada hermandad cuando está publicada en Hilo Cofrade.</p>
+            <p>Ordenadas por número de veces y, a igualdad, por la más reciente. Enlazamos la ficha de cada hermandad cuando está publicada en Hilo Cofrade.</p>
           </div>
-          <ol className={styles.presidencies}>
-            {presidencies.map((group) => (
-              <li key={group.key}>
-                <div>
-                  {group.href ? <Link href={group.href}>{group.name}</Link> : <span>{group.name}</span>}
-                  <small>
-                    {group.years.map((entry) => (entry.isAnnounced ? `${entry.year} (próximo)` : entry.year)).join(', ')}
-                  </small>
-                </div>
-                <strong aria-label={`${group.count} ${pluralWord(group.count, 'vez', 'veces')}`}>{group.count}</strong>
-              </li>
-            ))}
-          </ol>
+          <PresidencyList groups={repeated} />
+          {singles.length ? (
+            <details className={styles.decade}>
+              <summary>
+                <h3>Una vez</h3>
+                <span>{singles.length} {pluralWord(singles.length, 'hermandad', 'hermandades')}</span>
+              </summary>
+              <PresidencyList groups={singles} />
+            </details>
+          ) : null}
         </section>
 
         <section className={styles.block} aria-labelledby="cronologia-pregon-glorias">
