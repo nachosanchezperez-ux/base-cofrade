@@ -56,14 +56,15 @@ function groupedDirectory(items, typeKey) {
   ].filter(Boolean)
 }
 
-export default function HermandadesCategoryDirectory({ hermandades, typeKey }) {
+export default function HermandadesCategoryDirectory({ hermandades, typeKey, extraRoutes = [] }) {
   const config = directoryType(typeKey)
   const items = sortBrotherhoods(
     hermandades.filter((item) => hasDirectoryType(item, typeKey)),
     typeKey
   )
   const groups = groupedDirectory(items, typeKey)
-  const routes = brotherhoodDirectoryRoutes(items, typeKey)
+  // Rutas temáticas propias del tipo (p. ej. el Pregón de las Glorias) antes de las de localidad.
+  const routes = [...extraRoutes, ...brotherhoodDirectoryRoutes(items, typeKey)]
   const pageName = `${config.label} de Sevilla y provincia`
   const itemSingular = config.itemSingular || 'hermandad'
   const itemPlural = config.itemPlural || 'hermandades'

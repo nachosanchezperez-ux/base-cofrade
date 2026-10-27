@@ -1,0 +1,304 @@
+/* Pregón de las Glorias — mobile-first, sin cajas: filas con línea inferior,
+   en la línea de los listados de cambios musicales y del directorio. */
+.page {
+  --pg-ink: #0f2742;
+  --pg-muted: #5a6b7c;
+  --pg-line: #dce5ec;
+  --pg-accent: #b71f37;
+  padding-top: 22px;
+  padding-bottom: clamp(64px, 8vw, 110px);
+  color: var(--pg-ink);
+  background: #fff;
+}
+
+.intro {
+  display: grid;
+  gap: 8px;
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--pg-line);
+}
+
+.intro h1 {
+  margin: 0;
+  color: var(--pg-ink);
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -.035em;
+}
+
+.intro p {
+  max-width: 680px;
+  margin: 0;
+  color: var(--pg-muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.intro .stats {
+  margin-top: 4px;
+  color: #536a7e;
+  font-size: 14px;
+}
+
+.stats strong {
+  color: var(--pg-ink);
+  font-weight: 800;
+}
+
+/* Próximo pregón */
+.next {
+  margin-top: 22px;
+  padding: 4px 0 4px 16px;
+  border-left: 3px solid var(--pg-accent);
+}
+
+.kicker {
+  color: var(--pg-accent);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.next h2 {
+  margin: 2px 0 8px;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.03em;
+}
+
+.next dl {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+
+.next dl > div {
+  display: grid;
+  gap: 0;
+}
+
+.next dt {
+  color: var(--pg-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.next dd {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+/* Criterio del sitio: los enlaces no se subrayan; se distinguen por color. */
+.next a,
+.presidencies a,
+.presidency a {
+  color: #123a67;
+  text-decoration: none;
+}
+
+.next a:hover,
+.presidencies a:hover,
+.presidency a:hover {
+  color: var(--pg-accent);
+}
+
+/* Bloques */
+.block {
+  padding-top: 34px;
+}
+
+.blockHead h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+}
+
+.blockHead p {
+  margin: 6px 0 0;
+  color: var(--pg-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Hermandades que lo han presidido */
+.presidencies {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0 28px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.presidencies li {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--pg-line);
+}
+
+.presidencies li > div {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.presidencies li > div > a,
+.presidencies li > div > span {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.presidencies small {
+  color: var(--pg-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.presidencies strong {
+  flex: 0 0 auto;
+  min-width: 1.5em;
+  font-size: 22px;
+  font-weight: 800;
+  text-align: right;
+}
+
+/* Cronología */
+.decade {
+  margin-top: 12px;
+}
+
+.decade summary {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 2px solid var(--pg-ink);
+  color: var(--pg-ink);
+  cursor: pointer;
+  list-style: none;
+}
+
+.decade summary::-webkit-details-marker {
+  display: none;
+}
+
+.decade summary h3 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.decade summary span {
+  color: var(--pg-muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.decade summary span::after {
+  content: ' +';
+  font-weight: 800;
+}
+
+.decade[open] summary span::after {
+  content: ' −';
+}
+
+.years {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.years li {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--pg-line);
+  scroll-margin-top: 90px;
+}
+
+.year {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+}
+
+.years p {
+  margin: 0;
+}
+
+.pregonero {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.presidency {
+  margin-top: 2px;
+  color: #33475b;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.meta {
+  margin-top: 2px;
+  color: var(--pg-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.source {
+  margin: 28px 0 0;
+  color: var(--pg-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.source a {
+  color: inherit;
+}
+
+@media (min-width: 760px) {
+  .page {
+    padding-top: 40px;
+  }
+
+  .intro {
+    padding: 26px 0 30px;
+  }
+
+  .intro p {
+    font-size: 17px;
+  }
+
+  .presidencies {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .years {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 28px;
+  }
+
+  .years li {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
+}
