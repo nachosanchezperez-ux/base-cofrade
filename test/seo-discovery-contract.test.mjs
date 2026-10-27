@@ -121,10 +121,9 @@ test('las rutas segmentadas declaran canonical y datos estructurados', () => {
 })
 
 test('Extraordinarias enlaza cada ItemList con su guía canónica', () => {
-  assert.match(
-    extraordinaryDirectory,
-    /outing\.slug \? `\/extraordinarias\/\$\{outing\.slug\}` : outing\.anchorHref/
-  )
+  // 25/10/2026: solo fichas propias (sin anclas ni URL que redirigen a la Agenda).
+  assert.match(extraordinaryDirectory, /isStandaloneExtraordinaryPath\(outing\.detailHref\)/)
+  assert.match(extraordinaryDirectory, /path: outing\.detailHref/)
 })
 
 test('robots reserva las APIs y mantiene el noindex en el Panel', () => {

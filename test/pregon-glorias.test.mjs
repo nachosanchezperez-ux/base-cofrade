@@ -73,8 +73,10 @@ test('agrupa por hermandad enlazada y, sin ficha, por la denominación del archi
   assert.equal(byName.get('Virgen de la Salud').href, '')
   // Los años sin imagen consignada no generan grupo.
   assert.equal(presidencies.some((group) => group.name === ''), false)
-  // El próximo pregón cuenta y queda marcado.
-  assert.equal(byName.get('Inmaculado Corazón de María de Torreblanca').years[0].isAnnounced, true)
+  // Una designación futura no es una presidencia celebrada.
+  assert.equal(byName.has('Inmaculado Corazón de María de Torreblanca'), false)
+  assert.equal(buildPregonGlorias([rows[0]], brotherhoods).stats.corporationCount, 0)
+  assert.equal(buildPregonGlorias([rows[0]], brotherhoods).next.year, 2027)
 })
 
 test('la página está enlazada desde Glorias y en el sitemap', async () => {
