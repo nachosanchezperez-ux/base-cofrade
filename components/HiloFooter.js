@@ -13,10 +13,10 @@ export default function HiloFooter() {
   return (
     <footer className={styles.footer}>
       <div className={`shell ${styles.inner}`}>
-        <div className={styles.brand} aria-label="Hilo Cofrade">
+        <div className={styles.brand}>
           <Image
             src="/brand/logo.svg"
-            alt=""
+            alt="Hilo Cofrade"
             width={680}
             height={270}
             className={styles.brandLogo}

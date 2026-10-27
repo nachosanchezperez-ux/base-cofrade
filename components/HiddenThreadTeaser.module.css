@@ -106,6 +106,14 @@
   font-size: 17px;
 }
 
+/* En la portada, el rótulo en frase normal, como el resto de bloques. */
+.teaserFeature .teaserCopy span {
+  font-size: 13px;
+  font-weight: 750;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
 /* Botón con contorno: invita a jugar sin competir con la ficha del día. */
 .teaserFeature .teaserLink.teaserLink {
   width: auto;

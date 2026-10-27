@@ -174,31 +174,6 @@
   padding-top: 22px;
 }
 
-.totalChanges {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  border-left: 3px solid var(--music-ink);
-  background: var(--music-soft);
-}
-
-:global(#hc-app) .page:not(:global(#hc-panel)) .totalChanges strong {
-  color: var(--music-ink);
-  font-size: 36px;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -.04em;
-}
-
-.totalChanges span {
-  max-width: 140px;
-  color: var(--music-muted);
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
 .municipalitySummary {
   display: grid;
   gap: 8px;
@@ -850,19 +825,6 @@
     padding: 30px 0;
   }
 
-  .summaryStrip {
-    grid-template-columns: 180px minmax(0, 1fr);
-    gap: 26px;
-    align-items: stretch;
-  }
-
-  .totalChanges {
-    display: grid;
-    align-content: center;
-    justify-content: start;
-    gap: 8px;
-  }
-
   .summaryHeading {
     align-content: center;
   }
@@ -974,5 +936,35 @@
   .searchPanel button,
   .searchPanel > a {
     flex: 0 0 auto;
+  }
+}
+
+/* Lista compacta en móvil (26/10/2026): la página medía 31.500 px. Menos aire
+   entre cambios y enlaces de 32 px de alto (siguen por encima de los 24 px
+   mínimos para tocar con el dedo). */
+@media (max-width: 699px) {
+  .movement {
+    gap: 6px;
+  }
+
+  .movement + .movement {
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+
+  .movementLead {
+    gap: 2px;
+  }
+
+  :global(#hc-app) .page:not(:global(#hc-panel)) .clusterHeader h4 a,
+  :global(#hc-app) .page:not(:global(#hc-panel)) .movementLead strong a,
+  :global(#hc-app) .page:not(:global(#hc-panel)) .bandCell dd > a,
+  :global(#hc-app) .page:not(:global(#hc-panel)) .bandCell dd > strong {
+    min-height: 32px;
+    padding: 1px 0;
+  }
+
+  .bandCell {
+    padding: 3px 10px;
   }
 }

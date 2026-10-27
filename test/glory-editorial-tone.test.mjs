@@ -34,7 +34,8 @@ test('Procesiones de Gloria usa un tono editorial y no explica la herramienta', 
   }
 
   assert.match(combined, /Calendario anual/)
-  assert.match(combined, /Datos de la salida/)
+  // «Datos de la salida» se retiró (25/10/2026): repetía la cabecera; queda «Información práctica» si hay notas.
+  assert.match(combined, /Información práctica/)
   assert.match(combined, /Fuentes consultadas/)
   assert.match(combined, /Acompañamiento musical por confirmar\./)
 })

@@ -485,3 +485,21 @@
     padding-top: 205px;
   }
 }
+
+
+/* Sin fotografía, en móvil la cabecera se ajusta al texto (criterio de #1305):
+   sin el hueco reservado para la foto ni el logotipo de relleno cuando falta
+   el escudo. En escritorio no cambia. */
+@media (max-width: 700px) {
+  .noPhoto {
+    min-height: 0;
+  }
+
+  .noPhoto .content {
+    padding-top: 28px;
+  }
+
+  .crestFallback {
+    display: none;
+  }
+}

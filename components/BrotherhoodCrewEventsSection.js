@@ -1,11 +1,10 @@
 import Link from 'next/link'
 import SectionTitle from '@/components/SectionTitle'
-import { crewEventStatusLabel } from '@/lib/crew-events'
+import { crewEventDisplayStatus } from '@/lib/crew-events'
 import styles from './BrotherhoodCrewEventsSection.module.css'
 
 function eventStatus(event) {
-  if (event.isPast && event.eventStatus === 'announced') return 'Fecha pasada'
-  return event.urgencyLabel || crewEventStatusLabel(event.eventStatus)
+  return crewEventDisplayStatus(event).label
 }
 
 function EventCard({ event }) {

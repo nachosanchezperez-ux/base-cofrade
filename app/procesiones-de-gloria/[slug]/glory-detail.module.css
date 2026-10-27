@@ -48,7 +48,7 @@
   flex-wrap: wrap;
   gap: 9px;
   margin-bottom: 14px;
-  font-size: .72rem;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: .09em;
   text-transform: uppercase;
@@ -125,7 +125,7 @@
 .keyFacts span,
 .infoGrid span {
   color: #8794a0;
-  font-size: .68rem;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -177,7 +177,7 @@
   border-radius: 8px;
   background: rgba(7, 22, 37, .74);
   color: #fff;
-  font-size: .67rem;
+  font-size: 12px;
 }
 
 .crest {
@@ -299,7 +299,7 @@
   border-radius: 50%;
   background: var(--hc-blue);
   color: #fff;
-  font-size: .72rem;
+  font-size: 12px;
   font-weight: 800;
 }
 
@@ -407,4 +407,11 @@
     align-items: flex-start;
     flex-direction: column;
   }
+}
+
+
+/* En la calle ahora mismo (antes decía «Hoy» aunque la Agenda dijera «En curso»). */
+.topline span:last-child[data-status='live'] {
+  background: #a91d34;
+  color: #fff;
 }

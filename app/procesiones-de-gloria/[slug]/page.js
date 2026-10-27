@@ -9,6 +9,7 @@ import AgendaRelationLinks from '@/components/AgendaRelationLinks'
 import ProcessionRoute from '@/components/ProcessionRoute'
 import { gloryDisplayTitle } from '@/lib/glory-display'
 import { buildProcessionRoute } from '@/lib/procession-route'
+import { isActOnStreet } from '@/lib/procession-live-status'
 import { getGloryDetail } from '@/lib/supabase/glory-directory'
 import {
   absoluteUrl,
@@ -77,10 +78,11 @@ function entryLabel(item) {
   return row?.time || row?.timeText || ''
 }
 
-function statusLabel(item) {
+function statusLabel(item, entry = '') {
   if (item.isCancelled) return 'Cancelada'
   if (item.isCelebrated) return 'Celebrada'
   if (item.isPast) return 'Fecha pasada'
+  if (isActOnStreet({ date: item.date, returnDate: item.returnDate, departureTime: item.departureTime, returnTime: entry })) return 'En la calle'
   return item.urgencyLabel || 'Próxima'
 }
 
@@ -227,7 +229,7 @@ export default async function GloryDetailPage({ params }) {
             <Link className={styles.backLink} href="/procesiones-de-gloria">← Calendario de Glorias</Link>
             <div className={styles.topline}>
               <span>{item.municipality || 'Sevilla y provincia'}</span>
-              <span data-status={item.eventStatus}>{statusLabel(item)}</span>
+              <span data-status={statusLabel(item, entry) === 'En la calle' ? 'live' : item.eventStatus}>{statusLabel(item, entry)}</span>
             </div>
             <h1>{displayTitle}</h1>
             {item.brotherhoodHref
@@ -267,19 +269,17 @@ export default async function GloryDetailPage({ params }) {
       />
 
       <div className={`shell ${styles.body}`}>
-        <section className={styles.section} aria-labelledby="datos-procesion-gloria">
-          <div className={styles.sectionHead}>
-            <span className="eyebrow">Información</span>
-            <h2 id="datos-procesion-gloria">Datos de la salida</h2>
-          </div>
-          <div className={styles.infoGrid}>
-            <article><span>Hermandad</span>{item.brotherhoodHref ? <Link href={item.brotherhoodHref}>{item.brotherhoodName}</Link> : <strong>{item.brotherhoodName}</strong>}</article>
-            <article><span>Localidad</span><strong>{item.municipality || 'Por confirmar'}</strong></article>
-            <article><span>Fecha</span><strong>{dateLabel}</strong></article>
-            <article><span>Estado</span><strong>{statusLabel(item)}</strong></article>
-          </div>
-          {item.publicNotes ? <p className={styles.publicNotes}>{item.publicNotes}</p> : null}
-        </section>
+        {/* Hermandad, localidad, fecha y estado ya están en la cabecera y en
+            «Relacionado con este acto»: aquí solo queda la información práctica. */}
+        {item.publicNotes ? (
+          <section className={styles.section} aria-labelledby="datos-procesion-gloria">
+            <div className={styles.sectionHead}>
+              <span className="eyebrow">Información</span>
+              <h2 id="datos-procesion-gloria">Información práctica</h2>
+            </div>
+            <p className={styles.publicNotes}>{item.publicNotes}</p>
+          </section>
+        ) : null}
 
         {(processionRoute.summary || processionRoute.legs.length) ? (
           <section className={styles.section} aria-labelledby="recorrido-procesion-gloria">

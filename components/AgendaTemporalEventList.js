@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import AgendaClockRefresh from '@/components/AgendaClockRefresh'
 import Link from 'next/link'
 import ShareActions, { CalendarAddLink } from '@/components/ShareActions'
 import AgendaEventThread from '@/components/AgendaEventThread'
@@ -9,7 +10,7 @@ import { agendaEventAnchor, scheduleTimeHint } from '@/lib/agenda-event-presenta
 import { agendaThreadLinks, repeatsPlace } from '@/lib/agenda-event-relations'
 import { cultTimeParts } from '@/lib/agenda-cult-time'
 import { isSecondaryCult } from '@/lib/agenda-priority'
-import { agendaScheduleSteps, madridMinutes, nextScheduleStep } from '@/lib/agenda-schedule-steps'
+import { agendaScheduleSteps, nextScheduleStepAt } from '@/lib/agenda-schedule-steps'
 import { contributionReadiness } from '@/lib/contributions/security'
 import styles from './AgendaTemporalEventList.module.css'
 
@@ -94,17 +95,17 @@ function LiveNow({ items }) {
   const seen = new Set()
   const live = items.filter((item) => item.liveState?.isLive && !seen.has(item.key) && seen.add(item.key))
   if (!live.length) return null
-  const now = madridMinutes(new Date())
+  const now = new Date()
   return (
     <section className={styles.liveNow} aria-labelledby="agenda-en-la-calle">
       <h3 id="agenda-en-la-calle"><span className={styles.livePulse} aria-hidden="true" />Ahora en la calle</h3>
       <ul>
         {live.map((item) => {
-          const next = nextScheduleStep(item, now)
+          const next = nextScheduleStepAt(item, now)
           return (
             <li key={item.key}>
               {item.eventHref ? <Link href={item.eventHref}>{item.title}</Link> : <strong>{item.title}</strong>}
-              <small>{[item.liveState.label, item.liveState.timingLabel, next ? `Próximo: ${next.label} ${next.time}` : '', item.municipality].filter(Boolean).join(' · ')}</small>
+              <small>{['Según horario publicado', item.liveState.timingLabel, next ? `Próximo: ${next.label} ${next.time}` : '', item.municipality].filter(Boolean).join(' · ')}</small>
             </li>
           )
         })}
@@ -157,6 +158,7 @@ export default function AgendaTemporalEventList({ landing }) {
   return (
     <section className={styles.section} id="agenda-del-periodo" aria-labelledby="agenda-periodo-title">
       <div className="shell">
+        <AgendaClockRefresh />
         <header className={styles.header}>
           <div>
             <span>{landing.period === 'today' ? 'Hoy' : landing.period === 'tomorrow' ? 'Mañana' : 'Fin de semana'}</span>

@@ -5,6 +5,7 @@ import JsonLd from '@/components/JsonLd'
 import { getGloryDirectory } from '@/lib/supabase/public-directory-cache'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
 import styles from './glory-page.module.css'
+import introStyles from '@/components/CalendarIntro.module.css'
 import { pluralWord } from '@/lib/plural'
 
 export const revalidate = 300
@@ -46,7 +47,6 @@ export default async function ProcesionesDeGloriaPage() {
   const outings = await getGloryDirectory()
   const visibleOutings = outings.filter((item) => !item.isCancelled)
   const currentYear = currentMadridYear()
-  const yearOutings = visibleOutings.filter((item) => item.year === currentYear)
   // Mismas cifras que los botones «Próximas» y «Archivo» del directorio.
   const upcomingOutings = visibleOutings.filter((item) => item.isUpcoming)
   const upcomingCount = upcomingOutings.length
@@ -64,7 +64,7 @@ export default async function ProcesionesDeGloriaPage() {
   })
 
   return (
-    <section className={`section page-top ${styles.page}`}>
+    <section className={`section page-top ${styles.page} ${introStyles.compactPage}`}>
       <JsonLd data={breadcrumbJsonLd([
         { name: 'Inicio', path: '/' },
         { name: 'Procesiones de Gloria', path: '/procesiones-de-gloria' },
@@ -72,35 +72,25 @@ export default async function ProcesionesDeGloriaPage() {
       <JsonLd data={directoryJsonLd} />
 
       <div className="shell">
-        <header className={styles.intro}>
+        <header className={`${styles.intro} ${introStyles.compactIntro}`}>
           <div>
             <span className="eyebrow">Calendario cofrade · Sevilla y provincia</span>
             <h1>Procesiones de Gloria en Sevilla</h1>
           </div>
-          <p>
-            Fechas, horarios y recorridos de las próximas procesiones de Gloria de Sevilla capital y provincia. Las salidas anteriores pueden consultarse por año.
-          </p>
+          <div>
+            <p>
+              Fechas, horarios y recorridos de las próximas procesiones de Gloria de Sevilla capital y provincia. Las salidas anteriores pueden consultarse por año.
+            </p>
+            <p className={introStyles.introStats}>
+              <strong>{upcomingCount}</strong> {pluralWord(upcomingCount, 'próxima', 'próximas')} · <strong>{capitalCount}</strong> capital · <strong>{provinceCount}</strong> provincia · <strong>{archiveCount}</strong> en archivo
+            </p>
+          </div>
         </header>
       </div>
 
       <AgendaCofradeNav activeSection="glories" />
 
       <div className="shell">
-        <div className={styles.summary} aria-label={`Resumen del calendario de procesiones de Gloria de ${currentYear}`}>
-          <div className={styles.summaryCopy}>
-            <span className="eyebrow">Glorias · {currentYear}</span>
-            <p>
-              Las <strong>procesiones de Gloria de Sevilla capital y provincia</strong>, ordenadas por fecha y localidad, con la información disponible de cada jornada.
-            </p>
-          </div>
-          <div className={styles.stats}>
-            <span><strong>{upcomingCount}</strong> {pluralWord(upcomingCount, 'próxima', 'próximas')}</span>
-            <span><strong>{archiveCount}</strong> en archivo</span>
-            <span><strong>{capitalCount}</strong> capital · <strong>{provinceCount}</strong> provincia</span>
-            <span><strong>{yearOutings.length}</strong> en {currentYear}</span>
-          </div>
-        </div>
-
         <GloryDirectory outings={outings} />
 
         <section className={styles.guide} aria-labelledby="guia-procesiones-gloria-sevilla">

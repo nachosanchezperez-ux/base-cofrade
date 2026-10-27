@@ -13,7 +13,8 @@ test('Extraordinarias alinea el title con la consulta principal observada en GSC
   assert.match(seo, /Extraordinarias Sevilla \$\{year\}: calendario/)
   assert.match(seo, /Procesiones y salidas extraordinarias de Sevilla en \$\{year\}:/)
   assert.match(page, /Procesiones y salidas extraordinarias de Sevilla \{currentYear\}/)
-  assert.match(page, /Consulta las extraordinarias de Sevilla en \{currentYear\}/)
+  // Entradilla más corta en móvil (26/10/2026), con la misma consulta de GSC.
+  assert.match(page, /extraordinarias de Sevilla en \{currentYear\}/)
 })
 
 test('las fichas extraordinarias incorporan la Hermandad cuando aporta intención de búsqueda', () => {

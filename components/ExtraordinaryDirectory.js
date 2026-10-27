@@ -112,7 +112,6 @@ export default function ExtraordinaryDirectory({ outings }) {
           <span>Calendario</span>
           <h2 id="extraordinarias-list-title">{status === 'upcoming' ? 'Próximas extraordinarias' : 'Extraordinarias celebradas'}</h2>
         </div>
-        <p>Elige el ámbito que quieras consultar. Las tarjetas indican de forma visible si la cita es en Sevilla capital o en un municipio de la provincia.</p>
       </div>
 
       <div className={styles.filters} aria-label="Filtros del calendario de extraordinarias">
