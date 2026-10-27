@@ -21,17 +21,14 @@ export const metadata = {
   ...socialMetadata({ title, description, path: PREGON_GLORIAS_PATH }),
 }
 
+// La imagen o Simpecado tal como lo consigna el Consejo; si la hermandad tiene
+// ficha publicada, ese mismo nombre enlaza a ella (sin repetir la hermandad).
 function Presidency({ item }) {
+  const label = item.presidencia || item.brotherhood?.name || 'El archivo oficial no consigna imagen'
   if (item.brotherhood) {
-    return (
-      <>
-        {item.presidencia || item.brotherhood.name}
-        {' · '}
-        <Link href={item.brotherhood.href}>{item.brotherhood.name}</Link>
-      </>
-    )
+    return <Link href={item.brotherhood.href} title={item.brotherhood.name}>{label}</Link>
   }
-  return item.presidencia || 'El archivo oficial no consigna imagen'
+  return label
 }
 
 export default async function PregonGloriasPage() {
