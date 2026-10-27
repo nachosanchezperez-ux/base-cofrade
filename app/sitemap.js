@@ -144,6 +144,11 @@ const staticEntries = [
     priority: 0.88,
   },
   {
+    url: absoluteUrl('/pregon-de-las-glorias'),
+    changeFrequency: 'monthly',
+    priority: 0.72,
+  },
+  {
     url: absoluteUrl('/pregunta'),
     changeFrequency: 'monthly',
     priority: 0.7,

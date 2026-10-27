@@ -2,6 +2,7 @@ import { connection } from 'next/server'
 import HermandadesCategoryDirectory from '@/components/HermandadesCategoryDirectory'
 import { socialMetadata } from '@/lib/seo'
 import { getIndexableBrotherhoodDirectory } from '@/lib/supabase/indexable-brotherhood-directory'
+import { PREGON_GLORIAS_PATH } from '@/lib/pregon-glorias'
 
 export const revalidate = 900
 
@@ -18,5 +19,11 @@ export const metadata = {
 export default async function GloriaDirectoryPage() {
   await connection()
   const hermandades = await getIndexableBrotherhoodDirectory()
-  return <HermandadesCategoryDirectory hermandades={hermandades} typeKey="gloria" />
+  return (
+    <HermandadesCategoryDirectory
+      hermandades={hermandades}
+      typeKey="gloria"
+      extraRoutes={[{ href: PREGON_GLORIAS_PATH, label: 'Pregón de las Glorias · desde 1968' }]}
+    />
+  )
 }
