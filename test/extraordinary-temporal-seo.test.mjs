@@ -7,7 +7,7 @@ const page = readFileSync(new URL('../app/extraordinarias/page.js', import.meta.
 test('Extraordinarias mantiene navegación SEO por meses con enlaces a guías', () => {
   assert.match(page, /groupUpcomingByMonth/)
   assert.match(page, /Próximas extraordinarias de Sevilla por meses/)
-  assert.match(page, /href=\{`\/extraordinarias\/\$\{outing\.slug\}`\}/)
+  assert.match(page, /href=\{outing\.detailHref\}/)
   assert.match(page, /upcomingOutings/)
 })
 

@@ -14,7 +14,7 @@ test('Extraordinarias mantiene su intención SEO principal y canonical', () => {
 test('Extraordinarias conserva datos estructurados y enlazado a guías', () => {
   assert.match(page, /breadcrumbJsonLd/)
   assert.match(page, /collectionPageJsonLd/)
-  assert.match(page, /`\/extraordinarias\/\$\{outing\.slug\}`/)
+  assert.match(page, /href=\{outing\.detailHref\}/)
 })
 
 test('la página pilar muestra datos calculados, no cifras editoriales hardcodeadas', () => {
