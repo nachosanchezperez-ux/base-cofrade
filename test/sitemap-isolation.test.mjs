@@ -7,14 +7,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { PUBLIC_SITEMAP_SEGMENTS, sitemapEntriesForSegment } from '../lib/seo-sitemap-segments.js';
-import { hasCrewEventPage } from '../lib/crew-event-url-policy.js';
+import { hasCrewEventPage, isIndexableCrewEventPage } from '../lib/crew-event-url-policy.js';
 
 // Execute the real sitemap orchestration with controlled readers. No network,
 // production credentials, or framework cache is needed to verify its contract.
 async function harness({ fail = '', delay = 0 } = {}) {
   const calls = [];
   const context = {
-    allowAgendaSitemapUrl, hasCrewEventPage, PUBLIC_SITEMAP_SEGMENTS, sitemapEntriesForSegment, connection: async () => {},
+    allowAgendaSitemapUrl, hasCrewEventPage, isIndexableCrewEventPage, PUBLIC_SITEMAP_SEGMENTS, sitemapEntriesForSegment, connection: async () => {},
     absoluteUrl: (path) => `https://hilocofrade.es${path}`,
     unstable_cache: (fn) => fn,
     brotherhoodDirectoryLocalities: () => [], brotherhoodDirectoryRoutes: () => [],
