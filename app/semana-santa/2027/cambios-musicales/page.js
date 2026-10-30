@@ -1,3 +1,4 @@
+import { getPendingMusicChangesForYear } from '@/lib/supabase/music-changes'
 import { connection } from 'next/server'
 import Link from 'next/link'
 import JsonLd from '@/components/JsonLd'
@@ -161,9 +162,10 @@ function bandLink(change, previous = false) {
 export default async function CambiosMusicales2027Page({ searchParams } = {}) {
   await connection()
   const params = await searchParams
-  const [changes, renewals] = await Promise.all([
+  const [changes, renewals, pending] = await Promise.all([
     getPublicMusicChanges2027(),
     getPublicMusicRenewals2027(),
+    getPendingMusicChangesForYear(2027),
   ])
 
   const dayOptions = SEMANA_SANTA_DAYS.filter((day) => (
@@ -208,7 +210,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
   })
 
   const brotherhoodCount = new Set(changes.map((item) => item.brotherhoodSlug || item.brotherhoodName)).size
-  const lastUpdated = updatedLabel([...changes, ...renewals])
+  const lastUpdated = updatedLabel([...changes, ...renewals, ...pending.map((item) => ({ updatedAt: item.updated_at }))])
   const municipalityTop = municipalityRanking(changes)
   const hasFilters = Boolean(activeDay || activeScope || activeMunicipality || activeType || requestedQuery)
   const allGroups = groupsFor(changes)
@@ -265,6 +267,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
             <nav className={styles.modeNav} aria-label="Lecturas de la música de 2027">
               <Link href="#cambios-musicales">Cambios <strong>{changes.length}</strong></Link>
               <Link href="#renovaciones-musicales">Renovaciones <strong>{renewals.length}</strong></Link>
+              {pending.length ? <Link href="#acompanamientos-pendientes">Pendientes <strong>{pending.length}</strong></Link> : null}
             </nav>
             <Link className={styles.accompanimentLink} href="/acompanamientos-musicales?temporada=2027">
               Acompañamientos por banda · Avance de 2027 <span aria-hidden="true">→</span>
@@ -409,6 +412,25 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
             <Link href={PATH}>Ver todos los cambios →</Link>
           </div>
         )}
+
+        {pending.length ? (
+          <section className={styles.renewalsSection} id="acompanamientos-pendientes" aria-labelledby="titulo-acompanamientos-pendientes">
+            <div className={styles.renewalsIntro}>
+              <div><span>Semana Santa 2027 · Pendiente de decidir</span><h2 id="titulo-acompanamientos-pendientes">Acompañamientos pendientes</h2></div>
+              <p>Palios cuyo acompañamiento musical está pendiente de decidir. No se incluyen en el contador de cambios confirmados.</p>
+            </div>
+            <div className={styles.brotherhoodList}>
+              {pending.map((item) => (
+                <article className={styles.brotherhoodCluster} key={item.id} id={`pendiente-${item.id}`}>
+                  <header className={styles.clusterHeader}>
+                    <div><h3>{item.title}</h3><span>{item.effective_label}</span></div>
+                  </header>
+                  <div className={styles.clusterChanges}><p>{item.summary}</p></div>
+                </article>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         <section className={styles.renewalsSection} id="renovaciones-musicales" aria-labelledby="titulo-renovaciones-musicales">
           <div className={styles.renewalsIntro}>
