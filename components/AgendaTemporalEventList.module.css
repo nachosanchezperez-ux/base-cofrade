@@ -201,3 +201,21 @@
 .cults li a:focus-visible{outline:2px solid #a61931;outline-offset:2px}
 .cults li small{color:#5f6e7a;font-size:13px;line-height:1.35}
 @media (max-width:720px){.cults li{grid-template-columns:52px minmax(0,1fr)}}
+
+/* Lectura rápida de Hoy (#agenda-lectura). */
+.rowStatus{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;min-height:22px;padding:0 8px;border-radius:999px;background:#eef1f3;color:#4e5f6d;font-size:12px;font-style:normal;font-weight:800;white-space:nowrap}
+.rowStatus[data-kind="live"]{background:#fde8ec;color:#a61931}
+.rowStatus[data-kind="live"]::before{content:"";width:8px;height:8px;border-radius:50%;background:#d0263f}
+.cults .cultNoTime{color:#5f6e7a;font-size:11px;font-weight:800;line-height:1.2}
+.periodShareIcons{display:none!important}
+@media (max-width:720px){
+  /* El aviso de la portada de la sección ya dice qué día es: la lista empieza antes. */
+  .header{grid-template-columns:minmax(0,1fr) auto;align-items:center;margin-bottom:12px}
+  .header h2{font-size:22px;line-height:1.15}
+  .header>strong{justify-self:end}
+  .periodShare{flex-direction:row;align-items:center;flex-wrap:nowrap;margin-bottom:14px;padding:8px 10px 8px 14px}
+  .periodShare>span{font-size:13px}
+  .periodShareFull{display:none!important}
+  .periodShareIcons{display:flex!important;flex:0 0 auto}
+  .dayGroup[data-single] .dayHeading{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+}
