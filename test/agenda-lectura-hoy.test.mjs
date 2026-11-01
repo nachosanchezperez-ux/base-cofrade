@@ -71,3 +71,9 @@ test('Hoy en móvil: lista antes, compartir en una línea y cultos sin hora expl
   assert.match(css, /\.dayGroup\[data-single\] \.dayHeading\{position:absolute/)
   assert.match(read('lib/home-agenda-now.js'), /title: agendaDisplayTitle\(item\)/)
 })
+
+test('la organizadora sin ficha se ve aunque la cita tenga banda enlazada', () => {
+  const list = read('components/AgendaTemporalEventList.js')
+  assert.match(list, /agendaThreadLinks\(item\)\.some\(\(link\) => link\.kind === 'brotherhood'\)/)
+  assert.doesNotMatch(list, /link\.kind === 'brotherhood' \|\| link\.kind === 'band'/)
+})
