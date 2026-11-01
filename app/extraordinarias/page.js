@@ -62,7 +62,7 @@ export default async function ExtraordinariasPage() {
   const upcomingOutings = visibleOutings.filter((item) => item.isUpcoming)
   const upcomingCount = upcomingOutings.length
   // Mismas cifras que los botones «Próximas» y «Celebradas» del directorio.
-  const celebratedCount = visibleOutings.filter((item) => item.isCelebrated).length
+  const celebratedCount = visibleOutings.filter((item) => item.isCelebrated || item.isPast).length
   const capitalCount = upcomingOutings.filter((item) => item.scope === 'capital').length
   const provinceCount = upcomingOutings.filter((item) => item.scope === 'province').length
   const monthGroups = groupUpcomingByMonth(upcomingOutings)

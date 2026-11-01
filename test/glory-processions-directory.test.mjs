@@ -64,8 +64,11 @@ test('Glory distinguishes a past date from an explicitly held procession', async
     read('app/procesiones-de-gloria/[slug]/page.js'),
   ])
 
-  assert.match(loader, /const isCelebrated = row\.event_status === 'held'/)
-  assert.match(loader, /const isPast = Boolean\(date\) && date < today/)
+  assert.match(loader, /const temporal = getOutingTemporalState\(/)
+  assert.match(loader, /const \{ isUpcoming, isCelebrated, isPast \} = temporal/)
+  const temporal = await read('lib/outing-temporal-state.js')
+  assert.match(temporal, /isCelebrated: eventStatus === 'held'/)
+  assert.match(temporal, /liveState\.state === 'done'/)
   assert.match(component, /if \(item\.isPast\) return 'Fecha pasada'/)
   assert.match(component, /Archivo <small>/)
   assert.match(detail, /if \(item\.isPast\) return 'Fecha pasada'/)
