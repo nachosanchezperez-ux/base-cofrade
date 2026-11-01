@@ -37,4 +37,88 @@ test('Estepa 2/11: solo termina al llegar la entrada prevista a las 14:30 de Mad
   ]) {
     const state = getOutingTemporalState(estepa, at(instant))
     assert.equal(state.isUpcoming, upcoming, instant)
-    assert.equal(state.isPast, !u¶»§q«^
+    assert.equal(state.isPast, !upcoming, instant)
+    assert.equal(state.isLive, live, instant)
+  }
+})
+
+test('San Esteban y Borriquita de Coria 22/11: sin hora no se inventa una finalizaciÃ³n', () => {
+  for (const outing of [noTime('2026-11-22'), noTime('2026-11-22')]) {
+    for (const instant of ['2026-11-01T12:00:00Z', '2026-11-22T18:00:00Z']) {
+      const state = getOutingTemporalState(outing, at(instant))
+      assert.equal(state.isUpcoming, true, instant)
+      assert.equal(state.isPast, false, instant)
+      assert.equal(state.isLive, false, instant)
+    }
+    assert.equal(getOutingTemporalState(outing, at('2026-11-01T12:00:00Z')).urgencyLabel, 'EN 21 DÃAS')
+    const past = getOutingTemporalState(outing, at('2026-11-23T00:00:00Z'))
+    assert.equal(past.isUpcoming, false)
+    assert.equal(past.isPast, true)
+  }
+})
+
+test('un acto que cruza medianoche sigue en curso hasta su hora de entrada', () => {
+  for (const returnDate of ['', '2026-11-02']) {
+    const item = {
+      date: '2026-11-01', returnDate, departureTime: '23:30',
+      returnTime: '01:15', eventStatus: 'announced',
+    }
+    assert.equal(getOutingTemporalState(item, at('2026-11-01T23:30:00Z')).isLive, true)
+    assert.equal(getOutingTemporalState(item, at('2026-11-02T00:14:00Z')).isPast, false)
+    assert.equal(getOutingTemporalState(item, at('2026-11-02T00:15:00Z')).isPast, true)
+  }
+})
+
+test('un culto de varias jornadas no caduca por haber empezado', () => {
+  const item = {
+    date: '2026-10-30', endDate: '2026-11-02',
+    daySchedules: [{ celebrationDate: '2026-11-02', timeText: '18:00â€“21:00' }],
+  }
+  assert.equal(isAgendaItemOver(item, at('2026-10-31T21:00:00Z')), false)
+  assert.equal(isAgendaItemOver(item, at('2026-11-01T21:00:00Z')), false)
+  assert.equal(isAgendaItemOver(item, at('2026-11-02T19:59:00Z')), false)
+  assert.equal(isAgendaItemOver(item, at('2026-11-02T20:00:00Z')), true)
+})
+
+test('Madrid conserva el dÃ­a civil al retrasar el reloj el 25 de octubre', () => {
+  for (const instant of ['2026-10-25T00:30:00Z', '2026-10-25T01:30:00Z']) {
+    const clock = madridNow(at(instant))
+    assert.equal(clock.today, '2026-10-25')
+    assert.equal(clock.minutes, 150)
+    assert.equal(getOutingTemporalState({
+      date: '2026-10-25', departureTime: '02:00',
+      returnTime: '03:00', eventStatus: 'announced',
+    }, at(instant)).isLive, true)
+  }
+  assert.equal(getOutingTemporalState({
+    date: '2026-10-25', departureTime: '02:00',
+    returnTime: '03:00', eventStatus: 'announced',
+  }, at('2026-10-25T02:00:00Z')).isPast, true)
+})
+
+test('cancelaciÃ³n y celebraciÃ³n manual tienen prioridad sobre la fecha', () => {
+  assert.equal(getOutingTemporalState({
+    date: '2026-11-22', eventStatus: 'cancelled',
+  }, at('2026-11-01T12:00:00Z')).isCancelled, true)
+  assert.equal(getOutingTemporalState({
+    date: '2026-11-22', eventStatus: 'cancelled',
+  }, at('2026-11-01T12:00:00Z')).isUpcoming, false)
+  assert.equal(getOutingTemporalState({
+    date: '2026-11-22', eventStatus: 'held',
+  }, at('2026-11-01T12:00:00Z')).isCelebrated, true)
+})
+
+test('fichas y directorios de Extraordinarias y Glorias comparten la utilidad temporal', () => {
+  for (const path of [
+    '../lib/supabase/extraordinary-detail.js',
+    '../lib/supabase/extraordinary-directory.js',
+    '../lib/supabase/glory-directory.js',
+  ]) {
+    const source = readFileSync(new URL(path, import.meta.url), 'utf8')
+    assert.match(source, /getOutingTemporalState\(/)
+  }
+  const detail = readFileSync(new URL('../lib/supabase/extraordinary-detail.js', import.meta.url), 'utf8')
+  assert.match(detail, /isUpcoming: temporal\.isUpcoming/)
+  const page = readFileSync(new URL('../app/extraordinarias/[slug]/page.js', import.meta.url), 'utf8')
+  assert.match(page, /schemaEventStatus\(item\)/)
+})
