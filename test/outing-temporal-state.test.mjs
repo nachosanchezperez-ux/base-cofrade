@@ -122,3 +122,14 @@ test('fichas y directorios de Extraordinarias y Glorias comparten la utilidad te
   const page = readFileSync(new URL('../app/extraordinarias/[slug]/page.js', import.meta.url), 'utf8')
   assert.match(page, /schemaEventStatus\(item\)/)
 })
+
+test('el archivo distingue fecha pasada de celebración confirmada', () => {
+  const directory = readFileSync(new URL('../lib/supabase/extraordinary-directory.js', import.meta.url), 'utf8')
+  const component = readFileSync(new URL('../components/ExtraordinaryDirectory.js', import.meta.url), 'utf8')
+  const page = readFileSync(new URL('../app/extraordinarias/page.js', import.meta.url), 'utf8')
+  assert.match(directory, /const isCelebrated = temporal\.isCelebrated/)
+  assert.match(directory, /isPast: temporal\.isPast/)
+  assert.match(component, /if \(item\.isPast\) return 'Fecha pasada'/)
+  assert.match(component, /\(item\.isCelebrated \|\| item\.isPast\)/)
+  assert.match(page, /item\.isCelebrated \|\| item\.isPast/)
+})

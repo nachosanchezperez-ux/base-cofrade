@@ -11,6 +11,7 @@ const AGENDA_TYPE = 'extraordinarias'
 function statusLabel(item) {
   if (item.isCancelled) return 'Cancelada'
   if (item.isCelebrated) return 'Celebrada'
+  if (item.isPast) return 'Fecha pasada'
   return item.urgencyLabel || 'Próxima'
 }
 
@@ -67,7 +68,7 @@ export default function ExtraordinaryDirectory({ outings }) {
   const [year, setYear] = useState('all')
 
   const upcoming = useMemo(() => outings.filter((item) => item.isUpcoming && !item.isCancelled), [outings])
-  const celebrated = useMemo(() => outings.filter((item) => item.isCelebrated && !item.isCancelled), [outings])
+  const celebrated = useMemo(() => outings.filter((item) => (item.isCelebrated || item.isPast) && !item.isCancelled), [outings])
   const years = useMemo(() => [...new Set(
     celebrated.map((item) => item.year).filter(Boolean)
   )].sort((a, b) => b - a), [celebrated])
