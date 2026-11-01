@@ -211,7 +211,6 @@
 @media (max-width:720px){
   /* El aviso de la portada de la sección ya dice qué día es: la lista empieza antes. */
   .header{grid-template-columns:minmax(0,1fr) auto;align-items:center;margin-bottom:12px}
-  .header h2{font-size:22px;line-height:1.15}
   .header>strong{justify-self:end}
   .periodShare{flex-direction:row;align-items:center;flex-wrap:nowrap;margin-bottom:14px;padding:8px 10px 8px 14px}
   .periodShare>span{font-size:13px}
