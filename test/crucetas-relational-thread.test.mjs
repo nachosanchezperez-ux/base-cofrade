@@ -17,6 +17,11 @@ test('la cruceta resuelve cada obra desde la Marcha canónica', () => {
   assert.match(loader, /marchHref:.*`\/marchas\//s)
 })
 
+test('la cruceta solo enlaza perfiles públicos realmente publicados', () => {
+  assert.match(loader, /href: publicEntityHref\(brotherhoodEntity\)/)
+  assert.match(loader, /href: publicEntityHref\(band\)/)
+})
+
 test('la cruceta muestra autoría, dedicatoria, veces interpretada y escucha', () => {
   assert.match(explorer, />Autoría</)
   assert.match(explorer, />Dedicatoria</)
