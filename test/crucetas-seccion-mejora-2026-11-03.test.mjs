@@ -55,7 +55,8 @@ test('la ficha no enlaza a una Hermandad no pública ni repite la Banda', () => 
 
 test('una cruceta puede llevar nombre propio en lugar del de la Hermandad', () => {
   const loader = read('../lib/supabase/musical-repertoires.js')
-  assert.match(loader, /display_name, repertoire_kind/)
+  assert.ok(loader.includes('`${REPERTOIRE_COLUMNS}, display_name`'))
+  assert.ok(loader.includes("result.error?.code === '42703'"))
   assert.match(loader, /String\(repertoire\.display_name \|\| ''\)\.trim\(\)\s*\n\s*\|\| brotherhoodName/)
   assert.equal(presentMusicalRepertoireIdentity({
     brotherhoodName: 'Virgen del Rosario de la Macarena',
