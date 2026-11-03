@@ -4,8 +4,8 @@ import JsonLd from '@/components/JsonLd'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import EntityLastUpdated from '@/components/EntityLastUpdated'
 import EntitySectionNav from '@/components/EntitySectionNav'
-import RelationalThread from '@/components/RelationalThread'
 import { getPublicMarchBySlug } from '@/lib/supabase/public-marches'
+import { groupReleasesForDisplay } from '@/lib/bands/discography'
 import { absoluteUrl, breadcrumbJsonLd, marchHeadingByline, marchSeoTitle, socialMetadata } from '@/lib/seo'
 import styles from './marcha.module.css'
 
@@ -37,6 +37,39 @@ function metricLabel(count, singular, plural) {
   return count === 1 ? singular : plural
 }
 
+// Crucetas: con más de 6, las 5 más recientes a la vista y el resto plegado.
+const CRUCETAS_FOLD_THRESHOLD = 6
+const CRUCETAS_VISIBLE = 5
+
+function CrucetaRow({ item }) {
+  return (
+    <article>
+      <div className={styles.historyDate}><strong>{item.year}</strong><span>{dateLabel(item.date)}</span></div>
+      <div className={styles.historyCopy}>
+        <h3><Link href={item.repertoireHref}>{item.outingTitle} <span aria-hidden="true">→</span></Link></h3>
+        {item.brotherhood?.name ? <p>{item.brotherhood.href ? <Link href={item.brotherhood.href}>{item.brotherhood.name}</Link> : item.brotherhood.name}</p> : null}
+        <small>
+          {item.band?.href ? <Link href={item.band.href}>{item.band.name}</Link> : item.band?.name}
+          {item.step?.name ? <> · {item.step.href ? <Link href={item.step.href}>{item.step.name}</Link> : item.step.name}</> : null}
+        </small>
+      </div>
+      {item.count > 1 ? <strong className={styles.playCount}>{countLabel(item.count)}</strong> : null}
+    </article>
+  )
+}
+
+function DiscographyRow({ item }) {
+  return (
+    <article>
+      <div className={styles.discographyYear}><strong>{item.year || '—'}</strong></div>
+      <div>
+        <h3>{item.bandDiscographyHref ? <Link href={item.bandDiscographyHref}>{item.title} <span aria-hidden="true">→</span></Link> : item.title}</h3>
+        {item.band?.name ? <p>{item.band.href ? <Link href={item.band.href}>{item.band.name}</Link> : item.band.name}</p> : null}
+      </div>
+    </article>
+  )
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const march = await getPublicMarchBySlug(slug)
@@ -62,63 +95,28 @@ export default async function MarchDetailPage({ params }) {
   if (!march) notFound()
   const headingByline = marchHeadingByline(march.authors.filter((author) => author.role === 'composer').map((author) => author.name))
 
-  const relatedBands = [
-    ...(march.premiereBand?.href ? [{ ...march.premiereBand, relation: 'Estrenada por' }] : []),
-    ...march.listenings.filter((item) => item.band?.href).map((item) => ({ ...item.band, relation: 'Grabación' })),
-    ...march.repertoireHistory.filter((item) => item.band?.href).map((item) => ({ ...item.band, relation: 'Interpretación documentada' })),
-    ...march.discographyHistory.filter((item) => item.band?.href).map((item) => ({ ...item.band, relation: 'Discografía' })),
-  ]
-  const marchThreadItems = [
-    ...march.authors
-      .filter((author) => author.href)
-      .map((author) => ({
-        kind: 'Compositor',
-        relation: AUTHOR_LABELS[author.role] || 'Autoría',
-        title: author.name,
-        href: author.href,
-        context: 'Ver otras Marchas documentadas',
-      })),
-    ...march.dedications
-      .filter((dedication) => dedication.href)
-      .map((dedication) => ({
-        kind: 'Dedicatoria',
-        relation: 'Dedicada a',
-        title: dedication.name,
-        href: dedication.href,
-        context: [dedication.date, dedication.text !== dedication.name ? dedication.text : ''].filter(Boolean).join(' · '),
-      })),
-    ...relatedBands.map((band) => ({
-      kind: 'Banda',
-      relation: band.relation,
-      title: band.name,
-      href: band.href,
-      context: 'Formación vinculada a esta obra',
-    })),
-    ...march.repertoireHistory.map((item) => ({
-      kind: 'Cruceta',
-      relation: 'Interpretada en',
-      title: item.outingTitle || item.repertoireTitle,
-      href: item.repertoireHref,
-      context: [item.brotherhood?.name, item.band?.name, item.year].filter(Boolean).join(' · '),
-    })),
-    ...march.discographyHistory
-      .filter((item) => item.bandDiscographyHref)
-      .map((item) => ({
-        kind: 'Discografía',
-        relation: 'Incluida en',
-        title: item.title,
-        href: item.bandDiscographyHref,
-        context: [item.band?.name, item.year].filter(Boolean).join(' · '),
-      })),
-  ]
+  const palette = march.palette || {}
+  const hasFicha = Boolean(march.compositionYear || march.musicType || march.premiere || march.premiereBand)
+  const identityBlocks = [hasFicha, march.authors.length > 0, march.dedications.length > 0].filter(Boolean).length
+  const crucetasVisible = march.repertoireHistory.length > CRUCETAS_FOLD_THRESHOLD
+    ? march.repertoireHistory.slice(0, CRUCETAS_VISIBLE)
+    : march.repertoireHistory
+  const crucetasFolded = march.repertoireHistory.slice(crucetasVisible.length)
+  const discography = groupReleasesForDisplay(march.discographyHistory)
+  // Cifras como accesos a su sección; ninguna a 0 (decisión 19/10/2026).
+  const metrics = [
+    { href: '#crucetas', count: march.documentedPerformances, label: metricLabel(march.documentedPerformances, 'interpretación documentada', 'interpretaciones documentadas') },
+    { href: '#escuchar', count: march.listenings.length, label: metricLabel(march.listenings.length, 'escucha disponible', 'escuchas disponibles') },
+    { href: '#discografia', count: march.discographyHistory.length, label: metricLabel(march.discographyHistory.length, 'aparición discográfica', 'apariciones discográficas') },
+  ].filter((metric) => metric.count > 0)
 
   return (
     <div
       className={styles.page}
       style={{
-        '--brotherhood-primary': '#102943',
-        '--brotherhood-secondary': '#c99f49',
-        '--brotherhood-dark': '#08131f',
+        '--march-primary': palette.primario || '#102943',
+        '--march-secondary': palette.secundario || '#C99F49',
+        '--march-dark': palette.oscuro || '#08131F',
       }}
     >
       <JsonLd data={breadcrumbJsonLd([
@@ -153,7 +151,6 @@ export default async function MarchDetailPage({ params }) {
         <div className={`shell ${styles.heroShell}`}>
           <SiteBreadcrumb
             items={[
-              { label: 'Inicio', href: '/' },
               { label: 'Marchas', href: '/marchas' },
               { label: march.name },
             ]}
@@ -169,66 +166,59 @@ export default async function MarchDetailPage({ params }) {
             </h1>
             {march.summary ? <p>{march.summary}</p> : null}
           </div>
-          <div className={styles.metrics}>
-            <div><strong>{march.documentedPerformances}</strong><span>{metricLabel(march.documentedPerformances, 'interpretación documentada', 'interpretaciones documentadas')}</span></div>
-            <div><strong>{march.repertoireHistory.length}</strong><span>{metricLabel(march.repertoireHistory.length, 'cruceta relacionada', 'crucetas relacionadas')}</span></div>
-            <div><strong>{march.listenings.length}</strong><span>{metricLabel(march.listenings.length, 'escucha disponible', 'escuchas disponibles')}</span></div>
-            <div><strong>{march.discographyHistory.length}</strong><span>{metricLabel(march.discographyHistory.length, 'aparición discográfica', 'apariciones discográficas')}</span></div>
-          </div>
+          {metrics.length ? (
+            <nav className={styles.metrics} aria-label="Contenido de la ficha">
+              {metrics.map((metric) => (
+                <a href={metric.href} key={metric.href}><strong>{metric.count}</strong><span>{metric.label}</span></a>
+              ))}
+            </nav>
+          ) : null}
         </div>
       </header>
 
       <EntityLastUpdated value={march.updatedAt} variant="bar" />
 
       <EntitySectionNav items={[
-        { href: '#resumen', label: 'Ficha musical' },
-        marchThreadItems.length > 0 && { href: '#tira-del-hilo', label: 'Conexiones' },
+        identityBlocks > 0 && { href: '#resumen', label: 'Ficha musical' },
         march.listenings.length > 0 && { href: '#escuchar', label: 'Escuchar' },
         march.repertoireHistory.length > 0 && { href: '#crucetas', label: 'Crucetas' },
         march.discographyHistory.length > 0 && { href: '#discografia', label: 'Discografía' },
       ]} />
 
-      <section className={styles.identitySection} id="resumen">
-        <div className={`shell ${styles.identityGrid}`}>
-          <article>
-            <span>Ficha musical</span>
-            <dl>
-              {march.compositionYear ? <div><dt>Composición</dt><dd>{march.compositionYear}</dd></div> : null}
-              {march.musicType ? <div><dt>Formación</dt><dd>{march.musicType}</dd></div> : null}
-              {march.premiere ? <div><dt>Estreno</dt><dd>{march.premiere}</dd></div> : null}
-              {march.premiereBand ? <div><dt>Estrenada por</dt><dd>{march.premiereBand.href ? <Link href={march.premiereBand.href}>{march.premiereBand.name}</Link> : march.premiereBand.name}</dd></div> : null}
-            </dl>
-          </article>
-          <article>
-            <span>Autoría</span>
+      {identityBlocks ? (
+        <section className={styles.identitySection} id="resumen">
+          <div className={`shell ${styles.identityGrid}`} data-blocks={identityBlocks}>
+            {hasFicha ? (
+              <article>
+                <span>Ficha musical</span>
+                <dl>
+                  {march.compositionYear ? <div><dt>Composición</dt><dd>{march.compositionYear}</dd></div> : null}
+                  {march.musicType ? <div><dt>Formación</dt><dd>{march.musicType}</dd></div> : null}
+                  {march.premiere ? <div><dt>Estreno</dt><dd>{march.premiere}</dd></div> : null}
+                  {march.premiereBand ? <div><dt>Estrenada por</dt><dd>{march.premiereBand.href ? <Link href={march.premiereBand.href}>{march.premiereBand.name}</Link> : march.premiereBand.name}</dd></div> : null}
+                </dl>
+              </article>
+            ) : null}
             {march.authors.length ? (
-              <ul>{march.authors.map((author) => <li key={`${author.id}-${author.role}`}><small>{AUTHOR_LABELS[author.role] || 'Autoría'}</small><strong>{author.href ? <Link href={author.href}>{author.name}</Link> : author.name}</strong></li>)}</ul>
-            ) : <p>Autoría todavía no documentada.</p>}
-          </article>
-          <article>
-            <span>Dedicatoria</span>
+              <article>
+                <span>Autoría</span>
+                <ul>{march.authors.map((author) => <li key={`${author.id}-${author.role}`}><small>{AUTHOR_LABELS[author.role] || 'Autoría'}</small><strong>{author.href ? <Link href={author.href}>{author.name}</Link> : author.name}</strong></li>)}</ul>
+              </article>
+            ) : null}
             {march.dedications.length ? (
-              <ul>{march.dedications.map((dedication, index) => <li key={`${dedication.id}-${index}`}><small>{dedication.date || 'Dedicada a'}</small><strong>{dedication.href ? <Link href={dedication.href}>{dedication.name}</Link> : dedication.name}</strong>{dedication.text && dedication.text !== dedication.name ? <p>{dedication.text}</p> : null}</li>)}</ul>
-            ) : <p>Sin dedicatoria documentada en las fuentes publicadas.</p>}
-          </article>
-        </div>
-      </section>
-
-      <RelationalThread
-        currentLabel="Marcha"
-        currentName={march.name}
-        currentMeta={[march.compositionYear, march.musicType].filter(Boolean).join(' · ')}
-        items={marchThreadItems}
-        priorityProfile="marcha"
-        eyebrow="Descubre el hilo"
-        title="Conexiones de esta Marcha"
-        description="Continúa por su compositor, dedicatorias, bandas, crucetas y presencia discográfica. Cada vínculo parte de datos ya documentados en Hilo Cofrade."
-      />
+              <article>
+                <span>{march.dedications.length === 1 ? 'Dedicatoria' : 'Dedicatorias'}</span>
+                <ul>{march.dedications.map((dedication, index) => <li key={`${dedication.id}-${index}`}><small>{dedication.date || 'Dedicada a'}</small><strong>{dedication.href ? <Link href={dedication.href}>{dedication.name}</Link> : dedication.name}</strong>{dedication.text && dedication.text !== dedication.name ? <p>{dedication.text}</p> : null}</li>)}</ul>
+              </article>
+            ) : null}
+          </div>
+        </section>
+      ) : null}
 
       {march.listenings.length ? (
         <section className={styles.listenSection} id="escuchar">
           <div className="shell">
-            <header className={styles.sectionHeading}><span>Archivo sonoro</span><h2>Escuchar la marcha</h2><p>Grabaciones y pistas enlazadas con esta obra.</p></header>
+            <header className={styles.sectionHeading}><h2>Escuchar la marcha</h2></header>
             <div className={styles.listenGrid}>
               {march.listenings.map((listening) => (
                 <article className={styles.listenCard} key={listening.url}>
@@ -257,23 +247,18 @@ export default async function MarchDetailPage({ params }) {
       {march.repertoireHistory.length ? (
         <section className={styles.historySection} id="crucetas">
           <div className="shell">
-            <header className={styles.sectionHeading}><span>Marcha → procesión → banda</span><h2>Interpretada en</h2><p>Presencia documentada en las crucetas musicales publicadas.</p></header>
+            <header className={styles.sectionHeading}><h2>Interpretada en</h2></header>
             <div className={styles.historyList}>
-              {march.repertoireHistory.map((item) => (
-                <article key={item.id}>
-                  <div className={styles.historyDate}><strong>{item.year}</strong><span>{dateLabel(item.date)}</span></div>
-                  <div className={styles.historyCopy}>
-                    <h3><Link href={item.repertoireHref}>{item.outingTitle} <span aria-hidden="true">→</span></Link></h3>
-                    <p>{item.brotherhood?.href ? <Link href={item.brotherhood.href}>{item.brotherhood.name}</Link> : item.brotherhood?.name}</p>
-                    <small>
-                      {item.band?.href ? <Link href={item.band.href}>{item.band.name}</Link> : item.band?.name}
-                      {item.step?.name ? <> · {item.step.href ? <Link href={item.step.href}>{item.step.name}</Link> : item.step.name}</> : null}
-                    </small>
-                  </div>
-                  <strong className={styles.playCount}>{countLabel(item.count)}</strong>
-                </article>
-              ))}
+              {crucetasVisible.map((item) => <CrucetaRow item={item} key={item.id} />)}
             </div>
+            {crucetasFolded.length ? (
+              <details className={styles.fold}>
+                <summary>{crucetasFolded.length === 1 ? 'Otra cruceta' : `Otras ${crucetasFolded.length} crucetas`}<b aria-hidden="true">+</b></summary>
+                <div className={styles.historyList}>
+                  {crucetasFolded.map((item) => <CrucetaRow item={item} key={item.id} />)}
+                </div>
+              </details>
+            ) : null}
           </div>
         </section>
       ) : null}
@@ -281,19 +266,18 @@ export default async function MarchDetailPage({ params }) {
       {march.discographyHistory.length ? (
         <section className={styles.discographySection} id="discografia">
           <div className="shell">
-            <header className={styles.sectionHeading}><span>Marcha → disco → banda</span><h2>En la discografía</h2><p>Trabajos publicados donde esta obra figura como pista documentada.</p></header>
+            <header className={styles.sectionHeading}><h2>En la discografía</h2></header>
             <div className={styles.discographyList}>
-              {march.discographyHistory.map((item) => (
-                <article key={item.id}>
-                  <div className={styles.discographyYear}><strong>{item.year || '—'}</strong><span>Edición</span></div>
-                  <div>
-                    <h3>{item.bandDiscographyHref ? <Link href={item.bandDiscographyHref}>{item.title} <span aria-hidden="true">→</span></Link> : item.title}</h3>
-                    {item.band?.name ? <p>{item.band.href ? <Link href={item.band.href}>{item.band.name}</Link> : item.band.name}</p> : null}
-                  </div>
-                  {item.spotifyUrl ? <a className={styles.spotifyLink} href={item.spotifyUrl} target="_blank" rel="noopener noreferrer">Spotify ↗</a> : null}
-                </article>
-              ))}
+              {discography.recent.map((item) => <DiscographyRow item={item} key={item.id} />)}
             </div>
+            {discography.groups.map((group) => (
+              <details className={styles.fold} key={group.key}>
+                <summary>{group.label}<small>{group.releases.length} {group.releases.length === 1 ? 'trabajo' : 'trabajos'}</small><b aria-hidden="true">+</b></summary>
+                <div className={styles.discographyList}>
+                  {group.releases.map((item) => <DiscographyRow item={item} key={item.id} />)}
+                </div>
+              </details>
+            ))}
           </div>
         </section>
       ) : null}
