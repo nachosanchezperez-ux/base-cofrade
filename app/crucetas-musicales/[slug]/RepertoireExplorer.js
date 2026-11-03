@@ -29,19 +29,34 @@ function AuthorList({ authors, fallback }) {
   ))
 }
 
-export default function RepertoireExplorer({ entries }) {
+const SORTS = [
+  ['source', 'Orden de la fuente'],
+  ['most', 'Más interpretadas'],
+  ['az', 'A–Z'],
+]
+
+function entryKey(entry) {
+  return entry.marchId || `titulo:${String(entry.title || '').toLowerCase()}`
+}
+
+export default function RepertoireExplorer({ entries, habitualIds = [], bandName = '' }) {
   const [filter, setFilter] = useState('all')
+  const [sort, setSort] = useState('source')
+  const habitual = useMemo(() => new Set(habitualIds), [habitualIds])
   const hasListening = entries.some((entry) => entry.listening)
   const hasRepeated = entries.some((entry) => entry.isRepeated)
   const [query, setQuery] = useState('')
   const visible = useMemo(() => {
     const needle = normalize(query.trim())
-    return entries.filter((entry) => {
+    const filtered = entries.filter((entry) => {
       const matchesFilter = filter === 'all' || (filter === 'listening' && entry.listening) || (filter === 'repeated' && entry.isRepeated)
       const matchesQuery = !needle || normalize(`${entry.title} ${authorNames(entry)}`).includes(needle)
       return matchesFilter && matchesQuery
     })
-  }, [entries, filter, query])
+    if (sort === 'most') return [...filtered].sort((first, second) => second.count - first.count || first.displayOrder - second.displayOrder)
+    if (sort === 'az') return [...filtered].sort((first, second) => first.title.localeCompare(second.title, 'es'))
+    return filtered
+  }, [entries, filter, query, sort])
 
   return (
     <>
@@ -53,6 +68,11 @@ export default function RepertoireExplorer({ entries }) {
             {hasRepeated ? <button className={filter === 'repeated' ? styles.activeChip : ''} aria-pressed={filter === 'repeated'} onClick={() => setFilter('repeated')} type="button">Repetidas</button> : null}
           </div>
         ) : null}
+        <label className={styles.repertoireSort}><span>Ordenar</span>
+          <select value={sort} onChange={(event) => setSort(event.target.value)}>
+            {SORTS.map(([value, label]) => <option value={value} key={value}>{label}</option>)}
+          </select>
+        </label>
         <label className={styles.repertoireSearch}><span>Buscar marcha o autor</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Título o autor" type="search" /></label>
       </div>
       <p className={styles.visibleWorks} aria-live="polite">{visible.length} {visible.length === 1 ? 'entrada visible' : 'entradas visibles'}</p>
@@ -61,7 +81,14 @@ export default function RepertoireExplorer({ entries }) {
           <article className={styles.workCard} key={entry.id}>
             <div className={styles.note} aria-hidden="true">♪</div>
             <div className={styles.workCopy}>
-              <div className={styles.workTitle}><span>{entry.workType || 'Marcha vinculada'}{entry.compositionYear ? ` · ${entry.compositionYear}` : ''}</span><h3>{entry.marchHref ? <Link href={entry.marchHref}>{entry.title} <b aria-hidden="true">→</b></Link> : entry.title}</h3></div>
+              <div className={styles.workTitle}><span>{entry.workType || 'Marcha vinculada'}{entry.compositionYear ? ` · ${entry.compositionYear}` : ''}</span><h3>{entry.marchHref ? <Link href={entry.marchHref}>{entry.title} <b aria-hidden="true">→</b></Link> : entry.title}</h3>
+                {entry.isPremiere || entry.isNewThisYear || entry.isDedicatedToBrotherhood || habitual.has(entryKey(entry)) ? (
+                  <p className={styles.workTags}>
+                    {entry.isPremiere ? <em className={styles.workTag}>Estreno</em> : entry.isNewThisYear ? <em className={styles.workTag}>Nueva</em> : null}
+                    {entry.isDedicatedToBrotherhood ? <em className={styles.workTag}>Dedicada a esta Hermandad</em> : null}
+                    {habitual.has(entryKey(entry)) ? <em className={styles.workTag} title={`Suena en casi todas las crucetas de ${bandName}`}>Habitual de la banda</em> : null}
+                  </p>
+                ) : null}</div>
               <dl className={styles.workRelations}>
                 <div><dt>Autoría</dt><dd><AuthorList authors={entry.authors} fallback={entry.credit} /></dd>{secondaryAuthors(entry).map((author) => <small key={`${entry.id}-${author.id}`}>{author.role === 'adapter' ? 'Adaptación' : author.role === 'lyricist' ? 'Letra' : 'Autoría'}: {author.name}</small>)}</div>
                 {entry.dedications.length ? <div><dt>Dedicatoria</dt><dd>{entry.dedications.map((dedication, index) => <span key={`${dedication.id}-${index}`}>{index ? ' · ' : ''}{dedication.href ? <Link href={dedication.href}>{dedication.name}</Link> : dedication.name}</span>)}</dd></div> : null}

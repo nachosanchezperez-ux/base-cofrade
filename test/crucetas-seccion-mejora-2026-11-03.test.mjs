@@ -47,7 +47,7 @@ test('la ficha no enlaza a una Hermandad no pública ni repite la Banda', () => 
   const explorer = read('../app/crucetas-musicales/[slug]/RepertoireExplorer.js')
   assert.match(detail, /repertoire\.brotherhood\.href \? \(/)
   assert.doesNotMatch(detail, /<span aria-label="Banda">/)
-  assert.match(detail, /relatedRepertoires/)
+  assert.match(detail, /repertoireContext/)
   assert.match(detail, /Más crucetas/)
   assert.match(explorer, /hasListening \?/)
   assert.match(explorer, /hasRepeated \?/)
