@@ -1030,3 +1030,11 @@ details.insightBlock summary span { color: #736d64; font-size: 13px; line-height
   }
   .sourceCard h2 { font-size: 24px; }
 }
+
+/* La tipografía global (#hc-app > main … h2) agranda los h2 de página; los
+   rótulos de mes son de agrupación y deben quedar por debajo de las tarjetas. */
+:global(#hc-app) .directory:not(:global(#hc-panel)) .monthHeading {
+  font-size: 15px;
+  line-height: 1.3;
+  letter-spacing: var(--tracking-card);
+}

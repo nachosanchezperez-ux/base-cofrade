@@ -50,7 +50,7 @@ export default function CrucetasDirectory({ repertoires }) {
       <div className={`${styles.directoryToolbar} ${years.length > 1 ? '' : styles.directoryToolbarCompact}`}>
         <label className={styles.searchField}>
           <span>Buscar Hermandad, Banda o Marcha</span>
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Ej. San Gonzalo, Santa Ana o Amarguras" type="search" />
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Ej. San Gonzalo o Amarguras" type="search" />
         </label>
         {years.length > 1 ? (
           <label className={styles.filterField}>
