@@ -36,7 +36,8 @@ test('la ficha pública de Marcha devuelve el hilo hacia las crucetas', () => {
   assert.match(marchLoader, /from\('musical_repertoire_entries'\)/)
   assert.match(marchLoader, /repertoireHistory/)
   assert.match(marchLoader, /documentedPerformances/)
-  assert.match(marchDetail, /Marcha → procesión → banda/)
+  // Sin coletillas de sección (decisión 19/10/2026).
+  assert.doesNotMatch(marchDetail, /Marcha → procesión → banda/)
   assert.match(marchDetail, /Interpretada en/)
   assert.match(marchDetail, /Escuchar la marcha/)
   assert.match(marchDetail, /metricLabel\(march\.documentedPerformances, 'interpretación documentada', 'interpretaciones documentadas'\)/)

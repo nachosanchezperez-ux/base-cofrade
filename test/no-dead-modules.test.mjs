@@ -18,6 +18,10 @@ const PENDING_REVIEW = new Set([
   'components/AgendaCofradeNavFromUrl.js',
   'components/BrotherhoodSeatSection.js',
   'components/HermandadesDirectory.js',
+  // La ficha de Marcha era su último uso (04/11/2026). Se retira con su
+  // cliente, estilos, lib/relational-thread y relational-presence en una PR
+  // de limpieza aparte, para no mezclarla con el cambio visible.
+  'components/RelationalThread.js',
   'components/RelatedExtraordinaryOutings.js',
   'lib/brotherhood-source-import-plan.js',
   'lib/home-temporal-complement.js',
