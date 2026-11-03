@@ -1,4 +1,5 @@
 import { agendaEventPerformers, agendaEventSeoDescription, agendaEventSeoTitle, hasPublishedRoute } from '@/lib/agenda-event-seo'
+import OutingRepertoireLinks from '@/components/OutingRepertoireLinks'
 import Image from 'next/image'
 import { isActOnStreet } from '@/lib/procession-live-status'
 import Link from 'next/link'
@@ -447,6 +448,7 @@ export default async function ExtraordinaryDetailPage({ params }) {
               <p>Bandas y formaciones que acompañan la salida, diferenciadas por tramo cuando está documentado.</p>
             </header>
             <MusicRows items={item.processionalMusic} />
+            <OutingRepertoireLinks outingId={item.id} />
           </section>
         ) : null}
 

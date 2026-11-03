@@ -1,0 +1,29 @@
+.links { display: grid; gap: 8px; margin-top: 16px; }
+.link {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid #ddd6cc;
+  border-radius: 12px;
+  color: #211f1b;
+  background: #fff;
+  text-decoration: none;
+  transition: border-color .18s ease, transform .18s ease;
+}
+.link:hover { border-color: #112339; transform: translateY(-1px); }
+.link:focus-visible { outline: 2px solid #112339; outline-offset: 3px; }
+.link > span:first-child {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: #112339;
+  font-size: 15px;
+}
+.link strong { display: block; font-size: 15px; line-height: 1.25; }
+.link small { display: block; margin-top: 2px; color: #736d64; font-size: 12px; line-height: 1.4; }
+.link b { color: #112339; }
