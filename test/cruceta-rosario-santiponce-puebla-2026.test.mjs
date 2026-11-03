@@ -24,7 +24,7 @@ test('las dos láminas conservan 31 obras, 33 interpretaciones y solo dos multip
 })
 
 test('la nueva presentación escala con búsqueda, filtros y obras distintas reales', () => {
-  assert.match(directory, /Buscar Hermandad o Banda/)
+  assert.match(directory, /Buscar Hermandad, Banda o Marcha/)
   assert.match(directory, />Municipio</)
   assert.match(explorer, />Con escucha</)
   assert.match(explorer, />Repetidas</)
