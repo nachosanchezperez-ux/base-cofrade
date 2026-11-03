@@ -5,7 +5,7 @@ import styles from './crucetas.module.css'
 // Escudo de la banda sobre su color de fondo (el del Panel; blanco si no hay),
 // para que se lea igual en una tarjeta clara que en la cabecera oscura.
 // Sin escudo no se pinta nada: ni hueco ni icono de relleno.
-export default function BandCrest({ band, size = 44, className = '' }) {
+export default function BandCrest({ band, size = 52, className = '' }) {
   if (!band?.logoPath) return null
   const background = normalizeLogoBackgroundColor(band.logoBackground) || '#FFFFFF'
 
