@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
@@ -9,27 +8,13 @@ import { getMusicalRepertoires } from '@/lib/supabase/public-directory-cache'
 import { absoluteUrl, breadcrumbJsonLd, compactSeoTitle, socialMetadata } from '@/lib/seo'
 import styles from '../crucetas.module.css'
 import RepertoireExplorer from './RepertoireExplorer'
+import BandCrest from '../BandCrest'
 import { plural } from '@/lib/plural'
 import { isPreservedAgendaEventPath } from '@/lib/agenda-event-url-policy'
 import { bandHabitualMarchIds, compareEditions, previousEdition } from '@/lib/musical-repertoires/insights'
 
 export const dynamic = 'force-static'
 export const revalidate = 900
-
-function BandLogo({ band, size = 36 }) {
-  if (!band?.logoPath) return <span aria-hidden="true">♪</span>
-
-  return (
-    <Image
-      src={band.logoPath}
-      alt=""
-      width={size}
-      height={size}
-      sizes={`${size}px`}
-      style={{ width: size, height: size, objectFit: 'contain', display: 'block' }}
-    />
-  )
-}
 
 // Otras crucetas de la misma Banda o de la misma Hermandad: el hilo musical
 // sigue sin salir de la sección. Un fallo aquí nunca debe tumbar la ficha.
@@ -139,8 +124,8 @@ export default async function MusicalRepertoireDetailPage({ params }) {
               </div>
               <h1>{repertoire.displayTitle}</h1>
               {repertoire.band.href ? (
-                <Link className={styles.heroBand} href={repertoire.band.href}>
-                  <BandLogo band={repertoire.band} size={38} />
+                <Link className={`${styles.heroBand} ${repertoire.band.logoPath ? '' : styles.heroBandNoCrest}`} href={repertoire.band.href}>
+                  <BandCrest band={repertoire.band} size={42} />
                   <span className={styles.heroBandCopy}><small>Cruceta de</small><strong>{repertoire.band.name}</strong></span>
                   <b aria-hidden="true">→</b>
                 </Link>
@@ -219,7 +204,8 @@ export default async function MusicalRepertoireDetailPage({ params }) {
             <h2 id="mas-crucetas">Más crucetas</h2>
             <div className={styles.directoryGrid}>
               {related.map((item) => (
-                <article className={styles.directoryCard} key={item.id} style={{ '--repertoire-primary': item.colors.primary, '--repertoire-accent': item.colors.accent }}>
+                <article className={`${styles.directoryCard} ${item.band.logoPath ? styles.withCrest : ''}`} key={item.id} style={{ '--repertoire-primary': item.colors.primary, '--repertoire-accent': item.colors.accent }}>
+                  <BandCrest band={item.band} className={styles.cardCrest} />
                   <div className={styles.cardTopline}>
                     <time dateTime={item.date}>{musicalRepertoireShortDate(item.date) || item.year}</time>
                     {item.outing.type ? <span>{item.outing.type}</span> : null}
