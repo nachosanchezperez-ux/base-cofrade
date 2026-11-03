@@ -10,6 +10,7 @@ import { absoluteUrl, breadcrumbJsonLd, compactSeoTitle, socialMetadata } from '
 import styles from '../crucetas.module.css'
 import RepertoireExplorer from './RepertoireExplorer'
 import { plural } from '@/lib/plural'
+import { bandHabitualMarchIds, compareEditions, previousEdition } from '@/lib/musical-repertoires/insights'
 
 export const dynamic = 'force-static'
 export const revalidate = 900
@@ -31,17 +32,22 @@ function BandLogo({ band, size = 36 }) {
 
 // Otras crucetas de la misma Banda o de la misma Hermandad: el hilo musical
 // sigue sin salir de la sección. Un fallo aquí nunca debe tumbar la ficha.
-async function relatedRepertoires(repertoire) {
+async function repertoireContext(repertoire) {
   try {
     const all = await getMusicalRepertoires()
-    return all
+    const related = all
       .filter((item) => item.id !== repertoire.id && (
         (repertoire.band.id && item.band.id === repertoire.band.id)
         || (repertoire.brotherhood.id && item.brotherhood.id === repertoire.brotherhood.id)
       ))
       .slice(0, 6)
+    return {
+      related,
+      habitualIds: [...bandHabitualMarchIds(all, repertoire.band.id)],
+      comparison: compareEditions(repertoire, previousEdition(repertoire, all)),
+    }
   } catch {
-    return []
+    return { related: [], habitualIds: [], comparison: null }
   }
 }
 
@@ -56,7 +62,8 @@ export async function generateMetadata({ params }) {
   return {
     title,
     description,
-    ...socialMetadata({ title, description, path: repertoire.href }),
+    // images: null → la imagen propia de opengraph-image.js (colores de la Hermandad).
+    ...socialMetadata({ title, description, path: repertoire.href, images: null }),
   }
 }
 
@@ -67,7 +74,7 @@ export default async function MusicalRepertoireDetailPage({ params }) {
 
   const stepHref = repertoire.step?.slug ? `/pasos/${repertoire.step.slug}` : ''
   const listenableCount = repertoire.entries.filter((entry) => entry.listening).length
-  const related = await relatedRepertoires(repertoire)
+  const { related, habitualIds, comparison } = await repertoireContext(repertoire)
   const heroContext = [
     repertoire.outing.type,
     repertoire.municipality?.name,
@@ -173,7 +180,16 @@ export default async function MusicalRepertoireDetailPage({ params }) {
             <p>La cifra indica cuántas veces fue interpretada cada obra según la información facilitada. No se deduce el orden, el lugar ni si las interpretaciones fueron consecutivas.</p>
           </header>
 
-          <RepertoireExplorer entries={repertoire.entries} />
+          {comparison && (comparison.entered.length || comparison.left.length) ? (
+            <aside className={styles.comparison} aria-label={`Respecto a ${comparison.previous.year}`}>
+              <h3>Respecto a <Link href={comparison.previous.href}>{comparison.previous.year}</Link></h3>
+              <p>{comparison.sameBand ? `Misma banda. Repiten ${comparison.kept} obras.` : `Cambio de banda: en ${comparison.previous.year} acompañó ${comparison.previous.band}.`}</p>
+              {comparison.entered.length ? <p><strong>Entran:</strong> {comparison.entered.map((item) => item.title).join(' · ')}</p> : null}
+              {comparison.left.length ? <p><strong>Salen:</strong> {comparison.left.map((item) => item.title).join(' · ')}</p> : null}
+            </aside>
+          ) : null}
+
+          <RepertoireExplorer entries={repertoire.entries} habitualIds={habitualIds} bandName={repertoire.band.name} />
         </div>
       </section>
 
