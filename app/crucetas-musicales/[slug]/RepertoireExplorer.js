@@ -31,6 +31,8 @@ function AuthorList({ authors, fallback }) {
 
 export default function RepertoireExplorer({ entries }) {
   const [filter, setFilter] = useState('all')
+  const hasListening = entries.some((entry) => entry.listening)
+  const hasRepeated = entries.some((entry) => entry.isRepeated)
   const [query, setQuery] = useState('')
   const visible = useMemo(() => {
     const needle = normalize(query.trim())
@@ -44,11 +46,13 @@ export default function RepertoireExplorer({ entries }) {
   return (
     <>
       <div className={styles.repertoireTools}>
-        <div className={styles.filterChips} aria-label="Filtrar repertorio">
-          <button className={filter === 'all' ? styles.activeChip : ''} onClick={() => setFilter('all')} type="button">Todas</button>
-          <button className={filter === 'listening' ? styles.activeChip : ''} onClick={() => setFilter('listening')} type="button">Con escucha</button>
-          <button className={filter === 'repeated' ? styles.activeChip : ''} onClick={() => setFilter('repeated')} type="button">Repetidas</button>
-        </div>
+        {hasListening || hasRepeated ? (
+          <div className={styles.filterChips} role="group" aria-label="Filtrar repertorio">
+            <button className={filter === 'all' ? styles.activeChip : ''} aria-pressed={filter === 'all'} onClick={() => setFilter('all')} type="button">Todas</button>
+            {hasListening ? <button className={filter === 'listening' ? styles.activeChip : ''} aria-pressed={filter === 'listening'} onClick={() => setFilter('listening')} type="button">Con escucha</button> : null}
+            {hasRepeated ? <button className={filter === 'repeated' ? styles.activeChip : ''} aria-pressed={filter === 'repeated'} onClick={() => setFilter('repeated')} type="button">Repetidas</button> : null}
+          </div>
+        ) : null}
         <label className={styles.repertoireSearch}><span>Buscar marcha o autor</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Título o autor" type="search" /></label>
       </div>
       <p className={styles.visibleWorks} aria-live="polite">{visible.length} {visible.length === 1 ? 'entrada visible' : 'entradas visibles'}</p>

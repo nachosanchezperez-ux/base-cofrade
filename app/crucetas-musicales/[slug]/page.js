@@ -3,8 +3,9 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
-import { musicalRepertoireDateLabel } from '@/lib/musical-repertoires/presentation'
+import { musicalRepertoireDateLabel, musicalRepertoireShortDate } from '@/lib/musical-repertoires/presentation'
 import { getMusicalRepertoireBySlug } from '@/lib/supabase/musical-repertoires'
+import { getMusicalRepertoires } from '@/lib/supabase/public-directory-cache'
 import { absoluteUrl, breadcrumbJsonLd, compactSeoTitle, socialMetadata } from '@/lib/seo'
 import styles from '../crucetas.module.css'
 import RepertoireExplorer from './RepertoireExplorer'
@@ -26,6 +27,22 @@ function BandLogo({ band, size = 36 }) {
       style={{ width: size, height: size, objectFit: 'contain', display: 'block' }}
     />
   )
+}
+
+// Otras crucetas de la misma Banda o de la misma Hermandad: el hilo musical
+// sigue sin salir de la sección. Un fallo aquí nunca debe tumbar la ficha.
+async function relatedRepertoires(repertoire) {
+  try {
+    const all = await getMusicalRepertoires()
+    return all
+      .filter((item) => item.id !== repertoire.id && (
+        (repertoire.band.id && item.band.id === repertoire.band.id)
+        || (repertoire.brotherhood.id && item.brotherhood.id === repertoire.brotherhood.id)
+      ))
+      .slice(0, 6)
+  } catch {
+    return []
+  }
 }
 
 export async function generateMetadata({ params }) {
@@ -50,6 +67,12 @@ export default async function MusicalRepertoireDetailPage({ params }) {
 
   const stepHref = repertoire.step?.slug ? `/pasos/${repertoire.step.slug}` : ''
   const listenableCount = repertoire.entries.filter((entry) => entry.listening).length
+  const related = await relatedRepertoires(repertoire)
+  const heroContext = [
+    repertoire.outing.type,
+    repertoire.municipality?.name,
+    repertoire.moment ? musicalRepertoireDateLabel(repertoire.date) : '',
+  ].filter(Boolean).join(' · ')
 
   return (
     <div
@@ -68,7 +91,7 @@ export default async function MusicalRepertoireDetailPage({ params }) {
         url: absoluteUrl(repertoire.href),
         numTracks: repertoire.worksCount,
         dateCreated: repertoire.date,
-        byArtist: { '@type': 'MusicGroup', name: repertoire.band.name, url: absoluteUrl(repertoire.band.href) },
+        byArtist: { '@type': 'MusicGroup', name: repertoire.band.name, url: repertoire.band.href ? absoluteUrl(repertoire.band.href) : undefined },
         track: repertoire.entries.map((entry) => ({
           '@type': 'MusicRecording',
           name: entry.title,
@@ -92,17 +115,16 @@ export default async function MusicalRepertoireDetailPage({ params }) {
             <div className={styles.heroCopy}>
               <div className={styles.heroMeta}>
                 <div className={styles.verified}><i aria-hidden="true" /> Repertorio interpretado</div>
-                <span className={styles.heroDate}>{musicalRepertoireDateLabel(repertoire.date)}</span>
+                {heroContext ? <span className={styles.heroDate}>{heroContext}</span> : null}
               </div>
               <h1>{repertoire.displayTitle}</h1>
-              <p>Cruceta de {repertoire.band.name}</p>
               {repertoire.band.href ? (
                 <Link className={styles.heroBand} href={repertoire.band.href}>
                   <BandLogo band={repertoire.band} size={38} />
-                  <strong>{repertoire.band.name}</strong>
+                  <span className={styles.heroBandCopy}><small>Cruceta de</small><strong>{repertoire.band.name}</strong></span>
                   <b aria-hidden="true">→</b>
                 </Link>
-              ) : null}
+              ) : <p>Cruceta de {repertoire.band.name}</p>}
             </div>
           </div>
 
@@ -113,18 +135,15 @@ export default async function MusicalRepertoireDetailPage({ params }) {
         </div>
       </header>
 
-      <section className={styles.relationsSection}>
+      {repertoire.brotherhood.href || repertoire.step ? <section className={styles.relationsSection}>
         <div className={`shell ${styles.relationsGrid}`}>
-          <Link href={repertoire.brotherhood.href}>
-            <span>Hermandad</span>
-            <strong>{repertoire.brotherhood.name}</strong>
-            <small>Consultar ficha <b aria-hidden="true">→</b></small>
-          </Link>
-          <Link href={repertoire.band.href}>
-            <span aria-label="Banda"><BandLogo band={repertoire.band} size={30} /></span>
-            <strong>{repertoire.band.name}</strong>
-            <small>Consultar ficha <b aria-hidden="true">→</b></small>
-          </Link>
+          {repertoire.brotherhood.href ? (
+            <Link href={repertoire.brotherhood.href}>
+              <span>Hermandad</span>
+              <strong>{repertoire.brotherhood.name}</strong>
+              <small>Consultar ficha <b aria-hidden="true">→</b></small>
+            </Link>
+          ) : null}
           {repertoire.step ? (
             stepHref ? (
               <Link href={stepHref}>
@@ -141,7 +160,7 @@ export default async function MusicalRepertoireDetailPage({ params }) {
             )
           ) : null}
         </div>
-      </section>
+      </section> : null}
 
       <section className={styles.repertoireSection}>
         <div className="shell">
@@ -157,6 +176,26 @@ export default async function MusicalRepertoireDetailPage({ params }) {
           <RepertoireExplorer entries={repertoire.entries} />
         </div>
       </section>
+
+      {related.length ? (
+        <section className={styles.relatedSection} aria-labelledby="mas-crucetas">
+          <div className="shell">
+            <h2 id="mas-crucetas">Más crucetas</h2>
+            <div className={styles.directoryGrid}>
+              {related.map((item) => (
+                <article className={styles.directoryCard} key={item.id} style={{ '--repertoire-primary': item.colors.primary, '--repertoire-accent': item.colors.accent }}>
+                  <div className={styles.cardTopline}>
+                    <time dateTime={item.date}>{musicalRepertoireShortDate(item.date) || item.year}</time>
+                    {item.outing.type ? <span>{item.outing.type}</span> : null}
+                  </div>
+                  <h3><Link href={item.href}>{item.identityName || item.displayTitle.split(' · ')[0]}</Link></h3>
+                  <p className={styles.cardBand}>Por <strong>{item.band.name}</strong></p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section className={styles.sourceSection}>
         <div className={`shell ${styles.sourceCard}`}>
