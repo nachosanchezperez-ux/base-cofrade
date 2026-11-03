@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import Link from 'next/link';
 import SectionTitle from './SectionTitle';
 import { publicText } from '@/lib/supabase/public-entity-page';
@@ -48,7 +49,7 @@ function MusicRow({ item, showStyle = true, headingLevel = 4 }) {
       </div>
       <div className={styles.copy}>
         <small className={styles.fieldLabel}>Título</small>
-        <Heading>{item.name}</Heading>
+        <Heading>{item.href ? <Link href={item.href} prefetch={false}>{item.name}</Link> : item.name}</Heading>
         {item.bandRelation?.name ? (
           <div className={styles.bandRelation}>
             <small>{item.bandRelation.label}</small>
@@ -60,7 +61,14 @@ function MusicRow({ item, showStyle = true, headingLevel = 4 }) {
       </div>
       <div className={styles.authorColumn}>
         <small className={styles.fieldLabel}>Compositor</small>
-        {composer ? <strong>{composer}</strong> : null}
+        {item.composers?.some((author) => author.href) ? (
+          <strong>{item.composers.map((author, index) => (
+            <Fragment key={author.slug || author.name}>
+              {index ? ' · ' : null}
+              {author.href ? <Link href={author.href} prefetch={false}>{author.name}</Link> : author.name}
+            </Fragment>
+          ))}</strong>
+        ) : composer ? <strong>{composer}</strong> : null}
         {item.adapters?.length && item.composers?.length ? (
           <span>{item.adapters.map((author) => `${author.label || 'Adaptación'} · ${author.name}`).join(' · ')}</span>
         ) : null}
