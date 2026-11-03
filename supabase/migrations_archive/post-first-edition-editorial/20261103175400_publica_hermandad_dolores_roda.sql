@@ -16,3 +16,15 @@ where id = '061f2c22-c1c8-4f55-8d63-4933bea12efc'
   and entity_type = 'brotherhood'
   and slug = 'hermandad-dolores-roda-andalucia'
   and status = 'draft';
+
+-- Nombre popular (autorizado por Nacho el 04/11/2026: «Dejamos los Dolores de
+-- La Roda de Andalucía»). Aplicado en producción el 04/11/2026 a las 00:22.
+-- Estado previo: popular_name='Hermandad de los Dolores de La Roda de Andalucía'
+-- (igual que official_name, que no cambia).
+-- Recuperación: update public.brotherhoods set popular_name='Hermandad de los Dolores de La Roda de Andalucía'
+--   where entity_id='061f2c22-c1c8-4f55-8d63-4933bea12efc';
+
+update public.brotherhoods
+set popular_name = 'Los Dolores de La Roda de Andalucía'
+where entity_id = '061f2c22-c1c8-4f55-8d63-4933bea12efc'
+  and popular_name = 'Hermandad de los Dolores de La Roda de Andalucía';
