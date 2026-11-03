@@ -222,6 +222,13 @@
 }
 .resultLine strong { color: #28251f; }
 
+.contributeLine {
+  margin: 26px 0 0;
+  color: #736d64;
+  font-size: 14px;
+}
+.contributeLine a { color: #112339; font-weight: var(--font-weight-bold); }
+
 .empty {
   padding: 36px;
   border: 1px solid #d9d2c7;

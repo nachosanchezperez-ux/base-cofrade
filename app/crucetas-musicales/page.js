@@ -1,4 +1,6 @@
+import Link from 'next/link'
 import { connection } from 'next/server'
+import { contributionReadiness } from '@/lib/contributions/security'
 import JsonLd from '@/components/JsonLd'
 import { getMusicalRepertoires } from '@/lib/supabase/public-directory-cache'
 import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo'
@@ -64,6 +66,9 @@ export default async function MusicalRepertoiresDirectoryPage() {
           {repertoires.length ? <CrucetasDirectory repertoires={directoryItems} /> : (
             <p className={styles.empty}>Las primeras crucetas documentadas se publicarán próximamente.</p>
           )}
+          {contributionReadiness().enabled ? (
+            <p className={styles.contributeLine}>¿Tienes el repertorio de otra salida? <Link href="/colabora/cruceta">Envía la cruceta</Link></p>
+          ) : null}
         </div>
       </section>
     </div>
