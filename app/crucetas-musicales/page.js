@@ -26,6 +26,9 @@ export default async function MusicalRepertoiresDirectoryPage() {
     href: item.href,
     year: item.year,
     displayTitle: item.displayTitle,
+    date: item.date,
+    outingType: item.outing.type,
+    marchTitles: item.marchTitles,
     worksCount: item.worksCount,
     performancesCount: item.performancesCount,
     colors: item.colors,
@@ -57,10 +60,6 @@ export default async function MusicalRepertoiresDirectoryPage() {
 
       <section className={styles.directoryList}>
         <div className="shell">
-          <div className={styles.directoryHeading}>
-            <span>Repertorios documentados</span>
-            <strong>{repertoires.length}</strong>
-          </div>
           {repertoires.length ? <CrucetasDirectory repertoires={directoryItems} /> : (
             <p className={styles.empty}>Las primeras crucetas documentadas se publicarán próximamente.</p>
           )}

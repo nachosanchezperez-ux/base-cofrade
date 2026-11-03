@@ -4,9 +4,26 @@ import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import styles from './crucetas.module.css'
 import { plural } from '@/lib/plural'
+import { musicalRepertoireMonthLabel, musicalRepertoireShortDate } from '@/lib/musical-repertoires/presentation'
 
 function normalize(value = '') {
-  return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+  return value.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+}
+
+// El título común es «Hermandad · fecha»: en la tarjeta la fecha ya va arriba.
+function cardName(item) {
+  return item.brotherhood.name || item.displayTitle.split(' · ')[0]
+}
+
+function groupByMonth(items) {
+  const groups = []
+  for (const item of items) {
+    const key = (item.date || '').slice(0, 7) || 'sin-fecha'
+    const last = groups.at(-1)
+    if (last?.key === key) last.items.push(item)
+    else groups.push({ key, label: musicalRepertoireMonthLabel(item.date), items: [item] })
+  }
+  return groups
 }
 
 export default function CrucetasDirectory({ repertoires }) {
@@ -15,30 +32,35 @@ export default function CrucetasDirectory({ repertoires }) {
   const [municipality, setMunicipality] = useState('all')
   const years = useMemo(() => [...new Set(repertoires.map((item) => item.year).filter(Boolean))].sort((a, b) => b - a), [repertoires])
   const municipalities = useMemo(() => [...new Set(repertoires.map((item) => item.municipality?.name).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'es')), [repertoires])
-  const visible = useMemo(() => {
-    const needle = normalize(query.trim())
-    return repertoires.filter((item) => {
-      const haystack = normalize([item.displayTitle, item.band.name, item.brotherhood.name, item.municipality?.name].join(' '))
-      return (!needle || haystack.includes(needle))
-        && (year === 'all' || String(item.year) === year)
-        && (municipality === 'all' || item.municipality?.name === municipality)
+  const needle = normalize(query.trim())
+  const visible = useMemo(() => repertoires
+    .map((item) => {
+      if ((year !== 'all' && String(item.year) !== year) || (municipality !== 'all' && item.municipality?.name !== municipality)) return null
+      if (!needle) return { item, marchMatches: [] }
+      const identity = normalize([item.displayTitle, item.band.name, item.brotherhood.name, item.municipality?.name, item.outingType].join(' '))
+      const marchMatches = (item.marchTitles || []).filter((title) => normalize(title).includes(needle))
+      return identity.includes(needle) || marchMatches.length ? { item, marchMatches } : null
     })
-  }, [municipality, query, repertoires, year])
+    .filter(Boolean), [municipality, needle, repertoires, year])
+  const groups = useMemo(() => groupByMonth(visible.map(({ item }) => item)), [visible])
+  const matchesById = useMemo(() => new Map(visible.map(({ item, marchMatches }) => [item.id, marchMatches])), [visible])
 
   return (
     <>
-      <div className={styles.directoryToolbar}>
+      <div className={`${styles.directoryToolbar} ${years.length > 1 ? '' : styles.directoryToolbarCompact}`}>
         <label className={styles.searchField}>
-          <span>Buscar Hermandad o Banda</span>
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Ej. San Gonzalo o Santa Ana" type="search" />
+          <span>Buscar Hermandad, Banda o Marcha</span>
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Ej. San Gonzalo, Santa Ana o Amarguras" type="search" />
         </label>
-        <label className={styles.filterField}>
-          <span>Año</span>
-          <select value={year} onChange={(event) => setYear(event.target.value)}>
-            <option value="all">Todos</option>
-            {years.map((value) => <option value={value} key={value}>{value}</option>)}
-          </select>
-        </label>
+        {years.length > 1 ? (
+          <label className={styles.filterField}>
+            <span>Año</span>
+            <select value={year} onChange={(event) => setYear(event.target.value)}>
+              <option value="all">Todos</option>
+              {years.map((value) => <option value={value} key={value}>{value}</option>)}
+            </select>
+          </label>
+        ) : null}
         <label className={styles.filterField}>
           <span>Municipio</span>
           <select value={municipality} onChange={(event) => setMunicipality(event.target.value)}>
@@ -52,23 +74,32 @@ export default function CrucetasDirectory({ repertoires }) {
         <strong>{visible.length}</strong> {visible.length === 1 ? 'cruceta encontrada' : 'crucetas encontradas'}
       </div>
 
-      {visible.length ? (
-        <div className={styles.directoryGrid}>
-          {visible.map((item) => (
-            <article className={styles.directoryCard} key={item.id} style={{ '--repertoire-primary': item.colors.primary, '--repertoire-accent': item.colors.accent }}>
-              <div className={styles.cardTopline}><span>Repertorio interpretado</span><strong>{item.year}</strong></div>
-              <h2><Link href={item.href}>{item.displayTitle}</Link></h2>
-              <p className={styles.cardBand}>Por <strong>{item.band.name}</strong></p>
-              <div className={styles.cardContext}>
-                <span>{item.municipality?.name || 'Provincia de Sevilla'}</span>
-                <span>{plural(item.worksCount, 'obra', 'obras')}</span>
-                <span>{plural(item.performancesCount, 'interpretación', 'interpretaciones')}</span>
-              </div>
-              <Link className={styles.cardAction} href={item.href}>Ver cruceta <b aria-hidden="true">→</b></Link>
-            </article>
-          ))}
-        </div>
-      ) : <div className={styles.empty}>No hay crucetas que coincidan con estos filtros.</div>}
+      {groups.length ? groups.map((group) => (
+        <section className={styles.monthGroup} key={group.key} aria-labelledby={`crucetas-${group.key}`}>
+          <h2 className={styles.monthHeading} id={`crucetas-${group.key}`}>{group.label}<small>{group.items.length}</small></h2>
+          <div className={styles.directoryGrid}>
+            {group.items.map((item) => {
+              const marchMatches = matchesById.get(item.id) || []
+              return (
+                <article className={styles.directoryCard} key={item.id} style={{ '--repertoire-primary': item.colors.primary, '--repertoire-accent': item.colors.accent }}>
+                  <div className={styles.cardTopline}>
+                    <time dateTime={item.date}>{musicalRepertoireShortDate(item.date) || item.year}</time>
+                    {item.outingType ? <span>{item.outingType}</span> : null}
+                  </div>
+                  <h3><Link href={item.href}>{cardName(item)}</Link></h3>
+                  <p className={styles.cardBand}>Por <strong>{item.band.name}</strong></p>
+                  {marchMatches.length ? (
+                    <p className={styles.cardMatch}>♪ {marchMatches.slice(0, 2).join(' · ')}{marchMatches.length > 2 ? ` y ${marchMatches.length - 2} más` : ''}</p>
+                  ) : null}
+                  <p className={styles.cardContext}>
+                    {[item.municipality?.name, plural(item.worksCount, 'obra', 'obras'), plural(item.performancesCount, 'interpretación', 'interpretaciones')].filter(Boolean).join(' · ')}
+                  </p>
+                </article>
+              )
+            })}
+          </div>
+        </section>
+      )) : <div className={styles.empty}>No hay crucetas que coincidan con esta búsqueda.</div>}
     </>
   )
 }
