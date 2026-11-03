@@ -83,3 +83,9 @@ test('la cruceta enlaza con la ficha de su salida solo si existe como página', 
   assert.match(detail, /outingHref \? \(/)
   assert.match(read('../lib/supabase/musical-repertoires.js'), /slug: outing\.slug \|\| ''/)
 })
+
+test('Novedades presenta la cruceta con su nombre propio cuando lo tiene', () => {
+  const loader = read('../lib/supabase/platform-updates.js')
+  assert.match(loader, /title, display_name, outing_id/)
+  assert.match(loader, /String\(repertoire\.display_name \|\| ''\)\.trim\(\) \|\| \(brotherhood/)
+})
