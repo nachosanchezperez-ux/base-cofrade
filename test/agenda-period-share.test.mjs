@@ -35,5 +35,5 @@ test('un solo día no repite el día y se recorta con «y N actos más»', () =>
 
 test('la lista del periodo ofrece compartir la agenda entera', () => {
   const list = readFileSync(new URL('../components/AgendaTemporalEventList.js', import.meta.url), 'utf8')
-  assert.match(list, /<ShareActions share=\{periodShare\} contentType="agenda_period"/)
+  assert.match(list, /<ShareActions className=\{styles\.periodShareFull\} share=\{periodShare\} contentType="agenda_period"/)
 })

@@ -1,4 +1,5 @@
 import { agendaEventPerformers, agendaEventSeoDescription, agendaEventSeoTitle, hasPublishedRoute } from '@/lib/agenda-event-seo'
+import OutingRepertoireLinks from '@/components/OutingRepertoireLinks'
 import Image from 'next/image'
 import Link from 'next/link'
 import { cache } from 'react'
@@ -236,6 +237,7 @@ export default async function RosaryDetailPage({ params }) {
                   </div>
                 ))}
               </div>
+              <OutingRepertoireLinks outingId={item.id} />
             </section>
           ) : null}
           {description ? (

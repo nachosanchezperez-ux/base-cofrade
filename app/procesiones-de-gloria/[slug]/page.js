@@ -1,4 +1,5 @@
 import { agendaEventPerformers, agendaEventSeoDescription, agendaEventSeoTitle, hasPublishedRoute } from '@/lib/agenda-event-seo'
+import OutingRepertoireLinks from '@/components/OutingRepertoireLinks'
 import Link from 'next/link'
 import { cache } from 'react'
 import { notFound, permanentRedirect } from 'next/navigation'
@@ -312,6 +313,7 @@ export default async function GloryDetailPage({ params }) {
           ) : (
             <p className={styles.pending}>Acompañamiento musical por confirmar.</p>
           )}
+          <OutingRepertoireLinks outingId={item.id} />
         </section>
 
         <section className={styles.section} aria-labelledby="fuentes-procesion-gloria">

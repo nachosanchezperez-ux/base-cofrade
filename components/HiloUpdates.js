@@ -5,6 +5,9 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { usePathname } from 'next/navigation'
 import styles from './HiloUpdates.module.css'
+import useFollowedBrotherhoods from '@/components/useFollowedBrotherhoods'
+import useFollowedBands from '@/components/useFollowedBands'
+import { isFollowedUpdate } from '@/lib/followed-bands'
 
 const STORAGE_KEY = 'hilo:novedades:seen:v1'
 const MAX_SEEN_REVISIONS = 100
@@ -48,6 +51,10 @@ function normalizeItems(items) {
     cta: typeof item.cta === 'string' ? item.cta.replace(/\s*→\s*$/, '') : '',
     dateTime: typeof item.dateTime === 'string' ? item.dateTime : '',
     dateVerb: item.dateVerb === 'Actualizado' ? 'Actualizado' : 'Añadido',
+    follow: item.follow && typeof item.follow === 'object' ? {
+      brotherhood: typeof item.follow.brotherhood === 'string' ? item.follow.brotherhood : '',
+      band: typeof item.follow.band === 'string' ? item.follow.band : '',
+    } : null,
   }))
 }
 
@@ -77,6 +84,8 @@ export default function HiloUpdates() {
   const [items, setItems] = useState([])
   const [status, setStatus] = useState('loading')
   const [seenRevisions, setSeenRevisions] = useState([])
+  const { followed: followedBrotherhoods } = useFollowedBrotherhoods()
+  const { followed: followedBands } = useFollowedBands()
   const dialogRef = useRef(null)
   const titleRef = useRef(null)
   const triggerRef = useRef(null)
@@ -280,10 +289,11 @@ export default function HiloUpdates() {
           <ol className={styles.list} aria-label="Últimas actualizaciones">
             {items.map((item) => {
               const dateLabel = updateDateLabel(item)
+              const isFollowed = isFollowedUpdate(item, { brotherhoods: followedBrotherhoods, bands: followedBands })
               return (
                 <li key={item.id}>
                   <Link
-                    className={styles.item}
+                    className={`${styles.item} ${isFollowed ? styles.followed : ''}`}
                     href={item.href}
                     prefetch={false}
                     onClick={(event) => {
@@ -291,7 +301,7 @@ export default function HiloUpdates() {
                     }}
                     data-hilo-update-id={item.id}
                   >
-                    <span className={styles.category}>{item.categoryLabel || item.label || 'Actualización'}</span>
+                    <span className={styles.category}>{item.categoryLabel || item.label || 'Actualización'}{isFollowed ? <em className={styles.followedTag}> · De lo que sigues</em> : null}</span>
                     <h3>{item.title}</h3>
                     {item.summary ? <p className={styles.summary}>{item.summary}</p> : null}
                     <span className={styles.itemFooter}>

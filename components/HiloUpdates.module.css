@@ -271,3 +271,7 @@
   .trigger,
   .item { transition: none; }
 }
+
+/* Novedad de una Hermandad o banda que el usuario sigue (solo en su navegador). */
+.followed { box-shadow: inset 3px 0 0 #b01b32; }
+.followedTag { color: #b01b32; font-style: normal; }

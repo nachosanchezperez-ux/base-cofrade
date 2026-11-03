@@ -1,9 +1,13 @@
+import Link from 'next/link'
 import { connection } from 'next/server'
+import { contributionReadiness } from '@/lib/contributions/security'
 import JsonLd from '@/components/JsonLd'
 import { getMusicalRepertoires } from '@/lib/supabase/public-directory-cache'
 import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo'
 import styles from './crucetas.module.css'
 import CrucetasDirectory from './CrucetasDirectory'
+import RepertoireInsights from './RepertoireInsights'
+import { newMarchesOfYear, topMarches } from '@/lib/musical-repertoires/insights'
 
 export const revalidate = 900
 
@@ -21,11 +25,19 @@ export const metadata = {
 export default async function MusicalRepertoiresDirectoryPage() {
   await connection()
   const repertoires = await getMusicalRepertoires()
+  const latestYear = Math.max(0, ...repertoires.map((item) => Number(item.year) || 0)) || null
+  const seasonRepertoires = latestYear ? repertoires.filter((item) => Number(item.year) === latestYear) : repertoires
+  const mostPlayed = topMarches(seasonRepertoires, { limit: 5 })
+  const newMarches = latestYear ? newMarchesOfYear(repertoires, latestYear) : []
   const directoryItems = repertoires.map((item) => ({
     id: item.id,
     href: item.href,
     year: item.year,
     displayTitle: item.displayTitle,
+    identityName: item.identityName,
+    date: item.date,
+    outingType: item.outing.type,
+    marchTitles: item.marchTitles,
     worksCount: item.worksCount,
     performancesCount: item.performancesCount,
     colors: item.colors,
@@ -55,15 +67,21 @@ export default async function MusicalRepertoiresDirectoryPage() {
         </div>
       </header>
 
+      <RepertoireInsights
+        year={latestYear}
+        totalRepertoires={seasonRepertoires.length}
+        mostPlayed={mostPlayed}
+        newMarches={newMarches}
+      />
+
       <section className={styles.directoryList}>
         <div className="shell">
-          <div className={styles.directoryHeading}>
-            <span>Repertorios documentados</span>
-            <strong>{repertoires.length}</strong>
-          </div>
           {repertoires.length ? <CrucetasDirectory repertoires={directoryItems} /> : (
             <p className={styles.empty}>Las primeras crucetas documentadas se publicarán próximamente.</p>
           )}
+          {contributionReadiness().enabled ? (
+            <p className={styles.contributeLine}>¿Tienes el repertorio de otra salida? <Link href="/colabora/cruceta">Envía la cruceta</Link></p>
+          ) : null}
         </div>
       </section>
     </div>

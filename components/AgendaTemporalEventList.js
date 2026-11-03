@@ -6,8 +6,8 @@ import AgendaEventThread from '@/components/AgendaEventThread'
 import AgendaFollowedInPeriod from '@/components/AgendaFollowedInPeriod'
 import { agendaItemBrotherhoodSlugs } from '@/lib/followed-brotherhoods'
 import { agendaItemShare, agendaPeriodShare } from '@/lib/share'
-import { agendaEventAnchor, scheduleTimeHint } from '@/lib/agenda-event-presentation'
-import { agendaThreadLinks, repeatsPlace } from '@/lib/agenda-event-relations'
+import { agendaDisplayTitle, agendaEventAnchor, agendaRowStatus, scheduleTimeHint } from '@/lib/agenda-event-presentation'
+import { agendaThreadLinks, organizerIncludesPlace, repeatsPlace } from '@/lib/agenda-event-relations'
 import { cultTimeParts } from '@/lib/agenda-cult-time'
 import { isSecondaryCult } from '@/lib/agenda-priority'
 import { agendaScheduleSteps, nextScheduleStepAt } from '@/lib/agenda-schedule-steps'
@@ -104,7 +104,7 @@ function LiveNow({ items }) {
           const next = nextScheduleStepAt(item, now)
           return (
             <li key={item.key}>
-              {item.eventHref ? <Link href={item.eventHref}>{item.title}</Link> : <strong>{item.title}</strong>}
+              {item.eventHref ? <Link href={item.eventHref}>{agendaDisplayTitle(item)}</Link> : <strong>{agendaDisplayTitle(item)}</strong>}
               <small>{['Según horario publicado', item.liveState.timingLabel, next ? `Próximo: ${next.label} ${next.time}` : '', item.municipality].filter(Boolean).join(' · ')}</small>
             </li>
           )
@@ -126,9 +126,11 @@ function DayCults({ items }) {
           const time = cultTimeParts(itemTime(item))
           return (
           <li key={item.displayKey || item.key}>
-            <time>{time.lead}</time>
+            {time.lead === '—'
+              ? <span className={styles.cultNoTime}>Hora por confirmar</span>
+              : <time>{time.lead}</time>}
             <div>
-              {item.eventHref ? <Link href={item.eventHref}>{item.title}</Link> : <strong>{item.title}</strong>}
+              {item.eventHref ? <Link href={item.eventHref}>{agendaDisplayTitle(item)}</Link> : <strong>{agendaDisplayTitle(item)}</strong>}
               {time.detail ? <span className={styles.cultSchedule}>{time.detail}</span> : null}
               <small>{[item.organizer && !String(item.title).includes(item.organizer) ? item.organizer : '', item.place, item.municipality].filter(Boolean).join(' · ')}</small>
             </div>
@@ -170,7 +172,8 @@ export default function AgendaTemporalEventList({ landing }) {
         {periodShare ? (
           <div className={styles.periodShare}>
             <span>{landing.period === 'weekend' ? 'Pásala a tu grupo: la agenda del fin de semana' : landing.period === 'tomorrow' ? 'Pásala a tu grupo: la agenda de mañana' : 'Pásala a tu grupo: la agenda de hoy'}</span>
-            <ShareActions share={periodShare} contentType="agenda_period" analytics={{ agenda_period: landing.period, items_count: count }} />
+            <ShareActions className={styles.periodShareFull} share={periodShare} contentType="agenda_period" analytics={{ agenda_period: landing.period, items_count: count }} />
+            <ShareActions className={styles.periodShareIcons} compact iconsOnly share={periodShare} contentType="agenda_period" analytics={{ agenda_period: landing.period, items_count: count }} />
           </div>
         ) : null}
 
@@ -189,7 +192,7 @@ export default function AgendaTemporalEventList({ landing }) {
 
         <div className={styles.groups}>
           {groups.map((group) => (
-            <section className={styles.dayGroup} key={group.key} aria-labelledby={`agenda-dia-${group.key}`}>
+            <section className={styles.dayGroup} data-single={groups.length === 1 ? 'true' : undefined} key={group.key} aria-labelledby={`agenda-dia-${group.key}`}>
               <header className={styles.dayHeading}>
                 <time dateTime={group.key !== 'sin-fecha' ? group.key : undefined}>
                   <strong>{group.day || '—'}</strong>
@@ -206,11 +209,14 @@ export default function AgendaTemporalEventList({ landing }) {
               <div className={styles.list}>
                 {group.items.filter((item) => !isSecondaryCult(item)).map((item) => {
                   const media = eventMedia(item)
+                  const status = landing.period === 'today' ? agendaRowStatus(item) : null
+                  const placeText = organizerIncludesPlace(item.organizer, item.place) ? item.organizer : item.place
                   return (
                   <article
                     className={styles.row}
                     data-category={item.category || 'other'}
                     data-media={media?.variant}
+                    data-status={status?.kind}
                     key={item.displayKey || item.key || item.href || item.id}
                   >
                     {media ? <EventMedia item={item} media={media} /> : null}
@@ -222,6 +228,7 @@ export default function AgendaTemporalEventList({ landing }) {
                     <div className={styles.copy}>
                       <div className={styles.topline}>
                         <span>{categoryLabel(item)}</span>
+                        {status ? <em className={styles.rowStatus} data-kind={status.kind}>{status.label}</em> : null}
                         <ShareActions
                           compact
                           iconsOnly
@@ -231,7 +238,7 @@ export default function AgendaTemporalEventList({ landing }) {
                           analytics={{ event_type: item.category, municipality: item.municipality, agenda_period: landing.period }}
                         />
                       </div>
-                      <h4 className={styles.title}>{item.eventHref ? <Link href={item.eventHref}>{item.title}</Link> : item.title}</h4>
+                      <h4 className={styles.title}>{item.eventHref ? <Link href={item.eventHref}>{agendaDisplayTitle(item)}</Link> : agendaDisplayTitle(item)}</h4>
                       {/* Lugar en una línea de texto: el separador va pegado al dato anterior
                           (espacio duro), así nunca empieza una línea con «·». */}
                       <p className={styles.meta}>
@@ -240,12 +247,14 @@ export default function AgendaTemporalEventList({ landing }) {
                             ? <Link className={styles.municipality} href={item.municipalityHref} aria-label={`Guía local de ${item.municipality}`}>{item.municipality}</Link>
                             : <strong className={styles.municipality}>{item.municipality}</strong>
                         ) : null}
-                        {item.place ? <span className={styles.place}>{item.municipality ? '\u00a0· ' : ''}{item.place}</span> : null}
-                        {/* Si la entidad tiene ficha, su nombre ya va enlazado en el hilo; si
-                            solo repite el lugar, tampoco se muestra. */}
+                        {placeText ? <span className={styles.place}>{item.municipality ? '\u00a0· ' : ''}{placeText}</span> : null}
+                        {/* Si la Hermandad tiene ficha, su nombre ya va enlazado en el hilo; si
+                            solo repite el lugar, tampoco se muestra. Una banda enlazada no
+                            es la organizadora: no la oculta. */}
                         {item.organizer
-                          && !agendaThreadLinks(item).some((link) => link.kind === 'brotherhood' || link.kind === 'band')
+                          && !agendaThreadLinks(item).some((link) => link.kind === 'brotherhood')
                           && !repeatsPlace(item.organizer, item.place)
+                          && placeText !== item.organizer
                           ? <span className={styles.organizer}>{item.municipality || item.place ? '\u00a0· ' : ''}{item.organizer}</span>
                           : null}
                       </p>
