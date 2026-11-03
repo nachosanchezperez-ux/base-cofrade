@@ -76,3 +76,10 @@ test('listado y ficha usan las lecturas y la imagen propia', () => {
   assert.match(loader, /isPremiere: Boolean\(marchProfile\.premiere_date/)
   assert.match(read('../app/crucetas-musicales/[slug]/opengraph-image.js'), /renderRepertoireSocialImage/)
 })
+
+test('la cruceta enlaza con la ficha de su salida solo si existe como página', () => {
+  const detail = read('../app/crucetas-musicales/[slug]/page.js')
+  assert.match(detail, /isPreservedAgendaEventPath\(path\)/)
+  assert.match(detail, /outingHref \? \(/)
+  assert.match(read('../lib/supabase/musical-repertoires.js'), /slug: outing\.slug \|\| ''/)
+})

@@ -10,6 +10,7 @@ import { absoluteUrl, breadcrumbJsonLd, compactSeoTitle, socialMetadata } from '
 import styles from '../crucetas.module.css'
 import RepertoireExplorer from './RepertoireExplorer'
 import { plural } from '@/lib/plural'
+import { isPreservedAgendaEventPath } from '@/lib/agenda-event-url-policy'
 import { bandHabitualMarchIds, compareEditions, previousEdition } from '@/lib/musical-repertoires/insights'
 
 export const dynamic = 'force-static'
@@ -32,6 +33,17 @@ function BandLogo({ band, size = 36 }) {
 
 // Otras crucetas de la misma Banda o de la misma Hermandad: el hilo musical
 // sigue sin salir de la sección. Un fallo aquí nunca debe tumbar la ficha.
+// Ficha propia de la salida, solo si existe como página (la política de la
+// Agenda no crea una URL por cada acto; el resto redirige a la Agenda).
+function outingPageHref(outing) {
+  if (!outing?.slug) return ''
+  return [
+    `/procesiones-de-gloria/${outing.slug}`,
+    `/extraordinarias/${outing.slug}`,
+    `/agenda-cofrade/rosarios/${outing.slug}`,
+  ].find((path) => isPreservedAgendaEventPath(path)) || ''
+}
+
 async function repertoireContext(repertoire) {
   try {
     const all = await getMusicalRepertoires()
@@ -75,6 +87,7 @@ export default async function MusicalRepertoireDetailPage({ params }) {
   const stepHref = repertoire.step?.slug ? `/pasos/${repertoire.step.slug}` : ''
   const listenableCount = repertoire.entries.filter((entry) => entry.listening).length
   const { related, habitualIds, comparison } = await repertoireContext(repertoire)
+  const outingHref = outingPageHref(repertoire.outing)
   const heroContext = [
     repertoire.outing.type,
     repertoire.municipality?.name,
@@ -142,13 +155,20 @@ export default async function MusicalRepertoireDetailPage({ params }) {
         </div>
       </header>
 
-      {repertoire.brotherhood.href || repertoire.step ? <section className={styles.relationsSection}>
+      {repertoire.brotherhood.href || repertoire.step || outingHref ? <section className={styles.relationsSection}>
         <div className={`shell ${styles.relationsGrid}`}>
           {repertoire.brotherhood.href ? (
             <Link href={repertoire.brotherhood.href}>
               <span>Hermandad</span>
               <strong>{repertoire.brotherhood.name}</strong>
               <small>Consultar ficha <b aria-hidden="true">→</b></small>
+            </Link>
+          ) : null}
+          {outingHref ? (
+            <Link href={outingHref}>
+              <span>Salida</span>
+              <strong>{repertoire.outing.type || 'La procesión'}</strong>
+              <small>Consultar la salida <b aria-hidden="true">→</b></small>
             </Link>
           ) : null}
           {repertoire.step ? (
