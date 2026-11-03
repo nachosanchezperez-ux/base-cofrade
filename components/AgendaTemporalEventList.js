@@ -248,10 +248,11 @@ export default function AgendaTemporalEventList({ landing }) {
                             : <strong className={styles.municipality}>{item.municipality}</strong>
                         ) : null}
                         {placeText ? <span className={styles.place}>{item.municipality ? '\u00a0· ' : ''}{placeText}</span> : null}
-                        {/* Si la entidad tiene ficha, su nombre ya va enlazado en el hilo; si
-                            solo repite el lugar, tampoco se muestra. */}
+                        {/* Si la Hermandad tiene ficha, su nombre ya va enlazado en el hilo; si
+                            solo repite el lugar, tampoco se muestra. Una banda enlazada no
+                            es la organizadora: no la oculta. */}
                         {item.organizer
-                          && !agendaThreadLinks(item).some((link) => link.kind === 'brotherhood' || link.kind === 'band')
+                          && !agendaThreadLinks(item).some((link) => link.kind === 'brotherhood')
                           && !repeatsPlace(item.organizer, item.place)
                           && placeText !== item.organizer
                           ? <span className={styles.organizer}>{item.municipality || item.place ? '\u00a0· ' : ''}{item.organizer}</span>
