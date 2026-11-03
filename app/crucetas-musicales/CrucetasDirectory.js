@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import styles from './crucetas.module.css'
 import { plural } from '@/lib/plural'
+import BandCrest from './BandCrest'
 import { musicalRepertoireMonthLabel, musicalRepertoireShortDate } from '@/lib/musical-repertoires/presentation'
 
 function normalize(value = '') {
@@ -81,7 +82,8 @@ export default function CrucetasDirectory({ repertoires }) {
             {group.items.map((item) => {
               const marchMatches = matchesById.get(item.id) || []
               return (
-                <article className={styles.directoryCard} key={item.id} style={{ '--repertoire-primary': item.colors.primary, '--repertoire-accent': item.colors.accent }}>
+                <article className={`${styles.directoryCard} ${item.band.logoPath ? styles.withCrest : ''}`} key={item.id} style={{ '--repertoire-primary': item.colors.primary, '--repertoire-accent': item.colors.accent }}>
+                  <BandCrest band={item.band} className={styles.cardCrest} />
                   <div className={styles.cardTopline}>
                     <time dateTime={item.date}>{musicalRepertoireShortDate(item.date) || item.year}</time>
                     {item.outingType ? <span>{item.outingType}</span> : null}

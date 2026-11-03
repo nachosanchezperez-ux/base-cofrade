@@ -43,7 +43,7 @@ export default async function MusicalRepertoiresDirectoryPage() {
     colors: item.colors,
     municipality: item.municipality ? { name: item.municipality.name } : null,
     brotherhood: { name: item.brotherhood.name },
-    band: { name: item.band.name },
+    band: { name: item.band.name, logoPath: item.band.logoPath, logoBackground: item.band.logoBackground },
   }))
 
   return (

@@ -89,3 +89,12 @@ test('Novedades presenta la cruceta con su nombre propio cuando lo tiene', () =>
   assert.match(loader, /title, display_name, outing_id/)
   assert.match(loader, /String\(repertoire\.display_name \|\| ''\)\.trim\(\) \|\| \(brotherhood/)
 })
+
+test('el escudo de la banda se muestra sobre su color de fondo y sin hueco cuando falta', () => {
+  const crest = read('../app/crucetas-musicales/BandCrest.js')
+  assert.match(crest, /if \(!band\?\.logoPath\) return null/)
+  assert.match(crest, /normalizeLogoBackgroundColor\(band\.logoBackground\) \|\| '#FFFFFF'/)
+  assert.match(read('../app/crucetas-musicales/CrucetasDirectory.js'), /<BandCrest band=\{item\.band\} className=\{styles\.cardCrest\} \/>/)
+  assert.match(read('../app/crucetas-musicales/[slug]/page.js'), /<BandCrest band=\{repertoire\.band\} size=\{42\} \/>/)
+  assert.match(read('../lib/supabase/musical-repertoires.js'), /logoBackground: bandProfile\.logo_background_color/)
+})
