@@ -12,7 +12,7 @@ function normalize(value = '') {
 
 // El título común es «Hermandad · fecha»: en la tarjeta la fecha ya va arriba.
 function cardName(item) {
-  return item.brotherhood.name || item.displayTitle.split(' · ')[0]
+  return item.identityName || item.displayTitle.split(' · ')[0]
 }
 
 function groupByMonth(items) {

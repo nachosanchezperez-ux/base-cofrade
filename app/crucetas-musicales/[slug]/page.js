@@ -188,7 +188,7 @@ export default async function MusicalRepertoireDetailPage({ params }) {
                     <time dateTime={item.date}>{musicalRepertoireShortDate(item.date) || item.year}</time>
                     {item.outing.type ? <span>{item.outing.type}</span> : null}
                   </div>
-                  <h3><Link href={item.href}>{item.brotherhood.name || item.displayTitle.split(' · ')[0]}</Link></h3>
+                  <h3><Link href={item.href}>{item.identityName || item.displayTitle.split(' · ')[0]}</Link></h3>
                   <p className={styles.cardBand}>Por <strong>{item.band.name}</strong></p>
                 </article>
               ))}

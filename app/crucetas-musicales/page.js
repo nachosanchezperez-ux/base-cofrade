@@ -26,6 +26,7 @@ export default async function MusicalRepertoiresDirectoryPage() {
     href: item.href,
     year: item.year,
     displayTitle: item.displayTitle,
+    identityName: item.identityName,
     date: item.date,
     outingType: item.outing.type,
     marchTitles: item.marchTitles,

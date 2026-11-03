@@ -52,3 +52,15 @@ test('la ficha no enlaza a una Hermandad no pública ni repite la Banda', () => 
   assert.match(explorer, /hasListening \?/)
   assert.match(explorer, /hasRepeated \?/)
 })
+
+test('una cruceta puede llevar nombre propio en lugar del de la Hermandad', () => {
+  const loader = read('../lib/supabase/musical-repertoires.js')
+  assert.match(loader, /display_name, repertoire_kind/)
+  assert.match(loader, /String\(repertoire\.display_name \|\| ''\)\.trim\(\)\s*\n\s*\|\| brotherhoodName/)
+  assert.equal(presentMusicalRepertoireIdentity({
+    brotherhoodName: 'Virgen del Rosario de la Macarena',
+    outingType: 'Procesión de Gloria',
+    outingDate: '2026-10-25',
+    year: 2026,
+  }).title, 'Virgen del Rosario de la Macarena · 25 de octubre de 2026')
+})
