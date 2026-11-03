@@ -137,6 +137,7 @@ export default async function RelationalEntityHero({
   relation = null,
   facts = [],
   media = {},
+  actions = null,
 }) {
   const visibleBadges = badges.filter(Boolean).slice(0, 4);
   const visibleFacts = facts.filter((fact) => fact?.label && fact?.value).slice(0, 3);
@@ -208,6 +209,8 @@ export default async function RelationalEntityHero({
                 ))}
               </dl>
             ) : null}
+
+            {actions ? <div style={{ marginTop: 18 }}>{actions}</div> : null}
           </div>
 
           {showMedia ? (
