@@ -813,8 +813,7 @@ details.insightBlock summary span { color: #736d64; font-size: 13px; line-height
   flex-wrap: wrap;
   gap: 8px;
   margin: 0 auto;
-  padding-top: 14px;
-  padding-bottom: 14px;
+  padding: 14px 0;
   list-style: none;
 }
 .relationsBar li { min-width: 0; }
@@ -973,7 +972,7 @@ details.insightBlock summary span { color: #736d64; font-size: 13px; line-height
 }
 @media (max-width: 620px) {
   .repertoireSection { padding: 34px 0 48px; }
-  .relationsBar ul { padding-top: 12px; padding-bottom: 12px; }
+  .relationsBar ul { padding: 12px 0; }
   .relationsBar strong { font-size: 13px; }
   .workRow { padding: 11px 0; }
   .workRow h3 { font-size: 15px; }
