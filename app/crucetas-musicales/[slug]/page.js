@@ -73,6 +73,16 @@ export default async function MusicalRepertoireDetailPage({ params }) {
   const listenableCount = repertoire.entries.filter((entry) => entry.listening).length
   const { related, habitualIds, comparison } = await repertoireContext(repertoire)
   const outingHref = outingPageHref(repertoire.outing)
+  const relationLinks = [
+    repertoire.brotherhood.href ? { label: 'Hermandad', name: repertoire.brotherhood.name, href: repertoire.brotherhood.href } : null,
+    outingHref ? { label: 'Salida', name: repertoire.outing.type || 'La procesión', href: outingHref } : null,
+    repertoire.step ? { label: 'Paso', name: repertoire.step.name, href: stepHref } : null,
+  ].filter(Boolean)
+  // «Lo que más sonó»: las tres obras más repetidas, si alguna se repitió.
+  const mostPlayed = repertoire.entries
+    .filter((entry) => entry.count > 1)
+    .sort((first, second) => second.count - first.count || first.displayOrder - second.displayOrder)
+    .slice(0, 3)
   const heroContext = [
     repertoire.outing.type,
     repertoire.municipality?.name,
@@ -130,6 +140,7 @@ export default async function MusicalRepertoireDetailPage({ params }) {
                   <b aria-hidden="true">→</b>
                 </Link>
               ) : <p>Cruceta de {repertoire.band.name}</p>}
+              <p className={styles.heroFigures}><strong>{repertoire.worksCount}</strong> {repertoire.worksCount === 1 ? 'obra' : 'obras'} · <strong>{repertoire.performancesCount}</strong> {repertoire.performancesCount === 1 ? 'interpretación' : 'interpretaciones'}</p>
             </div>
           </div>
 
@@ -140,39 +151,21 @@ export default async function MusicalRepertoireDetailPage({ params }) {
         </div>
       </header>
 
-      {repertoire.brotherhood.href || repertoire.step || outingHref ? <section className={styles.relationsSection}>
-        <div className={`shell ${styles.relationsGrid}`}>
-          {repertoire.brotherhood.href ? (
-            <Link href={repertoire.brotherhood.href}>
-              <span>Hermandad</span>
-              <strong>{repertoire.brotherhood.name}</strong>
-              <small>Consultar ficha <b aria-hidden="true">→</b></small>
-            </Link>
-          ) : null}
-          {outingHref ? (
-            <Link href={outingHref}>
-              <span>Salida</span>
-              <strong>{repertoire.outing.type || 'La procesión'}</strong>
-              <small>Consultar la salida <b aria-hidden="true">→</b></small>
-            </Link>
-          ) : null}
-          {repertoire.step ? (
-            stepHref ? (
-              <Link href={stepHref}>
-                <span>Paso</span>
-                <strong>{repertoire.step.name}</strong>
-                <small>Consultar ficha <b aria-hidden="true">→</b></small>
-              </Link>
-            ) : (
-              <div>
-                <span>Paso</span>
-                <strong>{repertoire.step.name}</strong>
-                <small>Procesión de {repertoire.year}</small>
-              </div>
-            )
-          ) : null}
-        </div>
-      </section> : null}
+      {relationLinks.length ? (
+        <nav className={styles.relationsBar} aria-label="Relacionado con esta cruceta">
+          <ul className="shell">
+            {relationLinks.map((link) => (
+              <li key={link.label}>
+                {link.href ? (
+                  <Link href={link.href}><small>{link.label}</small><strong>{link.name}</strong><b aria-hidden="true">→</b></Link>
+                ) : (
+                  <span><small>{link.label}</small><strong>{link.name}</strong></span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ) : null}
 
       <section className={styles.repertoireSection}>
         <div className="shell">
@@ -180,10 +173,23 @@ export default async function MusicalRepertoireDetailPage({ params }) {
             <div>
               <span>La música de la procesión</span>
               <h2>Repertorio interpretado</h2>
-              <small>{plural(repertoire.worksCount, 'marcha vinculada', 'marchas vinculadas')}{listenableCount ? ` · ${listenableCount} con escucha disponible` : ''}</small>
+              {listenableCount ? <small>{plural(listenableCount, 'obra con escucha disponible', 'obras con escucha disponible')}</small> : null}
             </div>
-            <p>La cifra indica cuántas veces fue interpretada cada obra según la información facilitada. No se deduce el orden, el lugar ni si las interpretaciones fueron consecutivas.</p>
           </header>
+
+          {mostPlayed.length ? (
+            <section className={styles.mostPlayed} aria-labelledby="lo-que-mas-sono">
+              <h3 id="lo-que-mas-sono">Lo que más sonó</h3>
+              <ol>
+                {mostPlayed.map((entry) => (
+                  <li key={entry.id}>
+                    <strong>{entry.marchHref ? <Link href={entry.marchHref}>{entry.title}</Link> : entry.title}</strong>
+                    <span>{entry.count} veces</span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          ) : null}
 
           {comparison && (comparison.entered.length || comparison.left.length) ? (
             <aside className={styles.comparison} aria-label={`Respecto a ${comparison.previous.year}`}>
@@ -222,7 +228,10 @@ export default async function MusicalRepertoireDetailPage({ params }) {
       <section className={styles.sourceSection}>
         <div className={`shell ${styles.sourceCard}`}>
           <div><span>Fuente directa</span><h2>{repertoire.source?.name || 'Información de la formación musical'}</h2></div>
-          <p>{repertoire.source?.notes || repertoire.notes}</p>
+          <div className={styles.sourceText}>
+            {repertoire.source?.notes || repertoire.notes ? <p>{repertoire.source?.notes || repertoire.notes}</p> : null}
+            <p className={styles.sourceScope}>La fuente indica cuántas veces sonó cada obra; no recoge el orden ni el lugar del recorrido.</p>
+          </div>
           {repertoire.source?.url ? <a href={repertoire.source.url} target="_blank" rel="noreferrer">Consultar publicación original ↗</a> : null}
         </div>
       </section>

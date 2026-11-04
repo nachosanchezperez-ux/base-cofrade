@@ -80,7 +80,7 @@ test('listado y ficha usan las lecturas y la imagen propia', () => {
 test('la cruceta enlaza con la ficha de su salida solo si existe como página', () => {
   const detail = read('../app/crucetas-musicales/[slug]/page.js')
   assert.match(detail, /isPreservedAgendaEventPath\(path\)/)
-  assert.match(detail, /outingHref \? \(/)
+  assert.match(detail, /outingHref \? \{ label: 'Salida'/)
   assert.match(read('../lib/supabase/musical-repertoires.js'), /slug: outing\.slug \|\| ''/)
 })
 
@@ -97,4 +97,24 @@ test('el escudo de la banda se muestra sobre su color de fondo y sin hueco cuand
   assert.match(read('../app/crucetas-musicales/CrucetasDirectory.js'), /<BandCrest band=\{item\.band\} className=\{styles\.cardCrest\} \/>/)
   assert.match(read('../app/crucetas-musicales/[slug]/page.js'), /<BandCrest band=\{repertoire\.band\} size=\{42\} \/>/)
   assert.match(read('../lib/supabase/musical-repertoires.js'), /logoBackground: bandProfile\.logo_background_color/)
+})
+
+test('ficha compacta: una fila por obra, lo que más sonó arriba y relaciones en una fila', () => {
+  const detail = read('../app/crucetas-musicales/[slug]/page.js')
+  const explorer = read('../app/crucetas-musicales/[slug]/RepertoireExplorer.js')
+  assert.match(explorer, /function distinctWorkType\(entry\)/)
+  assert.match(explorer, /<ol className=\{styles\.workList\}>/)
+  assert.match(detail, /\.filter\(\(entry\) => entry\.count > 1\)/)
+  assert.match(detail, /\.slice\(0, 3\)/)
+  assert.match(detail, /Lo que más sonó/)
+  assert.match(detail, /className=\{styles\.relationsBar\}/)
+  assert.doesNotMatch(detail, /relationsGrid/)
+})
+
+test('en móvil la cabecera de la ficha es compacta y las cifras van en una línea', () => {
+  const detail = read('../app/crucetas-musicales/[slug]/page.js')
+  const css = read('../app/crucetas-musicales/crucetas.module.css')
+  assert.match(detail, /className=\{styles\.heroFigures\}/)
+  assert.match(css, /\.heroFigures \{ display: none; \}/)
+  assert.match(css, /\.heroMetrics \{ display: none; \}/)
 })
