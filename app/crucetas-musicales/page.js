@@ -20,6 +20,12 @@ export const metadata = {
     description: 'Consulta las marchas interpretadas por las bandas en cada procesión documentada.',
     url: '/crucetas-musicales',
   },
+  // Sin esto, X heredaba el título y la descripción genéricos de la portada.
+  twitter: {
+    card: 'summary_large_image',
+    title: pageTitle('Crucetas musicales y repertorios procesionales'),
+    description: 'Consulta las marchas interpretadas por las bandas en cada procesión documentada.',
+  },
 }
 
 export default async function MusicalRepertoiresDirectoryPage() {
