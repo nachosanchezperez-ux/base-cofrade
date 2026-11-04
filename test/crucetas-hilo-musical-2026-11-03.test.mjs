@@ -110,3 +110,11 @@ test('ficha compacta: una fila por obra, lo que más sonó arriba y relaciones e
   assert.match(detail, /className=\{styles\.relationsBar\}/)
   assert.doesNotMatch(detail, /relationsGrid/)
 })
+
+test('en móvil la cabecera de la ficha es compacta y las cifras van en una línea', () => {
+  const detail = read('../app/crucetas-musicales/[slug]/page.js')
+  const css = read('../app/crucetas-musicales/crucetas.module.css')
+  assert.match(detail, /className=\{styles\.heroFigures\}/)
+  assert.match(css, /\.heroFigures \{ display: none; \}/)
+  assert.match(css, /\.heroMetrics \{ display: none; \}/)
+})

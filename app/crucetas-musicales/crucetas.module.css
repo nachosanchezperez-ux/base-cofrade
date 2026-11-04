@@ -977,3 +977,41 @@ details.insightBlock summary span { color: #736d64; font-size: 13px; line-height
   .workRow { padding: 11px 0; }
   .workRow h3 { font-size: 15px; }
 }
+
+/* Ficha en móvil (04/11/2026): cabecera compacta para que la música aparezca
+   en la primera pantalla. Las cifras pasan a una línea bajo la banda y se
+   ocultan las etiquetas que repiten lo que ya dice la página. */
+.heroFigures { display: none; }
+@media (max-width: 620px) {
+  .detailHeroShell { padding-top: 14px; padding-bottom: 16px; }
+  .heroGrid { padding: 16px 0 0; }
+  .verified { display: none; }
+  .heroDate { flex-basis: auto; margin-top: 0; }
+  .heroBand { margin-top: 12px; padding: 8px 10px; }
+  .heroMetrics { display: none; }
+  .heroFigures {
+    display: block;
+    margin: 10px 0 0;
+    color: rgba(255,255,255,.72);
+    font-size: 13px;
+    font-weight: var(--font-weight-bold);
+  }
+  .heroFigures strong { color: #fff; }
+  .relationsBar ul { padding: 10px 0; gap: 6px; }
+  .relationsBar a,
+  .relationsBar li > span { padding: 6px 10px; }
+  .repertoireSection { padding-top: 18px; }
+  .repertoireHeading { margin-bottom: 14px; }
+  .repertoireHeading > div > span { display: none; }
+  .mostPlayed { margin-bottom: 16px; padding: 12px 14px; }
+  .mostPlayed strong { font-size: 15px; }
+  :global(#hc-app) .detail:not(:global(#hc-panel)) .heroCopy h1 {
+    margin: 10px 0 0;
+    font-size: clamp(28px, 8vw, 34px);
+    line-height: 1.08;
+  }
+  :global(#hc-app) .detail:not(:global(#hc-panel)) .repertoireHeading h2 {
+    font-size: 22px;
+    line-height: 1.2;
+  }
+}

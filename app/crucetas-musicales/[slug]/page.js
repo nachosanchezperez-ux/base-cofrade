@@ -140,6 +140,7 @@ export default async function MusicalRepertoireDetailPage({ params }) {
                   <b aria-hidden="true">→</b>
                 </Link>
               ) : <p>Cruceta de {repertoire.band.name}</p>}
+              <p className={styles.heroFigures}><strong>{repertoire.worksCount}</strong> {repertoire.worksCount === 1 ? 'obra' : 'obras'} · <strong>{repertoire.performancesCount}</strong> {repertoire.performancesCount === 1 ? 'interpretación' : 'interpretaciones'}</p>
             </div>
           </div>
 
