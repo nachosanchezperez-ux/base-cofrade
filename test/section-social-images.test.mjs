@@ -31,6 +31,7 @@ const SECTION_ROUTES = [
   ['app/agenda-cofrade/manana', 'tomorrow'],
   ['app/agenda-cofrade/fin-de-semana', 'weekend'],
   ['app/igualas-y-ensayos', 'crewEvents'],
+  ['app/crucetas-musicales', 'crucetas'],
 ]
 
 test('cada sección compartible tiene imagen propia para Open Graph y X', () => {
@@ -63,7 +64,7 @@ test('el texto siempre cumple el contraste mínimo y el rojo queda solo para el 
 
 test('«Hoy» se distingue en blanco y el resto va en azul corporativo', () => {
   assert.equal(sectionSocialImageConfig('today').theme, 'light')
-  for (const key of ['agenda', 'tomorrow', 'weekend', 'crewEvents', 'home']) {
+  for (const key of ['agenda', 'tomorrow', 'weekend', 'crewEvents', 'crucetas', 'home']) {
     assert.equal(sectionSocialImageConfig(key).theme, 'dark', key)
   }
   assert.equal(SECTION_SOCIAL_THEMES.dark.background, '#112339')
@@ -101,4 +102,13 @@ test('Hoy, Mañana y Fin de semana no fijan la imagen genérica y usan la de su 
   assert.equal(own.twitter.card, 'summary_large_image')
   const fallback = socialMetadata({ title: 'Otra', description: 'Página', path: '/otra' })
   assert.equal(fallback.openGraph.images[0].url, '/opengraph-image')
+})
+
+test('Crucetas lleva su pentagrama sin usar el rojo fuera del hilo', () => {
+  assert.equal(sectionSocialImageConfig('crucetas').motif, 'staff')
+  const renderer = read('lib/section-social-image.js')
+  assert.match(renderer, /motif === 'staff' \? <StaffMotif colors=\{colors\} \/>/)
+  const staff = renderer.slice(renderer.indexOf('function StaffMotif'), renderer.indexOf('export async function renderSectionSocialImage'))
+  assert.doesNotMatch(staff, /colors\.accent/)
+  assert.match(read('app/crucetas-musicales/page.js'), /twitter: \{\n    card: 'summary_large_image'/)
 })
