@@ -5,12 +5,16 @@ import { useMemo, useState } from 'react'
 import styles from '../crucetas.module.css'
 
 function normalize(value = '') {
-  return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+  return value.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+}
+
+function mainAuthors(entry) {
+  const composers = entry.authors.filter((author) => author.role === 'composer')
+  return composers.length ? composers : entry.authors
 }
 
 function authorNames(entry) {
-  const composers = entry.authors.filter((author) => author.role === 'composer')
-  return (composers.length ? composers : entry.authors).map((author) => author.name).join(' · ') || entry.credit || ''
+  return mainAuthors(entry).map((author) => author.name).join(' · ') || entry.credit || ''
 }
 
 function secondaryAuthors(entry) {
@@ -19,14 +23,13 @@ function secondaryAuthors(entry) {
   return entry.authors.filter((author) => author.role !== 'composer')
 }
 
-function AuthorList({ authors, fallback }) {
-  const composers = authors.filter((author) => author.role === 'composer')
-  const items = composers.length ? composers : authors
-  if (!items.length) return fallback || 'No documentada'
+const SECONDARY_ROLE = { adapter: 'Adaptación', lyricist: 'Letra' }
 
-  return items.map((author, index) => (
-    <span key={author.id}>{index ? ' · ' : ''}{author.href ? <Link href={author.href}>{author.name}</Link> : author.name}</span>
-  ))
+// «Marcha procesional» es lo esperable en una cruceta: solo se nombra el tipo
+// cuando es otro (adaptación, himno, pieza de capilla…).
+function distinctWorkType(entry) {
+  const type = String(entry.workType || '').trim()
+  return type && !/^marcha( procesional)?$/i.test(type) ? type : ''
 }
 
 const SORTS = [
@@ -39,13 +42,66 @@ function entryKey(entry) {
   return entry.marchId || `titulo:${String(entry.title || '').toLowerCase()}`
 }
 
+function WorkRow({ entry, isHabitual, bandName }) {
+  const authors = mainAuthors(entry)
+  const type = distinctWorkType(entry)
+  const extras = secondaryAuthors(entry)
+
+  return (
+    <li className={styles.workRow}>
+      <div className={styles.workMain}>
+        <h3>{entry.marchHref ? <Link href={entry.marchHref}>{entry.title}</Link> : entry.title}</h3>
+        <p className={styles.workMeta}>
+          {authors.length
+            ? authors.map((author, index) => <span key={author.id}>{index ? ' · ' : ''}{author.href ? <Link href={author.href}>{author.name}</Link> : author.name}</span>)
+            : <span>{entry.credit || 'Autoría no documentada'}</span>}
+          {extras.map((author) => <span key={`${entry.id}-${author.id}`}> · {SECONDARY_ROLE[author.role] || 'Con'} {author.name}</span>)}
+          {entry.compositionYear ? <span> · {entry.compositionYear}</span> : null}
+          {type ? <span> · {type}</span> : null}
+        </p>
+        {entry.dedications.length ? (
+          <p className={styles.workDedication}>
+            Dedicada a {entry.dedications.map((dedication, index) => (
+              <span key={`${dedication.id}-${index}`}>{index ? ' · ' : ''}{dedication.href ? <Link href={dedication.href}>{dedication.name}</Link> : dedication.name}</span>
+            ))}
+          </p>
+        ) : null}
+        {entry.isPremiere || entry.isNewThisYear || entry.isDedicatedToBrotherhood || isHabitual ? (
+          <p className={styles.workTags}>
+            {entry.isPremiere ? <em className={styles.workTag}>Estreno</em> : entry.isNewThisYear ? <em className={styles.workTag}>Nueva</em> : null}
+            {entry.isDedicatedToBrotherhood ? <em className={styles.workTag}>Dedicada a esta Hermandad</em> : null}
+            {isHabitual ? <em className={styles.workTag} title={`Suena en casi todas las crucetas de ${bandName}`}>Habitual de la banda</em> : null}
+          </p>
+        ) : null}
+      </div>
+      <div className={styles.workSide}>
+        {entry.count > 1 ? <strong className={styles.workCount} aria-label={`${entry.count} interpretaciones`}>×{entry.count}</strong> : null}
+        {entry.listening ? (
+          <a
+            className={styles.workListen}
+            href={entry.listening.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Escuchar ${entry.title} en ${entry.listening.provider}`}
+            title={`Escuchar en ${entry.listening.provider}`}
+            data-hilo-event="repertoire_listen_click"
+            data-hilo-provider={entry.listening.provider.toLowerCase()}
+          >
+            <span aria-hidden="true">▶</span>
+          </a>
+        ) : null}
+      </div>
+    </li>
+  )
+}
+
 export default function RepertoireExplorer({ entries, habitualIds = [], bandName = '' }) {
   const [filter, setFilter] = useState('all')
   const [sort, setSort] = useState('source')
+  const [query, setQuery] = useState('')
   const habitual = useMemo(() => new Set(habitualIds), [habitualIds])
   const hasListening = entries.some((entry) => entry.listening)
   const hasRepeated = entries.some((entry) => entry.isRepeated)
-  const [query, setQuery] = useState('')
   const visible = useMemo(() => {
     const needle = normalize(query.trim())
     const filtered = entries.filter((entry) => {
@@ -75,33 +131,14 @@ export default function RepertoireExplorer({ entries, habitualIds = [], bandName
         </label>
         <label className={styles.repertoireSearch}><span>Buscar marcha o autor</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Título o autor" type="search" /></label>
       </div>
-      <p className={styles.visibleWorks} aria-live="polite">{visible.length} {visible.length === 1 ? 'entrada visible' : 'entradas visibles'}</p>
-      <div className={styles.worksGrid}>
-        {visible.map((entry) => (
-          <article className={styles.workCard} key={entry.id}>
-            <div className={styles.note} aria-hidden="true">♪</div>
-            <div className={styles.workCopy}>
-              <div className={styles.workTitle}><span>{entry.workType || 'Marcha vinculada'}{entry.compositionYear ? ` · ${entry.compositionYear}` : ''}</span><h3>{entry.marchHref ? <Link href={entry.marchHref}>{entry.title} <b aria-hidden="true">→</b></Link> : entry.title}</h3>
-                {entry.isPremiere || entry.isNewThisYear || entry.isDedicatedToBrotherhood || habitual.has(entryKey(entry)) ? (
-                  <p className={styles.workTags}>
-                    {entry.isPremiere ? <em className={styles.workTag}>Estreno</em> : entry.isNewThisYear ? <em className={styles.workTag}>Nueva</em> : null}
-                    {entry.isDedicatedToBrotherhood ? <em className={styles.workTag}>Dedicada a esta Hermandad</em> : null}
-                    {habitual.has(entryKey(entry)) ? <em className={styles.workTag} title={`Suena en casi todas las crucetas de ${bandName}`}>Habitual de la banda</em> : null}
-                  </p>
-                ) : null}</div>
-              <dl className={styles.workRelations}>
-                <div><dt>Autoría</dt><dd><AuthorList authors={entry.authors} fallback={entry.credit} /></dd>{secondaryAuthors(entry).map((author) => <small key={`${entry.id}-${author.id}`}>{author.role === 'adapter' ? 'Adaptación' : author.role === 'lyricist' ? 'Letra' : 'Autoría'}: {author.name}</small>)}</div>
-                {entry.dedications.length ? <div><dt>Dedicatoria</dt><dd>{entry.dedications.map((dedication, index) => <span key={`${dedication.id}-${index}`}>{index ? ' · ' : ''}{dedication.href ? <Link href={dedication.href}>{dedication.name}</Link> : dedication.name}</span>)}</dd></div> : null}
-              </dl>
-            </div>
-            <div className={styles.workActions}>
-              {entry.count > 1 ? <strong className={styles.count} aria-label={`${entry.count} interpretaciones`}>×{entry.count}</strong> : null}
-              {entry.marchHref ? <Link className={styles.profileAction} href={entry.marchHref}>Ver ficha</Link> : null}
-              {entry.listening ? <a className={styles.listen} href={entry.listening.url} target="_blank" rel="noopener noreferrer" aria-label={`Escuchar ${entry.title} en ${entry.listening.provider}`} data-hilo-event="repertoire_listen_click" data-hilo-provider={entry.listening.provider.toLowerCase()}><span aria-hidden="true">▶</span><span>Escuchar <small>{entry.listening.provider}</small></span></a> : null}
-            </div>
-          </article>
-        ))}
-      </div>
+      <p className={styles.visibleWorks} aria-live="polite">{visible.length} {visible.length === 1 ? 'obra' : 'obras'}</p>
+      {visible.length ? (
+        <ol className={styles.workList}>
+          {visible.map((entry) => (
+            <WorkRow entry={entry} isHabitual={habitual.has(entryKey(entry))} bandName={bandName} key={entry.id} />
+          ))}
+        </ol>
+      ) : <p className={styles.empty}>Ninguna obra coincide con la búsqueda.</p>}
     </>
   )
 }

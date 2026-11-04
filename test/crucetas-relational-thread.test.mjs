@@ -23,13 +23,17 @@ test('la cruceta solo enlaza perfiles públicos realmente publicados', () => {
 })
 
 test('la cruceta muestra autoría, dedicatoria, veces interpretada y escucha', () => {
-  assert.match(explorer, />Autoría</)
-  assert.match(explorer, />Dedicatoria</)
+  // Lista compacta (04/11/2026): el título enlaza a la ficha de la Marcha, sin
+  // botón «Ver ficha» ni rótulos repetidos en cada obra.
+  assert.match(explorer, /mainAuthors\(entry\)/)
+  assert.match(explorer, /Dedicada a \{entry\.dedications\.map/)
   assert.match(explorer, /entry\.count > 1/)
   assert.doesNotMatch(explorer, /1 vez/)
-  assert.match(explorer, />Escuchar /)
-  assert.match(explorer, />Ver ficha</)
-  assert.match(detail, /No se deduce el orden, el lugar ni si las interpretaciones fueron consecutivas/)
+  assert.match(explorer, /aria-label=\{`Escuchar \$\{entry\.title\}/)
+  assert.doesNotMatch(explorer, />Ver ficha</)
+  assert.doesNotMatch(explorer, />Autoría</)
+  assert.match(detail, /no recoge el orden ni el lugar del recorrido/)
+  assert.doesNotMatch(detail, /No se deduce el orden/)
 })
 
 test('la ficha pública de Marcha devuelve el hilo hacia las crucetas', () => {

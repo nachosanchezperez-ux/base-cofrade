@@ -45,7 +45,7 @@ test('el listado busca también por marcha y no repite datos en la tarjeta', () 
 test('la ficha no enlaza a una Hermandad no pública ni repite la Banda', () => {
   const detail = read('../app/crucetas-musicales/[slug]/page.js')
   const explorer = read('../app/crucetas-musicales/[slug]/RepertoireExplorer.js')
-  assert.match(detail, /repertoire\.brotherhood\.href \? \(/)
+  assert.match(detail, /repertoire\.brotherhood\.href \? \{ label: 'Hermandad'/)
   assert.doesNotMatch(detail, /<span aria-label="Banda">/)
   assert.match(detail, /repertoireContext/)
   assert.match(detail, /Más crucetas/)
