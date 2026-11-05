@@ -21,6 +21,9 @@ import MusicalRepertoiresSection from '@/components/MusicalRepertoiresSection';
 import BrotherhoodOverviewV2 from '@/components/BrotherhoodOverviewV2';
 import BrotherhoodViaCrucisSection from '@/components/BrotherhoodViaCrucisSection';
 import BrotherhoodOutingsSection from '@/components/BrotherhoodOutingsSection';
+import BrotherhoodChapterOuting from '@/components/BrotherhoodChapterOuting';
+import { featuredBrotherhoodOuting, otherBrotherhoodOutings } from '@/lib/brotherhood-featured-outing';
+import { getGloryDetail } from '@/lib/supabase/glory-directory';
 import BrotherhoodProgramHero from '@/components/BrotherhoodProgramHero';
 import { panelEditHref } from '@/lib/panel-session-cookie';
 import FollowBrotherhoodButton from '@/components/FollowBrotherhoodButton';
@@ -266,6 +269,18 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   const tiposHermandad = h.tipos || [];
   const isPenitencia = tiposHermandad.includes('Penitencia');
   const isGloria = tiposHermandad.includes('Gloria');
+  // Ficha por capítulos de Gloria: la próxima salida (o la última) se destaca
+  // con su horario, bandas y recorrido. Misma lectura en caché que la Agenda.
+  const featuredOuting = chapters && !isPenitencia
+    ? featuredBrotherhoodOuting(h.salidas || [], agendaData.today || '')
+    : null;
+  const featuredOutingDetail = featuredOuting
+    ? await getGloryDetail(featuredOuting.slug).catch((error) => {
+      console.error('[Hilo Cofrade] Salida destacada omitida temporalmente en la ficha por capítulos', { slug: h.slug, error });
+      return null;
+    })
+    : null;
+  const listedOutings = featuredOutingDetail ? otherBrotherhoodOutings(h.salidas || [], featuredOuting) : (h.salidas || []);
   const brotherhoodTypeLabel = brotherhoodPublicTypeLabel(h);
   const steps = h.pasos || [];
   // Música actual: la de cada paso y la Cruz de Guía se muestran en «Pasos
@@ -918,7 +933,9 @@ export default async function HermandadDetailPage({ params, reading: readingOver
             ownMusic: ownMusicSection, musicalHeritage: musicalHeritageSection, repertoires: repertoiresSection,
             historicalMusic: historicalMusicSection, heritage: heritageSection, simpecados: simpecadosSection,
             posters: postersSection, habit: habitSection, council: councilSection, viaCrucis: viaCrucisSection,
-            outings: outingsSection, crew: crewSection, cults: cultsSection, curiosities: curiositiesSection,
+            outings: featuredOutingDetail ? <BrotherhoodOutingsSection outings={listedOutings} /> : outingsSection, crew: crewSection, cults: cultsSection, curiosities: curiositiesSection,
+            outingFeature: featuredOutingDetail ? <BrotherhoodChapterOuting outing={featuredOutingDetail} /> : null,
+            outingsCount: listedOutings.length,
             thread: <BrotherhoodThread nodes={threadNodes} />,
             discovery: <BrotherhoodReadingDiscovery brotherhoodId={h.id} />,
             officialLinks: h.enlacesOficiales?.length ? <OfficialLinks links={h.enlacesOficiales} compact /> : null }}

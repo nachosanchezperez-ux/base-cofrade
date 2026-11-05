@@ -1,0 +1,408 @@
+/* Salida destacada: tarjeta en el color de la propia Hermandad. */
+.outing {
+  padding-block: 4px 18px;
+  background: #fff;
+}
+
+.card {
+  --tone: var(--brotherhood-primary, #153b69);
+  --tone-soft: color-mix(in srgb, var(--tone) 9%, #fff);
+  --tone-line: color-mix(in srgb, var(--tone) 30%, #e3e7eb);
+  border: 1px solid color-mix(in srgb, var(--tone) 16%, #e3e7eb);
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* Cabecera: fecha grande + estado y título, sobre el color de la entidad. */
+.head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  padding: 16px;
+  background: var(--tone);
+  color: #fff;
+}
+
+.date {
+  display: grid;
+  justify-items: center;
+  min-width: 62px;
+  margin: 0;
+  padding: 8px 6px 7px;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--tone);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.date span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.date strong {
+  margin-block: 2px;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.headText {
+  min-width: 0;
+}
+
+.status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  align-items: center;
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.92;
+}
+
+.urgency {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 18%);
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.title {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(18px, 4.8vw, 22px);
+  line-height: 1.2;
+}
+
+/* Salida y entrada: los dos datos que más se buscan, en grande. */
+.times {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid #edf0f2;
+}
+
+.time {
+  display: grid;
+  gap: 2px;
+  padding: 14px 16px;
+}
+
+.time + .time {
+  border-left: 1px solid #edf0f2;
+}
+
+.time small {
+  color: #5d6670;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.time strong {
+  color: #171b20;
+  font-size: clamp(26px, 8vw, 34px);
+  font-weight: 800;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+
+.time strong.pending {
+  color: #6b737c;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.time span {
+  color: #4a535c;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+/* Bandas: una fila por posición. */
+.bands {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 14px 16px;
+  list-style: none;
+  border-bottom: 1px solid #edf0f2;
+}
+
+.bands li {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+}
+
+.bandIcon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--tone-soft);
+  color: var(--tone);
+  font-size: 16px;
+}
+
+.bandText {
+  display: grid;
+  min-width: 0;
+}
+
+.bandText small {
+  color: #5d6670;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.bandText a,
+.bandText strong {
+  color: #171b20;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Recorrido como línea: extremos destacados y calles como paradas. */
+.route {
+  padding: 14px 16px 6px;
+}
+
+.routeTitle {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  margin: 0 0 10px;
+  color: #171b20;
+  font-size: 16px;
+}
+
+.routeTitle small {
+  color: #6b737c;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.line,
+.foldList {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.line::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  left: 11px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--tone-line);
+}
+
+.street,
+.stop,
+.fold {
+  position: relative;
+  padding-left: 34px;
+}
+
+.street {
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  color: #262c33;
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+.street::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  border: 3px solid var(--tone);
+  border-radius: 50%;
+  background: #fff;
+  transform: translateY(-50%);
+  box-sizing: border-box;
+}
+
+.endpoint {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 46px;
+}
+
+.endpoint::before {
+  content: '';
+  position: absolute;
+  left: 1px;
+  top: 50%;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  background: var(--tone);
+  box-shadow: 0 0 0 4px #fff;
+  transform: translateY(-50%);
+}
+
+.endpoint b {
+  padding: 3px 8px;
+  border-radius: 8px;
+  background: var(--tone-soft);
+  color: var(--tone);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.endpoint span {
+  color: #171b20;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* Tramo central plegado: sigue la línea con un nodo «+». */
+.fold details > summary {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 40px;
+  color: var(--tone);
+  font-size: 14px;
+  font-weight: 700;
+  list-style: none;
+  cursor: pointer;
+}
+
+.fold details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.fold::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 20px;
+  width: 19px;
+  height: 19px;
+  border: 2px dashed var(--tone);
+  border-radius: 50%;
+  background: #fff;
+  transform: translateY(-50%);
+  box-sizing: border-box;
+}
+
+.fold details[open] > summary b {
+  transform: rotate(45deg);
+}
+
+.fold details > summary b {
+  transition: transform 0.15s ease;
+}
+
+.foldList .street {
+  padding-left: 0;
+}
+
+.foldList .street::before {
+  left: -27px;
+}
+
+.routeText {
+  margin: 0;
+  padding: 14px 16px;
+  color: #262c33;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+/* Detalles y enlace a la Agenda. */
+.notes {
+  margin: 0 16px;
+  border-top: 1px solid #edf0f2;
+}
+
+.notes > summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 44px;
+  color: #262c33;
+  font-size: 14px;
+  font-weight: 700;
+  list-style: none;
+  cursor: pointer;
+}
+
+.notes > summary::-webkit-details-marker {
+  display: none;
+}
+
+.notes p {
+  margin: 0 0 12px;
+  color: #3b434b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.agenda {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  min-height: 46px;
+  margin: 8px 16px 16px;
+  border-radius: 12px;
+  background: var(--tone-soft);
+  color: var(--tone);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (min-width: 900px) {
+  .card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      'head head'
+      'times route'
+      'bands route'
+      'notes route'
+      'agenda route';
+    align-items: start;
+  }
+
+  .head { grid-area: head; }
+  .times { grid-area: times; }
+  .bands { grid-area: bands; }
+  .notes { grid-area: notes; }
+  .agenda { grid-area: agenda; }
+
+  .route,
+  .routeText {
+    grid-area: route;
+    align-self: stretch;
+    border-left: 1px solid #edf0f2;
+  }
+}
