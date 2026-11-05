@@ -6,6 +6,7 @@ import { unstable_cache } from 'next/cache'
 import { BROTHERHOOD_DETAIL_DATA_CACHE } from '@/lib/brotherhood-detail-cache'
 import { createPublicClient as createClient } from '@/lib/supabase/public'
 import { publicText } from '@/lib/supabase/public-entity-page'
+import peopleRows from './BrotherhoodPeopleRows.module.css'
 import styles from './BrotherhoodQuickFacts.module.css'
 import { groupBrotherhoodDressers, relationPeriod } from '@/lib/brotherhood-people'
 
@@ -191,7 +192,7 @@ const loadRelationalFacts = cache(async function loadRelationalFacts(brotherhood
   }
 })
 
-export default async function BrotherhoodQuickFacts({ brotherhood, heroFactLabels = [], compact = false, peopleOnly = false, hidePeople = false }) {
+export default async function BrotherhoodQuickFacts({ brotherhood, heroFactLabels = [], compact = false, peopleOnly = false, hidePeople = false, peopleVariant = 'default' }) {
   let relational = { head: null, dressers: [], membership: null, recurringSeries: [] }
 
   try {
@@ -205,6 +206,31 @@ export default async function BrotherhoodQuickFacts({ brotherhood, heroFactLabel
 
   const activities = annualActivities(brotherhood, relational.recurringSeries)
   const dressers = groupBrotherhoodDressers(relational.dressers)
+  if (peopleOnly && peopleVariant === 'rows') {
+    // Ficha por capítulos: personas en filas, con el mismo lenguaje que los titulares.
+    if (!relational.head && !dressers.length) return null
+    return <section className={peopleRows.section} aria-labelledby="personas-titulo">
+      <h3 className={peopleRows.title} id="personas-titulo">{relational.head ? 'Personas de la Hermandad' : dressers.length === 1 ? 'Vestidor' : 'Vestidores'}</h3>
+      <ul className={peopleRows.list}>
+        {relational.head ? <li>
+          {/* La etiqueta de cargo solo hace falta si se mezclan cargos. */}
+          <small className={peopleRows.role}>{relational.head.label}</small>
+          <strong>{relational.head.name}</strong>
+          {relational.head.period ? <span className={peopleRows.period}>{relational.head.period}</span> : null}
+        </li> : null}
+        {dressers.map(dresser => <li key={dresser.agentId || dresser.id}>
+          {relational.head ? <small className={peopleRows.role}>Vestidor</small> : null}
+          <strong>{dresser.slug ? <Link href={`/autores/${dresser.slug}`}>{dresser.name}</Link> : dresser.name}</strong>
+          {dresser.commonPeriod ? <span className={peopleRows.period}>{dresser.commonPeriod}</span> : null}
+          <p className={peopleRows.images}>Viste a {dresser.images.map((image, index) => <span key={image.id}>
+            {index ? (index === dresser.images.length - 1 ? ' y ' : ', ') : ''}
+            {image.imageSlug ? <Link href={`/imagenes/${image.imageSlug}`}>{image.image}</Link> : image.image}
+            {image.period && !dresser.commonPeriod ? ` (${image.period})` : ''}
+          </span>)}</p>
+        </li>)}
+      </ul>
+    </section>
+  }
   if (peopleOnly) {
     if (!relational.head && !dressers.length) return null
     return <aside className={styles.people} aria-label="Personas vinculadas a la Hermandad">

@@ -1,0 +1,585 @@
+/* Ficha por capítulos: separación con espacio y tipografía, no con cajas. */
+.chapters {
+  --chapter-offset: calc(var(--hc-app-header-height, 70px) + 10px);
+  background: #fff;
+}
+
+:global(body):has(.chapters) {
+  /* La barra inferior fija no tapa el final de la página en móvil. */
+  padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+}
+
+.chapter {
+  padding-block: 36px 8px;
+  border-top: 1px solid #e3e7eb;
+}
+
+.chapter:first-of-type {
+  border-top: 0;
+  padding-top: 24px;
+}
+
+/* El nombre del capítulo ya lo dicen la barra, la mini cabecera y el título
+   de cada sección: aquí queda solo para lectores de pantalla y como destino
+   del foco al cambiar de capítulo (sin título repetido a la vista). */
+.chapterHead {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.chapterTitle {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0;
+  color: #171b20;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.chapterNumber {
+  color: var(--brotherhood-secondary, #a71930);
+  font-variant-numeric: tabular-nums;
+}
+
+.chapterIntro {
+  max-width: 68ch;
+  margin: 8px 0 0;
+  color: #4b5560;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* Gana a `.brotherhood-page section[id]` (148/138 px, pensado para la barra
+   superior antigua): en móvil la navegación está abajo. */
+.chapters section.chapter[id] {
+  scroll-margin-top: var(--chapter-offset);
+}
+
+/* Las secciones reutilizadas pierden el relleno superior: el capítulo ya separa. */
+.chapter :global(.section),
+.chapter :global(#conoce-hermandad),
+.chapter :global(#salidas),
+.chapter :global(#agenda) {
+  padding-block: 20px 24px;
+}
+
+.chapter :global(.section-heading) {
+  margin-bottom: 16px;
+}
+
+.chapter :global(.section-heading h2) {
+  font-size: clamp(24px, 6.4vw, 34px);
+}
+
+.flow > :global(*) + :global(*) {
+  border-top: 1px solid #eef1f4;
+}
+
+/* Inicio */
+.homeGrid {
+  display: grid;
+  gap: 22px;
+  padding-top: 12px;
+}
+
+.homeMain,
+.homeSide {
+  min-width: 0;
+}
+
+.lead {
+  max-width: 62ch;
+  margin: 8px 0 18px;
+  color: #23272c;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.essentials :global([class*='__facts']) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 28px;
+}
+
+.essentials :global([class*='__fact']) {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.essentials :global([class*='__facts'] dd) {
+  font-size: 24px;
+}
+
+.homeSide :global(#agenda) {
+  padding: 0;
+  background: transparent;
+}
+
+.homeSide :global(#agenda > .shell) {
+  width: 100%;
+  padding: 0;
+}
+
+.news {
+  margin-top: 24px;
+}
+
+.newsEyebrow,
+.subhead {
+  margin: 0 0 10px;
+  color: #555d66;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.subhead small {
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Una noticia protagonista; las demás, en segundo nivel y sin competir. */
+.newsLead :global(ol) {
+  margin: 0;
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+/* Gran cita (coronación…), justo después de Próximamente. */
+.milestone {
+  margin-top: 18px;
+  scroll-margin-top: calc(var(--chapter-offset, 140px) + 8px);
+}
+
+.life {
+  margin-top: 16px;
+}
+
+/* Música: quién acompaña hoy, en filas. */
+.bandsToday {
+  padding-block: 4px 12px;
+}
+
+.bandsTodayTitle {
+  margin: 0 0 6px;
+  color: #171b20;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.bandsToday ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bandsToday li {
+  display: grid;
+  gap: 2px;
+  padding: 10px 0;
+  border-top: 1px solid #e3e7eb;
+}
+
+.bandsToday a {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+}
+
+.bandsToday a,
+.bandsToday strong {
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 17px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.bandsToday li span {
+  color: #59636e;
+  font-size: 14px;
+}
+
+/* Zonas táctiles: enlaces de calendario de Próximamente. */
+.homeSide :global([class*='__subscribe'] a) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.newsLead :global(h3) {
+  font-size: 21px;
+  line-height: 1.25;
+}
+
+.newsMore {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #e3e7eb;
+}
+
+.newsMore :global(h3) {
+  font-size: 16px;
+}
+
+/* Qué descubrir: accesos visuales a los capítulos, como en una aplicación. */
+.tiles {
+  margin-block: 4px 22px;
+}
+
+.tiles ol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* El primero (Cortejo o Procesión) ocupa el ancho; con número impar de
+   accesos, el último también, para no dejar huecos. */
+.tiles li:first-child,
+.tiles[data-count='2'] li,
+.tiles[data-count='4'] li:last-child {
+  grid-column: 1 / -1;
+}
+
+.tiles a {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: 'icon label arrow' 'icon summary arrow';
+  align-items: center;
+  column-gap: 12px;
+  min-height: 76px;
+  padding: 14px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 7%, #fff);
+  color: #171b20;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .12s ease, background-color .15s ease;
+}
+
+.tiles a:active {
+  transform: scale(.985);
+}
+
+.tiles a:hover {
+  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 12%, #fff);
+}
+
+.tiles a:focus-visible {
+  outline: 3px solid #175f99;
+  outline-offset: 2px;
+}
+
+.tileIcon {
+  grid-area: icon;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--brotherhood-primary, #153b69);
+  color: var(--brotherhood-light, #fff);
+}
+
+.tileIcon svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tiles strong {
+  grid-area: label;
+  align-self: end;
+  font-size: 17px;
+  line-height: 1.2;
+}
+
+.tileSummary {
+  grid-area: summary;
+  align-self: start;
+  color: #4b5560;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.tiles b {
+  grid-area: arrow;
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 24px;
+  font-weight: 400;
+}
+
+/* En los accesos de media anchura, icono arriba y texto debajo. */
+.tiles li:not(:first-child):not(:last-child) a,
+.tiles[data-count='3'] li:last-child a,
+.tiles[data-count='5'] li:not(:first-child) a {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'icon arrow' 'label label' 'summary summary';
+  row-gap: 6px;
+  align-items: start;
+  min-height: 132px;
+}
+
+/* Acceso con foto del titular: imagen a sangre con velo para leer el texto. */
+.tilePhoto a {
+  min-height: 150px;
+  align-items: end;
+  background: #171b20;
+  color: #fff;
+}
+
+.tileImage {
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.tilePhoto a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(10, 14, 20, .82) 0%, rgba(10, 14, 20, .5) 55%, rgba(10, 14, 20, .15) 100%);
+}
+
+.tilePhoto a > :not(img) {
+  position: relative;
+  z-index: 1;
+}
+
+.tilePhoto .tileSummary,
+.tilePhoto b {
+  color: #fff;
+}
+
+.tilePhoto .tileIcon {
+  background: rgba(255, 255, 255, .18);
+  color: #fff;
+}
+
+/* Sigue con: al final de cada capítulo, el siguiente y la vuelta a Inicio. */
+.continue {
+  display: grid;
+  gap: 10px;
+  margin-block: 18px 8px;
+}
+
+.continueNext {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'small arrow' 'label arrow' 'summary arrow';
+  align-items: center;
+  gap: 2px 12px;
+  min-height: 72px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 7%, #fff);
+  color: #171b20;
+  text-decoration: none;
+}
+
+.continueNext small {
+  grid-area: small;
+  color: #59636e;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.continueNext strong {
+  grid-area: label;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 18px;
+}
+
+.continueIcon {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.continueNext span {
+  grid-area: summary;
+  color: #4b5560;
+  font-size: 13px;
+}
+
+.continueNext b {
+  grid-area: arrow;
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 26px;
+  font-weight: 400;
+}
+
+.continueHome {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #2a333c;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.continueNext:focus-visible,
+.continueHome:focus-visible {
+  outline: 3px solid #175f99;
+  outline-offset: 2px;
+}
+
+/* En la página continua (ordenador o sin JavaScript) el nombre de la Hermandad
+   no se repite en cada capítulo; en el modo aplicación hace de cabecera. */
+.chapterOwner {
+  display: none;
+}
+
+.chapterTitle:focus {
+  outline: none;
+}
+
+.chapterTitle:focus-visible {
+  /* Recibe el foco al cambiar de pantalla (lectores de pantalla); no es un
+     control, así que no se dibuja el anillo de foco. */
+  outline: none;
+}
+
+/* Modo aplicación (móvil con JavaScript): un capítulo por pantalla. */
+@media (max-width: 899px) {
+  .chapters[data-app='on'] > section[data-chapter]:not([data-active]) {
+    display: none;
+  }
+
+  .chapters[data-app='on'] > section[data-chapter] {
+    border-top: 0;
+    padding-top: 22px;
+    min-height: calc(100svh - var(--hc-app-header-height, 70px) - 60px);
+  }
+
+  .chapters[data-app='on'] > section[data-chapter]:not([data-chapter='inicio']) .chapterTitle {
+    display: grid;
+    gap: 2px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .chapters[data-app='on'] > section[data-chapter]:not([data-chapter='inicio']) .chapterNumber {
+    display: none;
+  }
+
+  .chapters[data-app='on'] > section[data-chapter]:not([data-chapter='inicio']) .chapterOwner {
+    display: block;
+    color: #59636e;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .chapters[data-app='on'] > section[data-chapter]:not([data-chapter='inicio']) .chapterName {
+    color: var(--brotherhood-primary, #153b69);
+    font-size: 30px;
+    line-height: 1.1;
+  }
+
+  /* El capítulo ya hace de título: el encabezado repetido («Patrimonio» bajo
+     «Patrimonio») queda solo para lectores de pantalla. */
+  .chapters[data-app='on'] > section[data-chapter='patrimonio'] :global(#patrimonio .section-heading) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .chapters[data-app='on'] .continue {
+    margin-bottom: 16px;
+  }
+
+  .chapters[data-app='on'] section.chapter[id] {
+    scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 56px);
+  }
+}
+
+.supplement {
+  padding-block: 8px 20px;
+}
+
+@media (min-width: 900px) {
+  :global(body):has(.chapters) {
+    padding-bottom: 0;
+  }
+
+  .chapters {
+    --chapter-offset: calc(var(--hc-app-header-height, 78px) + 62px);
+  }
+
+  .chapter {
+    padding-block: 56px 16px;
+  }
+
+  .homeGrid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 1fr);
+    gap: 48px;
+    align-items: start;
+  }
+
+  .lead {
+    font-size: 19px;
+  }
+
+  .tiles ol {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .tiles li,
+  .tiles li:first-child,
+  .tiles[data-count='2'] li,
+  .tiles[data-count='4'] li:last-child {
+    grid-column: auto;
+  }
+
+  .tiles a,
+  .tiles li:not(:first-child):not(:last-child) a {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: 'icon arrow' 'label label' 'summary summary';
+    row-gap: 6px;
+    align-items: start;
+    min-height: 150px;
+  }
+
+  .tilePhoto a {
+    align-content: end;
+  }
+
+  .continue {
+    grid-template-columns: minmax(0, 520px) auto;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
