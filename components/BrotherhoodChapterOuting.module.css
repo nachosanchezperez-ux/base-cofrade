@@ -636,7 +636,13 @@
   flex-direction: column;
   gap: 4px;
   min-height: 64px;
+  padding: 0 6px;
   font-size: 13px;
+  text-align: center;
+}
+
+.actionRow .action span {
+  white-space: nowrap;
 }
 
 .actionWhatsapp svg {
