@@ -16,29 +16,29 @@ export default function OutingShareBar({ share, calendarHref = '', storyHref = '
   const timer = useRef(null)
   const track = (method, extra = {}) => trackEvent('share', { method, content_type: 'procesion_gloria', item_name: share?.title || '', ...analytics, ...extra })
 
-  async function shareStory() {
-    if (!storyHref || busy) return
+  async function shareStory(href = storyHref, name = storyName) {
+    if (!href || busy) return
     setBusy(true)
     try {
-      const blob = await fetch(storyHref).then((response) => {
+      const blob = await fetch(href).then((response) => {
         if (!response.ok) throw new Error(String(response.status))
         return response.blob()
       })
-      const file = new File([blob], storyName, { type: blob.type || 'image/png' })
+      const file = new File([blob], name, { type: blob.type || 'image/png' })
       if (navigator.canShare?.({ files: [file] })) {
         await navigator.share({ files: [file], title: share?.title || '', text: share?.url || '' })
         track('story_image')
         return
       }
       const url = URL.createObjectURL(file)
-      const link = Object.assign(document.createElement('a'), { href: url, download: storyName })
+      const link = Object.assign(document.createElement('a'), { href: url, download: name })
       document.body.appendChild(link)
       link.click()
       link.remove()
       window.setTimeout(() => URL.revokeObjectURL(url), 10000)
       track('story_image_download')
     } catch (error) {
-      if (error?.name !== 'AbortError') window.open(storyHref, '_blank', 'noopener')
+      if (error?.name !== 'AbortError') window.open(href, '_blank', 'noopener')
     } finally {
       setBusy(false)
     }
@@ -74,10 +74,15 @@ export default function OutingShareBar({ share, calendarHref = '', storyHref = '
         </a>
       ) : null}
       {storyHref ? (
-        <button type="button" className={`${styles.action} ${styles.actionStory}`} onClick={shareStory} disabled={busy} aria-busy={busy}>
-          <ImageDownIcon size={22} />
-          <span>{busy ? 'Preparando la imagen…' : 'Imagen para tus estados'}</span>
-        </button>
+        <div className={styles.storyGroup}>
+          <button type="button" className={`${styles.action} ${styles.actionStory}`} onClick={() => shareStory()} disabled={busy} aria-busy={busy}>
+            <ImageDownIcon size={22} />
+            <span>{busy ? 'Preparando la imagen…' : 'Imagen para tus estados'}</span>
+          </button>
+          <button type="button" className={styles.storySquare} onClick={() => shareStory(`${storyHref}?formato=cuadrado`, storyName.replace(/\.png$/, '-cuadrada.png'))} disabled={busy}>
+            Versión cuadrada para publicaciones
+          </button>
+        </div>
       ) : null}
       <div className={styles.actionRow}>
         <a className={`${styles.action} ${styles.actionWhatsapp}`} href={whatsappShareHref(share.text)} target="_blank" rel="noopener noreferrer" onClick={() => track('whatsapp')} data-analytics-skip-entity="true">

@@ -701,3 +701,21 @@
 @media (prefers-reduced-motion: reduce) {
   .livePulse { animation: none; }
 }
+
+.storyGroup {
+  display: grid;
+  gap: 4px;
+}
+
+.storySquare {
+  justify-self: center;
+  min-height: 36px;
+  padding: 0 8px;
+  border: 0;
+  background: none;
+  color: var(--tone);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
