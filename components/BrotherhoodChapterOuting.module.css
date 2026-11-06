@@ -552,3 +552,93 @@
   color: inherit;
   text-decoration: none;
 }
+
+/* Iconos (Lucide) alineados con el texto. */
+.time small,
+.time span,
+.routeTitle,
+.bandChip,
+.agenda {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.time span svg {
+  flex: none;
+  color: var(--tone);
+}
+
+.bandIconSegment {
+  background: var(--brotherhood-secondary, #c6a15b);
+  color: #fff;
+}
+
+.routeTitle svg {
+  color: var(--tone);
+}
+
+.fold details > summary b,
+.notes > summary b {
+  display: grid;
+  place-items: center;
+}
+
+/* Barra de acciones. */
+.shareBar {
+  display: grid;
+  gap: 10px;
+}
+
+.action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 12px;
+  border: 1px solid color-mix(in srgb, var(--tone) 24%, #e3e7eb);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--tone);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.action:disabled {
+  cursor: progress;
+  opacity: 0.75;
+}
+
+.actionMain {
+  border-color: var(--tone);
+  background: var(--tone);
+  color: #fff;
+}
+
+/* «Imagen para tus estados»: la acción diferencial, en el segundo color. */
+.actionStory {
+  border-color: transparent;
+  background: linear-gradient(120deg, var(--brotherhood-secondary, #c6a15b), color-mix(in srgb, var(--brotherhood-secondary, #c6a15b) 70%, var(--tone)));
+  color: #fff;
+}
+
+.actionRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.actionRow .action {
+  flex-direction: column;
+  gap: 4px;
+  min-height: 64px;
+  font-size: 13px;
+}
+
+.actionWhatsapp svg {
+  color: #1f9d55;
+}

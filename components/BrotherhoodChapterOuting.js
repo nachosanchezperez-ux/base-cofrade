@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import ShareActions from './ShareActions'
+import OutingShareBar from './OutingShareBar'
+import { ChevronRightIcon, ChurchIcon, ClockIcon, FlagIcon, MusicIcon, PlusIcon, RouteIcon } from './icons/LucideIcons'
 import BrotherhoodOutingMap from './BrotherhoodOutingMap'
 import { bandSegments, outingCardTitle, outingDateParts, outingRouteStops, splitRouteStreets } from '@/lib/brotherhood-featured-outing'
 import { agendaEventAnchor } from '@/lib/agenda-event-presentation'
@@ -24,8 +25,8 @@ function bandMarks(segments, index) {
 function BandChips({ starts, ends }) {
   if (!starts.length && !ends.length) return null
   return <span className={styles.bandChips}>
-    {starts.map((band) => <em key={`s-${band.id}`} className={styles.bandChip}>♪ Desde aquí, {band.name}</em>)}
-    {ends.map((band) => <em key={`e-${band.id}`} className={`${styles.bandChip} ${styles.bandChipEnd}`}>♪ Hasta aquí, {band.name}</em>)}
+    {starts.map((band) => <em key={`s-${band.id}`} className={styles.bandChip}><MusicIcon size={13} strokeWidth={2.4} /> Desde aquí, {band.name}</em>)}
+    {ends.map((band) => <em key={`e-${band.id}`} className={`${styles.bandChip} ${styles.bandChipEnd}`}><FlagIcon size={13} strokeWidth={2.4} /> Hasta aquí, {band.name}</em>)}
   </span>
 }
 
@@ -38,9 +39,9 @@ function Street({ name, marks }) {
 
 function Time({ label, value, place }) {
   return <div className={styles.time}>
-    <small>{label}</small>
+    <small><ClockIcon size={14} strokeWidth={2.4} /> {label}</small>
     <strong className={value ? '' : styles.pending}>{value || 'Por confirmar'}</strong>
-    {place ? <span>{place}</span> : null}
+    {place ? <span><ChurchIcon size={14} /> {place}</span> : null}
   </div>
 }
 
@@ -102,7 +103,7 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
 
         {music.length ? <ul className={styles.bands} aria-label="Acompañamiento musical">
           {music.map((band) => <li key={band.id || band.name}>
-            <span className={styles.bandIcon} aria-hidden="true">♪</span>
+            <span className={`${styles.bandIcon} ${segmentById.get(band.id || band.name) ? styles.bandIconSegment : ''}`} aria-hidden="true"><MusicIcon size={18} /></span>
             <span className={styles.bandText}>
               {band.context ? <small>{band.context}{segmentById.get(band.id || band.name) ? ` · hasta ${segmentById.get(band.id || band.name).endLabel}` : ''}</small> : null}
               {band.href ? <Link href={band.href} prefetch={false}>{band.name}</Link> : <strong>{band.name}</strong>}
@@ -111,7 +112,7 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
         </ul> : null}
 
         {route.streets.length ? <div className={styles.route}>
-          <h3 className={styles.routeTitle}>Recorrido <small>{route.streets.length} calles</small></h3>
+          <h3 className={styles.routeTitle}><RouteIcon size={20} /> Recorrido <small>{route.streets.length} calles</small></h3>
           <BrotherhoodOutingMap points={outing.routePoints || []} segments={segments} title={outing.title} />
           <ol className={styles.line}>
             <li className={`${styles.stop} ${styles.endpoint} ${originMarks.inside ? styles.inBand : ''}`}>
@@ -122,7 +123,7 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
             {streets.head.map((name, index) => <Street key={`h-${index}`} name={name} marks={marksAt(index + 1)} />)}
             {streets.hidden.length ? <li className={styles.fold}>
               <details>
-                <summary><span>{streets.hidden.length} calles más</span><b aria-hidden="true">+</b></summary>
+                <summary><span>{streets.hidden.length} calles más</span><b aria-hidden="true"><PlusIcon size={16} strokeWidth={2.6} /></b></summary>
                 <ol className={styles.foldList}>
                   {streets.hidden.map((name, index) => <Street key={`m-${index}`} name={name} marks={marksAt(hiddenOffset + index)} />)}
                 </ol>
@@ -138,16 +139,22 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
         </div> : outing.routeSummary ? <p className={styles.routeText}>{outing.routeSummary}</p> : null}
 
         {outing.publicNotes ? <details className={styles.notes}>
-          <summary><span>Más detalles de la salida</span><b aria-hidden="true">+</b></summary>
+          <summary><span>Más detalles de la salida</span><b aria-hidden="true"><PlusIcon size={18} /></b></summary>
           <p>{outing.publicNotes}</p>
         </details> : null}
 
-        {upcoming || directionsHref ? <div className={styles.actions}>
-          {upcoming ? <ShareActions compact calendarFirst share={share} contentType="procesion_gloria" analytics={{ placement: 'ficha_salida' }} calendarHref={calendarHref} /> : null}
-          {directionsHref ? <a className={styles.directions} href={directionsHref} target="_blank" rel="noopener noreferrer">Cómo llegar a la salida <span aria-hidden="true">↗</span></a> : null}
-        </div> : null}
+        <div className={styles.actions}>
+          <OutingShareBar
+            share={share}
+            calendarHref={calendarHref}
+            storyHref={upcoming ? `/salidas/${outing.id}/estado` : ''}
+            storyName={`${outing.slug || 'salida'}-hilo-cofrade.png`}
+            directionsHref={directionsHref}
+            analytics={{ placement: 'ficha_salida' }}
+          />
+        </div>
 
-        {outing.detailHref ? <a className={styles.agenda} href={outing.detailHref}>Ver en la Agenda <span aria-hidden="true">›</span></a> : null}
+        {outing.detailHref ? <a className={styles.agenda} href={outing.detailHref}>Ver en la Agenda <ChevronRightIcon size={18} /></a> : null}
       </div>
     </div>
   </section>
