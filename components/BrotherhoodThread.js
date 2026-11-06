@@ -44,7 +44,9 @@ export default function BrotherhoodThread({ nodes = [] }) {
   return <section className={`section ${styles.section}`} id="tira-del-hilo" aria-labelledby="tira-del-hilo-titulo">
     <div className="shell">
       <h2 className={styles.title} id="tira-del-hilo-titulo">Tira del hilo</h2>
-      <p className={styles.intro}>De la Hermandad a quien compuso su música: {nodes.length} fichas unidas por relaciones documentadas.</p>
+      <p className={styles.intro}>{nodes.at(-1)?.kind === 'author'
+        ? `De la Hermandad a quien compuso su música: ${nodes.length} fichas unidas por relaciones documentadas.`
+        : `${nodes.length} fichas de Hilo Cofrade unidas por relaciones documentadas.`}</p>
       <ol className={styles.chain}>
         {nodes.map((node, index) => <li key={`${node.kind}-${node.href || index}`} className={styles.node} data-kind={node.kind}>
           <Avatar node={node} />

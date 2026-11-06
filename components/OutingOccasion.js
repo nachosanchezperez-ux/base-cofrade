@@ -13,7 +13,7 @@ function lowerFirst(text = '') {
   return text ? text.charAt(0).toLocaleLowerCase('es') + text.slice(1) : ''
 }
 
-export default function OutingOccasion({ occasion, music = [], names = [] }) {
+export default function OutingOccasion({ occasion, music = [], names = [], pieceLinks = true }) {
   if (!occasion || (!occasion.pieces?.length && !occasion.marches?.length)) return null
   const title = outingCardTitle(occasion.name, { names, fallback: occasion.type || occasion.name })
   const marches = occasion.marches || []
@@ -37,7 +37,7 @@ export default function OutingOccasion({ occasion, music = [], names = [] }) {
       {piece.credits?.length ? <ul className={styles.occasionCredits} aria-label="Autores de la intervención">
         {piece.credits.map((credit) => <li key={credit.discipline}><span>{credit.discipline}</span> {credit.names.join(', ')}</li>)}
       </ul> : null}
-      {piece.href ? <Link className={styles.occasionLink} href={piece.href} prefetch={false}>Ver en el patrimonio <ChevronRightIcon size={16} /></Link> : null}
+      {pieceLinks && piece.href ? <Link className={styles.occasionLink} href={piece.href} prefetch={false}>Ver en el patrimonio <ChevronRightIcon size={16} /></Link> : null}
     </article>)}
 
     {marches.length ? <div className={styles.occasionMarches}>
