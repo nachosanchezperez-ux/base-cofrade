@@ -23,7 +23,7 @@ import BrotherhoodViaCrucisSection from '@/components/BrotherhoodViaCrucisSectio
 import BrotherhoodOutingsSection from '@/components/BrotherhoodOutingsSection';
 import BrotherhoodChapterOuting from '@/components/BrotherhoodChapterOuting';
 import { featuredBrotherhoodOuting, otherBrotherhoodOutings } from '@/lib/brotherhood-featured-outing';
-import { getGloryDetail } from '@/lib/supabase/glory-directory';
+import { getGloryDetailByOutingId } from '@/lib/supabase/glory-directory';
 import BrotherhoodProgramHero from '@/components/BrotherhoodProgramHero';
 import { panelEditHref } from '@/lib/panel-session-cookie';
 import FollowBrotherhoodButton from '@/components/FollowBrotherhoodButton';
@@ -275,7 +275,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     ? featuredBrotherhoodOuting(h.salidas || [], agendaData.today || '')
     : null;
   const featuredOutingDetail = featuredOuting
-    ? await getGloryDetail(featuredOuting.slug).catch((error) => {
+    ? await getGloryDetailByOutingId(featuredOuting.id).catch((error) => {
       console.error('[Hilo Cofrade] Salida destacada omitida temporalmente en la ficha por capítulos', { slug: h.slug, error });
       return null;
     })

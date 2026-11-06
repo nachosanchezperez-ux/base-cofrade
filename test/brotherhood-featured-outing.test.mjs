@@ -10,7 +10,7 @@ import {
 
 const salidas = [
   { id: 'serie', serieId: 'serie', estado: 'recurring', nombre: 'Procesión anual' },
-  { id: 'mayo', slug: 'sacramental-2026', fecha: '2026-05-10', estado: 'announced' },
+  { id: 'mayo', slug: '', fecha: '2026-05-10', estado: 'announced' },
   { id: 'nov', slug: 'gloria-2026', fecha: '2026-11-08', serieId: 'serie', estado: 'announced' },
 ]
 
@@ -19,6 +19,11 @@ test('destaca la próxima salida concreta y, si no hay, la última celebrada', (
   assert.equal(featuredBrotherhoodOuting(salidas, '2026-04-01').id, 'mayo')
   assert.equal(featuredBrotherhoodOuting(salidas, '2026-12-01').id, 'nov')
   assert.equal(featuredBrotherhoodOuting([{ id: 'serie', estado: 'recurring' }], '2026-11-05'), null)
+  const withSacramental = [
+    { id: 'sac', tipo: 'Procesión sacramental', fecha: '2027-05-30', estado: 'announced' },
+    { id: 'glo', tipo: 'Procesión de Gloria', fecha: '2026-11-08', estado: 'announced' },
+  ]
+  assert.equal(featuredBrotherhoodOuting(withSacramental, '2026-12-01').id, 'glo')
 })
 
 test('las otras salidas no repiten la destacada ni su serie anual', () => {
