@@ -3,6 +3,7 @@ import OutingShareBar from './OutingShareBar'
 import OutingDayStatus from './OutingDayStatus'
 import { ChevronRightIcon, ChurchIcon, ClockIcon, FlagIcon, MusicIcon, PlusIcon, RouteIcon } from './icons/LucideIcons'
 import BrotherhoodOutingMap from './BrotherhoodOutingMap'
+import OutingOccasion from './OutingOccasion'
 import { bandSegments, outingCardTitle, outingDateParts, outingRouteStops, splitRouteStreets } from '@/lib/brotherhood-featured-outing'
 import { outingActionLinks } from '@/lib/outing-actions'
 import styles from './BrotherhoodChapterOuting.module.css'
@@ -97,6 +98,8 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
             </span>
           </li>)}
         </ul> : null}
+
+        <OutingOccasion occasion={outing.occasion} music={music} names={names} />
 
         {route.streets.length ? <div className={styles.route}>
           <h3 className={styles.routeTitle}><RouteIcon size={20} /> Recorrido <small>{route.streets.length} calles</small></h3>
