@@ -3,8 +3,7 @@ import OutingShareBar from './OutingShareBar'
 import { ChevronRightIcon, ChurchIcon, ClockIcon, FlagIcon, MusicIcon, PlusIcon, RouteIcon } from './icons/LucideIcons'
 import BrotherhoodOutingMap from './BrotherhoodOutingMap'
 import { bandSegments, outingCardTitle, outingDateParts, outingRouteStops, splitRouteStreets } from '@/lib/brotherhood-featured-outing'
-import { agendaEventAnchor } from '@/lib/agenda-event-presentation'
-import { agendaItemShare } from '@/lib/share'
+import { outingActionLinks } from '@/lib/outing-actions'
 import styles from './BrotherhoodChapterOuting.module.css'
 
 // Salida destacada del capítulo Procesión, pensada para consultarla en la
@@ -61,21 +60,7 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
   const destinationMarks = marksAt(route.streets.length + 1)
   const hiddenOffset = streets.head.length + 1
   const tailOffset = streets.head.length + streets.hidden.length + 1
-  const upcoming = outing.isUpcoming && !outing.isCancelled
-  const calendarHref = upcoming && outing.date ? `/calendario/acto/${agendaEventAnchor({ key: `processions:${outing.id}` })}.ics` : ''
-  const share = agendaItemShare({
-    title: outing.title,
-    organizer: outing.brotherhoodName,
-    categoryLabel: outing.outingType || 'Procesión de Gloria',
-    date: outing.date,
-    startTime: outing.departureTime,
-    place: route.origin,
-    municipality: outing.municipality,
-    href: outing.detailHref,
-  })
-  const directionsHref = route.origin
-    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([route.origin, outing.municipality].filter(Boolean).join(', '))}`
-    : ''
+  const { upcoming, calendarHref, storyHref, storyName, directionsHref, share } = outingActionLinks(outing)
   const status = outing.isCancelled ? 'Suspendida' : outing.isUpcoming ? 'Próxima salida' : 'Última salida'
 
   return <section className={styles.outing} id="salida" aria-labelledby="salida-titulo">
@@ -147,8 +132,8 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
           <OutingShareBar
             share={share}
             calendarHref={calendarHref}
-            storyHref={upcoming ? `/salidas/${outing.id}/estado` : ''}
-            storyName={`${outing.slug || 'salida'}-hilo-cofrade.png`}
+            storyHref={storyHref}
+            storyName={storyName}
             directionsHref={directionsHref}
             analytics={{ placement: 'ficha_salida' }}
           />

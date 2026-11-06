@@ -648,3 +648,9 @@
 .actionWhatsapp svg {
   color: #1f9d55;
 }
+
+/* Mapa y acciones fuera de la tarjeta (página de la procesión en la Agenda). */
+.tools {
+  --tone: var(--brotherhood-primary, #153b69);
+  --tone-soft: color-mix(in srgb, var(--tone) 9%, #fff);
+}

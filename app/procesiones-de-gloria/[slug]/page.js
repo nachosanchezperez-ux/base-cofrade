@@ -22,6 +22,12 @@ import {
   socialMetadata,
 } from '@/lib/seo'
 import GloryHeroMedia from './GloryHeroMedia'
+import BrotherhoodOutingMap from '@/components/BrotherhoodOutingMap'
+import OutingShareBar from '@/components/OutingShareBar'
+import { bandSegments, outingRouteStops } from '@/lib/brotherhood-featured-outing'
+import { outingActionLinks } from '@/lib/outing-actions'
+import { getHermandadPageBySlug } from '@/lib/supabase/brotherhood-page'
+import outingStyles from '@/components/BrotherhoodChapterOuting.module.css'
 import styles from './glory-detail.module.css'
 
 export const dynamic = 'force-static'
@@ -164,6 +170,17 @@ export default async function GloryDetailPage({ params }) {
     destination: item.destination,
     schedule: item.schedule,
   })
+  // Mapa, tramo de cada banda y acciones (mismos componentes que la ficha de
+  // la Hermandad), en los colores de la propia Hermandad.
+  const outingRoute = outingRouteStops(item.routeSummary, { origin: item.origin, destination: item.destination })
+  const outingSegments = bandSegments(item.processionalMusic?.length ? item.processionalMusic : (item.music || []), outingRoute)
+  const actions = outingActionLinks(item)
+  const brotherhoodSlug = String(item.brotherhoodHref || '').match(/\/hermandades\/([^/?#]+)/)?.[1] || ''
+  const palette = brotherhoodSlug ? (await getHermandadPageBySlug(brotherhoodSlug).catch(() => null))?.colores : null
+  const paletteStyle = {
+    ...(/^#[0-9a-f]{6}$/i.test(palette?.primario || '') ? { '--brotherhood-primary': palette.primario } : {}),
+    ...(/^#[0-9a-f]{6}$/i.test(palette?.secundario || '') ? { '--brotherhood-secondary': palette.secundario } : {}),
+  }
   const pageDescription = seoDescription([
     `${item.title}${item.municipality ? ` · ${item.municipality}` : ''}`,
     formatSeoDate(item.date),
@@ -269,7 +286,18 @@ export default async function GloryDetailPage({ params }) {
         calendarLabel="Glorias"
       />
 
-      <div className={`shell ${styles.body}`}>
+      <div className={`shell ${styles.body}`} style={paletteStyle}>
+        <section className={`${styles.section} ${outingStyles.tools}`} aria-label="Guarda y comparte esta salida">
+          <OutingShareBar
+            share={actions.share}
+            calendarHref={actions.calendarHref}
+            storyHref={actions.storyHref}
+            storyName={actions.storyName}
+            directionsHref={actions.directionsHref}
+            analytics={{ placement: 'agenda_gloria' }}
+          />
+        </section>
+
         {/* Hermandad, localidad, fecha y estado ya están en la cabecera y en
             «Relacionado con este acto»: aquí solo queda la información práctica. */}
         {item.publicNotes ? (
@@ -287,6 +315,9 @@ export default async function GloryDetailPage({ params }) {
             <div className={styles.sectionHead}>
               <span className="eyebrow">Itinerario</span>
               <h2 id="recorrido-procesion-gloria">Recorrido</h2>
+            </div>
+            <div className={outingStyles.tools}>
+              <BrotherhoodOutingMap points={item.routePoints || []} segments={outingSegments} title={item.title} />
             </div>
             <ProcessionRoute route={processionRoute} />
           </section>

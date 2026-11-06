@@ -25,5 +25,8 @@ test('la tarjeta de la salida ofrece calendario, imagen para estados, WhatsApp, 
   const bar = read('components/OutingShareBar.js')
   for (const label of ['Añadir al calendario', 'Imagen para tus estados', 'WhatsApp', 'Compartir', 'Cómo llegar']) assert.match(bar, new RegExp(label))
   assert.match(bar, /navigator\.canShare\?\.\(\{ files: \[file\] \}\)/)
-  assert.match(read('components/BrotherhoodChapterOuting.js'), /storyHref=\{upcoming \? `\/salidas\/\$\{outing\.id\}\/estado` : ''\}/)
+  assert.match(read('lib/outing-actions.js'), /storyHref: upcoming && outing\.id \? `\/salidas\/\$\{outing\.id\}\/estado` : ''/)
+  for (const file of ['components/BrotherhoodChapterOuting.js', 'app/procesiones-de-gloria/[slug]/page.js']) {
+    assert.match(read(file), /outingActionLinks\(/, file)
+  }
 })
