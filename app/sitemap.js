@@ -1,5 +1,5 @@
 import { allowAgendaSitemapUrl } from '@/lib/agenda-event-url-policy';
-import { hasCrewEventPage } from '@/lib/crew-event-url-policy';
+import { isIndexableCrewEventPage } from '@/lib/crew-event-url-policy';
 import {
   brotherhoodDirectoryLocalities,
   brotherhoodDirectoryRoutes,
@@ -306,8 +306,9 @@ function agendaMunicipalityEntries(groups = []) {
 
 function crewEventEntries(events) {
   return events
-    // New convocatorias live as cards in the calendar (#anchor), not as pages.
-    .filter((event) => hasCrewEventPage(event.detailHref))
+    // New convocatorias live as cards in the calendar (#anchor), not as pages;
+    // preserved pages of past convocatorias are noindex and stay out too.
+    .filter((event) => isIndexableCrewEventPage(event))
     .map((event) => ({
       url: absoluteUrl(event.detailHref),
       ...(validLastModified(event.updatedAt) ? { lastModified: validLastModified(event.updatedAt) } : {}),
