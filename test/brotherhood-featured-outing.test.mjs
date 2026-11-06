@@ -74,3 +74,19 @@ test('el tramo de cada banda se sitúa sobre el recorrido', async () => {
   ]
   assert.deepEqual(bandSegments(music, route).map(({ id, start, end }) => ({ id, start, end })), [{ id: 'c', start: 0, end: 6 }])
 })
+
+test('un rosario vespertino puede ser la salida destacada; un traslado, no', async () => {
+  const { featuredBrotherhoodOuting } = await import('../lib/brotherhood-featured-outing.js')
+  const salidas = [
+    { id: 't', fecha: '2026-11-01', tipo: 'Traslado' },
+    { id: 'r', fecha: '2026-11-07', tipo: 'Rosario Vespertino' },
+  ]
+  assert.equal(featuredBrotherhoodOuting(salidas, '2026-11-07').id, 'r')
+  assert.equal(featuredBrotherhoodOuting([salidas[0]], '2026-11-07'), null)
+})
+
+test('el calendario de un rosario usa su ancla de rosarios', async () => {
+  const { readFileSync } = await import('node:fs')
+  const actions = readFileSync(new URL('../lib/outing-actions.js', import.meta.url), 'utf8')
+  assert.match(actions, /\/rosario\/i\.test\(String\(outing\.outingType \|\| ''\)\) \? 'rosaries' : 'processions'/)
+})

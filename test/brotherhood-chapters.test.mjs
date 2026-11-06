@@ -74,13 +74,14 @@ test('Cabecera: jornada habitual antes que la edición de un año en una Gloria'
   assert.equal(JSON.stringify(chapterHeroFacts({ profile: 'gloria', foundingYear: '1735' })).includes('Nazarenos'), false);
 });
 
-test('Cohorte piloto por ID: San Benito, El Baratillo, El Amparo, Reina de Todos los Santos y el Postigo', () => {
-  assert.equal(BROTHERHOOD_CHAPTERS_PILOT.length, 5);
+test('Cohorte piloto por ID: San Benito, El Baratillo, El Amparo, Reina de Todos los Santos, el Postigo y la Pastora de San Antonio', () => {
+  assert.equal(BROTHERHOOD_CHAPTERS_PILOT.length, 6);
   assert.equal(Object.isFrozen(BROTHERHOOD_CHAPTERS_PILOT), true);
   assert.equal(usesBrotherhoodChapters('206cf962-fd63-4fae-ad0d-9454554283d8'), true);
   assert.equal(usesBrotherhoodChapters('fc0942dd-d555-43b2-9495-399daba54903'), true);
   assert.equal(usesBrotherhoodChapters('73ab8507-9ee3-4d03-914e-ca7e813061a0'), true);
   assert.equal(usesBrotherhoodChapters('5d8d6faa-95b3-415e-9aab-42e38b813c6a'), true);
+  assert.equal(usesBrotherhoodChapters('d71b4c6c-af75-467d-be1e-de7bc8d4c29d'), true);
   assert.equal(usesBrotherhoodChapters('san-benito'), false);
   assert.equal(usesBrotherhoodChapters('36b4d5c1-f7bb-4025-a09a-948e0d5d188f'), false);
 });

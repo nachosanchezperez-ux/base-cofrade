@@ -14,6 +14,9 @@ test('sin coordenadas suficientes no hay mapa', () => {
   assert.equal(routeMapLayout([]), null)
   assert.equal(routeMapLayout([{ lat: null, lng: null }, { lat: 37.39, lng: -5.99 }]), null)
   assert.equal(validRoutePoints([{ lat: '37.1', lng: '-5.9' }, { lat: '', lng: undefined }]).length, 1)
+  // Sin coordenadas (null) no hay mapa: no se pinta el punto 0,0.
+  assert.equal(validRoutePoints([{ lat: null, lng: null }, { lat: 0, lng: 0 }]).length, 1)
+  assert.equal(routeMapLayout([{ lat: null, lng: null }, { lat: null, lng: null }, { lat: null, lng: null }]), null)
 })
 
 test('el recorrido cabe en el lienzo con su margen y se cubre de teselas', () => {
