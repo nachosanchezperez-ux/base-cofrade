@@ -60,6 +60,7 @@ test('el título de la tarjeta no repite la Hermandad ni el año', async () => {
   const { outingCardTitle } = await import('../lib/brotherhood-featured-outing.js')
   assert.equal(outingCardTitle('Salida procesional de Nuestra Señora Reina de Todos los Santos 2026', { names: ['Reina de Todos los Santos', 'Nuestra Señora Reina de Todos los Santos'] }), 'Procesión de Gloria')
   assert.equal(outingCardTitle('Solemne Procesión de Alabanzas de la Coronación Canónica de Nuestra Señora del Amparo', { names: ['El Amparo', 'Nuestra Señora del Amparo'] }), 'Solemne Procesión de Alabanzas de la Coronación Canónica')
+  assert.equal(outingCardTitle('Procesión de la Pura y Limpia del Postigo 2026', { names: ['Pura y Limpia del Postigo'] }), 'Procesión de Gloria')
   assert.equal(outingCardTitle(''), 'Procesión de Gloria')
 })
 
