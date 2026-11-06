@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronRightIcon, CrownIcon, MusicIcon } from './icons/LucideIcons'
 import { outingCardTitle } from '@/lib/brotherhood-featured-outing'
@@ -26,6 +27,10 @@ export default function OutingOccasion({ occasion, music = [], names = [] }) {
     <h3 className={styles.occasionKicker} id="jornada-titulo"><CrownIcon size={18} strokeWidth={2.2} /> {title}</h3>
 
     {occasion.pieces.map((piece) => <article key={piece.id} className={styles.occasionPiece}>
+      {piece.image?.src ? <figure className={styles.occasionImage}>
+        <Image src={piece.image.src} alt={piece.image.alt} fill sizes="(max-width: 899px) 92vw, 440px" />
+        {piece.image.credit ? <figcaption>{piece.image.credit}</figcaption> : null}
+      </figure> : null}
       <p className={styles.occasionMeta}>{[piece.type, piece.date].filter(Boolean).join(' · ')}</p>
       <h4>{piece.name}</h4>
       {piece.description ? <p>{piece.description}</p> : null}
@@ -36,7 +41,7 @@ export default function OutingOccasion({ occasion, music = [], names = [] }) {
     </article>)}
 
     {marches.length ? <div className={styles.occasionMarches}>
-      <h4><MusicIcon size={17} /> Marchas de la {title}</h4>
+      <h4><MusicIcon size={17} /> Patrimonio musical de la {title}</h4>
       {band || premiere ? <p className={styles.occasionMeta}>
         {[
           band ? `${band}${bandInOuting?.context ? `, ${lowerFirst(bandInOuting.context)}` : ''}` : '',
