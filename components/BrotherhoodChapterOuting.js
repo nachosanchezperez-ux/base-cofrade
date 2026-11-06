@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { outingDateParts, outingRouteStops, splitRouteStreets } from '@/lib/brotherhood-featured-outing'
+import { outingCardTitle, outingDateParts, outingRouteStops, splitRouteStreets } from '@/lib/brotherhood-featured-outing'
 import styles from './BrotherhoodChapterOuting.module.css'
 
 // Salida destacada del capítulo Procesión, pensada para consultarla en la
@@ -20,7 +20,7 @@ function Time({ label, value, place }) {
   </div>
 }
 
-export default function BrotherhoodChapterOuting({ outing }) {
+export default function BrotherhoodChapterOuting({ outing, names = [] }) {
   if (!outing) return null
   const date = outingDateParts(outing.date)
   const route = outingRouteStops(outing.routeSummary, { origin: outing.origin, destination: outing.destination })
@@ -43,7 +43,7 @@ export default function BrotherhoodChapterOuting({ outing }) {
               {status}
               {outing.isUpcoming && outing.urgencyLabel ? <span className={styles.urgency}>{outing.urgencyLabel}</span> : null}
             </p>
-            <h2 className={styles.title} id="salida-titulo">{outing.title}</h2>
+            <h2 className={styles.title} id="salida-titulo">{outingCardTitle(outing.title, { names, fallback: outing.outingType || 'Procesión de Gloria' })}</h2>
           </div>
         </header>
 

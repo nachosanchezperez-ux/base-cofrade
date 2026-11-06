@@ -934,7 +934,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
             historicalMusic: historicalMusicSection, heritage: heritageSection, simpecados: simpecadosSection,
             posters: postersSection, habit: habitSection, council: councilSection, viaCrucis: viaCrucisSection,
             outings: featuredOutingDetail ? <BrotherhoodOutingsSection outings={listedOutings} /> : outingsSection, crew: crewSection, cults: cultsSection, curiosities: curiositiesSection,
-            outingFeature: featuredOutingDetail ? <BrotherhoodChapterOuting outing={featuredOutingDetail} /> : null,
+            outingFeature: featuredOutingDetail ? <BrotherhoodChapterOuting outing={featuredOutingDetail} names={[h.nombrePopular, h.nombreOficial, ...(h.imagenes || []).map((imagen) => imagen.nombre)]} /> : null,
             outingsCount: listedOutings.length,
             thread: <BrotherhoodThread nodes={threadNodes} />,
             discovery: <BrotherhoodReadingDiscovery brotherhoodId={h.id} />,
