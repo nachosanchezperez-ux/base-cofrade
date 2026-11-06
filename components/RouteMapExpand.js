@@ -38,7 +38,7 @@ export default function RouteMapExpand({ layout, labels = [], segments = [], tit
       </div>
       {open ? <div className={styles.mapDialogBody}>
         <svg viewBox={`0 0 ${layout.width} ${layout.height}`} role="img" aria-label="Mapa ampliado del recorrido con las calles rotuladas">
-          {layout.tiles.map((tile) => <image key={tile.key} href={tile.href} x={tile.x} y={tile.y} width="256" height="256" />)}
+          {layout.tiles.map((tile) => <image key={tile.key} href={tile.href} x={tile.x} y={tile.y} width={tile.size || 256} height={tile.size || 256} />)}
           <rect width={layout.width} height={layout.height} className={styles.mapVeil} />
           <path d={svgPath(located)} className={styles.mapCasing} />
           {segments.map((band) => <path key={band.id} d={svgPath(located.slice(band.start, band.end + 1))} className={styles.mapBand} />)}

@@ -15,13 +15,13 @@ export default function BrotherhoodOutingMap({ points = [], segments = [], title
   const last = located[located.length - 1]
   const roundTrip = Math.hypot(first.x - last.x, first.y - last.y) < 12
   // Mapa ampliado (vertical, más zoom): se calcula aquí y el cliente solo lo pinta al abrirlo.
-  const big = routeMapLayout(points, { width: 720, height: 1080, padding: 70, maxZoom: 19 })
+  const big = routeMapLayout(points, { width: 720, height: 1080, padding: 56, maxZoom: 19, fill: true })
   const bigSegments = big && big.points.length === points.length ? segments : []
 
   return <figure className={`${styles.map} ${styles.mapWithExpand}`}>
     <svg viewBox={`0 0 ${layout.width} ${layout.height}`} role="img" aria-label={`Mapa aproximado del recorrido${title ? ` de ${title}` : ''}`}>
       <g aria-hidden="true">
-        {layout.tiles.map((tile) => <image key={tile.key} href={tile.href} x={tile.x} y={tile.y} width="256" height="256" />)}
+        {layout.tiles.map((tile) => <image key={tile.key} href={tile.href} x={tile.x} y={tile.y} width={tile.size || 256} height={tile.size || 256} />)}
         <rect width={layout.width} height={layout.height} className={styles.mapVeil} />
         <path d={svgPath(located)} className={styles.mapCasing} />
         {sameCount ? segments.map((band) => <path key={band.id} d={svgPath(located.slice(band.start, band.end + 1))} className={styles.mapBand} />) : null}

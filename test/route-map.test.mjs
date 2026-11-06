@@ -51,3 +51,13 @@ test('el mapa ampliado rotula cada calle una vez, a lo largo de su tramo', async
   assert.deepEqual(labels.map((l) => l.name), ['Feria', 'Relator'])
   assert.equal(labels[1].angle, 90)
 })
+
+test('con fill el recorrido llena el lienzo y las teselas se escalan igual', async () => {
+  const { routeMapLayout } = await import('../lib/route-map.js')
+  const plain = routeMapLayout(points, { width: 720, height: 1080, padding: 56 })
+  const filled = routeMapLayout(points, { width: 720, height: 1080, padding: 56, fill: true })
+  const span = (layout) => Math.max(...layout.points.map((p) => p.x)) - Math.min(...layout.points.map((p) => p.x))
+  assert.ok(span(filled) >= span(plain))
+  assert.ok(filled.scale >= 1 && filled.scale <= 2)
+  assert.equal(filled.tiles[0].size, +(256 * filled.scale).toFixed(1))
+})

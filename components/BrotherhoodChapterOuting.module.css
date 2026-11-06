@@ -813,3 +813,13 @@
   color: inherit;
   text-decoration: none;
 }
+
+.mapExpand {
+  white-space: nowrap;
+}
+
+.mapExpand svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
