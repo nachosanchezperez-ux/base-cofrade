@@ -27,3 +27,13 @@ test('el recorrido cabe en el lienzo con su margen y se cubre de teselas', () =>
   assert.match(layout.tiles[0].href, /^https:\/\/tile\.openstreetmap\.org\/\d+\/\d+\/\d+\.png$/)
   assert.match(svgPath(layout.points), /^M[\d.]+ [\d.]+ L/)
 })
+
+test('el recorrido para redes llena el lienzo respetando el margen', async () => {
+  const { fitRoutePoints } = await import('../lib/route-map.js')
+  const fit = fitRoutePoints(points, { width: 900, height: 620, padding: 40 })
+  const xs = fit.points.map((p) => p.x); const ys = fit.points.map((p) => p.y)
+  const fillsWidth = Math.abs(Math.min(...xs) - 40) < 1 && Math.abs(Math.max(...xs) - 860) < 1
+  const fillsHeight = Math.abs(Math.min(...ys) - 40) < 1 && Math.abs(Math.max(...ys) - 580) < 1
+  assert.ok(fillsWidth || fillsHeight)
+  assert.equal(fitRoutePoints([]), null)
+})
