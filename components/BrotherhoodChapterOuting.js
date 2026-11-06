@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import ShareActions from './ShareActions'
+import BrotherhoodOutingMap from './BrotherhoodOutingMap'
 import { bandSegments, outingCardTitle, outingDateParts, outingRouteStops, splitRouteStreets } from '@/lib/brotherhood-featured-outing'
 import { agendaEventAnchor } from '@/lib/agenda-event-presentation'
 import { agendaItemShare } from '@/lib/share'
@@ -111,6 +112,7 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
 
         {route.streets.length ? <div className={styles.route}>
           <h3 className={styles.routeTitle}>Recorrido <small>{route.streets.length} calles</small></h3>
+          <BrotherhoodOutingMap points={outing.routePoints || []} segments={segments} title={outing.title} />
           <ol className={styles.line}>
             <li className={`${styles.stop} ${styles.endpoint} ${originMarks.inside ? styles.inBand : ''}`}>
               <b>{outing.departureTime || 'Salida'}</b>

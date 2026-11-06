@@ -483,3 +483,72 @@
 @media (min-width: 900px) {
   .actions { grid-area: actions; }
 }
+
+/* Mapa del recorrido. */
+.map {
+  margin: 0 0 14px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #eef0f2;
+}
+
+.map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mapVeil {
+  fill: rgb(255 255 255 / 22%);
+}
+
+.mapCasing,
+.mapBand,
+.mapRoute {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mapCasing {
+  stroke: #fff;
+  stroke-width: 11;
+}
+
+.mapBand {
+  stroke: var(--brotherhood-secondary, #c6a15b);
+  stroke-width: 13;
+  opacity: 0.9;
+}
+
+.mapRoute {
+  stroke: var(--brotherhood-primary, #153b69);
+  stroke-width: 5;
+}
+
+.mapStop {
+  fill: #fff;
+  stroke: var(--brotherhood-primary, #153b69);
+  stroke-width: 2.5;
+}
+
+.mapEnd {
+  fill: var(--brotherhood-primary, #153b69);
+  stroke: #fff;
+  stroke-width: 4;
+}
+
+.map figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 10px;
+  background: #fff;
+  color: #5d6670;
+  font-size: 12px;
+}
+
+.map figcaption a {
+  color: inherit;
+  text-decoration: none;
+}
