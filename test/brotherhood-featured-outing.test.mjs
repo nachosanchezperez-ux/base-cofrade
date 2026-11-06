@@ -62,3 +62,14 @@ test('el título de la tarjeta no repite la Hermandad ni el año', async () => {
   assert.equal(outingCardTitle('Solemne Procesión de Alabanzas de la Coronación Canónica de Nuestra Señora del Amparo', { names: ['El Amparo', 'Nuestra Señora del Amparo'] }), 'Solemne Procesión de Alabanzas de la Coronación Canónica')
   assert.equal(outingCardTitle(''), 'Procesión de Gloria')
 })
+
+test('el tramo de cada banda se sitúa sobre el recorrido', async () => {
+  const { bandSegments } = await import('../lib/brotherhood-featured-outing.js')
+  const route = { origin: 'Real Parroquia de Santa María Magdalena', streets: ['Cristo del Calvario', 'San Pablo', 'Rioja', 'Tetuán', 'Granada', 'Plaza de San Francisco', 'Granada', 'Cristo del Calvario'], destination: 'Real Parroquia de Santa María Magdalena' }
+  const music = [
+    { id: 'c', name: 'Las Cigarreras', segmentStart: 'Real Parroquia de Santa María Magdalena', segmentEnd: 'Ayuntamiento de Sevilla · Plaza de San Francisco' },
+    { id: 's', name: 'Carmen de Salteras' },
+    { id: 'x', name: 'Desconocida', segmentStart: 'Calle inexistente', segmentEnd: 'Otra' },
+  ]
+  assert.deepEqual(bandSegments(music, route).map(({ id, start, end }) => ({ id, start, end })), [{ id: 'c', start: 0, end: 6 }])
+})

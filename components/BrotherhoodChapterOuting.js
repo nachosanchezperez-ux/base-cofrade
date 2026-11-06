@@ -1,5 +1,8 @@
 import Link from 'next/link'
-import { outingCardTitle, outingDateParts, outingRouteStops, splitRouteStreets } from '@/lib/brotherhood-featured-outing'
+import ShareActions from './ShareActions'
+import { bandSegments, outingCardTitle, outingDateParts, outingRouteStops, splitRouteStreets } from '@/lib/brotherhood-featured-outing'
+import { agendaEventAnchor } from '@/lib/agenda-event-presentation'
+import { agendaItemShare } from '@/lib/share'
 import styles from './BrotherhoodChapterOuting.module.css'
 
 // Salida destacada del capítulo Procesión, pensada para consultarla en la
@@ -8,8 +11,28 @@ import styles from './BrotherhoodChapterOuting.module.css'
 // en recorridos largos, el tramo central se pliega sin romper la línea. Solo
 // se muestran datos documentados: sin hora, «Por confirmar».
 
-function Street({ name }) {
-  return <li className={styles.street}><span>{name}</span></li>
+// Franja de las bandas que no hacen todo el recorrido: marca dónde empieza y
+// dónde termina su tramo sobre la propia línea.
+function bandMarks(segments, index) {
+  const starts = segments.filter((band) => band.start === index && band.start > 0)
+  const ends = segments.filter((band) => band.end === index)
+  const inside = segments.some((band) => index >= band.start && index <= band.end)
+  return { starts, ends, inside }
+}
+
+function BandChips({ starts, ends }) {
+  if (!starts.length && !ends.length) return null
+  return <span className={styles.bandChips}>
+    {starts.map((band) => <em key={`s-${band.id}`} className={styles.bandChip}>♪ Desde aquí, {band.name}</em>)}
+    {ends.map((band) => <em key={`e-${band.id}`} className={`${styles.bandChip} ${styles.bandChipEnd}`}>♪ Hasta aquí, {band.name}</em>)}
+  </span>
+}
+
+function Street({ name, marks }) {
+  return <li className={`${styles.street} ${marks.inside ? styles.inBand : ''}`}>
+    <span>{name}</span>
+    <BandChips starts={marks.starts} ends={marks.ends} />
+  </li>
 }
 
 function Time({ label, value, place }) {
@@ -24,9 +47,33 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
   if (!outing) return null
   const date = outingDateParts(outing.date)
   const route = outingRouteStops(outing.routeSummary, { origin: outing.origin, destination: outing.destination })
-  const streets = splitRouteStreets(route.streets)
   const sameTemple = route.origin && route.destination && route.origin === route.destination
   const music = outing.processionalMusic?.length ? outing.processionalMusic : (outing.music || [])
+  const segments = bandSegments(music, route)
+  const segmentById = new Map(segments.map((band) => [band.id, band]))
+  // El final de un tramo de banda queda siempre a la vista, fuera del plegable.
+  const lastSegmentStreet = Math.max(0, ...segments.map((band) => Math.min(band.end, route.streets.length)))
+  const streets = splitRouteStreets(route.streets, { head: Math.max(4, lastSegmentStreet) })
+  const marksAt = (index) => bandMarks(segments, index)
+  const originMarks = marksAt(0)
+  const destinationMarks = marksAt(route.streets.length + 1)
+  const hiddenOffset = streets.head.length + 1
+  const tailOffset = streets.head.length + streets.hidden.length + 1
+  const upcoming = outing.isUpcoming && !outing.isCancelled
+  const calendarHref = upcoming && outing.date ? `/calendario/acto/${agendaEventAnchor({ key: `processions:${outing.id}` })}.ics` : ''
+  const share = agendaItemShare({
+    title: outing.title,
+    organizer: outing.brotherhoodName,
+    categoryLabel: outing.outingType || 'Procesión de Gloria',
+    date: outing.date,
+    startTime: outing.departureTime,
+    place: route.origin,
+    municipality: outing.municipality,
+    href: outing.detailHref,
+  })
+  const directionsHref = route.origin
+    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([route.origin, outing.municipality].filter(Boolean).join(', '))}`
+    : ''
   const status = outing.isCancelled ? 'Suspendida' : outing.isUpcoming ? 'Próxima salida' : 'Última salida'
 
   return <section className={styles.outing} id="salida" aria-labelledby="salida-titulo">
@@ -56,7 +103,7 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
           {music.map((band) => <li key={band.id || band.name}>
             <span className={styles.bandIcon} aria-hidden="true">♪</span>
             <span className={styles.bandText}>
-              {band.context ? <small>{band.context}</small> : null}
+              {band.context ? <small>{band.context}{segmentById.get(band.id || band.name) ? ` · hasta ${segmentById.get(band.id || band.name).endLabel}` : ''}</small> : null}
               {band.href ? <Link href={band.href} prefetch={false}>{band.name}</Link> : <strong>{band.name}</strong>}
             </span>
           </li>)}
@@ -65,23 +112,25 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
         {route.streets.length ? <div className={styles.route}>
           <h3 className={styles.routeTitle}>Recorrido <small>{route.streets.length} calles</small></h3>
           <ol className={styles.line}>
-            <li className={`${styles.stop} ${styles.endpoint}`}>
+            <li className={`${styles.stop} ${styles.endpoint} ${originMarks.inside ? styles.inBand : ''}`}>
               <b>{outing.departureTime || 'Salida'}</b>
               <span>{route.origin || 'Salida'}</span>
+              <BandChips starts={segments.filter((band) => band.start === 0)} ends={[]} />
             </li>
-            {streets.head.map((name, index) => <Street key={`h-${index}`} name={name} />)}
+            {streets.head.map((name, index) => <Street key={`h-${index}`} name={name} marks={marksAt(index + 1)} />)}
             {streets.hidden.length ? <li className={styles.fold}>
               <details>
                 <summary><span>{streets.hidden.length} calles más</span><b aria-hidden="true">+</b></summary>
                 <ol className={styles.foldList}>
-                  {streets.hidden.map((name, index) => <Street key={`m-${index}`} name={name} />)}
+                  {streets.hidden.map((name, index) => <Street key={`m-${index}`} name={name} marks={marksAt(hiddenOffset + index)} />)}
                 </ol>
               </details>
             </li> : null}
-            {streets.tail.map((name, index) => <Street key={`t-${index}`} name={name} />)}
-            <li className={`${styles.stop} ${styles.endpoint}`}>
+            {streets.tail.map((name, index) => <Street key={`t-${index}`} name={name} marks={marksAt(tailOffset + index)} />)}
+            <li className={`${styles.stop} ${styles.endpoint} ${destinationMarks.inside ? styles.inBand : ''}`}>
               <b>{outing.returnTime || 'Entrada'}</b>
               <span>{route.destination || 'Entrada'}</span>
+              <BandChips starts={[]} ends={destinationMarks.ends.filter((band) => band.start > 0)} />
             </li>
           </ol>
         </div> : outing.routeSummary ? <p className={styles.routeText}>{outing.routeSummary}</p> : null}
@@ -90,6 +139,11 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
           <summary><span>Más detalles de la salida</span><b aria-hidden="true">+</b></summary>
           <p>{outing.publicNotes}</p>
         </details> : null}
+
+        {upcoming || directionsHref ? <div className={styles.actions}>
+          {upcoming ? <ShareActions compact calendarFirst share={share} contentType="procesion_gloria" analytics={{ placement: 'ficha_salida' }} calendarHref={calendarHref} /> : null}
+          {directionsHref ? <a className={styles.directions} href={directionsHref} target="_blank" rel="noopener noreferrer">Cómo llegar a la salida <span aria-hidden="true">↗</span></a> : null}
+        </div> : null}
 
         {outing.detailHref ? <a className={styles.agenda} href={outing.detailHref}>Ver en la Agenda <span aria-hidden="true">›</span></a> : null}
       </div>

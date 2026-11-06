@@ -392,6 +392,7 @@
       'times route'
       'bands route'
       'notes route'
+      'actions route'
       'agenda route';
     align-items: start;
   }
@@ -408,4 +409,77 @@
     align-self: stretch;
     border-left: 1px solid #edf0f2;
   }
+}
+
+/* Tramo de una banda: franja en el segundo color de la Hermandad junto a la línea. */
+.inBand::after {
+  content: '';
+  position: absolute;
+  left: 24px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: 2px;
+  background: var(--brotherhood-secondary, #c6a15b);
+}
+
+.foldList .inBand::after {
+  left: -10px;
+}
+
+.street {
+  flex-wrap: wrap;
+  gap: 4px 10px;
+}
+
+.endpoint .bandChips {
+  grid-column: 1 / -1;
+}
+
+.bandChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.bandChip {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--brotherhood-secondary, #c6a15b) 22%, #fff);
+  color: #3a2f12;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.bandChipEnd {
+  background: #f1f2f4;
+  color: #4a535c;
+}
+
+/* Acciones: calendario y compartir, y cómo llegar a la salida. */
+.actions {
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px 4px;
+  border-top: 1px solid #edf0f2;
+}
+
+.directions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  border: 1px solid color-mix(in srgb, var(--tone) 28%, #e3e7eb);
+  border-radius: 12px;
+  color: var(--tone);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (min-width: 900px) {
+  .actions { grid-area: actions; }
 }
