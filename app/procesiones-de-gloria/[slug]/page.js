@@ -24,6 +24,7 @@ import {
 import GloryHeroMedia from './GloryHeroMedia'
 import BrotherhoodOutingMap from '@/components/BrotherhoodOutingMap'
 import OutingShareBar from '@/components/OutingShareBar'
+import OutingDayStatus from '@/components/OutingDayStatus'
 import { bandSegments, outingRouteStops } from '@/lib/brotherhood-featured-outing'
 import { outingActionLinks } from '@/lib/outing-actions'
 import { getHermandadPageBySlug } from '@/lib/supabase/brotherhood-page'
@@ -288,6 +289,7 @@ export default async function GloryDetailPage({ params }) {
 
       <div className={`shell ${styles.body}`} style={paletteStyle}>
         <section className={`${styles.section} ${outingStyles.tools}`} aria-label="Guarda y comparte esta salida">
+          <OutingDayStatus outing={{ date: item.date, departureTime: item.departureTime, returnTime: item.returnTime }} className={outingStyles.dayStatusLight} />
           <OutingShareBar
             share={actions.share}
             calendarHref={actions.calendarHref}

@@ -30,3 +30,14 @@ test('la tarjeta de la salida ofrece calendario, imagen para estados, WhatsApp, 
     assert.match(read(file), /outingActionLinks\(/, file)
   }
 })
+
+test('cuenta atrás del día de la salida en hora de Madrid', async () => {
+  const { minutesUntilDeparture, countdownLabel } = await import('../lib/procession-live-status.js')
+  // 8 nov 2026, 14:45 en Madrid (13:45 UTC, horario de invierno).
+  const now = new Date('2026-11-08T13:45:00Z')
+  assert.equal(minutesUntilDeparture({ date: '2026-11-08', startTime: '17:00' }, now), 135)
+  assert.equal(countdownLabel(135), 'Sale en 2 h 15 min')
+  assert.equal(countdownLabel(15), 'Sale en 15 min')
+  assert.equal(minutesUntilDeparture({ date: '2026-11-08', startTime: '12:00' }, now), null)
+  assert.equal(minutesUntilDeparture({ date: '2026-11-07', startTime: '17:00' }, now), null)
+})

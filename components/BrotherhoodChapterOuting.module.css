@@ -654,3 +654,50 @@
   --tone: var(--brotherhood-primary, #153b69);
   --tone-soft: color-mix(in srgb, var(--tone) 9%, #fff);
 }
+
+/* Estado del día de la salida. */
+.dayStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 16%);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.day_soon {
+  background: var(--brotherhood-secondary, #c6a15b);
+  color: #1b1408;
+}
+
+.day_live {
+  background: #fff;
+  color: var(--tone, #153b69);
+}
+
+.dayStatusLight {
+  margin: 0 0 12px;
+  background: var(--tone-soft, #eef2f6);
+  color: var(--tone, #153b69);
+}
+
+.livePulse {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #d7263d;
+  box-shadow: 0 0 0 0 rgb(215 38 61 / 60%);
+  animation: livePulse 1.6s ease-out infinite;
+}
+
+@keyframes livePulse {
+  to { box-shadow: 0 0 0 9px rgb(215 38 61 / 0%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .livePulse { animation: none; }
+}

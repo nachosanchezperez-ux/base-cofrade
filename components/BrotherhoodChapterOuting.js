@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import OutingShareBar from './OutingShareBar'
+import OutingDayStatus from './OutingDayStatus'
 import { ChevronRightIcon, ChurchIcon, ClockIcon, FlagIcon, MusicIcon, PlusIcon, RouteIcon } from './icons/LucideIcons'
 import BrotherhoodOutingMap from './BrotherhoodOutingMap'
 import { bandSegments, outingCardTitle, outingDateParts, outingRouteStops, splitRouteStreets } from '@/lib/brotherhood-featured-outing'
@@ -78,6 +79,7 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
               {outing.isUpcoming && outing.urgencyLabel ? <span className={styles.urgency}>{outing.urgencyLabel}</span> : null}
             </p>
             <h2 className={styles.title} id="salida-titulo">{outingCardTitle(outing.title, { names, fallback: outing.outingType || 'Procesión de Gloria' })}</h2>
+            <OutingDayStatus outing={{ date: outing.date, departureTime: outing.departureTime, returnTime: outing.returnTime }} />
           </div>
         </header>
 
