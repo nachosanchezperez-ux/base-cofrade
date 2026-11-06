@@ -76,7 +76,7 @@
 }
 
 /* La regla global de #hc-app fija el tamaño de los h2; aquí se ajusta a la tarjeta. */
-:global(#hc-app) .head h2.title {
+:global(#hc-app) .head h2.title:not(:global(#hc-panel)) {
   margin: 0;
   color: #fff;
   font-size: clamp(17px, 4.6vw, 21px);
