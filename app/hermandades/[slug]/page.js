@@ -22,7 +22,11 @@ import BrotherhoodOverviewV2 from '@/components/BrotherhoodOverviewV2';
 import BrotherhoodViaCrucisSection from '@/components/BrotherhoodViaCrucisSection';
 import BrotherhoodOutingsSection from '@/components/BrotherhoodOutingsSection';
 import BrotherhoodChapterOuting from '@/components/BrotherhoodChapterOuting';
-import { featuredBrotherhoodOuting, otherBrotherhoodOutings } from '@/lib/brotherhood-featured-outing';
+import { featuredBrotherhoodOuting, otherBrotherhoodOutings, outingCardTitle, outingTileSummary, outingWeekLabel } from '@/lib/brotherhood-featured-outing';
+import { occasionSummary } from '@/lib/supabase/outing-occasion';
+import { getBandLogosBySlug } from '@/lib/supabase/band-logos';
+import OutingOccasion from '@/components/OutingOccasion';
+import outingCardStyles from '@/components/BrotherhoodChapterOuting.module.css';
 import { getGloryDetailByOutingId } from '@/lib/supabase/glory-directory';
 import BrotherhoodProgramHero from '@/components/BrotherhoodProgramHero';
 import { panelEditHref } from '@/lib/panel-session-cookie';
@@ -281,6 +285,12 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     })
     : null;
   const listedOutings = featuredOutingDetail ? otherBrotherhoodOutings(h.salidas || [], featuredOuting) : (h.salidas || []);
+  // «Su semana»: si la salida es en los próximos días, la cabecera lo dice y
+  // lleva directo a la tarjeta de la salida.
+  const outingWeek = outingWeekLabel(featuredOutingDetail);
+  const outingNames = [h.nombrePopular, h.nombreOficial, ...(h.imagenes || []).map((imagen) => imagen.nombre)];
+  const outingOccasion = featuredOutingDetail?.occasion || null;
+  const occasionTitle = outingOccasion ? outingCardTitle(outingOccasion.name, { names: outingNames, fallback: outingOccasion.type || outingOccasion.name }) : '';
   const brotherhoodTypeLabel = brotherhoodPublicTypeLabel(h);
   const steps = h.pasos || [];
   // Música actual: la de cada paso y la Cruz de Guía se muestran en «Pasos
@@ -338,6 +348,12 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       nazarenes: penitentialFacts.find((fact) => fact.label.startsWith('Nazarenos')),
     })
     : heroFacts;
+  if (chapters && outingWeek) {
+    const index = programFacts.findIndex((fact) => fact.label === 'Salida');
+    const fact = { label: 'Salida', value: outingWeek };
+    if (index >= 0) programFacts[index] = fact;
+    else programFacts.unshift(fact);
+  }
   const heroFactLabels = new Set(heroFacts.map((fact) => fact.label));
   const hasPracticalOverview = Boolean(
     publicText(h.sedeDetalle?.nombre)
@@ -556,6 +572,17 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     steps.forEach((paso) => stepAccompaniments(currentMusicItems, paso.id).forEach((item) => add(item, stepPlace(paso))));
     return [...byBand.values()];
   })() : [];
+  // Escudos de las bandas (acompañamiento actual y «Tira del hilo») y foto o
+  // escudo de cada eslabón del hilo: datos ya cargados, más una consulta.
+  const chapterBandLogos = chapters
+    ? await getBandLogosBySlug([...chapterCurrentBands.map((band) => band.bandaSlug), ...threadNodes.filter((node) => node.kind === 'band').map((node) => node.id)])
+    : {};
+  const threadMedia = threadNodes.map((node) => {
+    if (node.kind === 'brotherhood' && authoritativeCrestPath) return { ...node, media: { type: 'crest', src: authoritativeCrestPath } };
+    if ((node.kind === 'image' || node.kind === 'step') && entityCoverMedia.get(node.id)?.path) return { ...node, media: { type: 'photo', src: entityCoverMedia.get(node.id).path } };
+    if (node.kind === 'band' && chapterBandLogos[node.id]) return { ...node, media: { type: 'band', src: chapterBandLogos[node.id].logoPath, background: chapterBandLogos[node.id].background } };
+    return node;
+  });
   // Ficha por capítulos: la túnica, a la vista (solo Penitencia).
   const chapterHabits = chapters && isPenitencia ? habitsWithFields(h.habitos || []) : [];
   // Ficha por capítulos: el cortejo en orden, de la Cruz de Guía al último paso.
@@ -873,7 +900,10 @@ export default async function HermandadDetailPage({ params, reading: readingOver
         ]}
         facts={programFacts}
         editHref={panelEditHref('brotherhood', h.id)}
-        actions={<FollowBrotherhoodButton slug={slug} name={h.nombrePopular} municipality={publicText(h.localidad)} />}
+        actions={<>
+          {chapters && outingWeek ? <a className={outingCardStyles.heroOuting} href="#salida">Ver la salida y el recorrido <span aria-hidden="true">›</span></a> : null}
+          <FollowBrotherhoodButton slug={slug} name={h.nombrePopular} municipality={publicText(h.localidad)} />
+        </>}
         media={{
           photoSrc: heroMedia?.path || '',
           photoAlt: heroMedia?.alt || `Fotografía de ${h.nombrePopular}`,
@@ -912,11 +942,13 @@ export default async function HermandadDetailPage({ params, reading: readingOver
               threadLength: threadNodes.length,
               habit: chapterHabits[0]?.tunica || '',
               threadEnd: threadNodes.at(-1)?.label || '',
+              nextOuting: outingTileSummary(featuredOutingDetail),
+              occasion: occasionSummary(outingOccasion, occasionTitle),
             },
           })}
           heroFactLabels={programFacts.map((fact) => fact.label)}
           milestone={chapterMilestone ? <BrotherhoodChapterMilestone milestone={chapterMilestone} /> : null}
-          currentBands={chapterCurrentBands}
+          currentBands={chapterCurrentBands.map((band) => ({ ...band, logo: chapterBandLogos[band.bandaSlug] || null }))}
           nextAppointment={<BrotherhoodNextAppointment
             next={nextAppointment}
             others={upcomingAgendaItems.filter((item) => !milestoneKeys.has(item.key || item.href))}
@@ -934,9 +966,10 @@ export default async function HermandadDetailPage({ params, reading: readingOver
             historicalMusic: historicalMusicSection, heritage: heritageSection, simpecados: simpecadosSection,
             posters: postersSection, habit: habitSection, council: councilSection, viaCrucis: viaCrucisSection,
             outings: featuredOutingDetail ? <BrotherhoodOutingsSection outings={listedOutings} /> : outingsSection, crew: crewSection, cults: cultsSection, curiosities: curiositiesSection,
-            outingFeature: featuredOutingDetail ? <BrotherhoodChapterOuting outing={featuredOutingDetail} names={[h.nombrePopular, h.nombreOficial, ...(h.imagenes || []).map((imagen) => imagen.nombre)]} /> : null,
+            outingFeature: featuredOutingDetail ? <BrotherhoodChapterOuting outing={featuredOutingDetail} names={outingNames} /> : null,
+            occasion: outingOccasion ? <div className={`shell ${outingCardStyles.tools} ${outingCardStyles.occasionStandalone} ${outingCardStyles.occasionChapter}`}><OutingOccasion occasion={outingOccasion} names={outingNames} pieceLinks={false} /></div> : null,
             outingsCount: listedOutings.length,
-            thread: <BrotherhoodThread nodes={threadNodes} />,
+            thread: <BrotherhoodThread nodes={threadMedia} />,
             discovery: <BrotherhoodReadingDiscovery brotherhoodId={h.id} />,
             officialLinks: h.enlacesOficiales?.length ? <OfficialLinks links={h.enlacesOficiales} compact /> : null }}
         />

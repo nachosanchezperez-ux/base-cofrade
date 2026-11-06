@@ -583,3 +583,20 @@
     justify-content: space-between;
   }
 }
+
+/* Acompañan hoy: escudo de cada banda junto a su nombre y su sitio. */
+.bandsToday li.bandToday {
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+}
+
+.bandTodayText {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.bandsToday .bandTodayText a {
+  min-height: 28px;
+}

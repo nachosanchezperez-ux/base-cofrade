@@ -25,6 +25,7 @@ import GloryHeroMedia from './GloryHeroMedia'
 import BrotherhoodOutingMap from '@/components/BrotherhoodOutingMap'
 import OutingShareBar from '@/components/OutingShareBar'
 import OutingDayStatus from '@/components/OutingDayStatus'
+import OutingOccasion from '@/components/OutingOccasion'
 import { bandSegments, outingRouteStops } from '@/lib/brotherhood-featured-outing'
 import { outingActionLinks } from '@/lib/outing-actions'
 import outingStyles from '@/components/BrotherhoodChapterOuting.module.css'
@@ -292,6 +293,12 @@ export default async function GloryDetailPage({ params }) {
             analytics={{ placement: 'agenda_gloria' }}
           />
         </section>
+
+        {item.occasion ? (
+          <div className={`${styles.section} ${outingStyles.tools} ${outingStyles.occasionStandalone}`}>
+            <OutingOccasion occasion={item.occasion} music={item.processionalMusic} names={[item.brotherhoodName]} />
+          </div>
+        ) : null}
 
         {/* Hermandad, localidad, fecha y estado ya están en la cabecera y en
             «Relacionado con este acto»: aquí solo queda la información práctica. */}
