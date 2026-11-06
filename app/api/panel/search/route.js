@@ -43,7 +43,7 @@ export async function GET(request) {
       .limit(4),
     supabase
       .from('entities')
-      .select('id, name, status, events!inner(event_category, event_date, event_type)')
+      .select('id, name, status, events!events_entity_id_fkey!inner(event_category, event_date, event_type)')
       .eq('entity_type', 'event')
       .eq('events.event_category', 'crew_call')
       .ilike('name', `%${query}%`)
