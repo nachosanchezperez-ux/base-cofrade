@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
+import { marchAuthorRoleLabel } from '@/lib/public-labels'
 import styles from '../crucetas.module.css'
 
 function normalize(value = '') {
@@ -10,20 +11,12 @@ function normalize(value = '') {
 
 function mainAuthors(entry) {
   const composers = entry.authors.filter((author) => author.role === 'composer')
-  return composers.length ? composers : entry.authors
+  return composers.concat(entry.authors.filter((author) => author.role !== 'composer'))
 }
 
 function authorNames(entry) {
-  return mainAuthors(entry).map((author) => author.name).join(' · ') || entry.credit || ''
+  return entry.authors.map((author) => author.name).join(' · ') || entry.credit || ''
 }
-
-function secondaryAuthors(entry) {
-  const composers = entry.authors.filter((author) => author.role === 'composer')
-  if (!composers.length) return []
-  return entry.authors.filter((author) => author.role !== 'composer')
-}
-
-const SECONDARY_ROLE = { adapter: 'Adaptación', lyricist: 'Letra' }
 
 // «Marcha procesional» es lo esperable en una cruceta: solo se nombra el tipo
 // cuando es otro (adaptación, himno, pieza de capilla…).
@@ -45,7 +38,6 @@ function entryKey(entry) {
 function WorkRow({ entry, isHabitual, bandName }) {
   const authors = mainAuthors(entry)
   const type = distinctWorkType(entry)
-  const extras = secondaryAuthors(entry)
 
   return (
     <li className={styles.workRow}>
@@ -53,9 +45,14 @@ function WorkRow({ entry, isHabitual, bandName }) {
         <h3>{entry.marchHref ? <Link href={entry.marchHref}>{entry.title}</Link> : entry.title}</h3>
         <p className={styles.workMeta}>
           {authors.length
-            ? authors.map((author, index) => <span key={author.id}>{index ? ' · ' : ''}{author.href ? <Link href={author.href}>{author.name}</Link> : author.name}</span>)
+            ? authors.map((author, index) => (
+              <span key={`${author.id}-${author.role}`}>
+                {index ? ' · ' : ''}
+                {author.role !== 'composer' && marchAuthorRoleLabel(author.role) ? `${marchAuthorRoleLabel(author.role)}: ` : ''}
+                {author.href ? <Link href={author.href}>{author.name}</Link> : author.name}
+              </span>
+            ))
             : <span>{entry.credit || 'Autoría no documentada'}</span>}
-          {extras.map((author) => <span key={`${entry.id}-${author.id}`}> · {SECONDARY_ROLE[author.role] || 'Con'} {author.name}</span>)}
           {entry.compositionYear ? <span> · {entry.compositionYear}</span> : null}
           {type ? <span> · {type}</span> : null}
         </p>
