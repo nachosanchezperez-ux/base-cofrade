@@ -1,0 +1,834 @@
+/* Salida destacada: cabecera en el color de la Hermandad; interfaz en la paleta de Hilo Cofrade. */
+.outing {
+  padding-block: 4px 18px;
+  background: #fff;
+}
+
+.card {
+  /* Solo la cabecera lleva el color de la Hermandad; el resto, la paleta de Hilo. */
+  --head-tone: var(--brotherhood-primary, var(--home-blue, #123a67));
+  --tone: var(--home-blue, #123a67);
+  --tone-ink: var(--home-ink, #0f2742);
+  --tone-accent: var(--home-red, #b71f37);
+  --tone-wine: var(--home-wine, #8a2235);
+  --tone-soft: color-mix(in srgb, var(--tone) 8%, #fff);
+  --tone-line: var(--home-border, #dce5ed);
+  border: 1px solid var(--home-border, #dce5ed);
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* Cabecera: fecha grande + estado y título, sobre el color de la entidad. */
+.head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  padding: 16px;
+  background: var(--head-tone);
+  color: #fff;
+}
+
+.date {
+  display: grid;
+  justify-items: center;
+  min-width: 62px;
+  margin: 0;
+  padding: 8px 6px 7px;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--head-tone);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.date span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.date strong {
+  margin-block: 2px;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.headText {
+  min-width: 0;
+}
+
+.status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  align-items: center;
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.92;
+}
+
+.urgency {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 18%);
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+/* La regla global de #hc-app fija el tamaño de los h2; aquí se ajusta a la tarjeta. */
+:global(#hc-app) .head h2.title:not(:global(#hc-panel)) {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(17px, 4.6vw, 21px);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+/* Salida y entrada: los dos datos que más se buscan, en grande. */
+.times {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid #edf0f2;
+}
+
+.time {
+  display: grid;
+  gap: 2px;
+  padding: 14px 16px;
+}
+
+.time + .time {
+  border-left: 1px solid #edf0f2;
+}
+
+.time small {
+  color: #5d6670;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.time strong {
+  color: #171b20;
+  font-size: clamp(26px, 8vw, 34px);
+  font-weight: 800;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+
+.time strong.pending {
+  color: #6b737c;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.time span {
+  color: #4a535c;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+/* Bandas: una fila por posición. */
+.bands {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 14px 16px;
+  list-style: none;
+  border-bottom: 1px solid #edf0f2;
+}
+
+.bands li {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+}
+
+.bandIcon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--tone-soft);
+  color: var(--tone);
+  font-size: 16px;
+}
+
+.bandText {
+  display: grid;
+  min-width: 0;
+}
+
+.bandText small {
+  color: #5d6670;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.bandText a,
+.bandText strong {
+  color: #171b20;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Recorrido como línea: extremos destacados y calles como paradas. */
+.route {
+  padding: 14px 16px 6px;
+}
+
+.routeTitle {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  margin: 0 0 10px;
+  color: #171b20;
+  font-size: 16px;
+}
+
+.routeTitle small {
+  color: #6b737c;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.line,
+.foldList {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.line::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  left: 11px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--tone-line);
+}
+
+.street,
+.stop,
+.fold {
+  position: relative;
+  padding-left: 34px;
+}
+
+.street {
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  color: #262c33;
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+.street::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  border: 3px solid var(--tone);
+  border-radius: 50%;
+  background: #fff;
+  transform: translateY(-50%);
+  box-sizing: border-box;
+}
+
+.endpoint {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 46px;
+}
+
+.endpoint::before {
+  content: '';
+  position: absolute;
+  left: 1px;
+  top: 50%;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  background: var(--tone);
+  box-shadow: 0 0 0 4px #fff;
+  transform: translateY(-50%);
+}
+
+.endpoint b {
+  padding: 3px 8px;
+  border-radius: 8px;
+  background: var(--tone-soft);
+  color: var(--tone);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.endpoint span {
+  color: #171b20;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* Tramo central plegado: sigue la línea con un nodo «+». */
+.fold details > summary {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 40px;
+  color: var(--tone);
+  font-size: 14px;
+  font-weight: 700;
+  list-style: none;
+  cursor: pointer;
+}
+
+.fold details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.fold::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 20px;
+  width: 19px;
+  height: 19px;
+  border: 2px dashed var(--tone);
+  border-radius: 50%;
+  background: #fff;
+  transform: translateY(-50%);
+  box-sizing: border-box;
+}
+
+.fold details[open] > summary b {
+  transform: rotate(45deg);
+}
+
+.fold details > summary b {
+  transition: transform 0.15s ease;
+}
+
+.foldList .street {
+  padding-left: 0;
+}
+
+.foldList .street::before {
+  left: -27px;
+}
+
+.routeText {
+  margin: 0;
+  padding: 14px 16px;
+  color: #262c33;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+/* Detalles y enlace a la Agenda. */
+.notes {
+  margin: 0 16px;
+  border-top: 1px solid #edf0f2;
+}
+
+.notes > summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 44px;
+  color: #262c33;
+  font-size: 14px;
+  font-weight: 700;
+  list-style: none;
+  cursor: pointer;
+}
+
+.notes > summary::-webkit-details-marker {
+  display: none;
+}
+
+.notes p {
+  margin: 0 0 12px;
+  color: #3b434b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.agenda {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  min-height: 46px;
+  margin: 8px 16px 16px;
+  border-radius: 12px;
+  background: var(--tone-soft);
+  color: var(--tone);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (min-width: 900px) {
+  .card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      'head head'
+      'times route'
+      'bands route'
+      'notes route'
+      'actions route'
+      'agenda route';
+    align-items: start;
+  }
+
+  .head { grid-area: head; }
+  .times { grid-area: times; }
+  .bands { grid-area: bands; }
+  .notes { grid-area: notes; }
+  .agenda { grid-area: agenda; }
+
+  .route,
+  .routeText {
+    grid-area: route;
+    align-self: stretch;
+    border-left: 1px solid #edf0f2;
+  }
+}
+
+/* Tramo de una banda: franja en el rojo de Hilo junto a la línea. */
+.inBand::after {
+  content: '';
+  position: absolute;
+  left: 24px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: 2px;
+  background: var(--tone-accent);
+}
+
+.foldList .inBand::after {
+  left: -10px;
+}
+
+.street {
+  flex-wrap: wrap;
+  gap: 4px 10px;
+}
+
+.endpoint .bandChips {
+  grid-column: 1 / -1;
+}
+
+.bandChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.bandChip {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tone-accent) 10%, #fff);
+  color: var(--tone-wine);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.bandChipEnd {
+  background: #f1f2f4;
+  color: #4a535c;
+}
+
+/* Acciones: calendario y compartir, y cómo llegar a la salida. */
+.actions {
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px 4px;
+  border-top: 1px solid #edf0f2;
+}
+
+.directions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  border: 1px solid var(--tone-line);
+  border-radius: 12px;
+  color: var(--tone);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (min-width: 900px) {
+  .actions { grid-area: actions; }
+}
+
+/* Mapa del recorrido. */
+.map {
+  margin: 0 0 14px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #eef0f2;
+}
+
+.map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mapVeil {
+  fill: rgb(255 255 255 / 22%);
+}
+
+.mapCasing,
+.mapBand,
+.mapRoute {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mapCasing {
+  stroke: #fff;
+  stroke-width: 11;
+}
+
+.mapBand {
+  stroke: var(--tone-accent);
+  stroke-width: 13;
+  opacity: 0.9;
+}
+
+.mapRoute {
+  stroke: var(--tone-ink);
+  stroke-width: 5;
+}
+
+.mapStop {
+  fill: #fff;
+  stroke: var(--tone-ink);
+  stroke-width: 2.5;
+}
+
+.mapEnd {
+  fill: var(--tone-ink);
+  stroke: #fff;
+  stroke-width: 4;
+}
+
+.map figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 10px;
+  background: #fff;
+  color: #5d6670;
+  font-size: 12px;
+}
+
+.map figcaption a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Iconos (Lucide) alineados con el texto. */
+.time small,
+.time span,
+.routeTitle,
+.bandChip,
+.agenda {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.time span svg {
+  flex: none;
+  color: var(--tone);
+}
+
+.bandIconSegment {
+  background: var(--tone-accent);
+  color: #fff;
+}
+
+.routeTitle svg {
+  color: var(--tone);
+}
+
+.fold details > summary b,
+.notes > summary b {
+  display: grid;
+  place-items: center;
+}
+
+/* Barra de acciones. */
+.shareBar {
+  display: grid;
+  gap: 10px;
+}
+
+.action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 12px;
+  border: 1px solid var(--tone-line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--tone);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.action:disabled {
+  cursor: progress;
+  opacity: 0.75;
+}
+
+.actionMain {
+  border-color: var(--tone);
+  background: var(--tone);
+  color: #fff;
+}
+
+/* «Imagen para tus estados»: la acción diferencial, en el rojo de Hilo. */
+.actionStory {
+  border-color: transparent;
+  background: linear-gradient(120deg, var(--tone-accent), var(--tone-wine));
+  color: #fff;
+}
+
+.actionRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.actionRow .action {
+  flex-direction: column;
+  gap: 4px;
+  min-height: 64px;
+  padding: 0 6px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.actionRow .action span {
+  white-space: nowrap;
+}
+
+.actionWhatsapp svg {
+  color: #1f9d55;
+}
+
+/* Mapa y acciones fuera de la tarjeta (página de la procesión en la Agenda). */
+.tools {
+  --tone: var(--home-blue, #123a67);
+  --tone-ink: var(--home-ink, #0f2742);
+  --tone-accent: var(--home-red, #b71f37);
+  --tone-wine: var(--home-wine, #8a2235);
+  --tone-soft: color-mix(in srgb, var(--tone) 8%, #fff);
+  --tone-line: var(--home-border, #dce5ed);
+}
+
+/* Estado del día de la salida. */
+.dayStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 16%);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.day_soon {
+  background: var(--tone-accent);
+  color: #fff;
+}
+
+.day_live {
+  background: #fff;
+  color: var(--tone);
+}
+
+.dayStatusLight {
+  margin: 0 0 12px;
+  background: var(--tone-soft);
+  color: var(--tone);
+}
+
+.livePulse {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #d7263d;
+  box-shadow: 0 0 0 0 rgb(215 38 61 / 60%);
+  animation: livePulse 1.6s ease-out infinite;
+}
+
+@keyframes livePulse {
+  to { box-shadow: 0 0 0 9px rgb(215 38 61 / 0%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .livePulse { animation: none; }
+}
+
+.storyGroup {
+  display: grid;
+  gap: 4px;
+}
+
+.storySquare {
+  justify-self: center;
+  min-height: 36px;
+  padding: 0 8px;
+  border: 0;
+  background: none;
+  color: var(--tone);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Mapa a pantalla completa. */
+.mapWithExpand {
+  position: relative;
+}
+
+.mapExpand {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 18%);
+  color: var(--tone);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mapDialog {
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #fff;
+}
+
+.mapDialog::backdrop {
+  background: rgb(0 0 0 / 55%);
+}
+
+.mapDialogBar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--tone);
+  color: #fff;
+}
+
+.mapDialogBar button {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--tone);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mapDialogBody svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.mapLabel {
+  fill: #111820;
+  stroke: #fff;
+  stroke-width: 4px;
+  paint-order: stroke;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.mapDialogFoot {
+  margin: 0;
+  padding: 10px 16px 24px;
+  color: #5d6670;
+  font-size: 12px;
+  text-align: center;
+}
+
+.mapDialogFoot a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.mapExpand {
+  white-space: nowrap;
+}
+
+.mapExpand svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}

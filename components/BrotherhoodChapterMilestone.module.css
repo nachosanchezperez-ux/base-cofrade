@@ -1,0 +1,66 @@
+/* Gran cita: banda en el color de la Hermandad, sin recuadros dentro. */
+.section {
+  margin: 0 0 20px;
+  padding: 18px 18px 16px;
+  border-radius: 18px;
+  background: var(--brotherhood-primary, #153b69);
+  color: var(--brotherhood-light, #fff);
+}
+
+.kicker {
+  margin: 0 0 4px;
+  color: color-mix(in srgb, var(--brotherhood-light, #fff) 78%, transparent);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  color: var(--brotherhood-light, #fff) !important;
+  font-size: clamp(21px, 5.4vw, 28px);
+  line-height: 1.15;
+}
+
+.date {
+  margin: 8px 0 0;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.acts {
+  display: grid;
+  gap: 2px;
+  margin: 12px 0 0;
+  padding: 10px 0 0;
+  border-top: 1px solid color-mix(in srgb, var(--brotherhood-light, #fff) 28%, transparent);
+  list-style: none;
+}
+
+.acts li {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 10px;
+  align-items: baseline;
+  min-height: 44px;
+  padding: 6px 0;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.acts a,
+.acts span {
+  color: var(--brotherhood-light, #fff);
+  text-decoration: none;
+}
+
+.acts a:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+.time {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,59 @@
+/* Personas de la Hermandad (vestidor, hermano mayor) en la ficha por capítulos. */
+.section {
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid #e3e7eb;
+}
+
+.title {
+  margin: 0 0 6px;
+  color: #171b20;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list li {
+  display: grid;
+  gap: 2px;
+  padding: 10px 0;
+}
+
+.list li + li {
+  border-top: 1px solid #eef0f2;
+}
+
+.list strong {
+  font-size: 17px;
+  line-height: 1.25;
+}
+
+.list a {
+  color: var(--brotherhood-primary, #153b69);
+  text-decoration: none;
+}
+
+.role {
+  color: var(--brotherhood-secondary, #a71930);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.period {
+  color: #59636e;
+  font-size: 14px;
+}
+
+.images {
+  margin: 2px 0 0;
+  color: #3d454e;
+  font-size: 15px;
+  line-height: 1.45;
+}

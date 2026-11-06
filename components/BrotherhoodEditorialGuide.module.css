@@ -327,3 +327,51 @@
     line-height: 1.68;
   }
 }
+
+/* Variante plegada (ficha por capítulos): una línea como el resto de plegables. */
+.folded {
+  border-top: 1px solid #e3e7eb;
+  border-bottom: 1px solid #e3e7eb;
+  margin: 8px 0 16px;
+}
+
+.folded > summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  cursor: pointer;
+  list-style: none;
+  color: #23272c;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.folded > summary::-webkit-details-marker {
+  display: none;
+}
+
+.folded > summary small {
+  color: #59636e;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.folded > summary b {
+  margin-left: auto;
+  font-size: 20px;
+  transition: transform .18s ease;
+}
+
+.folded[open] > summary b {
+  transform: rotate(45deg);
+}
+
+.folded > summary:focus-visible {
+  outline: 3px solid #175f99;
+  outline-offset: 2px;
+}
+
+.foldedBody {
+  padding: 0 0 16px;
+}

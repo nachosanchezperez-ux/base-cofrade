@@ -3,7 +3,11 @@ import BrotherhoodReadingLayout from '@/components/BrotherhoodReadingLayout';
 import BrotherhoodQuickFacts from '@/components/BrotherhoodQuickFacts';
 import readingStyles from '@/components/BrotherhoodReadingLayout.module.css';
 import { usesBrotherhoodReading } from '@/lib/brotherhood-reading-rollout';
-import { nextBrotherhoodAppointment } from '@/lib/brotherhood-reading';
+import { usesBrotherhoodChapters } from '@/lib/brotherhood-chapters-rollout';
+import { brotherhoodChapterProfile, brotherhoodChapters, chapterHeroFacts, foundingYearLabel } from '@/lib/brotherhood-chapters';
+import BrotherhoodChaptersLayout from '@/components/BrotherhoodChaptersLayout';
+import { brotherhoodMilestone, nextBrotherhoodAppointment, upcomingBrotherhoodActs } from '@/lib/brotherhood-reading';
+import BrotherhoodChapterMilestone, { milestoneDateLabel } from '@/components/BrotherhoodChapterMilestone';
 import Image from 'next/image';
 import { cache } from 'react';
 import BrotherhoodNextAppointment from '@/components/BrotherhoodNextAppointment';
@@ -17,6 +21,9 @@ import MusicalRepertoiresSection from '@/components/MusicalRepertoiresSection';
 import BrotherhoodOverviewV2 from '@/components/BrotherhoodOverviewV2';
 import BrotherhoodViaCrucisSection from '@/components/BrotherhoodViaCrucisSection';
 import BrotherhoodOutingsSection from '@/components/BrotherhoodOutingsSection';
+import BrotherhoodChapterOuting from '@/components/BrotherhoodChapterOuting';
+import { featuredBrotherhoodOuting, otherBrotherhoodOutings } from '@/lib/brotherhood-featured-outing';
+import { getGloryDetailByOutingId } from '@/lib/supabase/glory-directory';
 import BrotherhoodProgramHero from '@/components/BrotherhoodProgramHero';
 import { panelEditHref } from '@/lib/panel-session-cookie';
 import FollowBrotherhoodButton from '@/components/FollowBrotherhoodButton';
@@ -25,7 +32,17 @@ import {
   BrotherhoodConceptualTitulars,
   BrotherhoodOwnBands,
   BrotherhoodReadingDiscovery,
+  getBrotherhoodConceptualTitulars,
 } from '@/components/BrotherhoodRelationalExtras';
+import BrotherhoodChapterTitulars from '@/components/BrotherhoodChapterTitulars';
+import BrotherhoodChapterHistory from '@/components/BrotherhoodChapterHistory';
+import BrotherhoodEditorialGuide from '@/components/BrotherhoodEditorialGuide';
+import BrotherhoodChapterHeritage from '@/components/BrotherhoodChapterHeritage';
+import BrotherhoodThread from '@/components/BrotherhoodThread';
+import BrotherhoodChapterProcession from '@/components/BrotherhoodChapterProcession';
+import BrotherhoodChapterHabit from '@/components/BrotherhoodChapterHabit';
+import { documentedHabits as habitsWithFields, habitsBeforeSteps } from '@/lib/brotherhood-habits';
+import { brotherhoodThread } from '@/lib/brotherhood-thread';
 import EntitySectionNav from '@/components/EntitySectionNav';
 import { isExtraordinaryEvent } from '@/lib/brotherhood-extraordinary-events';
 import FestivalPostersSection from '@/components/FestivalPostersSection';
@@ -177,7 +194,10 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   const { slug } = await params;
   const h = await getHermandad(slug);
   if (!h) notFound();
-  const reading = readingOverride ?? usesBrotherhoodReading(h.id);
+  // Tarea 13 (prototipo): la cohorte piloto se lee por capítulos sobre la base
+  // de la versión lectura. El laboratorio (readingOverride) no cambia.
+  const chapters = !readingOverride && usesBrotherhoodChapters(h.id);
+  const reading = chapters || (readingOverride ?? usesBrotherhoodReading(h.id));
 
   const canonicalPath = `/hermandades/${h.slug}`;
   const municipalityHubHref = agendaMunicipalityHref(h.localidad);
@@ -187,7 +207,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     ...h.pasos.map((paso) => [paso.id, 'step']),
     ...(h.participacionesConsejo || []).map((participacion) => [participacion.id, 'event']),
   ]);
-  const [entityCoverMedia, musicalHeritage, authoritativeCrestPath, musicalRepertoires, crewEvents, agendaData, indexableBrotherhoods] = await Promise.all([
+  const [entityCoverMedia, musicalHeritage, authoritativeCrestPath, musicalRepertoires, crewEvents, agendaData, indexableBrotherhoods, chapterMovements, chapterConceptualTitulars] = await Promise.all([
     getCachedBrotherhoodCoverMedia(
       [...coverEntityTypes.keys()],
       Object.fromEntries(coverEntityTypes)
@@ -209,6 +229,10 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       console.error('[Hilo Cofrade] Directorio de localidades omitido en la miga de la ficha de Hermandad', { slug: h.slug, error });
       return [];
     }),
+    // «El Hilo se mueve» va al final de todas las fichas, montado desde el layout
+    // (decisión del 24/10/2026): la ficha por capítulos no la repite en Inicio.
+    [],
+    chapters ? getBrotherhoodConceptualTitulars(h.id) : [],
   ]);
   // Miga y cabecera: «Sevilla» lleva a las hermandades de la localidad; si no hay
   // listado, a su guía cofrade (que también se enlaza desde ese listado).
@@ -221,6 +245,12 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   // «Próximamente»: el siguiente acto entre agenda, igualás, salidas anunciadas
   // y cultos con fecha (misma regla que la versión lectura).
   const nextAppointment = nextBrotherhoodAppointment(upcomingAgendaItems, h.salidas || [], agendaData.today, h.cultos || []);
+  // Ficha por capítulos: la «gran cita» (p. ej. una coronación canónica) se
+  // destaca aparte, sin desplazar al siguiente acto de «Próximamente».
+  const chapterMilestone = chapters
+    ? brotherhoodMilestone(upcomingBrotherhoodActs(upcomingAgendaItems, h.salidas || [], agendaData.today, h.cultos || []))
+    : null;
+  const milestoneKeys = new Set((chapterMilestone?.day || []).map((item) => item.key || item.href));
   const heroMedia = entityCoverMedia.get(h.id)
     || h.imagenes.map((imagen) => entityCoverMedia.get(imagen.id)).find(Boolean)
     || null;
@@ -239,6 +269,18 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   const tiposHermandad = h.tipos || [];
   const isPenitencia = tiposHermandad.includes('Penitencia');
   const isGloria = tiposHermandad.includes('Gloria');
+  // Ficha por capítulos de Gloria: la próxima salida (o la última) se destaca
+  // con su horario, bandas y recorrido. Misma lectura en caché que la Agenda.
+  const featuredOuting = chapters && !isPenitencia
+    ? featuredBrotherhoodOuting(h.salidas || [], agendaData.today || '')
+    : null;
+  const featuredOutingDetail = featuredOuting
+    ? await getGloryDetailByOutingId(featuredOuting.id).catch((error) => {
+      console.error('[Hilo Cofrade] Salida destacada omitida temporalmente en la ficha por capítulos', { slug: h.slug, error });
+      return null;
+    })
+    : null;
+  const listedOutings = featuredOutingDetail ? otherBrotherhoodOutings(h.salidas || [], featuredOuting) : (h.salidas || []);
   const brotherhoodTypeLabel = brotherhoodPublicTypeLabel(h);
   const steps = h.pasos || [];
   // Música actual: la de cada paso y la Cruz de Guía se muestran en «Pasos
@@ -284,6 +326,18 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     { label: 'Titulares', value: h.imagenes?.length ? String(h.imagenes.length) : '' },
   ].filter((item) => item?.value);
   const heroFacts = isPenitencia ? penitentialFacts : gloryFacts;
+  const chapterProfile = brotherhoodChapterProfile(tiposHermandad);
+  // Ficha por capítulos: cabecera con la jornada habitual y el año de fundación.
+  const programFacts = chapters
+    ? chapterHeroFacts({
+      profile: chapterProfile,
+      holyWeekValue: holyWeekFact?.value,
+      recurringGloryDay: publicText(h.diaSalida),
+      gloryEditionDate: gloryDate,
+      foundingYear: foundingYearLabel(publicText(h.fundacion)),
+      nazarenes: penitentialFacts.find((fact) => fact.label.startsWith('Nazarenos')),
+    })
+    : heroFacts;
   const heroFactLabels = new Set(heroFacts.map((fact) => fact.label));
   const hasPracticalOverview = Boolean(
     publicText(h.sedeDetalle?.nombre)
@@ -292,6 +346,15 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     || (publicText(h.datosJornada?.totalHermanos) && !heroFactLabels.has('Hermanos'))
     || (h.imagenes?.length && !heroFactLabels.has('Titulares'))
   );
+  // «Tira del hilo» (ficha por capítulos): relaciones ya publicadas, sin consultas nuevas.
+  const threadNodes = chapters ? brotherhoodThread({
+    brotherhood: h,
+    titulars: h.imagenes || [],
+    steps,
+    accompaniments: currentMusicItems,
+    marches: musicalHeritage,
+  }) : [];
+  const hasMusic = Boolean(documentedCurrentAccompaniments.length || musicalHeritage.length || fallbackMusicalHeritage.length || documentedHistoricalAccompaniments.length || musicalRepertoires.length);
   const description = brotherhoodSeoDescription(h);
   const organizationJsonLdId = `${absoluteUrl(canonicalPath)}#organization`;
   // Sede con su dirección publicada: ayuda a responder «dónde está» en buscadores e IA.
@@ -381,7 +444,23 @@ export default async function HermandadDetailPage({ params, reading: readingOver
         </div></section>
       )}
   </>);
-  const titularsSection = (<>
+  // Ficha por capítulos: las imágenes que procesionan se presentan en su paso
+  // (Cortejo/Procesión) y no se repiten en Titulares.
+  const chapterImageIdsInSteps = chapters ? [...new Set((h.pasos || []).flatMap((paso) => (
+    paso.imagenesDetalle?.length ? paso.imagenesDetalle : (paso.imagenes || []).map((id) => ({ id }))
+  ).filter((imagen) => imagen.rol !== 'secundaria').map((imagen) => imagen.id)))] : [];
+  // Ficha por capítulos: titulares en filas compactas (misma información, plegada).
+  const chapterTitularsSection = chapters ? (
+    <BrotherhoodChapterTitulars
+      items={(h.imagenes || []).map((imagen) => ({ ...imagen, media: entityCoverMedia.get(imagen.id) || null }))}
+      conceptual={chapterConceptualTitulars}
+      excludeIds={chapterImageIdsInSteps}
+    >
+      <BrotherhoodOtherImages items={h.otrasImagenes || []} />
+      <BrotherhoodQuickFacts brotherhood={h} peopleOnly peopleVariant="rows" />
+    </BrotherhoodChapterTitulars>
+  ) : null;
+  const titularsSection = chapterTitularsSection || (<>
 {h.imagenes?.length > 0 && (
       <section className="section brotherhood-soft" id="titulares"><div className="shell">
         <SectionTitle eyebrow="Titularidad" title="Sagrados Titulares" />
@@ -456,7 +535,60 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     )}
     {paso.estadoActual && <p className="step-current-state">{paso.estadoActual}</p>}
   </>);
-  const stepsSection = (<>
+  // Ficha por capítulos: quién acompaña hoy, una línea por banda con sus puestos.
+  const chapterCurrentBands = chapters ? (() => {
+    const byBand = new Map();
+    const add = (item, where) => {
+      const name = publicText(item.banda);
+      if (!name) return;
+      const key = item.bandaSlug || name;
+      const entry = byBand.get(key) || { key, banda: name, bandaSlug: item.bandaSlug || '', where: [] };
+      if (where && !entry.where.includes(where)) entry.where.push(where);
+      byBand.set(key, entry);
+    };
+    crossGuideMusic.forEach((item) => add(item, 'Cruz de Guía'));
+    // «Paso de Misterio», «Paso de Palio»; un tipo suelto («Gloria») se lee «Paso de Gloria».
+    const stepPlace = (paso) => {
+      const tipo = publicText(paso.tipo);
+      if (!tipo) return paso.nombre;
+      return /^paso\b/i.test(tipo) ? tipo : `Paso de ${tipo}`;
+    };
+    steps.forEach((paso) => stepAccompaniments(currentMusicItems, paso.id).forEach((item) => add(item, stepPlace(paso))));
+    return [...byBand.values()];
+  })() : [];
+  // Ficha por capítulos: la túnica, a la vista (solo Penitencia).
+  const chapterHabits = chapters && isPenitencia ? habitsWithFields(h.habitos || []) : [];
+  // Ficha por capítulos: el cortejo en orden, de la Cruz de Guía al último paso.
+  const chapterStepsSection = chapters ? (
+    <BrotherhoodChapterProcession
+      title={isPenitencia ? 'Orden del cortejo' : 'La procesión'}
+      crossGuide={crossGuideMusic}
+      habitsBefore={habitsBeforeSteps(chapterHabits, steps)}
+      steps={steps.map((paso) => {
+        const stepImages = paso.imagenesDetalle?.length
+          ? paso.imagenesDetalle
+          : (paso.imagenes || []).map((id) => imagenMap.get(id)).filter(Boolean);
+        const music = stepAccompaniments(currentMusicItems, paso.id);
+        return {
+          ...paso,
+          media: entityCoverMedia.get(paso.id) || null,
+          framing: getStepPhotoFraming(paso.slug).card,
+          // La ficha del titular completa (descripción, técnica, iconografía) y,
+          // encima, solo los datos del paso que existan: nada vacío la pisa.
+          images: stepImages.filter((imagen) => imagen.rol !== 'secundaria').map((imagen) => ({
+            ...imagenMap.get(imagen.id),
+            ...Object.fromEntries(Object.entries(imagen).filter(([, value]) => value !== '' && value !== null && value !== undefined)),
+          })),
+          figures: stepImages.filter((imagen) => imagen.rol === 'secundaria'),
+          capataz: publicText(paso.capatazActual),
+          music,
+          musicFallback: music.length ? '' : publicText(paso.acompanamientoActual),
+          descripcion: publicText(paso.descripcion),
+        };
+      })}
+    />
+  ) : null;
+  const stepsSection = chapterStepsSection || (<>
 {h.pasos?.length > 0 && (
       <section className="section" id="pasos"><div className="shell">
         <SectionTitle eyebrow={stepCountText(h.pasos.length)} title="Pasos procesionales" />
@@ -530,11 +662,11 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       )}
   </>);
   const ownMusicSection = (<>
-<BrotherhoodOwnBands brotherhoodId={h.id} musicOnly={reading} excludeAccompanimentIds={accompanimentIdsInSteps} />
+<BrotherhoodOwnBands brotherhoodId={h.id} musicOnly={reading} excludeAccompanimentIds={accompanimentIdsInSteps} variant={chapters ? "rows" : "cards"} />
   </>);
   const musicalHeritageSection = (<>
 {musicalHeritage.length > 0 ? (
-        <BrotherhoodMusicalHeritage items={musicalHeritage} compact={reading} headingLevel={reading ? 3 : 2} id={reading ? "patrimonio-musical" : "musica"} />
+        <BrotherhoodMusicalHeritage items={musicalHeritage} compact={reading} chapter={chapters} headingLevel={reading ? 3 : 2} id={reading ? "patrimonio-musical" : "musica"} />
       ) : fallbackMusicalHeritage.length > 0 ? (
         <section className="section music-section" id={reading ? "patrimonio-musical" : "musica"}><div className="shell">
           <SectionTitle level={reading ? 3 : 2} eyebrow="Sonidos propios" title="Patrimonio Musical" />
@@ -548,7 +680,12 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   const repertoiresSection = (<>
 <MusicalRepertoiresSection items={musicalRepertoires} context="brotherhood" headingLevel={reading ? 3 : 2} />
   </>);
-  const historySection = (<>
+  const historySection = chapters ? (
+    <BrotherhoodChapterHistory items={h.cronologia || []} introduction={publicText(h.historia)} formerTitulars={h.antiguasTitulares || []} today={agendaData.today}
+      announced={chapterMilestone ? [{ id: 'gran-cita', fecha: milestoneDateLabel(chapterMilestone.date), titulo: chapterMilestone.name, href: '#gran-cita' }] : []}>
+      <BrotherhoodEditorialGuide guide={h.editorialGuide} variant="folded" />
+    </BrotherhoodChapterHistory>
+  ) : (<>
 <BrotherhoodHistoryTimeline items={h.cronologia || []} introduction={publicText(h.historia)} semanticPreview={reading} formerTitulars={h.antiguasTitulares || []} />
   </>);
   const viaCrucisSection = (<>
@@ -558,7 +695,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   const documentedHabits = (h.habitos || [])
     .map((item) => ({ ...item, fields: habitFields(item) }))
     .filter((item) => item.fields.length > 0);
-  const habitSection = (<>
+  const habitSection = chapters ? <BrotherhoodChapterHabit habits={chapterHabits} /> : (<>
 {documentedHabits.length > 0 && <section className="section brotherhood-dark" id="tunica"><div className="shell">
         <SectionTitle eyebrow="Estación de penitencia" title="Túnica" />
         <div className="habit-grid">{documentedHabits.map((item, index) => (
@@ -599,7 +736,14 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   const postersSection = (<>
 <FestivalPostersSection posters={h.cartelesFiestas} />
   </>);
-  const heritageSection = (<>
+  const heritageSection = chapters ? (
+    <BrotherhoodChapterHeritage
+      pieces={h.patrimonio || []}
+      updates={h.estrenos || []}
+      currentYear={Number(agendaData.today?.slice(0, 4)) || new Date().getUTCFullYear()}
+      sourcesHref={h.fuentesFicha?.length ? '#fuentes' : undefined}
+    />
+  ) : (<>
 {(h.patrimonio?.length > 0 || h.estrenos?.length > 0) && <section className="section heritage-section" id="patrimonio"><div className="shell">
         <SectionTitle eyebrow="Memoria material" title="Patrimonio" />
 
@@ -714,6 +858,8 @@ export default async function HermandadDetailPage({ params, reading: readingOver
 
       <BrotherhoodProgramHero
         compact={reading}
+        collapseOfficialName={chapters}
+        localityOnce={chapters}
         entityType={brotherhoodTypeLabel}
         title={h.nombrePopular}
         officialName={h.nombreOficial}
@@ -725,7 +871,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
           publicText(h.localidad) ? { label: publicText(h.localidad), href: localityBreadcrumbHref || undefined } : null,
           { label: h.nombrePopular },
         ]}
-        facts={heroFacts}
+        facts={programFacts}
         editHref={panelEditHref('brotherhood', h.id)}
         actions={<FollowBrotherhoodButton slug={slug} name={h.nombrePopular} municipality={publicText(h.localidad)} />}
         media={{
@@ -745,13 +891,62 @@ export default async function HermandadDetailPage({ params, reading: readingOver
         }}
       />
 
-      {reading ? (
+      {chapters ? (
+        <BrotherhoodChaptersLayout
+          brotherhood={h}
+          profile={chapterProfile}
+          chapters={brotherhoodChapters({
+            types: tiposHermandad,
+            availability: {
+              titulars: h.imagenes?.length || 0,
+              steps: steps.length,
+              currentBands: new Set(documentedCurrentAccompaniments.map((item) => item.bandaSlug || publicText(item.banda))).size,
+              marches: musicalHeritage.length || fallbackMusicalHeritage.length,
+              hasMusic,
+              heritagePieces: h.patrimonio?.length || 0,
+              simpecados: h.simpecados?.length || 0,
+              hasHeritage: Boolean(h.patrimonio?.length || h.estrenos?.length || h.simpecados?.length || h.cartelesFiestas?.length),
+              hasOutings: Boolean(h.salidas?.length),
+              historyEvents: h.cronologia?.length || 0,
+              hasHistory: Boolean(publicText(h.historia) || h.cronologia?.length || h.antiguasTitulares?.length || h.editorialGuide),
+              threadLength: threadNodes.length,
+              habit: chapterHabits[0]?.tunica || '',
+              threadEnd: threadNodes.at(-1)?.label || '',
+            },
+          })}
+          heroFactLabels={programFacts.map((fact) => fact.label)}
+          milestone={chapterMilestone ? <BrotherhoodChapterMilestone milestone={chapterMilestone} /> : null}
+          currentBands={chapterCurrentBands}
+          nextAppointment={<BrotherhoodNextAppointment
+            next={nextAppointment}
+            others={upcomingAgendaItems.filter((item) => !milestoneKeys.has(item.key || item.href))}
+            brotherhoodSlug={h.slug}
+            brotherhoodName={h.nombrePopular || h.nombreOficial}
+          />}
+          movements={chapterMovements}
+          hasCrew={crewEvents.length > 0}
+          agendaCount={upcomingAgendaItems.length}
+          hasMusic={hasMusic}
+          crestSrc={authoritativeCrestPath || ''}
+          tileMedia={(h.imagenes || []).map((imagen) => entityCoverMedia.get(imagen.id)).find((media) => media?.path) || heroMedia || null}
+          slots={{ titulars: titularsSection, steps: stepsSection, history: historySection,
+            ownMusic: ownMusicSection, musicalHeritage: musicalHeritageSection, repertoires: repertoiresSection,
+            historicalMusic: historicalMusicSection, heritage: heritageSection, simpecados: simpecadosSection,
+            posters: postersSection, habit: habitSection, council: councilSection, viaCrucis: viaCrucisSection,
+            outings: featuredOutingDetail ? <BrotherhoodOutingsSection outings={listedOutings} /> : outingsSection, crew: crewSection, cults: cultsSection, curiosities: curiositiesSection,
+            outingFeature: featuredOutingDetail ? <BrotherhoodChapterOuting outing={featuredOutingDetail} names={[h.nombrePopular, h.nombreOficial, ...(h.imagenes || []).map((imagen) => imagen.nombre)]} /> : null,
+            outingsCount: listedOutings.length,
+            thread: <BrotherhoodThread nodes={threadNodes} />,
+            discovery: <BrotherhoodReadingDiscovery brotherhoodId={h.id} />,
+            officialLinks: h.enlacesOficiales?.length ? <OfficialLinks links={h.enlacesOficiales} compact /> : null }}
+        />
+      ) : reading ? (
         <BrotherhoodReadingLayout
           brotherhood={h}
           today={agendaData.today}
           agendaItems={upcomingAgendaItems}
           heroFactLabels={heroFacts.map((fact) => fact.label)}
-          hasMusic={Boolean(documentedCurrentAccompaniments.length || musicalHeritage.length || fallbackMusicalHeritage.length || documentedHistoricalAccompaniments.length || musicalRepertoires.length)}
+          hasMusic={hasMusic}
           slots={{ titulars: titularsSection, steps: stepsSection, history: historySection,
             ownMusic: ownMusicSection, musicalHeritage: musicalHeritageSection, repertoires: repertoiresSection,
             historicalMusic: historicalMusicSection, heritage: heritageSection, simpecados: simpecadosSection,
@@ -826,9 +1021,9 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       {/* Cierre: rutas de segundo grado. Las relaciones directas ya están en su sección. */}
       {!reading && <BrotherhoodReadingDiscovery brotherhoodId={h.id} />}
 
-      {reading && <div className={`shell ${readingStyles.documentation}`}><details className={readingStyles.disclosure}><summary>Más rutas para tirar del hilo <b aria-hidden="true">+</b></summary><BrotherhoodReadingDiscovery brotherhoodId={h.id} /></details></div>}
+      {reading && !chapters && <div className={`shell ${readingStyles.documentation}`}><details className={readingStyles.disclosure}><summary>Más rutas para tirar del hilo <b aria-hidden="true">+</b></summary><BrotherhoodReadingDiscovery brotherhoodId={h.id} /></details></div>}
 
-      {reading && h.enlacesOficiales?.length ? <div className={`shell ${readingStyles.documentation}`}><details className={readingStyles.disclosure}><summary>Web y redes oficiales <span>{h.enlacesOficiales.length}</span><b aria-hidden="true">+</b></summary><OfficialLinks links={h.enlacesOficiales} /></details></div> : <OfficialLinks links={h.enlacesOficiales} />}
+      {chapters ? null : reading && h.enlacesOficiales?.length ? <div className={`shell ${readingStyles.documentation}`}><details className={readingStyles.disclosure}><summary>Web y redes oficiales <span>{h.enlacesOficiales.length}</span><b aria-hidden="true">+</b></summary><OfficialLinks links={h.enlacesOficiales} /></details></div> : <OfficialLinks links={h.enlacesOficiales} />}
       <SourcesBlock sources={h.fuentesFicha} />
     </div>
   );

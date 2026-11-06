@@ -1,0 +1,165 @@
+.section {
+  background: #fff;
+}
+
+.title {
+  margin: 0;
+  color: #171b20;
+  font-size: clamp(22px, 5.6vw, 30px);
+  line-height: 1.15;
+}
+
+.intro {
+  max-width: 62ch;
+  margin: 6px 0 20px;
+  color: #59636e;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* Móvil: el hilo baja en vertical; cada eslabón cuelga de la línea. */
+.chain {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 22px;
+  list-style: none;
+}
+
+.chain::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  left: 6px;
+  width: 2px;
+  background: var(--brotherhood-secondary, #a71930);
+  opacity: .55;
+}
+
+.node {
+  position: relative;
+  padding-bottom: 14px;
+}
+
+.node::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: -21px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--brotherhood-secondary, #a71930);
+}
+
+.node:first-child .relation {
+  display: none;
+}
+
+.node:first-child::before {
+  background: var(--brotherhood-secondary, #a71930);
+}
+
+.relation {
+  display: block;
+  min-height: 0;
+  margin: 0 0 4px;
+  color: #59636e;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.entry {
+  display: grid;
+  gap: 2px;
+}
+
+.kind {
+  color: var(--brotherhood-secondary, #a71930);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.name {
+  color: #171b20;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+a.name {
+  color: var(--brotherhood-primary, #153b69);
+}
+
+a.name:hover {
+  opacity: .8;
+}
+
+a.name:focus-visible {
+  outline: 3px solid #175f99;
+  outline-offset: 2px;
+}
+
+.detail {
+  color: #59636e;
+  font-size: 14px;
+}
+
+/* Ordenador: el hilo cruza en horizontal, con la relación sobre cada tramo. */
+@media (min-width: 900px) {
+  .chain {
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    gap: 0 18px;
+    padding: 0;
+  }
+
+  .chain::before {
+    top: 59px;
+    bottom: auto;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 2px;
+  }
+
+  .node {
+    display: grid;
+    grid-template-rows: 52px auto;
+    align-content: start;
+    padding: 0;
+  }
+
+  .node::before {
+    top: 52px;
+    left: 0;
+  }
+
+  .node:first-child .relation {
+    display: block;
+  }
+
+  .relation {
+    align-self: end;
+    margin-bottom: 12px;
+    line-height: 1.35;
+  }
+
+  .entry {
+    padding-top: 26px;
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

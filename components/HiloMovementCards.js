@@ -30,7 +30,7 @@ export function hiloKindLabel(kind = '') {
 // `secondary` (índice, #1253): segundo nivel, más discreto que la principal y
 // más rico que el archivo: miniatura lateral, titular menor y entradilla breve.
 // Sin botones de compartir: siguen en la página de cada noticia.
-export default function HiloMovementCards({ items, compact = false, headingLevel = 3, featured = false, secondary = false, anchors = !compact }) {
+export default function HiloMovementCards({ items, compact = false, headingLevel = 3, featured = false, secondary = false, anchors = !compact, hideProtagonist = false }) {
   const Heading = `h${headingLevel}`
   const listClass = compact ? styles.compactList : featured ? styles.leadList : secondary ? `${styles.list} ${styles.secondaryList}` : styles.list
   const sizes = featured ? '(max-width: 760px) 100vw, 45vw' : secondary ? '(max-width: 760px) 104px, 180px' : '(max-width: 760px) 100vw, 40vw'
@@ -43,11 +43,12 @@ export default function HiloMovementCards({ items, compact = false, headingLevel
       <article className={`${styles.chapter} ${featured ? styles.featured : ''} ${secondary ? styles.secondaryCard : ''} ${thumbless ? styles.secondaryNoPhoto : ''}`} id={anchors ? item.id : undefined} data-hilo-movement={item.id}>
         {!compact && !thumbless ? <MovementVisual item={item} featured={featured} sizes={sizes} /> : null}
         <div className={styles.cardBody}>
-          <header className={styles.identity}>
+          {/* Dentro de la propia ficha, el protagonista ya es la página: solo el tipo. */}
+          {hideProtagonist ? <p className={styles.kindOnly}><span className={styles.kind}>{hiloKindLabel(item.kind)}</span></p> : <header className={styles.identity}>
             {(compact || thumbless) && item.crestPath ? <Image className={styles.crest} src={item.crestPath} alt="" width={56} height={64} unoptimized={/\.svg(?:$|\?)/i.test(item.crestPath)} /> : null}
             <div><>{item.protagonist.href ? <Link href={item.protagonist.href} className={styles.brotherhood} prefetch={false}>{item.protagonist.label}</Link> : <strong className={styles.brotherhood}>{item.protagonist.label}</strong>}{item.protagonist.kind ? <span className={styles.locality}>{item.protagonist.kind}</span> : null}</><span className={styles.locality}>{item.municipality}</span></div>
             <span className={styles.kind}>{hiloKindLabel(item.kind)}</span>
-          </header>
+          </header>}
           <div className={styles.story}>
             <p className={styles.date}>{item.announcedOn ? <time dateTime={item.announcedOn}>{hiloDayLabel(item.announcedOn)}</time> : <>Documentado el <time dateTime={item.documentedOn}>{hiloDayLabel(item.documentedOn)}</time></>}{item.eventPassed ? <span className={styles.passed}>{hiloPassedLabel(item)}</span> : null}</p>
             <Heading><Link href={item.href} prefetch={false} className={styles.titleLink}>{item.title}</Link></Heading>

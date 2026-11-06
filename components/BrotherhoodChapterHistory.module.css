@@ -1,0 +1,241 @@
+.section {
+  background: #fff;
+}
+
+.title {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin: 0 0 18px;
+  color: #171b20;
+  font-size: clamp(22px, 5.6vw, 30px);
+  line-height: 1.15;
+}
+
+.title small {
+  color: #59636e;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Línea vertical: año a la izquierda, punto sobre el hilo, hito a la derecha. */
+.timeline {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 67px;
+  width: 2px;
+  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 22%, #e3e7eb);
+}
+
+.item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px 24px minmax(0, 1fr);
+  align-items: start;
+  padding-block: 4px;
+}
+
+.year {
+  padding-top: 11px;
+  color: var(--brotherhood-secondary, #a71930);
+  font-size: 14px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.dot {
+  justify-self: center;
+  width: 10px;
+  height: 10px;
+  margin-top: 15px;
+  border: 2px solid var(--brotherhood-primary, #153b69);
+  border-radius: 50%;
+  background: #fff;
+  z-index: 1;
+}
+
+.highlighted .dot {
+  width: 14px;
+  height: 14px;
+  margin-top: 13px;
+  background: var(--brotherhood-primary, #153b69);
+}
+
+.copy {
+  min-width: 0;
+  padding: 6px 0 10px 4px;
+  border-bottom: 1px solid #eef1f4;
+}
+
+.copy h3 {
+  margin: 0;
+  color: #23272c;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.highlighted .copy h3 {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.copy h3 a {
+  color: var(--brotherhood-primary, #153b69);
+  text-decoration: none;
+}
+
+.tag {
+  display: block;
+  margin-bottom: 2px;
+  color: #59636e;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.more summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 40px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.more summary::-webkit-details-marker,
+.storyMore summary::-webkit-details-marker {
+  display: none;
+}
+
+.more summary b,
+.storyMore summary b {
+  flex: 0 0 auto;
+  color: #59636e;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.more[open] summary b,
+.storyMore[open] summary b {
+  transform: rotate(45deg);
+}
+
+.more p {
+  margin: 4px 0 6px;
+  color: #3d454e;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.more summary:focus-visible,
+.storyMore summary:focus-visible {
+  outline: 3px solid #175f99;
+  outline-offset: 2px;
+}
+
+.upcoming {
+  margin-top: 22px;
+  padding-left: 14px;
+  border-left: 3px solid var(--brotherhood-secondary, #a71930);
+}
+
+.upcomingLabel {
+  margin: 0 0 6px;
+  color: #59636e;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.upcoming ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.upcoming li {
+  display: flex;
+  gap: 12px;
+  padding-block: 4px;
+  font-size: 15px;
+}
+
+.upcoming li span {
+  color: var(--brotherhood-secondary, #a71930);
+  font-weight: 800;
+}
+
+.story {
+  max-width: 70ch;
+  margin-top: 28px;
+}
+
+.lead {
+  margin: 0;
+  color: #23272c;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.storyMore {
+  margin-top: 10px;
+  border-block: 1px solid #e3e7eb;
+}
+
+.storyMore summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  cursor: pointer;
+  list-style: none;
+  color: #2a333c;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.storyMore p {
+  margin: 0 0 14px;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+@media (min-width: 900px) {
+  .timeline {
+    columns: 2;
+    column-gap: 48px;
+  }
+
+  .timeline::before {
+    display: none;
+  }
+
+  .item {
+    break-inside: avoid;
+  }
+
+  .item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 67px;
+    width: 2px;
+    background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 22%, #e3e7eb);
+  }
+}

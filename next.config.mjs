@@ -2,6 +2,11 @@ import { unifiedAuthorRedirects } from './lib/unified-author-redirects.mjs'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // La imagen para estados de una salida se genera bajo demanda y lee las
+  // tipografías de assets/og-fonts.
+  outputFileTracingIncludes: {
+    '/salidas/[id]/estado': ['./assets/og-fonts/*.ttf'],
+  },
   experimental: {
     staticGenerationRetryCount: 1,
     staticGenerationMaxConcurrency: 1,
