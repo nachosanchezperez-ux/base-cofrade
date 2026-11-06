@@ -2,8 +2,8 @@ import { routeMapLayout, streetLabels, svgPath } from '@/lib/route-map'
 import RouteMapExpand from './RouteMapExpand'
 import styles from './BrotherhoodChapterOuting.module.css'
 
-// Mapa del recorrido: teselas de OpenStreetMap y el trazado en el color de la
-// Hermandad, con el tramo de cada banda en su segundo color. Cada punto es la
+// Mapa del recorrido: teselas de OpenStreetMap y el trazado en la paleta de
+// Hilo Cofrade, con el tramo de cada banda en rojo. Cada punto es la
 // esquina donde se gira a la calle siguiente: trazado aproximado. Sin coordenadas
 // suficientes no se pinta nada.
 export default function BrotherhoodOutingMap({ points = [], segments = [], title = '' }) {

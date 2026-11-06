@@ -27,7 +27,6 @@ import OutingShareBar from '@/components/OutingShareBar'
 import OutingDayStatus from '@/components/OutingDayStatus'
 import { bandSegments, outingRouteStops } from '@/lib/brotherhood-featured-outing'
 import { outingActionLinks } from '@/lib/outing-actions'
-import { getHermandadPageBySlug } from '@/lib/supabase/brotherhood-page'
 import outingStyles from '@/components/BrotherhoodChapterOuting.module.css'
 import styles from './glory-detail.module.css'
 
@@ -176,12 +175,6 @@ export default async function GloryDetailPage({ params }) {
   const outingRoute = outingRouteStops(item.routeSummary, { origin: item.origin, destination: item.destination })
   const outingSegments = bandSegments(item.processionalMusic?.length ? item.processionalMusic : (item.music || []), outingRoute)
   const actions = outingActionLinks(item)
-  const brotherhoodSlug = String(item.brotherhoodHref || '').match(/\/hermandades\/([^/?#]+)/)?.[1] || ''
-  const palette = brotherhoodSlug ? (await getHermandadPageBySlug(brotherhoodSlug).catch(() => null))?.colores : null
-  const paletteStyle = {
-    ...(/^#[0-9a-f]{6}$/i.test(palette?.primario || '') ? { '--brotherhood-primary': palette.primario } : {}),
-    ...(/^#[0-9a-f]{6}$/i.test(palette?.secundario || '') ? { '--brotherhood-secondary': palette.secundario } : {}),
-  }
   const pageDescription = seoDescription([
     `${item.title}${item.municipality ? ` · ${item.municipality}` : ''}`,
     formatSeoDate(item.date),
@@ -287,7 +280,7 @@ export default async function GloryDetailPage({ params }) {
         calendarLabel="Glorias"
       />
 
-      <div className={`shell ${styles.body}`} style={paletteStyle}>
+      <div className={`shell ${styles.body}`}>
         <section className={`${styles.section} ${outingStyles.tools}`} aria-label="Guarda y comparte esta salida">
           <OutingDayStatus outing={{ date: item.date, departureTime: item.departureTime, returnTime: item.returnTime }} className={outingStyles.dayStatusLight} />
           <OutingShareBar
