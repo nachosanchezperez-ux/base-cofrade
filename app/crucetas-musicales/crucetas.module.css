@@ -789,6 +789,7 @@ details.insightBlock summary span { color: #736d64; font-size: 13px; line-height
 /* Escudo de la banda (BandCrest) */
 .bandCrest {
   display: inline-grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
   flex: none;
   place-items: center;
   padding: 3px;
@@ -800,7 +801,7 @@ details.insightBlock summary span { color: #736d64; font-size: 13px; line-height
 .cardCrest { position: absolute; top: 16px; right: 16px; }
 .withCrest .cardTopline,
 .withCrest h3 { padding-right: 62px; }
-.heroBand > .bandCrest { padding: 4px; border-color: rgba(255,255,255,.2); }
+.heroBand > .bandCrest { padding: 2px; border-color: rgba(255,255,255,.2); }
 .heroBand.heroBandNoCrest { grid-template-columns: minmax(0, 1fr) auto; }
 
 /* Relacionado con la cruceta: una fila de enlaces en lugar de tres tarjetas */
