@@ -37,3 +37,17 @@ test('el recorrido para redes llena el lienzo respetando el margen', async () =>
   assert.ok(fillsWidth || fillsHeight)
   assert.equal(fitRoutePoints([]), null)
 })
+
+test('el mapa ampliado rotula cada calle una vez, a lo largo de su tramo', async () => {
+  const { streetLabels } = await import('../lib/route-map.js')
+  const pts = [
+    { x: 0, y: 0, label: 'Real Parroquia de Omnium Sanctorum', type: 'place' },
+    { x: 100, y: 0, label: 'Feria', type: 'street' },
+    { x: 100, y: 100, label: 'Relator', type: 'street' },
+    { x: 100, y: 110, label: 'Amargura', type: 'street' },
+    { x: 0, y: 110, label: 'Feria', type: 'street' },
+  ]
+  const labels = streetLabels(pts)
+  assert.deepEqual(labels.map((l) => l.name), ['Feria', 'Relator'])
+  assert.equal(labels[1].angle, 90)
+})

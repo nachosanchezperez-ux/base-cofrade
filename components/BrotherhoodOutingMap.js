@@ -1,4 +1,5 @@
-import { routeMapLayout, svgPath } from '@/lib/route-map'
+import { routeMapLayout, streetLabels, svgPath } from '@/lib/route-map'
+import RouteMapExpand from './RouteMapExpand'
 import styles from './BrotherhoodChapterOuting.module.css'
 
 // Mapa del recorrido: teselas de OpenStreetMap y el trazado en el color de la
@@ -13,8 +14,11 @@ export default function BrotherhoodOutingMap({ points = [], segments = [], title
   const first = located[0]
   const last = located[located.length - 1]
   const roundTrip = Math.hypot(first.x - last.x, first.y - last.y) < 12
+  // Mapa ampliado (vertical, más zoom): se calcula aquí y el cliente solo lo pinta al abrirlo.
+  const big = routeMapLayout(points, { width: 720, height: 1080, padding: 70, maxZoom: 19 })
+  const bigSegments = big && big.points.length === points.length ? segments : []
 
-  return <figure className={styles.map}>
+  return <figure className={`${styles.map} ${styles.mapWithExpand}`}>
     <svg viewBox={`0 0 ${layout.width} ${layout.height}`} role="img" aria-label={`Mapa aproximado del recorrido${title ? ` de ${title}` : ''}`}>
       <g aria-hidden="true">
         {layout.tiles.map((tile) => <image key={tile.key} href={tile.href} x={tile.x} y={tile.y} width="256" height="256" />)}
@@ -27,6 +31,7 @@ export default function BrotherhoodOutingMap({ points = [], segments = [], title
         {!roundTrip ? <circle cx={last.x} cy={last.y} r="11" className={styles.mapEnd} /> : null}
       </g>
     </svg>
+    <RouteMapExpand layout={big} labels={big ? streetLabels(big.points) : []} segments={bigSegments} title={title} />
     <figcaption>
       <span>Trazado aproximado, de esquina a esquina.</span>
       <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap</a>
