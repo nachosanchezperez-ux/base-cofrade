@@ -2,8 +2,8 @@ import { routeMapLayout, svgPath } from '@/lib/route-map'
 import styles from './BrotherhoodChapterOuting.module.css'
 
 // Mapa del recorrido: teselas de OpenStreetMap y el trazado en el color de la
-// Hermandad, con el tramo de cada banda en su segundo color. Cada calle es un
-// solo punto, así que el trazado es aproximado y se dice. Sin coordenadas
+// Hermandad, con el tramo de cada banda en su segundo color. Cada punto es la
+// esquina donde se gira a la calle siguiente: trazado aproximado. Sin coordenadas
 // suficientes no se pinta nada.
 export default function BrotherhoodOutingMap({ points = [], segments = [], title = '' }) {
   const layout = routeMapLayout(points, { width: 640, height: 420, padding: 40 })
@@ -28,7 +28,7 @@ export default function BrotherhoodOutingMap({ points = [], segments = [], title
       </g>
     </svg>
     <figcaption>
-      <span>Trazado aproximado: un punto por calle.</span>
+      <span>Trazado aproximado, de esquina a esquina.</span>
       <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap</a>
     </figcaption>
   </figure>
