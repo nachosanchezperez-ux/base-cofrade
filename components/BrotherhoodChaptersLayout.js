@@ -3,6 +3,7 @@ import BrotherhoodChapterNav, { ChapterIcon } from './BrotherhoodChapterNav'
 import BrotherhoodQuickFacts from './BrotherhoodQuickFacts'
 import BrotherhoodOverviewV2 from './BrotherhoodOverviewV2'
 import HiloMovementCards from './HiloMovementCards'
+import BandCrestBadge from './BandCrestBadge'
 import { plural } from '@/lib/plural'
 import styles from './BrotherhoodChaptersLayout.module.css'
 import readingStyles from './BrotherhoodReadingLayout.module.css'
@@ -84,9 +85,12 @@ export default function BrotherhoodChaptersLayout({
   // Hermandad; el detalle por paso sigue en Cortejo/Procesión.
   const bandsToday = currentBands.length ? <div className={`shell ${styles.bandsToday}`}>
     <h3 className={styles.bandsTodayTitle}>Acompañan hoy</h3>
-    <ul>{currentBands.map((band) => <li key={band.key}>
-      {band.bandaSlug ? <a href={`/bandas/${band.bandaSlug}`}>{band.banda}</a> : <strong>{band.banda}</strong>}
-      {band.where.length ? <span>{band.where.join(' · ')}</span> : null}
+    <ul>{currentBands.map((band) => <li key={band.key} className={styles.bandToday}>
+      <BandCrestBadge logoPath={band.logo?.logoPath} background={band.logo?.background} size={48} />
+      <span className={styles.bandTodayText}>
+        {band.bandaSlug ? <a href={`/bandas/${band.bandaSlug}`}>{band.banda}</a> : <strong>{band.banda}</strong>}
+        {band.where.length ? <span>{band.where.join(' · ')}</span> : null}
+      </span>
     </li>)}</ul>
   </div> : null
 
@@ -180,6 +184,7 @@ export default function BrotherhoodChaptersLayout({
     {render('musica', music)}
 
     {render('patrimonio', <div className={styles.flow}>
+      {slots.occasion}
       {slots.heritage}
       {h.simpecados?.length || h.cartelesFiestas?.length ? <Supplement>
         {h.simpecados?.length ? <Disclosure title="Simpecados" count={h.simpecados.length}>{slots.simpecados}</Disclosure> : null}

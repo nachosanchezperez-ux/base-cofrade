@@ -6,7 +6,8 @@ import { plural } from '@/lib/plural'
 import styles from './BrotherhoodChapterHistory.module.css'
 
 // Historia de la ficha por capítulos: una línea de tiempo vertical con todos los
-// hitos celebrados (los principales, destacados) y el relato largo plegado.
+// hitos celebrados (los principales, destacados), precedida del relato en
+// pocas palabras (lo largo, plegado).
 // Lo anunciado queda aparte: es agenda hasta que se celebre. Mantiene el ancla
 // #historia de la ficha (enlaces existentes y extraordinarias, #1289).
 
@@ -37,6 +38,17 @@ export default function BrotherhoodChapterHistory({ items = [], introduction = '
   return <section className={`section ${styles.section}`} id="historia" aria-labelledby="historia-titulo">
     <div className="shell">
       <h2 className={styles.title} id="historia-titulo">Historia{past.length ? <small>{plural(past.length, 'hito documentado', 'hitos documentados')}</small> : null}</h2>
+      {/* El relato, primero: en pocas líneas, de dónde viene la Hermandad;
+          después, hito a hito. */}
+      {lead ? <div className={styles.story}>
+        <p className={styles.storyLabel}>En pocas palabras</p>
+        <p className={styles.lead}>{lead}</p>
+        {rest.length ? <details className={styles.storyMore}>
+          <summary>Seguir leyendo la historia <b aria-hidden="true">+</b></summary>
+          {rest.map((paragraph) => <p key={paragraph.slice(0, 40)}>{paragraph}</p>)}
+        </details> : null}
+      </div> : null}
+
       {past.length ? <ol className={styles.timeline}>
         {past.map((item) => <Milestone key={item.id || `${item.fecha}-${item.titulo}`} item={item} highlighted={past.length > 5 && highlighted.has(item)} />)}
       </ol> : null}
@@ -47,14 +59,6 @@ export default function BrotherhoodChapterHistory({ items = [], introduction = '
           <span>{item.fecha}</span>
           {item.href ? <Link href={item.href}>{item.titulo}</Link> : <strong>{item.titulo}</strong>}
         </li>)}</ul>
-      </div> : null}
-
-      {lead ? <div className={styles.story}>
-        <p className={styles.lead}>{lead}</p>
-        {rest.length ? <details className={styles.storyMore}>
-          <summary>Seguir leyendo la historia <b aria-hidden="true">+</b></summary>
-          {rest.map((paragraph) => <p key={paragraph.slice(0, 40)}>{paragraph}</p>)}
-        </details> : null}
       </div> : null}
 
       {children}

@@ -182,13 +182,26 @@
 
 .story {
   max-width: 70ch;
-  margin-top: 28px;
+  margin: 16px 0 26px;
+  padding: 16px 16px 14px 18px;
+  border-left: 4px solid var(--brotherhood-secondary, #a71930);
+  border-radius: 0 14px 14px 0;
+  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 5%, #fff);
+}
+
+.storyLabel {
+  margin: 0 0 6px;
+  color: var(--brotherhood-secondary, #a71930);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
 }
 
 .lead {
   margin: 0;
   color: #23272c;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.65;
 }
 

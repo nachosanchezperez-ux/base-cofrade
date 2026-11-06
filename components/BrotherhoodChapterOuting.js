@@ -4,6 +4,7 @@ import OutingDayStatus from './OutingDayStatus'
 import { ChevronRightIcon, ChurchIcon, ClockIcon, FlagIcon, MusicIcon, PlusIcon, RouteIcon } from './icons/LucideIcons'
 import BrotherhoodOutingMap from './BrotherhoodOutingMap'
 import OutingOccasion from './OutingOccasion'
+import BandCrestBadge from './BandCrestBadge'
 import { bandSegments, outingCardTitle, outingDateParts, outingRouteStops, splitRouteStreets } from '@/lib/brotherhood-featured-outing'
 import { outingActionLinks } from '@/lib/outing-actions'
 import styles from './BrotherhoodChapterOuting.module.css'
@@ -91,7 +92,9 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
 
         {music.length ? <ul className={styles.bands} aria-label="Acompañamiento musical">
           {music.map((band) => <li key={band.id || band.name}>
-            <span className={`${styles.bandIcon} ${segmentById.get(band.id || band.name) ? styles.bandIconSegment : ''}`} aria-hidden="true"><MusicIcon size={18} /></span>
+            {band.logoPath
+              ? <BandCrestBadge logoPath={band.logoPath} background={band.logoBackground} size={44} className={segmentById.get(band.id || band.name) ? styles.bandCrestSegment : ''} />
+              : <span className={`${styles.bandIcon} ${segmentById.get(band.id || band.name) ? styles.bandIconSegment : ''}`} aria-hidden="true"><MusicIcon size={18} /></span>}
             <span className={styles.bandText}>
               {band.context ? <small>{band.context}{segmentById.get(band.id || band.name) ? ` · hasta ${segmentById.get(band.id || band.name).endLabel}` : ''}</small> : null}
               {band.href ? <Link href={band.href} prefetch={false}>{band.name}</Link> : <strong>{band.name}</strong>}

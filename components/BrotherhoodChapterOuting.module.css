@@ -148,7 +148,7 @@
 
 .bands li {
   display: grid;
-  grid-template-columns: 32px minmax(0, 1fr);
+  grid-template-columns: 44px minmax(0, 1fr);
   gap: 10px;
   align-items: center;
 }
@@ -156,8 +156,9 @@
 .bandIcon {
   display: grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
+  justify-self: center;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: var(--tone-soft);
   color: var(--tone);
@@ -1008,4 +1009,36 @@
   background: rgb(0 0 0 / 45%);
   color: #fff;
   font-size: 11px;
+}
+
+/* Banda que solo hace un tramo: su escudo, con el anillo rojo del tramo. */
+.bandCrestSegment {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--tone-accent);
+}
+
+/* En el capítulo Patrimonio: la jornada, arriba y con aire. */
+.occasionChapter {
+  padding-block: 4px 18px;
+}
+
+/* Cabecera de la ficha en «su semana»: acceso directo a la salida. */
+.heroOuting {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  margin: 0 10px 10px 0;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: var(--home-red, #b71f37);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 22%);
+}
+
+.heroOuting span {
+  font-size: 20px;
+  line-height: 1;
 }
