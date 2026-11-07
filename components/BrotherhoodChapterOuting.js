@@ -5,7 +5,7 @@ import { ChevronRightIcon, ChurchIcon, ClockIcon, FlagIcon, MusicIcon, PlusIcon,
 import BrotherhoodOutingMap from './BrotherhoodOutingMap'
 import OutingOccasion from './OutingOccasion'
 import BandCrestBadge from './BandCrestBadge'
-import { bandSegments, isSameStop, outingCardTitle, outingDateParts, outingRouteStops, routeMilestones, splitRouteStreets } from '@/lib/brotherhood-featured-outing'
+import { bandSegments, isSameStop, outingCardTitle, outingDateParts, outingRouteStops, outingSchedule, routeMilestones, splitRouteStreets } from '@/lib/brotherhood-featured-outing'
 import { outingActionLinks } from '@/lib/outing-actions'
 import styles from './BrotherhoodChapterOuting.module.css'
 
@@ -94,7 +94,7 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
               {outing.isUpcoming && outing.urgencyLabel ? <span className={styles.urgency}>{outing.urgencyLabel}</span> : null}
             </p>
             <h2 className={styles.title} id="salida-titulo">{outingCardTitle(outing.title, { names, fallback: outing.outingType || 'Procesión de Gloria' })}</h2>
-            <OutingDayStatus outing={{ date: outing.date, departureTime: outing.departureTime, returnTime: outing.returnTime }} />
+            <OutingDayStatus outing={{ date: outing.date, departureTime: outing.departureTime, returnTime: outing.returnTime, schedule: outingSchedule(outing) }} />
           </div>
         </header>
 
