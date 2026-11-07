@@ -802,3 +802,9 @@
   color: var(--ink);
   font-size: 14px;
 }
+
+.silent {
+  color: var(--muted);
+  font-size: 13px;
+  font-style: italic;
+}

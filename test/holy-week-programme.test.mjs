@@ -166,3 +166,12 @@ test('el palio de la Sed: la Oliva en la ida y Mairena en el regreso', async () 
   const ordered = orderBandsBySegment([{ slug: 'm', segment: 'Regreso' }, { slug: 'o', segment: 'Ida' }])
   assert.deepEqual(ordered.map((band) => band.slug), ['o', 'm'])
 })
+
+test('cortejos y pasos sin música confirmados por la redacción', async () => {
+  const { isSilentStep } = await import('../lib/holy-week-programme.js')
+  assert.equal(isSilentStep('hermandad-del-gran-poder-sevilla', 'cualquier-paso'), true)
+  assert.equal(isSilentStep('el-museo', 'paso-cristo-expiracion-museo-sevilla'), true)
+  assert.equal(isSilentStep('el-museo', 'paso-palio-virgen-aguas-museo-sevilla'), false)
+  assert.equal(isSilentStep('santo-entierro-sevilla', 'paso-triunfo-santa-cruz-canina-sevilla'), true)
+  assert.equal(isSilentStep('el-baratillo', 'paso-cualquiera'), false)
+})

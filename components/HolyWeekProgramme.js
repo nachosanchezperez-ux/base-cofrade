@@ -161,6 +161,7 @@ function ProgrammeItem({ item, day, open, onToggle, followed, onFollow, onPull }
             <span className={styles.cortejoDot} aria-hidden="true" />
             <div>
               {step.href ? <Link href={step.href} className={styles.stepTitle}>{step.title}</Link> : <span className={styles.stepTitle}>{step.title}</span>}
+              {step.silent && !step.bands.length ? <span className={styles.silent}>Sin acompañamiento musical</span> : null}
               {step.bands.length ? <div className={styles.bands}>
                 {step.bands.map((band) => <button key={band.slug} type="button" className={styles.band} onClick={() => onPull(band.name)}>
                   <BandBadge band={band} />
