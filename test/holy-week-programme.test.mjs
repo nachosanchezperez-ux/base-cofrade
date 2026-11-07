@@ -142,3 +142,27 @@ test('la página reutiliza «Mis hermandades» y cita al Consejo como fuente', (
   assert.match(page, /consejoOrden2027/)
   assert.match(page, /canonical: PROGRAMME_PATH/)
 })
+
+test('Siete Palabras y el Cerro: Nazareno, misterio y palio', async () => {
+  const { orderSteps } = await import('../lib/holy-week-programme.js')
+  const siete = orderSteps([
+    { slug: 'paso-palio-nuestra-senora-cabeza-siete-palabras', name: 'Paso de palio', type: 'Palio' },
+    { slug: 'paso-misterio-santisimo-cristo-siete-palabras', name: 'Paso de misterio', type: 'Misterio' },
+    { slug: 'paso-divina-misericordia-siete-palabras', name: 'Paso de N. P. Jesús', type: 'Nazareno' },
+  ], 'siete-palabras-sevilla')
+  assert.deepEqual(siete.map((step) => step.slug), ['paso-divina-misericordia-siete-palabras', 'paso-misterio-santisimo-cristo-siete-palabras', 'paso-palio-nuestra-senora-cabeza-siete-palabras'])
+  const cerro = orderSteps([
+    { slug: 'paso-misterio-desamparo-abandono-cerro-aguila', name: 'Paso de misterio', type: 'Misterio' },
+    { slug: 'paso-palio-dolores-cerro-aguila', name: 'Paso de palio', type: 'Palio' },
+    { slug: 'paso-humildad-cerro-aguila', name: 'Paso de N. P. Jesús', type: 'Nazareno' },
+  ], 'hermandad-cerro-del-aguila-sevilla')
+  assert.deepEqual(cerro.map((step) => step.slug), ['paso-humildad-cerro-aguila', 'paso-misterio-desamparo-abandono-cerro-aguila', 'paso-palio-dolores-cerro-aguila'])
+})
+
+test('el palio de la Sed: la Oliva en la ida y Mairena en el regreso', async () => {
+  const { bandSegment, orderBandsBySegment } = await import('../lib/holy-week-programme.js')
+  assert.equal(bandSegment('hermandad-de-la-sed', 'banda-musica-oliva-salteras'), 'Ida')
+  assert.equal(bandSegment('hermandad-de-la-sed', 'banda-municipal-musica-mairena-del-alcor'), 'Regreso')
+  const ordered = orderBandsBySegment([{ slug: 'm', segment: 'Regreso' }, { slug: 'o', segment: 'Ida' }])
+  assert.deepEqual(ordered.map((band) => band.slug), ['o', 'm'])
+})
