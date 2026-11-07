@@ -1,5 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
+import { outingActionLinks } from '../lib/outing-actions.js'
 import {
   featuredBrotherhoodOuting,
   otherBrotherhoodOutings,
@@ -85,10 +86,22 @@ test('un rosario vespertino puede ser la salida destacada; un traslado, no', asy
   assert.equal(featuredBrotherhoodOuting([salidas[0]], '2026-11-07'), null)
 })
 
-test('el calendario de un rosario usa su ancla de rosarios', async () => {
-  const { readFileSync } = await import('node:fs')
-  const actions = readFileSync(new URL('../lib/outing-actions.js', import.meta.url), 'utf8')
-  assert.match(actions, /\/rosario\/i\.test\(String\(outing\.outingType \|\| ''\)\) \? 'rosaries' : 'processions'/)
+test('el calendario conserva la categoría de cada salida, incluidos los traslados de las fichas', () => {
+  const cases = [
+    ['59f45edd-170a-421f-9e22-b9ab1df56b27', 'Traslado', 'transfers'],
+    ['cf436fc8-b8e0-4105-a8a8-8b80949f87f9', 'Traslado', 'transfers'],
+    ['rosario', 'Rosario Vespertino', 'rosaries'],
+    ['gloria', 'Procesión de Gloria', 'processions'],
+    ['extraordinaria', 'Procesión', 'processions'],
+  ]
+  for (const [id, outingType, category] of cases) {
+    const outing = { id, outingType, date: '2026-11-21', isUpcoming: true }
+    assert.equal(outingActionLinks(outing).calendarHref, `/calendario/acto/acto-${category}-${id}.ics`)
+    assert.equal(outingActionLinks({ ...outing, isCancelled: true }).calendarHref, '')
+    assert.equal(outingActionLinks({ ...outing, isUpcoming: false }).calendarHref, '')
+    assert.equal(outingActionLinks({ ...outing, date: '' }).calendarHref, '')
+  }
+  assert.equal(outingActionLinks().calendarHref, '')
 })
 
 test('el templo no se repite aunque uno lleve «, Sevilla»', async () => {
