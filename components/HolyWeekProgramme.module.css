@@ -145,6 +145,7 @@
 .days {
   margin: 0 -14px 4px;
   padding: 0 14px 12px;
+  position: relative;
   overflow-x: auto;
   scrollbar-width: none;
 }

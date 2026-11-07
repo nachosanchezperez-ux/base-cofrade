@@ -221,7 +221,11 @@ export default function HolyWeekProgramme({ days = [], initialDayId = '', dateLa
 
   // La pastilla de la jornada activa siempre a la vista en la tira.
   useEffect(() => {
-    document.querySelector(`[data-day-tab="${activeDay}"]`)?.scrollIntoView({ block: 'nearest', inline: 'center' })
+    const tab = document.querySelector(`[data-day-tab="${activeDay}"]`)
+    const strip = tab?.closest('nav')
+    if (!tab || !strip) return
+    // Solo desplazamiento horizontal de la tira: la página no se mueve.
+    strip.scrollTo({ left: tab.offsetLeft - (strip.clientWidth - tab.offsetWidth) / 2, behavior: 'smooth' })
   }, [activeDay])
 
   const normalizedQuery = normalizeSearch(query)
