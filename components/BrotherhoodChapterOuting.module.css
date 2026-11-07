@@ -1060,3 +1060,92 @@
   outline: 3px solid color-mix(in srgb, var(--brotherhood-on-secondary, #fff) 55%, transparent);
   outline-offset: 2px;
 }
+
+/* Salida y entrada en el mismo templo: una sola línea bajo las dos horas. */
+.timesPlace {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin: 0;
+  padding: 10px 16px 12px;
+  border-top: 1px solid #edf0f2;
+  color: #262c33;
+  font-size: 14.5px;
+  line-height: 1.35;
+}
+
+.timesPlace svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--tone);
+}
+
+.timesPlace small {
+  display: block;
+  color: #5f7080;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* Hito del recorrido (la misa, una parada): nodo destacado con su hora y nota. */
+.milestone {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 10px;
+  align-items: center;
+  margin: 6px 0;
+  padding: 10px 12px 10px 34px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--tone-accent) 7%, #fff);
+}
+
+.milestone::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 21px;
+  width: 19px;
+  height: 19px;
+  border: 4px solid var(--tone-accent);
+  border-radius: 50%;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.milestone b {
+  padding: 3px 8px;
+  border-radius: 8px;
+  background: var(--tone-accent);
+  color: #fff;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.milestone > span {
+  color: #171b20;
+  font-size: 15.5px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.milestoneNote {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #34495d;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.streetTime {
+  margin-left: 8px;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: var(--tone-soft);
+  color: var(--tone);
+  font-size: 12.5px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}

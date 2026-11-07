@@ -91,7 +91,7 @@ test('Procesiones de Gloria acota la consulta de detalle por slug y cachea la fi
   assert.match(loader, /const targetedDirectory = await getGloryDirectory\(\{ throwOnError: true, \.\.\.\(id \? \{ id \} : \{ slug \}\) \}\)/)
   // Por slug (páginas públicas) solo procesiones de Gloria; por ID también rosarios.
   assert.match(loader, /: query\.ilike\('outing_type', 'Procesión de Gloria'\)/)
-  assert.match(loader, /hilo-cofrade-public-glory-detail-v7-rosarios/)
+  assert.match(loader, /hilo-cofrade-public-glory-detail-v8-hitos/)
   assert.match(loader, /tags: \['public-glory-detail'\]/)
   assert.match(directoryCache, /tags: \['public-glory-directory'\]/)
 })

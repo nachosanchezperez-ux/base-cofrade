@@ -90,3 +90,27 @@ test('el calendario de un rosario usa su ancla de rosarios', async () => {
   const actions = readFileSync(new URL('../lib/outing-actions.js', import.meta.url), 'utf8')
   assert.match(actions, /\/rosario\/i\.test\(String\(outing\.outingType \|\| ''\)\) \? 'rosaries' : 'processions'/)
 })
+
+test('el templo no se repite aunque uno lleve «, Sevilla»', async () => {
+  const { outingRouteStops, isSameStop } = await import('../lib/brotherhood-featured-outing.js')
+  const route = outingRouteStops('Iglesia de San Antonio de Padua → San Vicente → Santa Ana → Iglesia de San Antonio de Padua.', {
+    origin: 'Iglesia de San Antonio de Padua, Sevilla', destination: 'Iglesia de San Antonio de Padua, Sevilla',
+  })
+  assert.deepEqual(route.streets, ['San Vicente', 'Santa Ana'])
+  assert.equal(route.origin, 'Iglesia de San Antonio de Padua')
+  assert.equal(isSameStop(route.origin, route.destination), true)
+  assert.equal(isSameStop('Iglesia de San Antonio de Padua · Entrada', 'Iglesia de San Antonio de Padua'), true)
+})
+
+test('los hitos del recorrido se colocan en su calle', async () => {
+  const { routeMilestones } = await import('../lib/brotherhood-featured-outing.js')
+  const points = [
+    { order: 1, label: 'Iglesia', time: '18:30', notes: 'Salida' },
+    { order: 2, label: 'Plaza de San Lorenzo', time: '', notes: '' },
+    { order: 3, label: 'Parroquia de San Lorenzo', time: '19:45', notes: 'Solemne Eucaristía 20:00' },
+    { order: 4, label: 'Plaza de San Lorenzo', time: '21:15', notes: '' },
+    { order: 5, label: 'Iglesia', time: '22:00', notes: 'Entrada' },
+  ]
+  const milestones = routeMilestones(points, ['Plaza de San Lorenzo', 'Parroquia de San Lorenzo', 'Plaza de San Lorenzo'])
+  assert.deepEqual([...milestones.entries()], [[1, { time: '19:45', note: 'Solemne Eucaristía 20:00' }], [2, { time: '21:15', note: '' }]])
+})
