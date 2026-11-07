@@ -93,7 +93,7 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
               {status}
               {outing.isUpcoming && outing.urgencyLabel ? <span className={styles.urgency}>{outing.urgencyLabel}</span> : null}
             </p>
-            <h2 className={styles.title} id="salida-titulo">{outingCardTitle(outing.title, { names, fallback: outing.outingType || 'Procesión de Gloria' })}</h2>
+            <h2 className={styles.title} id="salida-titulo">{outingCardTitle(outing.title, { names, fallback: outing.character === 'extraordinary' ? `${outing.outingType || 'Salida'} extraordinaria` : (outing.outingType || 'Procesión de Gloria') })}</h2>
             <OutingDayStatus outing={{ date: outing.date, departureTime: outing.departureTime, returnTime: outing.returnTime, schedule: outingSchedule(outing) }} />
           </div>
         </header>
