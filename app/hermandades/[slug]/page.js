@@ -279,7 +279,9 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   // En penitencia, la próxima salida fuera de la Semana Santa (un traslado, una
   // extraordinaria), si la hay.
   const featuredOuting = chapters
-    ? featuredBrotherhoodOuting(h.salidas || [], agendaData.today || '', { penitencia: isPenitencia })
+    // Las extraordinarias viven como acontecimientos de la ficha, pero también
+    // pueden ser la próxima salida (traslados del centenario, coronaciones…).
+    ? featuredBrotherhoodOuting([...(h.salidas || []), ...(h.acontecimientosSalidas || [])], agendaData.today || '', { penitencia: isPenitencia })
     : null;
   const featuredOutingDetail = featuredOuting
     ? await getGloryDetailByOutingId(featuredOuting.id).catch((error) => {
