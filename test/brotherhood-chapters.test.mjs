@@ -166,3 +166,11 @@ test('Cortejo en orden: Cruz de Guía y pasos con su banda, sin inventar periodo
   assert.match(procession, /Abre el cortejo/);
   assert.match(procession, /\^desde\\s\+\\d\{4\}\$/);
 });
+
+test('móvil: la portada solo en Inicio; en otros capítulos manda la mini cabecera', () => {
+  const nav = readFileSync(new URL('../components/BrotherhoodChapterNav.js', import.meta.url), 'utf8');
+  const css = readFileSync(new URL('../components/BrotherhoodChapterNav.module.css', import.meta.url), 'utf8');
+  assert.match(nav, /dataset\.hcChapterScreen = id && id !== firstId \? 'inner' : 'home'/);
+  assert.match(nav, /const compactHeader = appMode && \(heroOut \|\| active !== items\[0\]\?\.anchor\)/);
+  assert.match(css, /html\[data-hc-chapter-screen="inner"\]\) :global\(section\[aria-labelledby="brotherhood-program-title"\]\)[\s\S]*display: none/);
+});

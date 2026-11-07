@@ -188,3 +188,11 @@
   .nav { backdrop-filter: none; }
   .iconWrap, .miniHeader { transition: none; }
 }
+
+/* Móvil: la portada solo en Inicio. En los demás capítulos la sustituye la
+   mini cabecera, sin franjas de portada con el texto cortado. */
+@media (max-width: 899px) {
+  :global(html[data-hc-chapter-screen="inner"]) :global(section[aria-labelledby="brotherhood-program-title"]) {
+    display: none;
+  }
+}
