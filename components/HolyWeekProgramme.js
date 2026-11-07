@@ -3,7 +3,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react'
-import BandCrestBadge from './BandCrestBadge'
 import {
   followedServerSnapshot,
   followedSnapshot,
@@ -39,10 +38,19 @@ function CloseIcon() {
 function Crest({ item, size = 44 }) {
   if (item.crestPath) {
     return <span className={styles.crest} style={{ '--crest-size': `${size}px` }}>
-      <Image src={item.crestPath} alt="" width={size * 2} height={size * 2} sizes={`${size}px`} />
+      <Image src={item.crestPath} alt="" width={size} height={size} />
     </span>
   }
   return <span className={styles.crestFallback} style={{ '--crest-size': `${size}px`, '--entity-color': item.color || 'var(--hc-navy, #112339)' }} aria-hidden="true" />
+}
+
+// Escudo de banda a tamaño fijo (srcset 1x/2x): el componente compartido pide
+// un srcset completo que, multiplicado por cada banda, encarecía la página.
+function BandBadge({ band, size = 32 }) {
+  if (!band.logoPath) return <span className={styles.bandEmpty} aria-hidden="true">♪</span>
+  return <span className={styles.bandLogo} style={{ background: band.logoBackground || '#fff' }} aria-hidden="true">
+    <Image src={band.logoPath} alt="" width={size} height={size} />
+  </span>
 }
 
 function itemSearchMatch(item, query) {
@@ -133,6 +141,7 @@ function ProgrammeItem({ item, day, open, onToggle, followed, onFollow, onPull }
     </button>
 
     <div id={panelId} className={styles.panel} hidden={!open}>
+      {open ? <>
       {hasTimes ? <div className={styles.block}>
         <div className={styles.blockHead}>
           <h4>Horario</h4>
@@ -154,7 +163,7 @@ function ProgrammeItem({ item, day, open, onToggle, followed, onFollow, onPull }
               {step.href ? <Link href={step.href} className={styles.stepTitle}>{step.title}</Link> : <span className={styles.stepTitle}>{step.title}</span>}
               {step.bands.length ? <div className={styles.bands}>
                 {step.bands.map((band) => <button key={band.slug} type="button" className={styles.band} onClick={() => onPull(band.name)}>
-                  <BandCrestBadge logoPath={band.logoPath} background={band.logoBackground} size={32} />
+                  <BandBadge band={band} />
                   <span className={styles.bandText}>
                     {band.segment ? <small>{band.segment}</small> : null}
                     <span>{band.name}</span>
@@ -179,6 +188,7 @@ function ProgrammeItem({ item, day, open, onToggle, followed, onFollow, onPull }
           <ShareIcon />
         </button>
       </div>
+      </> : null}
     </div>
   </li>
 }
