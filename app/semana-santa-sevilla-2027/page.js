@@ -37,7 +37,7 @@ function dateLabels() {
 
 export default async function HolyWeekProgrammePage() {
   const { days } = await getHolyWeekProgramme()
-  const total = days.reduce((sum, day) => sum + day.items.length, 0)
+  const total = new Set(days.flatMap((day) => day.items.map((item) => item.slug))).size
   const labels = dateLabels()
 
   return (

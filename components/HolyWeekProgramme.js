@@ -168,7 +168,7 @@ function ProgrammeItem({ item, day, open, onToggle, followed, onFollow, onPull }
       {empty ? <p className={styles.empty}>Cortejo y horario en preparación. Mientras tanto, su ficha reúne titulares, pasos y patrimonio.</p> : null}
 
       <div className={styles.actions}>
-        <Link href={item.href} className={styles.fichaLink}>Conoce {item.sentenceName} <span aria-hidden="true">→</span></Link>
+        <Link href={item.href} className={styles.fichaLink}><span>Conoce {item.sentenceName}&nbsp;<span aria-hidden="true">→</span></span></Link>
         <button type="button" className={styles.iconButton} data-active={followed ? 'true' : undefined} aria-pressed={followed} aria-label={followed ? 'Quitar de mi programa' : 'Añadir a mi programa'} onClick={onFollow}>
           <StarIcon filled={followed} />
         </button>
@@ -202,16 +202,27 @@ export default function HolyWeekProgramme({ days = [], initialDayId = '', dateLa
 
   // Enlace compartido: #miercoles-santo--el-baratillo abre esa cofradía.
   useEffect(() => {
-    const hash = decodeURIComponent(window.location.hash.replace(/^#/, ''))
-    if (!hash) return
-    const [dayId, itemKey] = hash.split('--')
-    if (!days.some((day) => day.id === dayId)) return
-    setActiveDay(dayId)
-    if (itemKey) {
-      setOpenKey(`${dayId}--${itemKey}`)
-      window.requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView({ block: 'start' }))
+    function openFromHash() {
+      const hash = decodeURIComponent(window.location.hash.replace(/^#/, ''))
+      if (!hash) return
+      const [dayId, itemKey] = hash.split('--')
+      if (!days.some((day) => day.id === dayId)) return
+      setQuery('')
+      setActiveDay(dayId)
+      if (itemKey) {
+        setOpenKey(`${dayId}--${itemKey}`)
+        window.requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView({ block: 'start' }))
+      }
     }
+    openFromHash()
+    window.addEventListener('hashchange', openFromHash)
+    return () => window.removeEventListener('hashchange', openFromHash)
   }, [days])
+
+  // La pastilla de la jornada activa siempre a la vista en la tira.
+  useEffect(() => {
+    document.querySelector(`[data-day-tab="${activeDay}"]`)?.scrollIntoView({ block: 'nearest', inline: 'center' })
+  }, [activeDay])
 
   const normalizedQuery = normalizeSearch(query)
   const searching = normalizedQuery.length >= 2
@@ -280,6 +291,7 @@ export default function HolyWeekProgramme({ days = [], initialDayId = '', dateLa
             <button
               type="button"
               aria-pressed={day.id === activeDay}
+              data-day-tab={day.id}
               data-pending={day.status === 'pending' ? 'true' : undefined}
               onClick={() => { setActiveDay(day.id); setOpenKey('') }}
             >
@@ -288,7 +300,7 @@ export default function HolyWeekProgramme({ days = [], initialDayId = '', dateLa
             </button>
           </li>)}
           <li>
-            <button type="button" aria-pressed={activeDay === MINE} onClick={() => setActiveDay(MINE)} className={styles.mineTab}>
+            <button type="button" aria-pressed={activeDay === MINE} data-day-tab={MINE} onClick={() => setActiveDay(MINE)} className={styles.mineTab}>
               <StarIcon filled={activeDay === MINE} size={16} />
               <span>Mi programa{followed.length ? ` · ${mine.length}` : ''}</span>
             </button>

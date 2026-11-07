@@ -652,6 +652,7 @@
 .streets button {
   display: inline;
   padding: 2px 0;
+  font-weight: 400 !important;
   border: 0;
   background: transparent;
   color: inherit;
@@ -679,6 +680,7 @@
 
 .fichaLink {
   display: flex;
+  line-height: 1.3;
   flex: 1 1 auto;
   align-items: center;
   gap: 6px;
