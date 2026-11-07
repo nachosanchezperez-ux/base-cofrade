@@ -1,5 +1,8 @@
 -- Vírgenes Coronadas de la provincia de Sevilla · carga editorial (07/11/2026)
--- PENDIENTE DE AUTORIZACIÓN. No aplicar sin la orden expresa de Nacho.
+-- Autorizado por Nacho el 07/11/2026 («Carga»). Aplicado en producción el 07/11/2026
+-- a las 20:3x (hora de Madrid) por SQL directo, tras un ensayo con rollback forzado.
+-- Verificado: 6 prelados, 24 coronaciones nuevas, 39 involves, 43 officiated_by,
+-- 26 source_links; 56 coronaciones, 49 imágenes, ninguna coronación sin imagen.
 -- Solo DML, sin DDL. Idempotente: puede ejecutarse dos veces sin duplicar nada.
 --
 -- Qué hace
