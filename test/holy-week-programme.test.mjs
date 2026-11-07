@@ -184,3 +184,10 @@ test('cortejos y pasos sin música confirmados por la redacción', async () => {
   assert.equal(isSilentStep('hermandad-del-amor', 'paso-cristo-amor-sevilla'), true)
   assert.equal(isSilentStep('hermandad-del-amor', 'paso-palio-socorro-amor'), false)
 })
+
+test('la caché de datos cambia de clave cuando cambia la configuración del programa', async () => {
+  const { PROGRAMME_CONFIG_VERSION } = await import('../lib/holy-week-programme.js')
+  assert.match(PROGRAMME_CONFIG_VERSION, /^[0-9a-z]+$/)
+  const loader = readFileSync(new URL('../lib/supabase/holy-week-programme.js', import.meta.url), 'utf8')
+  assert.match(loader, /PROGRAMME_CONFIG_VERSION\]/)
+})
