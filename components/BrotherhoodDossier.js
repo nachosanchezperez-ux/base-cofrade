@@ -237,6 +237,7 @@ export default function BrotherhoodDossier({
         <ul className={styles.plainList}>{cults.map((cult) => <li key={cult.id}>
           <strong>{cult.nombre}</strong>
           <span>{[cult.fechaDetalle && cult.fechaDetalle.startsWith('EDICIÓN') ? cult.fechaCorta : cult.fechaDetalle || cult.fechaCorta, cult.lugar].filter(Boolean).join(' · ')}</span>
+          {cult.descripcion && !/^culto ordinario de la hermandad/i.test(cult.descripcion) ? <p>{cult.descripcion}</p> : null}
         </li>)}</ul>
       </Section> : null}
 

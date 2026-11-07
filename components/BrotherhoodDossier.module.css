@@ -20,22 +20,22 @@
 .headerRow {
   display: flex;
   gap: 14px;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .crest {
   flex: none;
   display: grid;
   place-items: center;
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
   border-radius: 14px;
   background: #fff;
 }
 
 .crest img {
-  width: 52px;
-  height: 52px;
+  width: 46px;
+  height: 46px;
   object-fit: contain;
 }
 
@@ -48,9 +48,9 @@
   opacity: 0.85;
 }
 
-.header h1 {
+:global(#hc-app) .dossier .header h1 {
   margin: 0;
-  font-size: clamp(24px, 6vw, 36px);
+  font-size: clamp(26px, 7.2vw, 38px);
   line-height: 1.1;
   color: #fff;
 }
