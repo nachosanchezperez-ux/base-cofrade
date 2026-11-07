@@ -67,7 +67,10 @@ export default function BrotherhoodDossier({
 }) {
   const marches = occasion?.marches || []
   const schedule = outing?.schedule || []
-  const stations = (outing?.routePoints || []).filter((point) => point.notes || point.type === 'station')
+  // Momentos del recorrido entre la salida y la entrada (la salida y la entrada
+  // ya están en los horarios).
+  const routePoints = outing?.routePoints || []
+  const stations = routePoints.slice(1, -1).filter((point) => point.notes || point.type === 'station')
   const pieceCount = heritageGroups.reduce((total, group) => total + group.items.length, 0)
   const index = [
     keyFacts.length && { href: '#datos', label: 'Datos clave' },
@@ -119,10 +122,10 @@ export default function BrotherhoodDossier({
             </li>)}
           </ol>
         </> : null}
-        <Facts items={[
+        {schedule.length ? null : <Facts items={[
           { label: 'Salida', value: outing.departureTime },
           { label: 'Entrada', value: outing.returnTime },
-        ].filter((fact) => fact.value)} />
+        ].filter((fact) => fact.value)} />}
         {outing.routeSummary ? <>
           <h3 className={styles.subheading}><RouteIcon size={17} /> Recorrido</h3>
           <p>{outing.routeSummary}</p>
