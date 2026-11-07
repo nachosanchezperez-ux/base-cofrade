@@ -1,0 +1,421 @@
+/* Dosier: interfaz en la paleta de Hilo; el color de la Hermandad, solo en la cabecera y las marcas. */
+.dossier {
+  --tone: var(--home-blue, #123a67);
+  --ink: var(--home-ink, #0f2742);
+  --text: var(--home-text, #34495d);
+  --muted: var(--home-muted, #5f7080);
+  --line: var(--home-line, #e3e9ef);
+  --accent: var(--home-red, #b71f37);
+  --mark: var(--brotherhood-primary, var(--tone));
+  background: #fff;
+  color: var(--ink);
+}
+
+.header {
+  padding-block: 22px 18px;
+  background: var(--mark);
+  color: #fff;
+}
+
+.headerRow {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.crest {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.crest img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: clamp(24px, 6vw, 36px);
+  line-height: 1.1;
+  color: #fff;
+}
+
+.subtitle {
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 1.35;
+  opacity: 0.9;
+}
+
+.headerActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.headerActions a,
+.print {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgb(255 255 255 / 55%);
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.headerActions a {
+  background: #fff;
+  border-color: #fff;
+  color: var(--mark);
+}
+
+/* Índice: fila desplazable en móvil, fija bajo la cabecera del sitio. */
+.index {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  border-bottom: 1px solid var(--line);
+  background: rgb(255 255 255 / 96%);
+  backdrop-filter: blur(6px);
+}
+
+.index ol {
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 10px 0;
+  overflow-x: auto;
+  list-style: none;
+  scrollbar-width: none;
+}
+
+.index a {
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: var(--home-surface, #f6f8fa);
+  color: var(--tone);
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.body {
+  padding-bottom: 32px;
+}
+
+.section {
+  padding-block: 26px 6px;
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 64px;
+}
+
+.section:last-child {
+  border-bottom: 0;
+}
+
+.section h2 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  align-items: baseline;
+  margin: 0 0 14px;
+  font-size: 24px;
+  line-height: 1.15;
+}
+
+.section h2::before {
+  content: '';
+  align-self: center;
+  width: 4px;
+  height: 22px;
+  border-radius: 2px;
+  background: var(--mark);
+}
+
+.section h2 small {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.section p {
+  margin: 0 0 12px;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.lead {
+  color: var(--ink) !important;
+  font-size: 17px !important;
+}
+
+.context {
+  font-size: 15px !important;
+}
+
+.usage {
+  font-size: 15px !important;
+}
+
+.meta {
+  margin: 0 0 2px !important;
+  color: var(--accent) !important;
+  font-size: 13px !important;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.subheading {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin: 18px 0 8px;
+  color: var(--tone);
+  font-size: 16px;
+}
+
+/* Datos en pares etiqueta/valor: se leen de un vistazo. */
+.facts {
+  display: grid;
+  gap: 0;
+  margin: 4px 0 14px;
+}
+
+.facts div {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 10px;
+  padding: 7px 0;
+  border-top: 1px solid var(--line);
+}
+
+.facts dt {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.facts dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.keyFacts dd {
+  font-weight: 600;
+}
+
+.piece {
+  display: grid;
+  gap: 12px;
+  padding-block: 10px 6px;
+}
+
+.piece + .piece {
+  border-top: 1px dashed var(--line);
+}
+
+.pieceImage {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  max-height: 420px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--home-surface, #f6f8fa);
+}
+
+.pieceImage img {
+  object-fit: cover;
+}
+
+.pieceImage figcaption {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 55%);
+  color: #fff;
+  font-size: 11px;
+}
+
+.pieceText h3,
+.pieceText h4 {
+  margin: 0 0 8px;
+  font-size: 19px;
+  line-height: 1.25;
+}
+
+.pieceText h3 a,
+.pieceText h4 a,
+.plainList a {
+  color: var(--tone);
+  text-decoration: none;
+}
+
+.group + .group {
+  margin-top: 14px;
+}
+
+.groupTitle {
+  margin: 4px 0 4px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.schedule,
+.chronology,
+.stations,
+.plainList {
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+}
+
+.schedule li,
+.chronology li {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+}
+
+.schedule time,
+.chronology time,
+.stations time {
+  color: var(--accent);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.schedule span,
+.plainList span,
+.stations span {
+  display: block;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.schedule p,
+.chronology p,
+.plainList p {
+  margin: 4px 0 0 !important;
+  font-size: 15px !important;
+}
+
+.chronology strong {
+  line-height: 1.3;
+}
+
+.upcoming time {
+  color: var(--mark);
+}
+
+.stations li,
+.plainList li {
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+}
+
+.stations time {
+  margin-right: 8px;
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--tone);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (min-width: 900px) {
+  .body {
+    max-width: 860px;
+  }
+
+  .piece:has(.pieceImage) {
+    grid-template-columns: 300px minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .facts div {
+    grid-template-columns: 150px minmax(0, 1fr);
+  }
+}
+
+/* Impresión: el dosier a dos tintas, sin navegación ni botones. */
+@media print {
+  .index,
+  .headerActions {
+    display: none;
+  }
+
+  .header {
+    padding-block: 0 12px;
+    background: none;
+    color: #000;
+    border-bottom: 2px solid #000;
+  }
+
+  .header h1 {
+    color: #000;
+  }
+
+  .crest {
+    border: 1px solid #ccc;
+  }
+
+  .section {
+    break-inside: auto;
+    padding-block: 14px 4px;
+  }
+
+  .piece,
+  .facts div,
+  .schedule li,
+  .chronology li {
+    break-inside: avoid;
+  }
+
+  .pieceImage {
+    max-height: 220px;
+    max-width: 180px;
+  }
+}

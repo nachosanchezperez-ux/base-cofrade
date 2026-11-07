@@ -27,6 +27,7 @@ import { occasionSummary } from '@/lib/supabase/outing-occasion';
 import { getBandLogosBySlug } from '@/lib/supabase/band-logos';
 import OutingOccasion from '@/components/OutingOccasion';
 import { RouteIcon } from '@/components/icons/LucideIcons';
+import { dossierHref, usesBrotherhoodDossier } from '@/lib/brotherhood-dossier';
 import outingCardStyles from '@/components/BrotherhoodChapterOuting.module.css';
 import { getGloryDetailByOutingId } from '@/lib/supabase/glory-directory';
 import BrotherhoodProgramHero from '@/components/BrotherhoodProgramHero';
@@ -903,6 +904,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
         editHref={panelEditHref('brotherhood', h.id)}
         actions={<div className={outingCardStyles.heroActions}>
           {chapters && outingWeek ? <a className={outingCardStyles.heroOuting} href="#salida"><RouteIcon size={16} strokeWidth={2.4} /> Ver la salida</a> : null}
+          {usesBrotherhoodDossier(h.id) ? <Link className={outingCardStyles.heroOuting} href={dossierHref(h.slug)} prefetch={false}>Dosier{occasionTitle ? ` de la ${occasionTitle}` : ''}</Link> : null}
           <FollowBrotherhoodButton slug={slug} name={h.nombrePopular} municipality={publicText(h.localidad)} />
         </div>}
         media={{
