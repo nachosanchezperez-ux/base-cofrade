@@ -61,7 +61,7 @@ test('WhatsApp y X reciben el marcador sin soluciones', () => {
   assert.ok(links.whatsapp.startsWith('https://wa.me/?text='))
   assert.ok(links.x.startsWith('https://twitter.com/intent/tweet?text='))
   assert.ok(decodeURIComponent(links.whatsapp.split('text=')[1]).includes(HILO_SHARE_URL))
-  assert.ok(decodeURIComponent(links.x.split('text=')[1]).includes('200/300'))
+  assert.ok(decodeURIComponent(links.x.split('text=')[1]).includes('🧵 1/3 · 🧵 1/3 · 🪢 X/3'))
   for (const word of challenge.words) {
     for (const value of [data.text, data.tweet, links.whatsapp, links.x]) {
       assert.ok(!value.toUpperCase().includes(normalizeHiddenAnswer(word.answer)))
@@ -115,7 +115,7 @@ test('el menú nativo recibe el enlace aparte, sin duplicarlo en el texto', () =
   const payload = hiddenNativeSharePayload(data)
   assert.equal(payload.url, HILO_SHARE_URL)
   assert.ok(!payload.text.includes(HILO_SHARE_URL))
-  assert.ok(payload.text.includes('Racha: 4 días seguidos'))
+  assert.ok(payload.text.includes('Racha diaria: 4 días'))
   assert.equal(payload.title, data.title)
   assert.equal(hiddenNativeSharePayload(null), null)
 })

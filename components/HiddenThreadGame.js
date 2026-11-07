@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   getHiddenChallenge,
@@ -11,12 +12,13 @@ import {
   HILO_GAME_ERROR_COST,
   HILO_GAME_HINT_COST,
   HILO_GAME_MAX_ERRORS,
-  hiddenPriorDayKey,
+  nextHiddenStreak,
   hiddenRoundScore,
   hiddenTotalScore,
   madridHiddenDayKey,
   makeHiddenProgress,
   minutesUntilMadridMidnight,
+  millisecondsUntilMadridMidnight,
   normalizeHiddenAnswer,
   validHiddenProgress,
 } from '@/lib/hilo-hidden-game'
@@ -115,6 +117,7 @@ function prefersReducedMotion() {
 }
 
 export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
+  const router = useRouter()
   const [dateKey, setDateKey] = useState(initialDayKey)
   const [mode, setMode] = useState('daily')
   // Día que se está jugando: null es hoy; una fecha pasada es una partida del archivo.
@@ -132,6 +135,7 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
   const [feedback, setFeedbackState] = useState({ text: '', tone: '' })
   const setFeedback = (text, tone = 'info') => setFeedbackState({ text, tone: text ? tone : '' })
   const [shareStatus, setShareStatus] = useState('')
+  const [shareFallback, setShareFallback] = useState(false)
   const [streak, setStreak] = useState(0)
   const [minutesLeft, setMinutesLeft] = useState(0)
   // null hasta hidratar: el menú nativo solo existe en algunos navegadores (sobre todo móviles).
@@ -146,19 +150,36 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
   }, [])
 
   useEffect(() => {
-    const updateDay = () => setDateKey(madridHiddenDayKey())
+    let knownDay = initialDayKey
+    let timer
+    const updateDay = () => {
+      window.clearTimeout(timer)
+      const now = new Date()
+      const today = madridHiddenDayKey(now)
+      if (today !== knownDay) {
+        knownDay = today
+        window.clearTimeout(pendingTimer.current)
+        setDateKey(today)
+        router.refresh() // Refresh the day's real related fichas, too.
+      }
+      setMinutesLeft(minutesUntilMadridMidnight(now))
+      timer = window.setTimeout(updateDay, Math.min(60000, millisecondsUntilMadridMidnight(now)))
+    }
     const onVisibility = () => {
       if (document.visibilityState === 'visible') updateDay()
     }
     updateDay()
     document.addEventListener('visibilitychange', onVisibility)
     window.addEventListener('focus', updateDay)
+    window.addEventListener('pageshow', updateDay)
     return () => {
+      window.clearTimeout(timer)
       document.removeEventListener('visibilitychange', onVisibility)
       window.removeEventListener('focus', updateDay)
+      window.removeEventListener('pageshow', updateDay)
       window.clearTimeout(pendingTimer.current)
     }
-  }, [])
+  }, [initialDayKey, router])
 
   const activeDay = playDay && playDay !== dateKey ? playDay : dateKey
   const isArchive = Boolean(dateKey && activeDay !== dateKey)
@@ -170,11 +191,13 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
 
   useEffect(() => {
     if (!challenge) return
+    window.clearTimeout(pendingTimer.current)
     setState({ key: storageKey, progress: getProgress(challenge, storageKey) })
     setAnswer('')
     setPending('')
     setFeedback('')
     setShareStatus('')
+    setShareFallback(false)
     setStreak(hiddenEffectiveStreak(getStreak(), dateKey))
   }, [challenge, storageKey, dateKey])
 
@@ -206,9 +229,7 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
     }
     if (progress.challengeId !== 'daily-' + dateKey) return
     const won = progress.rounds[0]?.status === 'won'
-    const count = won
-      ? (previous.date === hiddenPriorDayKey(dateKey) ? previous.count + 1 : 1)
-      : 0
+    const { count } = nextHiddenStreak(previous, dateKey, won)
     try {
       window.localStorage.setItem(STREAK_STORAGE, JSON.stringify({ date: dateKey, count, best: Math.max(previous.best, count) }))
     } catch {
@@ -221,18 +242,16 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
   // Archivo y estadísticas: se recalculan al cambiar de día o al guardar una partida.
   useEffect(() => {
     if (!dateKey) return
-    setLedger(readLedger(dateKey))
+    const savedLedger = readLedger(dateKey)
+    if (state?.progress?.finished) {
+      const id = state.progress.challengeId
+      savedLedger[id.replace('-', ':')] = state.progress
+    }
+    setLedger(savedLedger)
     const saved = getStreak()
     setStreakRecord({ count: hiddenEffectiveStreak(saved, dateKey), best: saved.best })
   }, [dateKey, state])
 
-  useEffect(() => {
-    if (!completed) return undefined
-    const tick = () => setMinutesLeft(minutesUntilMadridMidnight())
-    tick()
-    const timer = window.setInterval(tick, 30000)
-    return () => window.clearInterval(timer)
-  }, [completed])
 
   function saveProgress(next) {
     if (!progress || !storageKey) return
@@ -246,11 +265,33 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
 
   function patchRound(nextRound, otherFields = {}) {
     const rounds = progress.rounds.map((item, index) => (index === progress.stage ? nextRound : item))
-    saveProgress({ ...progress, ...otherFields, rounds })
+    saveProgress({ ...progress, started: true, ...otherFields, rounds })
+  }
+
+  function ensureCurrentDay() {
+    const today = madridHiddenDayKey()
+    if (today === dateKey) return true
+    window.clearTimeout(pendingTimer.current)
+    setDateKey(today)
+    router.refresh()
+    return false
+  }
+
+  function markStarted() {
+    if (progress.started || progress.rounds.some((item) => item.guesses.length || item.hints.length)) return
+    trackEvent('juego_iniciado', hiddenGameContext({ mode, dayKey: activeDay, todayKey: dateKey }))
+  }
+
+  function trackFicha(href) {
+    trackEvent('juego_ficha_abierta', {
+      ...hiddenGameContext({ mode, dayKey: activeDay, todayKey: dateKey }),
+      ficha_url: href,
+    })
   }
 
   function revealHint(index) {
-    if (!canPlay || round.hints.includes(index)) return
+    if (!canPlay || !ensureCurrentDay() || round.hints.includes(index)) return
+    markStarted()
     patchRound({ ...round, hints: [...round.hints, index] })
     setFeedback('')
     trackEvent('game_hint', {
@@ -264,12 +305,11 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
   function streakAfter(won) {
     if (mode !== 'daily' || isArchive) return 0
     const previous = getStreak()
-    if (previous.date === dateKey) return previous.count
-    if (!won) return 0
-    return previous.date === hiddenPriorDayKey(dateKey) ? previous.count + 1 : 1
+    return nextHiddenStreak(previous, dateKey, won).count
   }
 
   function share(method, contentType) {
+    if (!contentType) trackEvent('juego_compartido', hiddenShareParams({ method, mode, dayKey: activeDay, todayKey: dateKey }))
     trackEvent('content_share', {
       ...hiddenShareParams({ method, mode, dayKey: activeDay, todayKey: dateKey }),
       ...(contentType ? { content_type: contentType } : {}),
@@ -284,7 +324,7 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
   }
 
   function tryGuess(value, tapped = false) {
-    if (!canPlay || (mode === 'daily') !== tapped) return
+    if (!canPlay || !ensureCurrentDay() || (mode === 'daily') !== tapped) return
     const result = evaluateHiddenGuess({ word, round, value, isChoice: tapped })
     if (result.kind === 'empty') {
       setFeedback('Escribe una palabra.')
@@ -299,6 +339,7 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
       return
     }
     if (!result.nextRound) return
+    markStarted()
 
     setShareStatus('')
     const finishing = result.nextRound.status !== 'playing' && progress.stage === challenge.words.length - 1
@@ -306,12 +347,14 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
     if (finishing) {
       const rounds = progress.rounds.map((item, index) => (index === progress.stage ? result.nextRound : item))
       const finalProgress = { ...progress, finished: true, rounds }
-      trackEvent('game_complete', hiddenGameCompleteParams({
+      const completeParams = hiddenGameCompleteParams({
         challenge,
         progress: finalProgress,
         todayKey: dateKey,
         streak: streakAfter(rounds.every((item) => item.status === 'won')),
-      }))
+      })
+      trackEvent('game_complete', completeParams)
+      trackEvent('juego_completado', completeParams)
     }
     setAnswer('')
     if (result.kind === 'won') {
@@ -412,6 +455,7 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
   }
 
   function offerShareTargets(message) {
+    setShareFallback(true)
     setShareStatus(message)
     window.requestAnimationFrame(() => targetsRef.current?.querySelector('a')?.focus({ preventScroll: false }))
   }
@@ -462,23 +506,25 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
       setShareStatus('No se ha podido crear la imagen. Elige otra aplicación.')
       return
     }
-    share('instagram')
     const canShareFile = typeof navigator.share === 'function'
       && typeof navigator.canShare === 'function'
       && navigator.canShare({ files: [image] })
     if (canShareFile) {
       try {
         await navigator.share({ files: [image] })
+        share('instagram')
         setShareStatus('Imagen lista. Si no la has publicado, elige Instagram en el menú.')
         return
       } catch (error) {
         if (error?.name === 'AbortError') return
       }
       saveHiddenStoryFile(image)
+      share('image_download')
       setShareStatus('Imagen descargada. Abre Instagram y súbela desde tu galería.')
       return
     }
     saveHiddenStoryFile(image)
+    share('image_download')
     window.open('https://www.instagram.com/', '_blank', 'noopener,noreferrer')
     setShareStatus('Imagen descargada. Súbela en Instagram desde tu galería.')
   }
@@ -734,14 +780,14 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
               <h3>{word.answer}</h3>
               <p>{word.definition}</p>
               {thread ? (
-                <Link className={styles.threadCard} href={thread.href} data-analytics-context="juego_sigue_el_hilo">
+                <Link className={styles.threadCard} href={thread.href} onClick={() => trackFicha(thread.href)} data-analytics-context="juego_sigue_el_hilo">
                   <small>{thread.label}</small>
                   <strong>{thread.name}</strong>
                   {thread.context ? <span>{thread.context}</span> : null}
                   <i aria-hidden="true">→</i>
                 </Link>
               ) : null}
-              <Link className={styles.resultLink} href={word.link.href}>{word.link.text} <span aria-hidden="true">→</span></Link>
+              {!thread ? <Link className={styles.resultLink} href={word.link.href} onClick={() => trackFicha(word.link.href)}>{word.link.text} <span aria-hidden="true">→</span></Link> : null}
               {!isFinalRound ? (
                 <button className={styles.primaryButton} type="button" onClick={nextStage}>
                   Siguiente cabo ({progress.stage + 2} de 3) <span aria-hidden="true">→</span>
@@ -763,25 +809,22 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
 
               <div className={styles.shareCard} aria-label={'Tu resultado: ' + shareData.score + ' de ' + shareData.maxScore + ' puntos'}>
                 <span className={styles.shareBrand}>Hilo Cofrade · El hilo escondido</span>
-                <span className={styles.shareMode}>{shareData.mode} · {shareData.date}</span>
+                <span className={styles.shareMode}>#{shareData.number} · {shareData.mode} · {shareData.date}</span>
                 <strong className={styles.shareScore}>{shareData.score}<small> / {shareData.maxScore}</small></strong>
                 <span className={styles.shareMarks} aria-label={shareData.winners + ' de ' + shareData.rounds + ' acertadas'}>{shareData.marks}</span>
-                <span className={styles.shareInvite}>¿Lo superas? hilocofrade.es</span>
+                <span className={styles.shareInvite}>{shareData.attempts} intentos · {shareData.hints} pistas</span>
               </div>
 
-              {canNativeShare === false ? shareTargetsBlock : null}
+              {canNativeShare === false ? <a className={styles.primaryButton} href={shareTargets.find((target) => target.id === 'whatsapp').href} target="_blank" rel="noopener noreferrer" onClick={() => share('whatsapp')}>Compartir por WhatsApp ↗</a> : null}
               <div className={styles.shareActions}>
                 {canNativeShare !== false ? (
                   <button type="button" className={styles.primaryButton} onClick={shareResult}>
                     Compartir resultado <span aria-hidden="true">↗</span>
                   </button>
                 ) : null}
-                <button type="button" className={styles.secondaryButton} onClick={downloadStory} aria-label="Guardar la imagen del resultado (formato 9:16)">
-                  Guardar imagen
-                </button>
                 <button type="button" className={styles.secondaryButton} onClick={copyResult}>Copiar texto</button>
               </div>
-              {canNativeShare === false ? null : shareTargetsBlock}
+              <details className={styles.moreShare} open={shareFallback || undefined}><summary>Más opciones para compartir</summary>{shareTargetsBlock}<button type="button" className={styles.secondaryButton} onClick={downloadStory}>Guardar imagen</button></details>
               {shareStatus ? <p className={styles.status} role="status">{shareStatus}</p> : null}
               <p className={styles.shareNote}>Sin respuestas ni pistas. A Instagram se envía como imagen.</p>
 
@@ -793,12 +836,12 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
                       : <>Empieza tu racha: <strong>1 día</strong>. </>)
                     : <>La racha vuelve a empezar. </>
                 ) : null}
-                {minutesLeft ? <>Nuevo reto en <strong>{countdownLabel(minutesLeft)}</strong>.</> : 'Nuevo reto mañana.'}
+                {minutesLeft ? <>Nuevo hilo en <strong>{countdownLabel(minutesLeft)}</strong>.</> : 'Nuevo hilo mañana.'}
               </p>
               {nextChallenge ? (
                 <button
                   type="button"
-                  className={styles.primaryButton}
+                  className={styles.secondaryButton}
                   onClick={() => openChallenge(nextChallenge.dayKey, nextChallenge.mode, 'siguiente')}
                 >
                   {nextChallenge.dayKey === dateKey
@@ -819,11 +862,25 @@ export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
                 <div className={styles.stats} aria-label="Tus números en El hilo escondido">
                   <span className={styles.statsTitle}>Tus números</span>
                   <dl className={styles.statsGrid}>
-                    <div><dt>Retos</dt><dd>{stats.played}<small>/{stats.available}</small></dd></div>
-                    <div><dt>Aciertos</dt><dd>{stats.winRate}<small>%</small></dd></div>
-                    <div><dt>Racha</dt><dd>{stats.currentStreak}<small> · mejor {stats.bestStreak}</small></dd></div>
-                    <div><dt>Perfectas</dt><dd>{stats.perfect}<small> ✦</small></dd></div>
+                    <div><dt>Partidas jugadas</dt><dd>{stats.played}</dd></div>
+                    <div><dt>Palabras acertadas</dt><dd>{stats.winRate}<small>%</small></dd></div>
+                    <div><dt>Racha actual</dt><dd>{stats.currentStreak}</dd></div>
+                    <div><dt>Racha máxima</dt><dd>{stats.bestStreak}</dd></div>
                   </dl>
+                  <p className={styles.statsNote}>Racha: días seguidos acertando el hilo del día. El experto y el archivo no la alteran.</p>
+                  <h4>Distribución de intentos</h4>
+                  <p className={styles.statsNote}>Palabras acertadas en cada modalidad, incluido el archivo.</p>
+                  {['daily', 'expert'].map((item) => (
+                    <div key={item} className={styles.distribution}>
+                      <strong>{MODE_LABEL[item]}</strong>
+                      {stats.distribution[item].map((count, index) => (
+                        <div key={index} className={styles.distributionRow} aria-label={(index + 1) + ' intentos: ' + count + ' palabras'}>
+                          <span>{index + 1}</span>
+                          <span className={styles.distributionBar} style={{ width: Math.max(8, count / Math.max(1, ...stats.distribution[item]) * 100) + '%' }}>{count}</span>
+                        </div>
+                      ))}
+                    </div>
+                  ))}
                 </div>
               ) : null}
             </section>
