@@ -1,0 +1,292 @@
+/* Vírgenes Coronadas — mobile-first. Tarjeta visual (foto o escudo sobre los
+   colores de la hermandad) y debajo la ficha breve, sin recuadros añadidos. */
+.explorer {
+  --cor-ink: #0f2742;
+  --cor-muted: #5a6b7c;
+  --cor-line: #dce5ec;
+  --cor-link: #123a67;
+  --cor-accent: #b01b32;
+  display: grid;
+  gap: 18px;
+}
+
+/* Filtros */
+.filters {
+  display: grid;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--cor-line);
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin: 0 -2px;
+  padding: 2px;
+}
+
+.chips::-webkit-scrollbar {
+  display: none;
+}
+
+.chips button {
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--cor-line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--cor-ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.chips button span {
+  margin-left: 4px;
+  color: var(--cor-muted);
+  font-weight: 600;
+}
+
+.chips button[aria-pressed='true'] {
+  border-color: #112339;
+  background: #112339;
+  color: #fff;
+}
+
+.chips button[aria-pressed='true'] span {
+  color: rgba(255, 255, 255, .78);
+}
+
+.selects {
+  display: grid;
+  gap: 10px;
+}
+
+.selects label {
+  display: grid;
+  gap: 4px;
+}
+
+.selects label > span {
+  color: var(--cor-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.selects select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--cor-line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--cor-ink);
+  font: inherit;
+  font-size: 16px;
+}
+
+.count {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  color: var(--cor-muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.reset {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--cor-link);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.empty {
+  margin: 0;
+  color: var(--cor-muted);
+}
+
+/* Rejilla */
+.grid {
+  display: grid;
+  gap: 28px 20px;
+}
+
+/* Tarjeta */
+.card {
+  --coronada-primary: #153b69;
+  --coronada-dark: #0d2949;
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  color: var(--cor-ink, #0f2742);
+}
+
+.media {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border-radius: 14px;
+  background: var(--coronada-primary);
+}
+
+.mediaIdentity {
+  background:
+    radial-gradient(120% 90% at 50% 30%, rgba(255, 255, 255, .14), transparent 60%),
+    linear-gradient(180deg, var(--coronada-primary), var(--coronada-dark));
+}
+
+.photo {
+  object-fit: cover;
+}
+
+.crest {
+  width: 42%;
+  max-width: 150px;
+  height: auto;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .28));
+}
+
+.fallback {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  color: #fff;
+}
+
+.year {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  display: grid;
+  padding: 7px 11px 8px;
+  border-radius: 10px;
+  background: rgba(17, 35, 57, .86);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.02em;
+  backdrop-filter: blur(4px);
+}
+
+.year small {
+  margin-bottom: 3px;
+  color: rgba(255, 255, 255, .78);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.body {
+  display: grid;
+  gap: 6px;
+}
+
+.name {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -.015em;
+}
+
+/* Criterio del sitio: los enlaces no se subrayan; se distinguen por color. */
+.name a,
+.place a,
+.officiant a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.name a:hover {
+  color: var(--cor-accent, #b01b32);
+}
+
+.place {
+  margin: 0;
+  color: var(--cor-muted, #5a6b7c);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.place a {
+  color: var(--cor-link, #123a67);
+}
+
+.acts {
+  display: grid;
+  gap: 8px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.acts li {
+  display: grid;
+  gap: 1px;
+  padding-left: 10px;
+  border-left: 2px solid var(--coronada-primary);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.actLabel {
+  color: var(--cor-muted, #5a6b7c);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.acts time {
+  font-weight: 700;
+}
+
+.officiant {
+  color: var(--cor-ink, #0f2742);
+}
+
+.officiant a {
+  color: var(--cor-link, #123a67);
+  font-weight: 600;
+}
+
+.officiant a:hover,
+.place a:hover {
+  color: var(--cor-accent, #b01b32);
+}
+
+.credit {
+  margin: 2px 0 0;
+  color: #7a8a99;
+  font-size: 11px;
+}
+
+@media (min-width: 720px) {
+  .selects {
+    grid-template-columns: repeat(2, minmax(0, 260px));
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
