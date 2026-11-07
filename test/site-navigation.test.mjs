@@ -30,7 +30,17 @@ test('conserva los accesos que antes estaban en el menú y añade Extraordinaria
 test('el Vía Crucis del Consejo va aparte, como Historia dentro de Patrimonio', () => {
   const patrimonio = MENU_GROUPS.find((group) => group.id === 'patrimonio')
   const history = patrimonio.sections.find((section) => section.title === 'Historia')
-  assert.deepEqual(history.links, [['/via-crucis-sevilla', 'Vía Crucis del Consejo']])
+  assert.deepEqual(history.links, [
+    ['/virgenes-coronadas', 'Vírgenes Coronadas'],
+    ['/via-crucis-sevilla', 'Vía Crucis del Consejo'],
+  ])
+})
+
+test('el programa de mano 2027 va en Hermandades, tras Semana Santa', () => {
+  const links = MENU_GROUPS.find((group) => group.id === 'hermandades').sections[0].links.map(([href]) => href)
+  assert.equal(links.indexOf('/semana-santa-sevilla-2027'), links.indexOf('/hermandades/semana-santa') + 1)
+  assert.equal(activeMenuGroup('/semana-santa-sevilla-2027'), 'hermandades')
+  assert.equal(activeMenuGroup('/virgenes-coronadas'), 'patrimonio')
 })
 
 test('marca el grupo y el enlace de la página actual por la ruta más larga', () => {
