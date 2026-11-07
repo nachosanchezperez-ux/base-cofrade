@@ -5,7 +5,7 @@ import { agendaItemVEvent, brotherhoodCalendarItems } from '../lib/agenda-ics.js
 import { agendaEventJsonLd } from '../lib/agenda-event-jsonld.js'
 import { withProcessionLiveState } from '../lib/procession-live-status.js'
 import { scheduleChangePayload, scheduleReviewKey } from '../lib/panel/schedule-change-core.js'
-const base = { id: 'a', key: 'devotions:a', title: 'Besamanos', category: 'devotions', date: '2026-11-14', endDate: '2026-11-15', isUpcoming: true, organizerHref: '/hermandades/amparo-sevilla' }
+const base = { id: 'a', key: 'devotions:a', title: 'Besamanos', category: 'devotions', date: '2026-11-14', endDate: '2026-11-15', isPast: false, isUpcoming: true, organizerHref: '/hermandades/amparo-sevilla' }
 const change = { previousDate: '2026-11-14', revision: 2, changedAt: '2026-11-07T20:00:00Z', reason: 'Aplazamiento', sourceUrl: 'https://example.org/comunicado' }
 test('aplazado fuera de Próximos y nunca vuelve a estar en curso', () => {
  const item = withEventScheduleChange({ ...base, eventStatus: 'postponed' }, change)
@@ -66,4 +66,10 @@ test('Panel registra una fecha anterior documentada cuando la nueva ya estaba pu
  assert.throws(() => scheduleChangePayload(form,previous,'2026-11-15','rescheduled'),/fecha anterior/)
  form.set('schedule_previous_date','2026-11-08')
  assert.equal(scheduleChangePayload(form,previous,'2026-11-15','rescheduled').schedule_change.previousDate,'2026-11-08')
+})
+
+
+test('una ficha reprogramada pasada no vuelve a Próximos si el lector no expone isPast', () => {
+ const item = { id:'historical', date:'2020-01-01', eventStatus:'rescheduled', isUpcoming:false }
+ assert.equal(withEventScheduleChange(item).isUpcoming,false)
 })
