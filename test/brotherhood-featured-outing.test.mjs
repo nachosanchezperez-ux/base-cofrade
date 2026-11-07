@@ -97,6 +97,7 @@ test('el templo no se repite aunque uno lleve «, Sevilla»', async () => {
     origin: 'Iglesia de San Antonio de Padua, Sevilla', destination: 'Iglesia de San Antonio de Padua, Sevilla',
   })
   assert.deepEqual(route.streets, ['San Vicente', 'Santa Ana'])
+  assert.equal(route.origin, 'Iglesia de San Antonio de Padua')
   assert.equal(isSameStop(route.origin, route.destination), true)
   assert.equal(isSameStop('Iglesia de San Antonio de Padua · Entrada', 'Iglesia de San Antonio de Padua'), true)
 })
