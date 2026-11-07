@@ -174,4 +174,6 @@ test('cortejos y pasos sin música confirmados por la redacción', async () => {
   assert.equal(isSilentStep('el-museo', 'paso-palio-virgen-aguas-museo-sevilla'), false)
   assert.equal(isSilentStep('santo-entierro-sevilla', 'paso-triunfo-santa-cruz-canina-sevilla'), true)
   assert.equal(isSilentStep('el-baratillo', 'paso-cualquiera'), false)
+  assert.equal(isSilentStep('hermandad-del-amor', 'paso-cristo-amor-sevilla'), true)
+  assert.equal(isSilentStep('hermandad-del-amor', 'paso-palio-socorro-amor'), false)
 })
