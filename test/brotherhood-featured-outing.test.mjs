@@ -114,3 +114,17 @@ test('los hitos del recorrido se colocan en su calle', async () => {
   const milestones = routeMilestones(points, ['Plaza de San Lorenzo', 'Parroquia de San Lorenzo', 'Plaza de San Lorenzo'])
   assert.deepEqual([...milestones.entries()], [[1, { time: '19:45', note: 'Solemne Eucaristía 20:00' }], [2, { time: '21:15', note: '' }]])
 })
+
+test('penitencia: se destaca la próxima salida fuera de la Semana Santa, nunca una pasada', async () => {
+  const { featuredBrotherhoodOuting } = await import('../lib/brotherhood-featured-outing.js')
+  const salidas = [
+    { id: 'ep', fecha: '2027-03-23', tipo: 'Estación de Penitencia' },
+    { id: 'vc', fecha: '2026-11-10', tipo: 'Vía Crucis' },
+    { id: 't', fecha: '2026-11-21', tipo: 'Traslado' },
+    { id: 'p', fecha: '2026-11-22', tipo: 'Procesión' },
+    { id: 'old', fecha: '2025-10-01', tipo: 'Procesión' },
+  ]
+  assert.equal(featuredBrotherhoodOuting(salidas, '2026-11-07', { penitencia: true }).id, 't')
+  assert.equal(featuredBrotherhoodOuting(salidas, '2026-11-22', { penitencia: true }).id, 'p')
+  assert.equal(featuredBrotherhoodOuting(salidas, '2026-11-23', { penitencia: true }), null)
+})
