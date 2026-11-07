@@ -31,15 +31,27 @@ export function ChapterIcon({ icon, className }) {
 export default function BrotherhoodChapterNav({ items = [], name = '', crestSrc = '' }) {
   const [active, setActive] = useState(items[0]?.anchor || '');
   const [appMode, setAppMode] = useState(false);
-  const [compactHeader, setCompactHeader] = useState(false);
+  const [heroOut, setHeroOut] = useState(false);
   const rootRef = useRef(null);
   const key = items.map((item) => item.anchor).join('|');
 
   // La lógica vive en lib/brotherhood-chapter-app.js (DOM puro, probado aparte).
   useEffect(() => {
     const container = rootRef.current?.closest('[data-chapters-root]');
-    const app = createChapterApp(container, { onChange: (id) => id && setActive(id), onMode: setAppMode });
-    return () => app.destroy();
+    // La portada pertenece a Inicio: en los demás capítulos (móvil) se oculta y
+    // manda la mini cabecera. Se marca antes del desplazamiento al capítulo.
+    const firstId = items[0]?.anchor || '';
+    const markScreen = (id) => {
+      document.documentElement.dataset.hcChapterScreen = id && id !== firstId ? 'inner' : 'home';
+    };
+    const app = createChapterApp(container, {
+      onChange: (id) => { if (id) { markScreen(id); setActive(id); } },
+      onMode: setAppMode,
+    });
+    return () => {
+      app.destroy();
+      delete document.documentElement.dataset.hcChapterScreen;
+    };
   }, [key]);
 
   // En ordenador (página continua) el capítulo activo sigue a la lectura.
@@ -57,16 +69,19 @@ export default function BrotherhoodChapterNav({ items = [], name = '', crestSrc 
 
   // Mini cabecera (móvil): escudo, nombre y capítulo cuando la portada sale de vista.
   useEffect(() => {
-    if (!appMode) { setCompactHeader(false); return undefined; }
-    const hero = document.getElementById('brotherhood-program-title');
+    if (!appMode) { setHeroOut(false); return undefined; }
+    // Toda la portada, no solo el título: la mini cabecera no aparece mientras
+    // se vea cualquier parte de ella (evita el texto cortado debajo).
+    const hero = document.getElementById('brotherhood-program-title')?.closest('section') || document.getElementById('brotherhood-program-title');
     if (!hero || typeof IntersectionObserver === 'undefined') return undefined;
-    const observer = new IntersectionObserver(([entry]) => setCompactHeader(!entry.isIntersecting && entry.boundingClientRect.top < 0), { threshold: 0 });
+    const observer = new IntersectionObserver(([entry]) => setHeroOut(!entry.isIntersecting && entry.boundingClientRect.top < 0), { threshold: 0 });
     observer.observe(hero);
     return () => observer.disconnect();
   }, [appMode]);
 
   if (items.length < 2) return null;
   const current = items.find((item) => item.anchor === active) || items[0];
+  const compactHeader = appMode && (heroOut || active !== items[0]?.anchor);
 
   return <div ref={rootRef} className={styles.wrapper}>
     {appMode ? <div className={`${styles.miniHeader} ${compactHeader ? styles.miniVisible : ''}`} aria-hidden={!compactHeader}>
