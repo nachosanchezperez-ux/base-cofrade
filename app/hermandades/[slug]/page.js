@@ -276,8 +276,12 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   const isGloria = tiposHermandad.includes('Gloria');
   // Ficha por capítulos de Gloria: la próxima salida (o la última) se destaca
   // con su horario, bandas y recorrido. Misma lectura en caché que la Agenda.
-  const featuredOuting = chapters && !isPenitencia
-    ? featuredBrotherhoodOuting(h.salidas || [], agendaData.today || '')
+  // En penitencia, la próxima salida fuera de la Semana Santa (un traslado, una
+  // extraordinaria), si la hay.
+  const featuredOuting = chapters
+    // Las extraordinarias viven como acontecimientos de la ficha, pero también
+    // pueden ser la próxima salida (traslados del centenario, coronaciones…).
+    ? featuredBrotherhoodOuting([...(h.salidas || []), ...(h.acontecimientosSalidas || [])], agendaData.today || '', { penitencia: isPenitencia })
     : null;
   const featuredOutingDetail = featuredOuting
     ? await getGloryDetailByOutingId(featuredOuting.id).catch((error) => {

@@ -163,7 +163,7 @@ export default function BrotherhoodChaptersLayout({
     </>)}
 
     {render(isPenitencia ? 'cortejo' : 'procesion', <>
-      {!isPenitencia ? slots.outingFeature : null}
+      {slots.outingFeature}
       {slots.steps}
       {isPenitencia ? slots.habit : null}
       {slots.titulars}
