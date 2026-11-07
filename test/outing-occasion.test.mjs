@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
-import { pieceCredits, sharedPremiere } from '../lib/supabase/outing-occasion.js'
+import { occasionWindowStart, pieceCredits, sharedPremiere } from '../lib/supabase/outing-occasion.js'
 
 test('las marchas comparten el estreno solo si todas lo tienen igual', () => {
   const premiere = '23 de octubre de 2026, Real Parroquia de Santa María Magdalena (Sevilla)'
@@ -38,4 +38,14 @@ test('la salida destacada y la Agenda muestran la jornada; los datos llegan del 
   assert.match(detail, /\.catch\(\(error\) =>/)
   assert.match(loader, /'commemorates'/)
   assert.match(loader, /\.eq\('event_category', 'historical'\)/)
+})
+
+test('una salida aplazada conserva su jornada: se busca hasta una semana antes', () => {
+  assert.equal(occasionWindowStart('2026-11-15'), '2026-11-08')
+  assert.equal(occasionWindowStart('2026-03-03'), '2026-02-24')
+  assert.equal(occasionWindowStart('2026-11-15', 0), '2026-11-15')
+  assert.equal(occasionWindowStart(''), '')
+  const loader = readFileSync(new URL('../lib/supabase/outing-occasion.js', import.meta.url), 'utf8')
+  assert.match(loader, /\.gte\('event_date', windowStart\)/)
+  assert.match(loader, /\.lte\('event_date', date\)/)
 })

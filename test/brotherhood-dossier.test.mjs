@@ -4,6 +4,7 @@ import {
   creditsByDiscipline,
   dossierChronology,
   dossierHeritageGroups,
+  dossierDayLabel,
   dossierHref,
   dossierKeyFacts,
   heritageFamilyKey,
@@ -90,4 +91,20 @@ test('los datos clave reúnen la jornada en pocas líneas', () => {
   assert.equal(byLabel['Música'], 'Las Cigarreras · Abriendo el cortejo · Carmen de Salteras · Tras el paso')
   assert.equal(byLabel['Coronación Canónica'], '10:00 · Función Principal de Instituto · Real Parroquia de Santa María Magdalena')
   assert.equal(dossierKeyFacts({}).length, 0)
+})
+
+test('si la procesión se aplaza, la jornada y la procesión llevan su fecha', () => {
+  assert.equal(dossierDayLabel('2026-11-15'), 'Domingo 15 de noviembre')
+  assert.equal(dossierDayLabel('mañana'), '')
+  const facts = Object.fromEntries(dossierKeyFacts({
+    outing: { date: '2026-11-15', departureTime: '17:00', returnTime: '22:45' },
+    occasion: { name: 'Coronación Canónica', date: '2026-11-08', time: '10:00', place: 'Magdalena' },
+  }).map((fact) => [fact.label, fact.value]))
+  assert.match(facts['Procesión'], /^Domingo 15 de noviembre · Salida 17:00 · entrada 22:45$/)
+  assert.match(facts['Coronación Canónica'], /^Domingo 8 de noviembre · 10:00 · Magdalena$/)
+  const sameDay = Object.fromEntries(dossierKeyFacts({
+    outing: { date: '2026-11-08', departureTime: '17:00' },
+    occasion: { name: 'Coronación Canónica', date: '2026-11-08', time: '10:00' },
+  }).map((fact) => [fact.label, fact.value]))
+  assert.equal(sameDay['Procesión'], 'Salida 17:00')
 })

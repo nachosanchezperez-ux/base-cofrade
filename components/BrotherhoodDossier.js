@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronRightIcon, ClockIcon, MusicIcon, RouteIcon } from './icons/LucideIcons'
 import DossierPrintButton from './DossierPrintButton'
-import { creditsByDiscipline, imageFacts, pieceFacts, stepFacts } from '@/lib/brotherhood-dossier'
+import { creditsByDiscipline, dossierDayLabel, imageFacts, pieceFacts, stepFacts } from '@/lib/brotherhood-dossier'
 import styles from './BrotherhoodDossier.module.css'
 
 // Dosier de la Hermandad: todo lo publicado sobre la Hermandad, su Titular y la
@@ -118,7 +118,7 @@ export default function BrotherhoodDossier({
           <ol className={styles.schedule}>
             {schedule.map((item) => <li key={item.id}>
               <time>{item.time || item.timeText || '—'}</time>
-              <div><strong>{item.label}</strong>{item.place ? <span>{item.place}</span> : null}{item.notes ? <p>{item.notes}</p> : null}</div>
+              <div><strong>{item.label}</strong>{item.date && outing.date && item.date !== outing.date ? <span>{dossierDayLabel(item.date)}</span> : null}{item.place ? <span>{item.place}</span> : null}{item.notes ? <p>{item.notes}</p> : null}</div>
             </li>)}
           </ol>
         </> : null}
