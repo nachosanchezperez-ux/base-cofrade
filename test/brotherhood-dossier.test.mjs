@@ -37,6 +37,8 @@ test('el patrimonio se agrupa por familias y la música queda fuera', () => {
   assert.deepEqual(groups[0].items.map((item) => item.id), ['manto', 'saya'])
   assert.equal(groups.flatMap((group) => group.items).some((item) => ['alabado', 'misa', 'coronas'].includes(item.id)), false)
   assert.equal(heritageFamilyKey({ tipo: 'Coronas', nombre: 'Coronas históricas' }), 'orfebreria')
+  assert.equal(heritageFamilyKey({ tipo: 'Corazón alado', nombre: 'Corazón alado de Nuestra Señora del Amparo' }), 'orfebreria')
+  assert.equal(heritageFamilyKey({ tipo: 'Saya', nombre: 'Saya' }), 'mantos')
 })
 
 test('las autorías se agrupan por disciplina sin repetir nombres', () => {
@@ -44,11 +46,13 @@ test('las autorías se agrupan por disciplina sin repetir nombres', () => {
     { nombre: 'Emilio José Gómez Moreno', disciplina: 'Bordado' },
     { nombre: 'Manuel María Ariza', disciplina: 'Bordado' },
     { nombre: 'Emilio José Gómez Moreno', disciplina: 'Bordado' },
-    { nombre: 'Joaquín Ossorio', disciplina: 'Orfebrería' },
+    { nombre: 'Joaquín Ossorio', disciplina: 'Orfebrería', rol: 'Orfebrería' },
     { nombre: '', disciplina: 'Pintura' },
+    { nombre: 'Manuel María Ariza', disciplina: 'Bordado', rol: 'Autoría original' },
   ]), [
     { label: 'Bordado', value: 'Emilio José Gómez Moreno, Manuel María Ariza' },
     { label: 'Orfebrería', value: 'Joaquín Ossorio' },
+    { label: 'Bordado (autoría original)', value: 'Manuel María Ariza' },
   ])
 })
 
