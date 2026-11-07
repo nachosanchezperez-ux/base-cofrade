@@ -1021,24 +1021,42 @@
   padding-block: 4px 18px;
 }
 
-/* Cabecera de la ficha en «su semana»: acceso directo a la salida. */
+/* Cabecera de la ficha en «su semana»: acceso directo a la salida, en el
+   color de la Hermandad y al lado de «Seguir hermandad». */
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  column-gap: 10px;
+}
+
 .heroOuting {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 48px;
-  margin: 0 10px 10px 0;
-  padding: 0 18px;
+  min-height: 42px;
+  margin-top: 14px;
+  padding: 0 16px 0 13px;
+  border: 1px solid color-mix(in srgb, var(--brotherhood-on-secondary, #fff) 18%, transparent);
   border-radius: 999px;
-  background: var(--home-red, #b71f37);
-  color: #fff;
-  font-size: 16px;
+  background: var(--brotherhood-secondary, #a71930);
+  color: var(--brotherhood-on-secondary, #fff);
+  font-size: 14px;
   font-weight: 800;
+  line-height: 1;
   text-decoration: none;
-  box-shadow: 0 6px 18px rgb(0 0 0 / 22%);
+  box-shadow: 0 6px 18px rgb(17 35 57 / 12%);
 }
 
-.heroOuting span {
-  font-size: 20px;
-  line-height: 1;
+.heroOuting svg {
+  flex: none;
+}
+
+.heroOuting:hover {
+  filter: brightness(1.05);
+}
+
+.heroOuting:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--brotherhood-on-secondary, #fff) 55%, transparent);
+  outline-offset: 2px;
 }
