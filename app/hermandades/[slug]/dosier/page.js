@@ -90,7 +90,8 @@ export default async function BrotherhoodDossierPage({ params }) {
     }),
   ])
 
-  const patrimonio = h.patrimonio || []
+  // Los simpecados se separan en la ficha; aquí vuelven con el resto de insignias.
+  const patrimonio = [...(h.patrimonio || []), ...(h.simpecados || []).filter((item) => !(h.patrimonio || []).some((pieza) => pieza.id === item.id))]
   const patrimonioById = new Map(patrimonio.map((pieza) => [pieza.id, pieza]))
   // Las piezas de la jornada, con todos sus datos de la ficha (si están en ella).
   const occasionPieces = (occasion?.pieces || []).map((piece) => patrimonioById.get(piece.id) || {

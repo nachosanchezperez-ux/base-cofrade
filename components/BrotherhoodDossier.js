@@ -191,7 +191,7 @@ export default function BrotherhoodDossier({
           {step.fases?.length ? <ul className={styles.plainList} aria-label="Fases del paso">
             {step.fases.map((phase) => <li key={phase.id}>
               <strong>{phase.nombre}</strong>
-              <span>{[phase.tipo, phase.periodo, creditsByDiscipline(phase.agentes).map((credit) => `${credit.label}: ${credit.value}`).join(' · ')].filter(Boolean).join(' · ')}</span>
+              <span>{[/^phase_/.test(phase.tipo || '') ? '' : phase.tipo, phase.periodo, creditsByDiscipline(phase.agentes).map((credit) => `${credit.label}: ${credit.value}`).join(' · ')].filter(Boolean).join(' · ')}</span>
               {phase.descripcion ? <p>{phase.descripcion}</p> : null}
             </li>)}
           </ul> : null}
