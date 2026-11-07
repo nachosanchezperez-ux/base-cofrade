@@ -89,6 +89,11 @@ const staticEntries = [
     priority: 0.86,
   },
   {
+    url: absoluteUrl('/semana-santa-sevilla-2027'),
+    changeFrequency: 'daily',
+    priority: 0.95,
+  },
+  {
     url: absoluteUrl('/semana-santa/2027/cambios-musicales'),
     changeFrequency: 'daily',
     priority: 0.9,
