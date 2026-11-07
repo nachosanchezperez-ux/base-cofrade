@@ -97,7 +97,7 @@
 /* Índice: fila desplazable en móvil, fija bajo la cabecera del sitio. */
 .index {
   position: sticky;
-  top: 0;
+  top: var(--hc-app-header-height, 70px);
   z-index: 5;
   border-bottom: 1px solid var(--line);
   background: rgb(255 255 255 / 96%);
@@ -133,7 +133,7 @@
 .section {
   padding-block: 26px 6px;
   border-bottom: 1px solid var(--line);
-  scroll-margin-top: 64px;
+  scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 60px);
 }
 
 .section:last-child {
