@@ -195,4 +195,9 @@
   :global(html[data-hc-chapter-screen="inner"]) :global(section[aria-labelledby="brotherhood-program-title"]) {
     display: none;
   }
+
+  /* Sin portada, el capítulo empieza bajo la mini cabecera fija (no debajo). */
+  :global(html[data-hc-chapter-screen="inner"]) :global([data-chapters-root]) {
+    padding-top: 56px;
+  }
 }
