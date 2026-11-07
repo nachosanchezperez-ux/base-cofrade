@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { connection } from 'next/server'
 import HolyWeekProgramme from '@/components/HolyWeekProgramme'
 import JsonLd from '@/components/JsonLd'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
@@ -36,6 +37,9 @@ function dateLabels() {
 }
 
 export default async function HolyWeekProgrammePage() {
+  // Se renderiza en la petición, como el resto de páginas que leen Supabase:
+  // el build (CI incluido) no necesita las claves públicas.
+  await connection()
   const { days } = await getHolyWeekProgramme()
   const total = new Set(days.flatMap((day) => day.items.map((item) => item.slug))).size
   const labels = dateLabels()
