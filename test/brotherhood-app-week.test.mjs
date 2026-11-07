@@ -42,3 +42,9 @@ test('el hilo no arrastra «fecha inicial no documentada»', () => {
   assert.equal(threadPeriod('Vigente en 2026; fecha inicial no documentada'), 'Vigente en 2026')
   assert.equal(threadPeriod('Desde 2015'), 'Desde 2015')
 })
+
+test('«Ver la salida» aparece siempre que haya salida destacada, no solo esa semana', async () => {
+  const { readFileSync } = await import('node:fs')
+  const page = readFileSync(new URL('../app/hermandades/[slug]/page.js', import.meta.url), 'utf8')
+  assert.match(page, /\{chapters && featuredOutingDetail \? <a className=\{outingCardStyles\.heroOuting\} href="#salida">/)
+})
