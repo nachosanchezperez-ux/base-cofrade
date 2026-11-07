@@ -155,7 +155,10 @@ function ProgrammeItem({ item, day, open, onToggle, followed, onFollow, onPull }
               {step.bands.length ? <div className={styles.bands}>
                 {step.bands.map((band) => <button key={band.slug} type="button" className={styles.band} onClick={() => onPull(band.name)}>
                   <BandCrestBadge logoPath={band.logoPath} background={band.logoBackground} size={32} />
-                  <span>{band.name}</span>
+                  <span className={styles.bandText}>
+                    {band.segment ? <small>{band.segment}</small> : null}
+                    <span>{band.name}</span>
+                  </span>
                 </button>)}
               </div> : null}
             </div>
