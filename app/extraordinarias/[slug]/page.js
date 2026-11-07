@@ -1,3 +1,5 @@
+import EventScheduleNotice from '@/components/EventScheduleNotice'
+import { previousEventStartDate } from '@/lib/event-schedule-change'
 import { agendaEventPerformers, agendaEventSeoDescription, agendaEventSeoTitle, hasPublishedRoute } from '@/lib/agenda-event-seo'
 import OutingRepertoireLinks from '@/components/OutingRepertoireLinks'
 import Image from 'next/image'
@@ -282,6 +284,7 @@ export default async function ExtraordinaryDetailPage({ params }) {
     } : {}),
     description: item.reason || item.description || pageDescription,
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    ...(previousEventStartDate(item) ? { previousStartDate: previousEventStartDate(item) } : {}),
     ...(schemaEventStatus(item) ? { eventStatus: schemaEventStatus(item) } : {}),
     ...(item.heroImagePath ? { image: [absoluteUrl(item.heroImagePath)] } : {}),
     ...(item.brotherhoodName ? {
@@ -314,6 +317,7 @@ export default async function ExtraordinaryDetailPage({ params }) {
       <JsonLd data={pageJsonLd} />
       {/* Sin fecha (actos históricos) no se publica un Event inválido. */}
       {item.date ? <JsonLd data={eventJsonLd} /> : null}
+      <EventScheduleNotice item={item} />
 
       <section className={styles.hero}>
         <div className={`shell ${styles.heroGrid}${item.heroImagePath ? '' : ` ${styles.heroGridText}`}`}>

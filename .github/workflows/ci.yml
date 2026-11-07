@@ -34,3 +34,22 @@ jobs:
         with:
           node-version: 24
       - run: node scripts/check-migration-code-split.mjs --base "origin/${{ github.base_ref }}" --head HEAD
+
+  # Certifica la cadena completa y el seed en una base desechable, nunca cloud.
+  database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Start isolated Supabase with migrations and seed
+        run: npx --no-install supabase start -x studio,imgproxy,mailpit,edge-runtime,logflare,vector,supavisor
+      - name: Verify schedule transitions on the real schema
+        run: docker exec -i supabase_db_hilocofrade psql -U postgres -d postgres -v ON_ERROR_STOP=1 < scripts/verify-event-schedule-schema.sql
+      - name: Stop isolated Supabase
+        if: always()
+        run: npx --no-install supabase stop --no-backup

@@ -1,5 +1,7 @@
 'use client'
 
+import { eventScheduleChange } from '@/lib/event-schedule-change'
+
 import { useEffect, useState } from 'react'
 import { countdownLabel, getProcessionLiveState, minutesUntilDeparture, scheduledRouteStatus } from '@/lib/procession-live-status'
 import styles from './BrotherhoodChapterOuting.module.css'
@@ -11,6 +13,8 @@ import styles from './BrotherhoodChapterOuting.module.css'
 // nada (el servidor ya pinta «Este domingo»); sin hora de entrada nunca afirma
 // que siga en la calle.
 function describe(outing, now) {
+  const editorial = eventScheduleChange(outing)
+  if (editorial.withdrawn) return { tone: 'upcoming', text: editorial.label, note: '' }
   const state = getProcessionLiveState({ date: outing.date, startTime: outing.departureTime, endTime: outing.returnTime }, now)
   const countdown = countdownLabel(minutesUntilDeparture({ date: outing.date, startTime: outing.departureTime }, now))
   if (countdown) return { tone: 'soon', text: countdown }

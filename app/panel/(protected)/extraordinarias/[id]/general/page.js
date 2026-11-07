@@ -1,3 +1,5 @@
+import ScheduleChangeReview from '@/components/panel/ScheduleChangeReview'
+import { EVENT_STATUS_LABELS } from '@/lib/panel/schedule-change-core'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import PanelFormGroup from '@/components/panel/PanelFormGroup'
@@ -7,7 +9,6 @@ import { saveExtraordinaryGeneralAction } from './actions'
 import styles from '@/app/panel/panel.module.css'
 import editorStyles from '../editor.module.css'
 
-const EVENT_STATUS_LABELS = { announced: 'Anunciada', held: 'Celebrada', cancelled: 'Cancelada' }
 const SAVED_MESSAGES = {
   created: 'Extraordinaria creada como borrador. Completa ahora la ficha y publícala cuando esté lista.',
   general: 'Datos generales guardados correctamente.',
@@ -57,6 +58,7 @@ export default async function ExtraordinaryGeneralPage({ params, searchParams })
         <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Ficha base</span><h2>Datos generales</h2></div><p>Edita aquí la identidad de la salida, fechas, lugares, motivo y textos públicos.</p></div>
         <form action={saveExtraordinaryGeneralAction} className={`${styles.panelCard} ${styles.editorForm}`}>
           <input type="hidden" name="outing_id" value={outing.id} />
+          <ScheduleChangeReview item={outing} related={outing.related} />
 
           <PanelFormGroup
             eyebrow="Identidad"

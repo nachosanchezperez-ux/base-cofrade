@@ -58,12 +58,12 @@ test('un acto con hora usa la zona de Madrid y la recogida de madrugada pasa al 
   assert.ok(lines.includes('STATUS:CONFIRMED'))
 })
 
-test('sin hora es de día completo, con fin exclusivo; sin hora de recogida dura 2 h', () => {
+test('sin hora es de día completo, con fin exclusivo; sin hora de recogida no inventa duración', () => {
   const allDay = agendaItemVEvent({ ...outing, startTime: '', endTime: '', date: '2026-11-01', endDate: '2026-11-03' }, { now })
   assert.ok(allDay.includes('DTSTART;VALUE=DATE:20261101'))
   assert.ok(allDay.includes('DTEND;VALUE=DATE:20261104'))
   const openEnd = agendaItemVEvent({ ...outing, endTime: '' }, { now })
-  assert.ok(openEnd.includes('DURATION:PT2H'))
+  assert.equal(openEnd.some((line) => line.startsWith('DURATION:') || line.startsWith('DTEND')), false)
 })
 
 test('los actos sin fecha o sin título no generan evento, y los suspendidos se marcan', () => {

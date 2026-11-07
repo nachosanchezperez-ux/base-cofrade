@@ -1,5 +1,6 @@
 'use client'
 
+import EventScheduleNotice from '@/components/EventScheduleNotice'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -774,6 +775,13 @@ export default function AgendaCofradeDirectoryV4({
         <div>
           <span>Sevilla y provincia</span>
           <h2 id="agenda-v4-title">Agenda de actos</h2>
+          {items.some((item) => item.isPostponed || item.isCancelled) ? <details>
+            <summary>Cambios de convocatoria y cancelaciones</summary>
+            {items.filter((item) => item.isPostponed || item.isCancelled).map((item) => <div key={item.key}>
+              <strong>{item.title}</strong><EventScheduleNotice item={item} />
+              {item.href ? <Link href={item.href}>Ver información del acto</Link> : null}
+            </div>)}
+          </details> : null}
         </div>
         <p>Solo mostramos lo que está por venir. Elige cuándo, qué tipo de acto y dónde para localizar una cita de un vistazo.</p>
       </div>
@@ -980,7 +988,7 @@ export default function AgendaCofradeDirectoryV4({
                         <span>{displayDateInfo.month}</span>
                         {displayDateInfo.year && String(displayDateInfo.year) !== currentYear ? <small>{displayDateInfo.year}</small> : null}
                       </time>
-                      <div className={`${styles.cardBody} ${mobileStyles.cardBody}`}>
+                      <div className={`${styles.cardBody} ${mobileStyles.cardBody}`}><EventScheduleNotice item={item} />
                         {isOutingEvent(item) && !item.timeText ? (
                           <div className={mobileStyles.outingTimes}>
                             <div><span>Salida</span><strong>{item.startTime || scheduleTimeHint(item.schedule, 'departure') || 'Por confirmar'}</strong><small>{schedulePrecision(item.schedule, 'departure')}</small></div>
