@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import CalendarSubscribeLinks from '@/components/CalendarSubscribeLinks'
 import { brotherhoodCalendarPath } from '@/lib/agenda-ics-links'
+import { relativeDayLabel } from '@/lib/relative-day'
+import RelativeDayLabel from './RelativeDayLabel'
 import styles from './BrotherhoodNextAppointment.module.css'
 
 // «Próximamente»: el siguiente acto de la Hermandad (agenda, igualás, salidas
@@ -33,6 +35,9 @@ function timeLabel(item) {
   return item.startTime || item.timeText || ''
 }
 
+// Más allá de dos meses, «En 74 días» no ayuda: se queda en «Próximamente».
+const RELATIVE_MAX_DAYS = 60
+
 function ItemLink({ item, children, className }) {
   if (!item.href) return children
   return <Link href={item.href} className={className}>{children}</Link>
@@ -49,7 +54,10 @@ export default function BrotherhoodNextAppointment({ next, others = [], brotherh
   return (
     <section className={styles.section} id="agenda" aria-labelledby="proximamente-titulo">
       <div className="shell">
-        <h2 id="proximamente-titulo" className={styles.eyebrow}>Próximamente</h2>
+        {/* «Hoy», «Mañana» o «En 3 días»; más allá de dos meses, «Próximamente». */}
+        <h2 id="proximamente-titulo" className={styles.eyebrow}>
+          <RelativeDayLabel date={next.date} initial={relativeDayLabel(next.date, undefined, { maxDays: RELATIVE_MAX_DAYS }) || 'Próximamente'} fallback="Próximamente" maxDays={RELATIVE_MAX_DAYS} />
+        </h2>
 
         <article className={styles.card}>
           {tile ? (
