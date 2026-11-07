@@ -5,7 +5,7 @@ import { ChevronRightIcon, ChurchIcon, ClockIcon, FlagIcon, MusicIcon, PlusIcon,
 import BrotherhoodOutingMap from './BrotherhoodOutingMap'
 import OutingOccasion from './OutingOccasion'
 import BandCrestBadge from './BandCrestBadge'
-import { bandSegments, outingCardTitle, outingDateParts, outingRouteStops, splitRouteStreets } from '@/lib/brotherhood-featured-outing'
+import { bandSegments, isSameStop, outingCardTitle, outingDateParts, outingRouteStops, routeMilestones, splitRouteStreets } from '@/lib/brotherhood-featured-outing'
 import { outingActionLinks } from '@/lib/outing-actions'
 import styles from './BrotherhoodChapterOuting.module.css'
 
@@ -32,9 +32,19 @@ function BandChips({ starts, ends }) {
   </span>
 }
 
-function Street({ name, marks }) {
+function Street({ name, marks, milestone = null }) {
+  // Hito del recorrido (una misa, una parada): hora y nota, destacado.
+  if (milestone?.note) {
+    return <li className={`${styles.stop} ${styles.milestone} ${marks.inside ? styles.inBand : ''}`}>
+      {milestone.time ? <b>{milestone.time}</b> : null}
+      <span>{name}</span>
+      <p className={styles.milestoneNote}>{milestone.note}</p>
+      <BandChips starts={marks.starts} ends={marks.ends} />
+    </li>
+  }
   return <li className={`${styles.street} ${marks.inside ? styles.inBand : ''}`}>
     <span>{name}</span>
+    {milestone?.time ? <small className={styles.streetTime}>{milestone.time}</small> : null}
     <BandChips starts={marks.starts} ends={marks.ends} />
   </li>
 }
@@ -51,13 +61,16 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
   if (!outing) return null
   const date = outingDateParts(outing.date)
   const route = outingRouteStops(outing.routeSummary, { origin: outing.origin, destination: outing.destination })
-  const sameTemple = route.origin && route.destination && route.origin === route.destination
+  const sameTemple = Boolean(route.origin && route.destination && isSameStop(route.origin, route.destination))
+  const milestones = routeMilestones(outing.routePoints || [], route.streets)
+  const lastMilestone = Math.max(-1, ...milestones.keys())
   const music = outing.processionalMusic?.length ? outing.processionalMusic : (outing.music || [])
   const segments = bandSegments(music, route)
   const segmentById = new Map(segments.map((band) => [band.id, band]))
   // El final de un tramo de banda queda siempre a la vista, fuera del plegable.
   const lastSegmentStreet = Math.max(0, ...segments.map((band) => Math.min(band.end, route.streets.length)))
-  const streets = splitRouteStreets(route.streets, { head: Math.max(4, lastSegmentStreet) })
+  // Los hitos (y la calle siguiente) quedan siempre a la vista, fuera del plegable.
+  const streets = splitRouteStreets(route.streets, { head: Math.max(4, lastSegmentStreet, lastMilestone + 2) })
   const marksAt = (index) => bandMarks(segments, index)
   const originMarks = marksAt(0)
   const destinationMarks = marksAt(route.streets.length + 1)
@@ -86,8 +99,10 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
         </header>
 
         <div className={styles.times}>
-          <Time label="Salida" value={outing.departureTime} place={route.origin} />
+          <Time label="Salida" value={outing.departureTime} place={sameTemple ? '' : route.origin} />
           <Time label="Entrada" value={outing.returnTime} place={sameTemple ? '' : route.destination} />
+          {/* Lo habitual: sale y entra en el mismo templo; se dice una vez. */}
+          {sameTemple ? <p className={styles.timesPlace}><ChurchIcon size={15} /> <span><small>Salida y entrada</small> {route.origin}</span></p> : null}
         </div>
 
         {music.length ? <ul className={styles.bands} aria-label="Acompañamiento musical">
@@ -113,16 +128,16 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
               <span>{route.origin || 'Salida'}</span>
               <BandChips starts={segments.filter((band) => band.start === 0)} ends={[]} />
             </li>
-            {streets.head.map((name, index) => <Street key={`h-${index}`} name={name} marks={marksAt(index + 1)} />)}
+            {streets.head.map((name, index) => <Street key={`h-${index}`} name={name} marks={marksAt(index + 1)} milestone={milestones.get(index)} />)}
             {streets.hidden.length ? <li className={styles.fold}>
               <details>
                 <summary><span>{streets.hidden.length} calles más</span><b aria-hidden="true"><PlusIcon size={16} strokeWidth={2.6} /></b></summary>
                 <ol className={styles.foldList}>
-                  {streets.hidden.map((name, index) => <Street key={`m-${index}`} name={name} marks={marksAt(hiddenOffset + index)} />)}
+                  {streets.hidden.map((name, index) => <Street key={`m-${index}`} name={name} marks={marksAt(hiddenOffset + index)} milestone={milestones.get(streets.head.length + index)} />)}
                 </ol>
               </details>
             </li> : null}
-            {streets.tail.map((name, index) => <Street key={`t-${index}`} name={name} marks={marksAt(tailOffset + index)} />)}
+            {streets.tail.map((name, index) => <Street key={`t-${index}`} name={name} marks={marksAt(tailOffset + index)} milestone={milestones.get(streets.head.length + streets.hidden.length + index)} />)}
             <li className={`${styles.stop} ${styles.endpoint} ${destinationMarks.inside ? styles.inBand : ''}`}>
               <b>{outing.returnTime || 'Entrada'}</b>
               <span>{route.destination || 'Entrada'}</span>
