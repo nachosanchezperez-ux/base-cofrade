@@ -1,0 +1,105 @@
+/* Vírgenes Coronadas — página. Misma línea que el Pregón de las Glorias:
+   fondo blanco, cabecera sin caja y bloques separados por aire. */
+.page {
+  --cor-ink: #0f2742;
+  --cor-muted: #5a6b7c;
+  --cor-line: #dce5ec;
+  --cor-accent: #b01b32;
+  padding-top: 22px;
+  padding-bottom: clamp(64px, 8vw, 110px);
+  color: var(--cor-ink);
+  background: #fff;
+}
+
+.intro {
+  display: grid;
+  gap: 8px;
+  padding: 18px 0 22px;
+}
+
+.intro h1 {
+  margin: 0;
+  color: var(--cor-ink);
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -.035em;
+}
+
+.intro p {
+  max-width: 680px;
+  margin: 0;
+  color: var(--cor-muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.intro .stats {
+  margin-top: 4px;
+  color: #536a7e;
+  font-size: 14px;
+}
+
+.stats strong {
+  color: var(--cor-ink);
+  font-weight: 800;
+}
+
+.upcoming {
+  display: grid;
+  gap: 14px;
+  padding: 6px 0 30px;
+}
+
+.upcoming h2,
+.blockTitle {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+}
+
+.upcoming h2 {
+  color: var(--cor-accent);
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.upcomingList {
+  display: grid;
+  gap: 24px;
+}
+
+.block {
+  display: grid;
+  gap: 14px;
+  padding-top: 8px;
+}
+
+.note {
+  max-width: 680px;
+  margin: 36px 0 0;
+  color: var(--cor-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.note a {
+  color: #123a67;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (min-width: 720px) {
+  .upcomingList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1100px) {
+  .upcomingList {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

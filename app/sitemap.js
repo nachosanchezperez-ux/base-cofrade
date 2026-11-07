@@ -154,6 +154,11 @@ const staticEntries = [
     priority: 0.72,
   },
   {
+    url: absoluteUrl('/virgenes-coronadas'),
+    changeFrequency: 'monthly',
+    priority: 0.78,
+  },
+  {
     url: absoluteUrl('/pregunta'),
     changeFrequency: 'monthly',
     priority: 0.7,

@@ -13,6 +13,9 @@ import {
   authorWorkOrder,
 } from '@/lib/authors-presentation'
 import { getPublicAgentBySlug } from '@/lib/supabase/public-agents'
+import { getCoronationsByOfficiant } from '@/lib/supabase/virgenes-coronadas'
+import CoronadaCard from '@/components/CoronadaCard'
+import coronadaStyles from '@/components/CoronadasExplorer.module.css'
 import {
   absoluteUrl,
   breadcrumbJsonLd,
@@ -162,11 +165,13 @@ export async function generateMetadata({ params }) {
     `${agent.name} en Hilo Cofrade: obra, autorías, intervenciones y Fuentes documentales relacionadas.`
   )
   const canonicalPath = `/autores/${agent.slug}`
+  // Un prelado sin obra artística se indexa por las coronaciones que presidió.
+  const coronations = await getCoronationsByOfficiant(agent.id)
 
   return {
     title,
     description,
-    robots: agent.indexable
+    robots: agent.indexable || coronations.length >= 3
       ? { index: true, follow: true }
       : { index: false, follow: true },
     ...socialMetadata({
@@ -183,6 +188,7 @@ export default async function AuthorPage({ params }) {
   if (!agent) notFound()
 
   const category = authorCategoryFor(agent)
+  const coronations = await getCoronationsByOfficiant(agent.id)
   // Sin dato no se escribe «pendiente»: la fila no aparece.
   const originText = [agent.municipality, [agent.birthText, agent.deathText].filter(Boolean).join(' — ')].filter(Boolean).join(' · ')
   const metrics = profileMetrics(agent, category.key)
@@ -345,6 +351,35 @@ export default async function AuthorPage({ params }) {
               />
             ))}
 
+          </div>
+        </section>
+      ) : null}
+
+      {coronations.length ? (
+        <section className={`shell ${styles.directory} ${styles.profileDirectory}`} aria-labelledby="coronaciones-autor">
+          <header className={styles.directoryHeading}>
+            <div>
+              <span>Vírgenes Coronadas</span>
+              <h2 id="coronaciones-autor">
+                {coronations.length === 1 ? 'Coronación que presidió' : `Las ${coronations.length} coronaciones que presidió`}
+              </h2>
+            </div>
+            <p>
+              Imágenes de la provincia de Sevilla a las que impuso la corona. <Link href="/virgenes-coronadas">Ver todas las Vírgenes Coronadas</Link>.
+            </p>
+          </header>
+          <div className={coronadaStyles.grid}>
+            {coronations.map((item) => (
+              <CoronadaCard
+                key={item.id}
+                item={{
+                  ...item,
+                  photo: item.photo
+                    ? { src: item.photo.path, alt: item.photo.alt, focus: item.photo.focusPosition, credit: item.photo.credit }
+                    : null,
+                }}
+              />
+            ))}
           </div>
         </section>
       ) : null}

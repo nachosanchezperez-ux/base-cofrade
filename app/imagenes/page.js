@@ -46,7 +46,8 @@ export default async function ImagenesPage() {
         <p className="page-lead">
           Descubre titulares y otras imágenes físicas a través de su hermandad, localidad, autoría y datación. Sigue sus relaciones documentadas en los directorios de{' '}
           <DirectoryIntroLink href="/autores">autores y oficios</DirectoryIntroLink>{' '}
-          y de <DirectoryIntroLink href="/pasos">pasos procesionales</DirectoryIntroLink>.
+          y de <DirectoryIntroLink href="/pasos">pasos procesionales</DirectoryIntroLink>, o recorre las{' '}
+          <DirectoryIntroLink href="/virgenes-coronadas">Vírgenes Coronadas</DirectoryIntroLink> de la provincia.
         </p>
         <HeritageDirectoryFacets items={images} section="imagenes" title="Imágenes" />
         <RelationalEntityDirectory items={directoryItems} kind="image" />
