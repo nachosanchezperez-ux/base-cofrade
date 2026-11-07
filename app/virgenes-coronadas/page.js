@@ -44,6 +44,7 @@ function compact(item) {
       date: act.date,
       dateLabel: act.dateLabel,
       isAnnounced: act.isAnnounced,
+      status: act.status,
       officiants: act.officiants,
     })),
   }
@@ -95,7 +96,7 @@ export default async function VirgenesCoronadasPage() {
           <section className={styles.upcoming} aria-labelledby="proximas-coronaciones">
             <h2 id="proximas-coronaciones">{upcoming.length === 1 ? 'Próxima coronación' : 'Próximas coronaciones'}</h2>
             <div className={styles.upcomingList}>
-              {upcoming.map((item) => <CoronadaCard key={item.id} item={compact(item)} priority />)}
+              {upcoming.map((item, index) => <CoronadaCard key={item.id} item={compact(item)} priority={index < 2} />)}
             </div>
           </section>
         ) : null}

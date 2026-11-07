@@ -3,6 +3,8 @@ import Link from 'next/link'
 import EntityVisualFallback from '@/components/EntityVisualFallback'
 import styles from './CoronadasExplorer.module.css'
 
+const ACT_STATUS_SUFFIX = { upcoming: ' · prevista', unconfirmed: ' · sin confirmar' }
+
 function isSvg(path = '') {
   return /\.svg(?:$|\?)/i.test(path)
 }
@@ -87,7 +89,7 @@ export default function CoronadaCard({ item, priority = false, headingLevel = 3 
         <ol className={styles.acts}>
           {item.acts.map((act) => (
             <li key={act.id}>
-              <span className={styles.actLabel}>{act.isAnnounced ? `${act.label} · anunciada` : act.label}</span>
+              <span className={styles.actLabel}>{act.label}{ACT_STATUS_SUFFIX[act.status] || ''}</span>
               {act.dateLabel ? <time dateTime={act.date || undefined}>{act.dateLabel}</time> : null}
               <Officiants officiants={act.officiants} />
             </li>

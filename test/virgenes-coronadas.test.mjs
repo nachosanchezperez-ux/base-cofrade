@@ -43,6 +43,8 @@ const images = new Map([
   ['macarena', { name: 'María Santísima de la Esperanza Macarena', slug: 'esperanza-macarena', cover: { path: 'https://x.supabase.co/m.jpg' } }],
   ['amparo', { name: 'Nuestra Señora del Amparo', slug: 'amparo', cover: null }],
   ['valle', { name: 'Nuestra Señora del Valle Coronada', slug: 'valle-ecija', cover: null }],
+  ['utrera', { name: 'Nuestra Señora de las Angustias', slug: 'angustias-utrera', cover: null }],
+  ['olivares', { name: 'Santa María de las Nieves', slug: 'nieves-olivares', published: false, cover: null }],
 ])
 const brotherhoods = new Map([
   ['b-genoveva', { name: 'Santa Genoveva', slug: 'santa-genoveva', municipalityId: 'sev', crest: '/escudos/sg.png', palette: { primario: '#2a3d6b', oscuro: '#161f38' }, cover: null }],
@@ -64,6 +66,8 @@ const events = [
   { entity_id: 'e4', name: 'Coronación Canónica de Nuestra Señora del Amparo', event_type: 'Coronación canónica', event_date: '2026-11-08', event_status: 'announced', brotherhood_entity_id: 'b-amparo' },
   { entity_id: 'e5', name: 'Coronación Canónica de Nuestra Señora del Valle', event_type: 'Coronación Canónica', event_date: '1999-09-08', event_status: 'held', brotherhood_entity_id: 'b-valle', municipality_id: 'eci' },
   { entity_id: 'e6', name: 'Breve Pontificio para la Coronación Canónica', event_type: 'Coronación', event_date: '1970-11-15', event_status: 'held', brotherhood_entity_id: 'b-valle' },
+  { entity_id: 'e8', name: 'Coronación canónica de las Angustias', event_type: 'Coronación canónica', event_date: '2026-10-03', event_status: 'announced', brotherhood_entity_id: 'b-valle' },
+  { entity_id: 'e9', name: 'Coronación canónica de las Nieves', event_type: 'Coronación canónica', event_date: '2028-04-29', event_status: 'announced', brotherhood_entity_id: 'b-valle' },
   { entity_id: 'e7', name: 'Coronación sin imagen enlazada', event_type: 'Coronación canónica', event_date: '2001-01-01', event_status: 'held' },
 ]
 const links = new Map([
@@ -73,9 +77,11 @@ const links = new Map([
   ['e4', { imageId: 'amparo', officiants: [{ id: 'saiz' }] }],
   ['e5', { imageId: 'valle', officiants: [{ id: 'amigo' }] }],
   ['e6', { imageId: 'valle', officiants: [] }],
+  ['e8', { imageId: 'utrera', officiants: [{ id: 'saiz' }] }],
+  ['e9', { imageId: 'olivares', officiants: [{ id: 'saiz' }] }],
 ])
 
-const result = buildVirgenesCoronadas({ events, links, images, brotherhoods, agents, municipalities })
+const result = buildVirgenesCoronadas({ events, links, images, brotherhoods, agents, municipalities, today: '2026-11-07' })
 
 test('agrupa por imagen: litúrgica y reconocimiento canónico en la misma tarjeta', () => {
   const mercedes = result.crowned.find((item) => item.id === 'mercedes')
@@ -92,21 +98,21 @@ test('el breve no suma un acto y lo que no tiene imagen no aparece', () => {
   const valle = result.crowned.find((item) => item.id === 'valle')
   assert.equal(valle.acts.length, 1)
   assert.equal(valle.municipality, 'Écija')
-  assert.equal(result.crowned.length, 3)
+  assert.equal(result.crowned.filter((item) => item.acts.every((act) => act.status === 'held')).length, 3)
 })
 
 test('la coronación anunciada va aparte y su prelado sin ficha publicada no enlaza', () => {
-  assert.deepEqual(result.upcoming.map((item) => item.id), ['amparo'])
+  assert.deepEqual(result.upcoming.map((item) => item.id), ['amparo', 'olivares'])
   assert.equal(result.upcoming[0].acts[0].officiants[0].href, '')
   assert.ok(!result.crowned.some((item) => item.id === 'amparo'))
 })
 
 test('ordena de la más reciente a la primera y prepara filtros y cifras', () => {
-  assert.deepEqual(result.crowned.map((item) => item.id), ['valle', 'mercedes', 'macarena'])
+  assert.deepEqual(result.crowned.map((item) => item.id), ['utrera', 'valle', 'mercedes', 'macarena'])
   assert.deepEqual(result.filters.municipalities.map((option) => option.value), ['Sevilla', 'Écija'])
   assert.equal(result.filters.officiants[0].name, 'Carlos Amigo Vallejo')
   assert.equal(result.filters.officiants[0].count, 2)
-  assert.deepEqual(result.stats, { count: 3, municipalityCount: 2, firstYear: 1964, lastYear: 1999 })
+  assert.deepEqual(result.stats, { count: 4, municipalityCount: 2, firstYear: 1964, lastYear: 2026 })
 })
 
 test('la página está en el sitemap y enlazada desde el directorio de imágenes', async () => {
@@ -118,4 +124,17 @@ test('la página está en el sitemap y enlazada desde el directorio de imágenes
   assert.match(sitemap, /absoluteUrl\('\/virgenes-coronadas'\)/)
   assert.match(images, /href="\/virgenes-coronadas"/)
   assert.match(page, /alternates: \{ canonical: VIRGENES_CORONADAS_PATH \}/)
+})
+
+test('anunciada con fecha pasada y sin confirmar: no se da por hecha ni sale como próxima', () => {
+  const utrera = result.crowned.find((item) => item.id === 'utrera')
+  assert.equal(utrera.acts[0].status, 'unconfirmed')
+  assert.equal(utrera.isUpcoming, false)
+})
+
+test('una imagen con la ficha en revisión se muestra sin enlace', () => {
+  const olivares = result.upcoming.find((item) => item.id === 'olivares')
+  assert.equal(olivares.href, '')
+  assert.equal(olivares.year, 2028)
+  assert.equal(olivares.acts[0].status, 'upcoming')
 })
