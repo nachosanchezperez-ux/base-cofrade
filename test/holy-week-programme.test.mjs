@@ -143,6 +143,13 @@ test('la página reutiliza «Mis hermandades» y cita al Consejo como fuente', (
   assert.match(page, /canonical: PROGRAMME_PATH/)
 })
 
+test('el programa se renderiza en la petición: connection precede a la carga', () => {
+  const page = readFileSync(new URL('../app/semana-santa-sevilla-2027/page.js', import.meta.url), 'utf8')
+  assert.match(page, /import \{ connection \} from 'next\/server'/)
+  assert.ok(page.indexOf('await connection()') > 0)
+  assert.ok(page.indexOf('await connection()') < page.indexOf('await getHolyWeekProgramme()'))
+})
+
 test('Siete Palabras y el Cerro: Nazareno, misterio y palio', async () => {
   const { orderSteps } = await import('../lib/holy-week-programme.js')
   const siete = orderSteps([
