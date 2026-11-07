@@ -38,6 +38,9 @@ Los eventos anteriores `game_complete`, `game_open`, `game_hint` y `content_shar
 - `git diff --check`: correcto.
 - Build local: compilación y TypeScript correctos. El prerender completo se detiene en `/semana-santa-sevilla-2027` por falta de configuración pública de Supabase en el entorno local. No es un build completo aprobado.
 - Preview local: el lanzador añade `--host`/`--strictPort`, que Next.js no admite. No se cambia la aplicación para eludir este límite del entorno.
-- Pendiente de certificación: interacción real en móvil, menú nativo del sistema, cambio de día con navegador abierto, inspección visual final, llegada de eventos a GA4 y build completo de Vercel. Las pruebas de lógica no equivalen a estos ensayos de navegador.
+- Vercel: build completo READY del código `13b95f81b57fe9636e9319259b639660c5ccf645`, deployment `dpl_D75VJjTaSYsrzgHqDUeu5eChQmVX`. El estado de GitHub/Vercel es success. Este añadido documental posterior no cambia el código probado.
+- GitHub confirma la PR #1410 sin conflictos con main `36f33e2b`; su primera respuesta de mergeability era provisional.
+- Pendiente de certificación: interacción real en móvil, menú nativo del sistema, cambio de día con navegador abierto, inspección visual final y llegada de eventos a GA4. Las pruebas de lógica no equivalen a estos ensayos de navegador.
+- Acceso visual bloqueado: el navegador privado llega al login de Vercel. La revisión automática rechazó crear el enlace temporal de acceso porque permitiría a cualquiera con el enlace ver la preview protegida. No se desactiva la protección ni se usa otra herramienta para crear el mismo enlace. Para continuar con esa vía hace falta autorización del usuario.
 
 Sin dependencias nuevas, cambios de datos, migraciones, merge ni despliegue de producción. PR en borrador para revisión.
