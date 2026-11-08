@@ -8,13 +8,14 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { PUBLIC_SITEMAP_SEGMENTS, sitemapEntriesForSegment } from '../lib/seo-sitemap-segments.js';
 import { hasCrewEventPage } from '../lib/crew-event-url-policy.js';
+import { PROGRAMME_DAYS, dayPath } from '../lib/holy-week-programme.js';
 
 // Execute the real sitemap orchestration with controlled readers. No network,
 // production credentials, or framework cache is needed to verify its contract.
 async function harness({ fail = '', delay = 0 } = {}) {
   const calls = [];
   const context = {
-    allowAgendaSitemapUrl, hasCrewEventPage, PUBLIC_SITEMAP_SEGMENTS, sitemapEntriesForSegment, connection: async () => {},
+    allowAgendaSitemapUrl, hasCrewEventPage, PROGRAMME_DAYS, dayPath, PUBLIC_SITEMAP_SEGMENTS, sitemapEntriesForSegment, connection: async () => {},
     absoluteUrl: (path) => `https://hilocofrade.es${path}`,
     unstable_cache: (fn) => fn,
     brotherhoodDirectoryLocalities: () => [], brotherhoodDirectoryRoutes: () => [],
@@ -211,4 +212,15 @@ test('el Vía Crucis del Consejo se descubre desde el sitemap general sin lector
   const source = await readFile(new URL('../app/sitemap.js', import.meta.url), 'utf8');
   assert.match(source, /segment === 'general'/);
   assert.match(source, /sitemapEntriesForSegment\(staticEntries, segment\)/);
+});
+
+test('las once jornadas del programa de mano 2027 están en el sitemap general', async () => {
+  const api = await harness();
+  const entries = await api.getPublicSitemapSegmentEntries('general');
+  const urls = entries.map((entry) => entry.url);
+  assert.ok(urls.includes('https://hilocofrade.es/semana-santa-sevilla-2027'));
+  for (const id of ['viernes-de-dolores', 'miercoles-santo', 'madrugada', 'domingo-de-resurreccion']) {
+    assert.ok(urls.includes(`https://hilocofrade.es/semana-santa-sevilla-2027/${id}`), id);
+  }
+  assert.equal(urls.filter((url) => url.startsWith('https://hilocofrade.es/semana-santa-sevilla-2027/')).length, 11);
 });

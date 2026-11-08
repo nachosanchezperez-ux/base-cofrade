@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react'
 import {
   followedServerSnapshot,
@@ -10,7 +11,7 @@ import {
   toggleFollowed,
   writeFollowed,
 } from '@/lib/followed-brotherhoods'
-import { normalizeSearch } from '@/lib/holy-week-programme'
+import { dayPath, daySeo, normalizeSearch } from '@/lib/holy-week-programme'
 import styles from './HolyWeekProgramme.module.css'
 
 const MINE = 'mi-programa'
@@ -67,7 +68,7 @@ function itemSearchMatch(item, query) {
 }
 
 function shareItem(item, day) {
-  const url = `${window.location.origin}${window.location.pathname}#${day.id}--${item.key}`
+  const url = `${window.location.origin}${dayPath(day.id)}#${day.id}--${item.key}`
   const text = `${item.name} · ${day.name}${item.departure ? `, salida a las ${item.departure}` : ''}`
   if (navigator.share) {
     navigator.share({ title: item.name, text, url }).catch(() => {})
@@ -126,19 +127,19 @@ function ProgrammeItem({ item, day, open, onToggle, followed, onFollow, onPull }
   const empty = !item.cortejo.length && !item.legs.length && !item.departure
 
   return <li id={`${day.id}--${item.key}`} className={styles.item} style={{ '--entity-color': accent }}>
-    <button type="button" className={styles.itemHead} aria-expanded={open} aria-controls={panelId} onClick={onToggle}>
+    <h3 className={styles.itemTitle}><button type="button" className={styles.itemHead} aria-expanded={open} aria-controls={panelId} onClick={onToggle}>
       <span className={styles.crestWrap}>
         <Crest item={item} />
         {item.position ? <span className={styles.position}>{item.position}</span> : null}
       </span>
       <span className={styles.itemName}>
         <strong>{item.name}</strong>
-        <span>{[item.parentName, item.departure ? `Salida ${item.departure}` : item.origin].filter(Boolean).join(' · ')}</span>
+        <span>{[item.parentName, item.departure ? `Salida ${item.departure}` : (day.order === 'salida' ? 'Hora de salida por confirmar' : item.origin)].filter(Boolean).join(' · ')}</span>
       </span>
       {followed ? <span className={styles.followedMark} aria-label="En mi programa"><StarIcon filled size={15} /></span> : null}
       {item.move ? <span className={item.move > 0 ? styles.moveUp : styles.moveDown} title="Cambio de puesto respecto a 2026">{item.move > 0 ? `↑ ${item.move}` : `↓ ${-item.move}`}</span> : null}
       <span className={styles.chevron} data-open={open ? 'true' : undefined}><ChevronIcon /></span>
-    </button>
+    </button></h3>
 
     <div id={panelId} className={styles.panel} hidden={!open}>
       {open ? <>
@@ -179,7 +180,10 @@ function ProgrammeItem({ item, day, open, onToggle, followed, onFollow, onPull }
       <RouteLegs item={item} onPull={onPull} />
 
       {empty ? <p className={styles.empty}>Cortejo y horario en preparación. Mientras tanto, su ficha reúne titulares, pasos y patrimonio.</p> : null}
+      </> : null}
 
+      {/* El enlace a la ficha va siempre en el HTML (aunque el panel esté
+          cerrado) para que los buscadores sigan el hilo hasta cada Hermandad. */}
       <div className={styles.actions}>
         <Link href={item.href} className={styles.fichaLink}><span>Conoce {item.sentenceName}&nbsp;<span aria-hidden="true">→</span></span></Link>
         <button type="button" className={styles.iconButton} data-active={followed ? 'true' : undefined} aria-pressed={followed} aria-label={followed ? 'Quitar de mi programa' : 'Añadir a mi programa'} onClick={onFollow}>
@@ -189,7 +193,6 @@ function ProgrammeItem({ item, day, open, onToggle, followed, onFollow, onPull }
           <ShareIcon />
         </button>
       </div>
-      </> : null}
     </div>
   </li>
 }
@@ -207,14 +210,22 @@ function dayBadge(day) {
   return null
 }
 
-export default function HolyWeekProgramme({ days = [], initialDayId = '', dateLabels = {} }) {
-  const [activeDay, setActiveDay] = useState(initialDayId || days[0]?.id || '')
+
+// Cada jornada tiene su URL (/semana-santa-sevilla-2027/miercoles-santo): las
+// pestañas y el paginador son enlaces reales, rastreables, y la navegación
+// sigue siendo instantánea. Solo se pinta la jornada de la página; el buscador
+// y «Mi programa» siguen recorriendo la semana entera.
+export default function HolyWeekProgramme({ days = [], activeDayId = '', dateLabels = {}, mode = 'hub' }) {
+  const router = useRouter()
+  const activeDay = activeDayId || days[0]?.id || ''
+  const [showMine, setShowMine] = useState(false)
   const [openKey, setOpenKey] = useState('')
   const [query, setQuery] = useState('')
   const followed = useSyncExternalStore(subscribeFollowed, followedSnapshot, followedServerSnapshot)
   const followedSlugs = useMemo(() => new Set(followed.map((item) => item.slug)), [followed])
 
-  // Enlace compartido: #miercoles-santo--el-baratillo abre esa cofradía.
+  // Enlace compartido: #miercoles-santo--el-baratillo abre esa cofradía. Los
+  // enlaces antiguos a la portada con el ancla de otra jornada llevan a su página.
   useEffect(() => {
     function openFromHash() {
       const hash = decodeURIComponent(window.location.hash.replace(/^#/, ''))
@@ -222,25 +233,29 @@ export default function HolyWeekProgramme({ days = [], initialDayId = '', dateLa
       const [dayId, itemKey] = hash.split('--')
       if (!days.some((day) => day.id === dayId)) return
       setQuery('')
-      setActiveDay(dayId)
+      setShowMine(false)
+      if (dayId !== activeDay) {
+        router.replace(`${dayPath(dayId)}#${hash}`)
+        return
+      }
       if (itemKey) {
-        setOpenKey(`${dayId}--${itemKey}`)
+        setOpenKey(hash)
         window.requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView({ block: 'start' }))
       }
     }
     openFromHash()
     window.addEventListener('hashchange', openFromHash)
     return () => window.removeEventListener('hashchange', openFromHash)
-  }, [days])
+  }, [days, activeDay, router])
 
-  // La pastilla de la jornada activa siempre a la vista en la tira.
+  // La pestaña de la jornada activa siempre a la vista en la tira.
   useEffect(() => {
-    const tab = document.querySelector(`[data-day-tab="${activeDay}"]`)
+    const tab = document.querySelector(`[data-day-tab="${showMine ? MINE : activeDay}"]`)
     const strip = tab?.closest('nav')
     if (!tab || !strip) return
     // Solo desplazamiento horizontal de la tira: la página no se mueve.
-    strip.scrollTo({ left: tab.offsetLeft - (strip.clientWidth - tab.offsetWidth) / 2, behavior: 'smooth' })
-  }, [activeDay])
+    strip.scrollTo({ left: tab.offsetLeft - (strip.clientWidth - tab.offsetWidth) / 2 })
+  }, [activeDay, showMine])
 
   const normalizedQuery = normalizeSearch(query)
   const searching = normalizedQuery.length >= 2
@@ -258,7 +273,11 @@ export default function HolyWeekProgramme({ days = [], initialDayId = '', dateLa
 
   function goTo(dayId, itemKey = '') {
     setQuery('')
-    setActiveDay(dayId)
+    setShowMine(false)
+    if (dayId !== activeDay) {
+      router.push(itemKey ? `${dayPath(dayId)}#${dayId}--${itemKey}` : dayPath(dayId))
+      return
+    }
     setOpenKey(itemKey ? `${dayId}--${itemKey}` : '')
     window.requestAnimationFrame(() => {
       const target = itemKey ? document.getElementById(`${dayId}--${itemKey}`) : document.getElementById('programa-jornada')
@@ -269,6 +288,11 @@ export default function HolyWeekProgramme({ days = [], initialDayId = '', dateLa
   function follow(item) {
     writeFollowed(toggleFollowed(followed, { slug: item.slug, name: item.parentName || item.name, municipality: 'Sevilla' }))
   }
+
+  const dayIndex = days.findIndex((day) => day.id === activeDay)
+  const day = days[dayIndex]
+  const badge = day ? dayBadge(day) : null
+  const seo = day ? daySeo(day, day.items.length) : null
 
   return <div className={styles.programme}>
     <div className={styles.searchBar}>
@@ -289,11 +313,11 @@ export default function HolyWeekProgramme({ days = [], initialDayId = '', dateLa
     {searching ? <section className={styles.results} aria-live="polite">
       <p className={styles.resultsCount}><strong>{results.length}</strong> {results.length === 1 ? 'resultado' : 'resultados'} para «{query}»</p>
       {results.length ? <ul>
-        {results.map(({ day, item, why }) => <li key={`${day.id}-${item.key}`}>
-          <button type="button" onClick={() => goTo(day.id, item.key)}>
+        {results.map(({ day: resultDay, item, why }) => <li key={`${resultDay.id}-${item.key}`}>
+          <button type="button" onClick={() => goTo(resultDay.id, item.key)}>
             <Crest item={item} size={36} />
             <span>
-              <small>{day.name}</small>
+              <small>{resultDay.name}</small>
               <strong>{item.name}</strong>
               <span>{why}</span>
             </span>
@@ -305,36 +329,37 @@ export default function HolyWeekProgramme({ days = [], initialDayId = '', dateLa
     <div hidden={searching}>
       <nav className={styles.days} aria-label="Jornadas">
         <ul>
-          {days.map((day) => <li key={day.id}>
-            <button
-              type="button"
-              aria-pressed={day.id === activeDay}
-              data-day-tab={day.id}
-              data-pending={day.status === 'pending' ? 'true' : undefined}
-              onClick={() => { setActiveDay(day.id); setOpenKey('') }}
+          {days.map((tabDay) => <li key={tabDay.id}>
+            <Link
+              href={dayPath(tabDay.id)}
+              scroll={false}
+              aria-current={tabDay.id === activeDay && !showMine ? 'page' : undefined}
+              data-day-tab={tabDay.id}
+              data-pending={tabDay.status === 'pending' ? 'true' : undefined}
+              onClick={() => { setShowMine(false); setOpenKey('') }}
             >
-              <strong>{day.short}</strong>
-              <span>{dateLabels[day.id]?.short}</span>
-            </button>
+              <strong>{tabDay.short}</strong>
+              <span>{dateLabels[tabDay.id]?.short}</span>
+            </Link>
           </li>)}
           <li>
-            <button type="button" aria-pressed={activeDay === MINE} data-day-tab={MINE} onClick={() => setActiveDay(MINE)} className={styles.mineTab}>
-              <StarIcon filled={activeDay === MINE} size={16} />
+            <button type="button" aria-pressed={showMine} data-day-tab={MINE} onClick={() => setShowMine(!showMine)} className={styles.mineTab}>
+              <StarIcon filled={showMine} size={16} />
               <span>Mi programa{followed.length ? ` · ${mine.length}` : ''}</span>
             </button>
           </li>
         </ul>
       </nav>
 
-      <section id="programa-jornada" className={styles.mine} hidden={activeDay !== MINE} aria-labelledby="mi-programa-titulo">
+      <section id="programa-jornada" className={styles.mine} hidden={!showMine} aria-labelledby="mi-programa-titulo">
         <h2 id="mi-programa-titulo">Mi programa</h2>
         <p>Las cofradías que marcas con la estrella, en el orden en que salen. Son las mismas de «Mis hermandades».</p>
         {mine.length ? <ul>
-          {mine.map(({ day, item }) => <li key={`${day.id}-${item.key}`}>
-            <button type="button" onClick={() => goTo(day.id, item.key)}>
+          {mine.map(({ day: mineDay, item }) => <li key={`${mineDay.id}-${item.key}`}>
+            <button type="button" onClick={() => goTo(mineDay.id, item.key)}>
               <Crest item={item} size={36} />
               <span>
-                <small>{day.name} · {dateLabels[day.id]?.short}</small>
+                <small>{mineDay.name} · {dateLabels[mineDay.id]?.short}</small>
                 <strong>{item.name}</strong>
                 <span>{item.departure ? `Salida ${item.departure}${item.arrival ? ` · entrada ${item.arrival}` : ''} (2026)` : 'Horario 2027 por publicar'}</span>
               </span>
@@ -343,42 +368,42 @@ export default function HolyWeekProgramme({ days = [], initialDayId = '', dateLa
         </ul> : <p className={styles.noResults}>Aún no has marcado ninguna. Abre una cofradía y toca la estrella para añadirla.</p>}
       </section>
 
-      {days.map((day, index) => {
-        const badge = dayBadge(day)
-        return <section key={day.id} id={day.id} className={styles.day} hidden={day.id !== activeDay} aria-labelledby={`${day.id}-titulo`}>
-          <header className={styles.dayHead}>
-            <p className={styles.kicker}>{dayKicker(day)}</p>
-            <h2 id={`${day.id}-titulo`}>{day.name}</h2>
-            <p className={styles.dayMeta}>{dateLabels[day.id]?.long} · {day.items.length} {day.items.length === 1 ? 'hermandad' : 'hermandades'}</p>
-            {badge || day.note ? <p className={styles.dayNote}>
-              {badge ? <span data-tone={badge.tone}>{badge.label}</span> : null}
-              {day.note ? <span>{day.note}</span> : null}
-            </p> : null}
-          </header>
+      {day ? <section id={day.id} className={styles.day} hidden={showMine} aria-labelledby={`${day.id}-titulo`}>
+        <header className={styles.dayHead}>
+          {mode === 'day'
+            ? <h2 id={`${day.id}-titulo`}>{seo.listHeading}</h2>
+            : <>
+              <p className={styles.kicker}>{dayKicker(day)}</p>
+              <h2 id={`${day.id}-titulo`}><Link href={dayPath(day.id)} className={styles.dayTitleLink}>{day.name}</Link></h2>
+            </>}
+          <p className={styles.dayMeta}>{dateLabels[day.id]?.long} · {day.items.length} {day.items.length === 1 ? 'hermandad' : 'hermandades'}</p>
+          {badge || day.note ? <p className={styles.dayNote}>
+            {badge ? <span data-tone={badge.tone}>{badge.label}</span> : null}
+            {day.note ? <span>{day.note}</span> : null}
+          </p> : null}
+        </header>
 
-          <ol className={styles.list}>
-            {day.items.map((item) => {
-              const key = `${day.id}--${item.key}`
-              return <ProgrammeItem
-                key={key}
-                item={item}
-                day={day}
-                open={openKey === key}
-                onToggle={() => setOpenKey(openKey === key ? '' : key)}
-                followed={followedSlugs.has(item.slug)}
-                onFollow={() => follow(item)}
-                onPull={(text) => { setQuery(text); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-              />
-            })}
-          </ol>
+        <ol className={styles.list}>
+          {day.items.map((item) => {
+            const key = `${day.id}--${item.key}`
+            return <ProgrammeItem
+              key={key}
+              item={item}
+              day={day}
+              open={openKey === key}
+              onToggle={() => setOpenKey(openKey === key ? '' : key)}
+              followed={followedSlugs.has(item.slug)}
+              onFollow={() => follow(item)}
+              onPull={(text) => { setQuery(text); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
+            />
+          })}
+        </ol>
 
-          <nav className={styles.pager} aria-label="Jornadas contiguas">
-            {index > 0 ? <button type="button" onClick={() => goTo(days[index - 1].id)}><span>‹ Anterior</span><strong>{days[index - 1].name}</strong></button> : <span />}
-            {index < days.length - 1 ? <button type="button" data-next="true" onClick={() => goTo(days[index + 1].id)}><span>Sigue con ›</span><strong>{days[index + 1].name}</strong></button> : null}
-          </nav>
-        </section>
-      })}
+        <nav className={styles.pager} aria-label="Jornadas contiguas">
+          {dayIndex > 0 ? <Link href={dayPath(days[dayIndex - 1].id)}><span>‹ Anterior</span><strong>{days[dayIndex - 1].name}</strong></Link> : <span />}
+          {dayIndex < days.length - 1 ? <Link href={dayPath(days[dayIndex + 1].id)} data-next="true"><span>Sigue con ›</span><strong>{days[dayIndex + 1].name}</strong></Link> : null}
+        </nav>
+      </section> : null}
     </div>
   </div>
 }
-
