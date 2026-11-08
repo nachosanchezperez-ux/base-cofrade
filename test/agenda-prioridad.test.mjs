@@ -66,3 +66,50 @@ test('la portada pone la coronación la primera en Hoy y en Lo que queda de hoy'
   assert.equal(home.todayItems[0].key, 'c')
   assert.equal(home.remainingTodayItems[0].key, 'c')
 })
+
+test('la marca del Panel pone primero cualquier acto extraordinario de su día', async () => {
+  const { applyExtraordinaryMarks, normalizeExtraordinaryKind } = await import('../lib/agenda-extraordinary.js')
+  assert.equal(normalizeExtraordinaryKind('anniversary'), 'anniversary')
+  assert.equal(normalizeExtraordinaryKind('otra cosa'), '')
+  assert.equal(agendaPriorityTier({ category: 'devotions', categoryLabel: 'Función', title: 'Función del 75 aniversario', extraordinaryKind: 'anniversary' }), -1)
+  assert.equal(agendaPriorityTier({ category: 'processions', title: 'Salida', extraordinaryKind: 'nada' }), 0)
+
+  const groups = [[{ id: 'o1' }], [], [], [], [{ id: 'c1' }, { id: 'c2' }], [{ id: 'o1' }]]
+  const marked = applyExtraordinaryMarks(groups, { outings: new Map([['o1', 'extraordinary_outing']]), occurrences: new Map([['c2', 'anniversary']]) })
+  assert.equal(marked[0][0].extraordinaryKind, 'extraordinary_outing')
+  assert.equal(marked[4][0].extraordinaryKind, undefined)
+  assert.equal(marked[4][1].extraordinaryKind, 'anniversary')
+  assert.equal(marked[5][0].extraordinaryKind, undefined, 'los conciertos no comparten ids con las salidas')
+
+  const base = { isUpcoming: true, municipality: 'Sevilla', scope: 'capital', date: '2026-11-15' }
+  const items = [
+    { ...base, key: 'b', id: 'b', category: 'devotions', categoryLabel: 'Besamanos', title: 'Besamanos', startTime: '10:00' },
+    { ...base, key: 'p', id: 'p', category: 'processions', categoryLabel: 'Procesión', title: 'Procesión', startTime: '18:00', extraordinaryKind: 'extraordinary_outing' },
+    { ...base, key: 't', id: 't', category: 'devotions', categoryLabel: 'Triduo', title: 'Triduo', startTime: '20:00' },
+  ]
+  const landing = buildAgendaTemporalLanding({ period: 'weekend', items, today: '2026-11-14', now: new Date('2026-11-14T06:00:00Z') })
+  assert.deepEqual(landing.items.map((item) => item.key), ['p', 'b', 't'])
+})
+
+test('la ficha pone primero el acto extraordinario del día en Próximamente y en su agenda', async () => {
+  const { upcomingBrotherhoodActs } = await import('../lib/brotherhood-reading.js')
+  const agenda = [
+    { key: 'a', date: '2026-11-15', startTime: '09:00', title: 'Misa' },
+    { key: 'b', date: '2026-11-15', startTime: '18:00', title: 'Salida extraordinaria', extraordinaryKind: 'extraordinary_outing' },
+    { key: 'c', date: '2026-11-14', startTime: '21:00', title: 'Vigilia' },
+  ]
+  assert.deepEqual(upcomingBrotherhoodActs(agenda, [], '2026-11-08', []).map((item) => item.key), ['c', 'b', 'a'])
+  assert.match(read('lib/brotherhood-agenda.js'), /isExtraordinaryAct\(first\) \? 0 : 1/)
+})
+
+test('la lectura de marcas tolera la base sin migrar y el Panel guarda solo esa columna', () => {
+  const reader = read('lib/supabase/agenda-extraordinary-marks.js')
+  assert.match(reader, /MISSING_COLUMN = '42703'/)
+  assert.match(reader, /return groups/)
+  assert.match(read('lib/supabase/agenda-cofrade.js'), /withAgendaExtraordinaryMarks\(await withAgendaPhotos/)
+  const action = read('app/panel/(protected)/agenda/extraordinarios/actions.js')
+  assert.match(action, /requirePanelEditor\(\)/)
+  assert.match(action, /update\(\{ extraordinary_kind: kind \|\| null \}\)/)
+  assert.match(action, /audit_log/)
+  assert.match(action, /revalidateAgendaPhotos\(\)/)
+})

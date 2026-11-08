@@ -1,0 +1,9 @@
+/* Fila de un acto: el selector va a la derecha en escritorio y debajo en móvil. */
+.markForm { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.markForm select { min-width: 190px; min-height: 39px; }
+
+@media (max-width: 720px) {
+  .row { grid-template-columns: 42px minmax(0, 1fr) !important; }
+  .markForm { grid-column: 1 / -1; justify-content: flex-start; }
+  .markForm select { flex: 1; min-width: 0; }
+}
