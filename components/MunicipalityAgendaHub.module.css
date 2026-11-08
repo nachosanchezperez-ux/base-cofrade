@@ -69,3 +69,26 @@
 .subscribe>span{font-weight:900;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
 .subscribe a{color:#a51d34;font-weight:850;}
 @media(max-width:520px){.subscribe>span{width:100%}}
+
+/* Piloto editorial de las guías de Dos Hermanas y Utrera. */
+.editorial{padding:clamp(42px,6vw,72px) 0;background:#fff;border-top:1px solid #e3e9ee;border-bottom:1px solid #e3e9ee}
+.editorialHeading span{display:block;color:#a51d34;font-size:9px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+.editorialHeading h2{max-width:880px;margin:10px 0 22px;color:#102b47;font-size:clamp(30px,4vw,44px);line-height:1.08;letter-spacing:-.035em}
+.editorialColumns{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(240px,.7fr);gap:clamp(24px,5vw,72px);align-items:start}
+.editorialText p{max-width:76ch;margin:0 0 15px;color:#506679;font-size:14px;line-height:1.8}
+.editorialText p:last-child{margin-bottom:0}
+.editorialLinks{display:grid;gap:9px;padding:20px;border:1px solid #dce5ec;border-radius:16px;background:#f7fafc}
+.editorialLinks h3{margin:0 0 4px;font-size:12px;color:#173650}
+.editorialLinks a{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#173650;font-size:12px;font-weight:750;line-height:1.45;text-decoration:none}
+.editorialLinks a span{color:#a51d34}
+.editorialLinks a:hover{text-decoration:underline;text-underline-offset:3px}
+.editorialLinks a:focus-visible,.editorialSources a:focus-visible,.editorialHighlight a:focus-visible{outline:2px solid #a51d34;outline-offset:3px}
+.editorialHighlight{padding:17px 19px;margin:22px 0 0;border-left:3px solid #a51d34;background:#f9fbfc}
+.editorialHighlight h3{margin:0 0 8px;color:#173650;font-size:16px}
+.editorialHighlight p{font-size:12px}
+.editorialHighlight a{color:#a51d34;font-size:12px;font-weight:850}
+.editorialSources{display:flex;flex-wrap:wrap;align-items:baseline;gap:7px 15px;margin-top:27px;padding-top:15px;border-top:1px solid #e5ebef;color:#778895;font-size:11px}
+.editorialSources span{font-weight:850}
+.editorialSources a{color:#506679;text-decoration:underline;text-underline-offset:2px}
+@media(max-width:800px){.editorialColumns{grid-template-columns:1fr}.editorialLinks{max-width:640px}}
+@media(max-width:560px){.editorialText p{font-size:13px}.editorialSources{align-items:flex-start;flex-direction:column}}
