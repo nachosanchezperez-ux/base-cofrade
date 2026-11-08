@@ -50,7 +50,7 @@ export default function BrotherhoodStepsEditor({ data, canEdit }) {
               const stepName = relation.step?.name || 'Paso no disponible'
               const archived = relation.status === 'archived'
               return (
-                <article className={styles.editorItem} key={relation.id}>
+                <article id={`paso-${relation.id}`} className={styles.editorItem} key={relation.id}>
                   <div className={styles.itemHeading}>
                     <div>
                       <span className={styles.eyebrow}>{relationLabel(relation.relation_type)}</span>

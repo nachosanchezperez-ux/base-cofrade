@@ -12,7 +12,7 @@ export const metadata = { title: 'Cultos · Hermandad · Panel' }
 function CultForm({ item, data, canEdit }) {
   const isNew = !item?.id
   return (
-    <article className={styles.editorItem}>
+    <article id={item?.id ? `culto-${item.id}` : undefined} className={styles.editorItem}>
       <div className={styles.itemHeading}>
         <div><span className={styles.eyebrow}>{isNew ? 'Nuevo culto' : item.cult_type}</span><h3>{isNew ? 'Añadir culto' : item.title}</h3></div>
         {!isNew ? <span className={`${styles.statusBadge} ${styles[item.status]}`}>{STATUS_LABELS[item.status]}</span> : null}

@@ -1,3 +1,4 @@
+import FichaSearch from '@/components/panel/FichaSearch'
 import EntityWorkspaceNav from '@/components/panel/EntityWorkspaceNav'
 import BrotherhoodPublicationControl from '@/components/panel/brotherhood/BrotherhoodPublicationControl'
 
@@ -24,6 +25,7 @@ export default async function BrotherhoodEditorLayout({ children, params }) {
   return (
     <>
       <EntityWorkspaceNav eyebrow="Ficha de Hermandad" description="Identidad, memoria, cortejo, patrimonio, agenda y documentación conectados." items={items} />
+      <FichaSearch key={id} brotherhoodId={id} />
       <BrotherhoodPublicationControl brotherhoodId={id} />
       {children}
     </>
