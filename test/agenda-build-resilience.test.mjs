@@ -51,6 +51,7 @@ function agendaFixture() {
   dependencies.withAgendaOutingContext = async (groups) => groups
   dependencies.withAgendaRelations = async (groups) => groups
   dependencies.withAgendaPhotos = async (groups) => groups
+  dependencies.withAgendaExtraordinaryMarks = async (groups) => groups
   dependencies.pickAgendaPhoto = pickAgendaPhoto
   dependencies.withProcessionLiveState = withProcessionLiveState
   dependencies.agendaMunicipalityHref = () => ''
