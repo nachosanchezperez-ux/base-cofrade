@@ -144,3 +144,28 @@ test('un resumen que solo es el rango de fechas en bruto no se repite', () => {
   const real = agendaItemVEvent({ ...outing, summary: 'Besamanos del 6 al 8 de diciembre.' }, { now }).join('\n')
   assert.match(real, /Besamanos del 6 al 8 de diciembre/)
 })
+
+test('la coronación con hora textual conserva las 10:00 sin inventar duración', () => {
+  const cult = { key: 'devotions:coronation', category: 'devotions', title: 'Coronación', date: '2026-11-08', startTime: '', timeText: '10:00' }
+  const lines = agendaItemVEvent(cult, { now })
+  assert.ok(lines.includes('DTSTART;TZID=Europe/Madrid:20261108T100000'))
+  assert.ok(!lines.some((line) => /^(DTEND|DURATION)/.test(line)))
+  assert.match(buildAgendaCalendar({ items: [cult], now }), /DTSTART;TZID=Europe\/Madrid:20261108T100000/)
+})
+
+test('un texto de turnos, una estimación o una hora inválida no inventa un inicio ICS', () => {
+  for (const timeText of ['09:00–14:00 y 17:00–21:00', 'Hacia las 10:00', '25:00', 'Por confirmar']) {
+    const lines = agendaItemVEvent({ title: 'Besamanos', date: '2026-11-14', endDate: '2026-11-15', timeText }, { now })
+    assert.ok(lines.includes('DTSTART;VALUE=DATE:20261114'), timeText)
+    assert.ok(lines.includes('DTEND;VALUE=DATE:20261116'), timeText)
+    assert.ok(lines.some((line) => line.startsWith('DESCRIPTION:') && line.includes(timeText)), timeText)
+  }
+})
+
+
+test('la hora textual de un culto de varios días no elimina su intervalo de fechas', () => {
+  const lines = agendaItemVEvent({ title: 'Triduo', date: '2026-11-13', endDate: '2026-11-15', timeText: '20:00' }, { now })
+  assert.ok(lines.includes('DTSTART;VALUE=DATE:20261113'))
+  assert.ok(lines.includes('DTEND;VALUE=DATE:20261116'))
+  assert.ok(lines.some((line) => line.startsWith('DESCRIPTION:') && line.includes('20:00')))
+})

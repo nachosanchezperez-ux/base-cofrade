@@ -1,5 +1,6 @@
 'use client'
 
+import { agendaScheduleDateLabel } from '@/lib/agenda-schedule-steps'
 import EventScheduleNotice from '@/components/EventScheduleNotice'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -1026,7 +1027,7 @@ export default function AgendaCofradeDirectoryV4({
                                 ))}
                               </section>
                             ) : null}
-                            {item.schedule?.length ? <section className={mobileStyles.eventTimetable}><h5>Horarios del acto</h5>{item.schedule.map((row) => <div key={row.id}><strong>{row.time || row.timeText || 'Por confirmar'}</strong><span>{row.label}{row.notes ? <small>{row.notes}</small> : null}</span></div>)}</section> : null}
+                            {item.schedule?.length ? <section className={mobileStyles.eventTimetable}><h5>Horarios del acto</h5>{item.schedule.map((row) => <div key={row.id}><strong>{row.time || row.timeText || 'Por confirmar'}</strong><span>{row.label}<small>{agendaScheduleDateLabel(row, item)}</small>{row.notes ? <small>{row.notes}</small> : null}</span></div>)}</section> : null}
                             {item.music?.length ? <section className={mobileStyles.eventMusic}><h5>Acompañamiento musical</h5>{item.music.map((band, index) => <p key={band.id || index}>{band.href ? <Link href={band.href}>{band.name}</Link> : <strong>{band.name}</strong>}{band.context ? <small>{band.context}</small> : null}</p>)}</section> : null}
                             {agendaDirectionsHref(item.place, item.municipality) ? <a href={agendaDirectionsHref(item.place, item.municipality)} target="_blank" rel="noreferrer">{isOutingEvent(item) ? 'Cómo llegar a la salida' : 'Cómo llegar'} ↗</a> : null}
                             {item.summary && item.summary !== item.routeText ? <p>{item.summary}</p> : null}

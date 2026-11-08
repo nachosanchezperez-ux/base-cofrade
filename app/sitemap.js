@@ -10,6 +10,7 @@ import { connection } from 'next/server';
 import { PUBLIC_SITEMAP_SEGMENTS, sitemapEntriesForSegment } from '@/lib/seo-sitemap-segments';
 import { getBandsDirectory } from '@/lib/supabase/bands';
 import { absoluteUrl } from '@/lib/seo';
+import { PROGRAMME_DAYS, dayPath } from '@/lib/holy-week-programme';
 import { bandDirectoryFacets } from '@/lib/band-directory';
 import { agendaMunicipalityRouteSlug } from '@/lib/agenda-cofrade-location';
 import { heritageDirectoryLocalities, heritageDirectoryTypes } from '@/lib/heritage-directory';
@@ -93,6 +94,12 @@ const staticEntries = [
     changeFrequency: 'daily',
     priority: 0.95,
   },
+  // Una URL por jornada del programa de mano, cada una con su canonical.
+  ...PROGRAMME_DAYS.map((day) => ({
+    url: absoluteUrl(dayPath(day.id)),
+    changeFrequency: 'daily',
+    priority: 0.9,
+  })),
   {
     url: absoluteUrl('/semana-santa/2027/cambios-musicales'),
     changeFrequency: 'daily',

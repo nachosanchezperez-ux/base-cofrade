@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
 const db=new PGlite();
 await db.exec(`create table outings(id text primary key, outing_date date, return_date date, event_status text constraint outings_event_status_check check(event_status in ('announced','held','cancelled')),title text); create table cult_occurrences(id text primary key,start_date date,end_date date,event_status text constraint cult_occurrences_event_status_check check(event_status in ('announced','held','cancelled')),title text); create table events(entity_id text primary key,event_date date,event_status text constraint events_status_check check(event_status in ('announced','postponed','held','cancelled')),title text); insert into outings values ('a','2026-11-08',null,'announced','Procesión'); insert into cult_occurrences values ('b','2026-11-14','2026-11-15','announced','Besamanos');`);
-await db.exec(readFileSync(new URL('../supabase/migrations/20261107214344_event_schedule_changes.sql', import.meta.url),'utf8'));
+await db.exec(readFileSync(new URL('../supabase/migrations/20261108140000_event_schedule_changes.sql', import.meta.url),'utf8'));
 await assert.rejects(db.exec(`update outings set outing_date='2026-11-15' where id='a'`));
 await db.exec(`update outings set outing_date='2026-11-15',schedule_change='{"reason":"Lluvia","sourceUrl":"https://example.org/comunicado"}' where id='a'; update cult_occurrences set event_status='postponed',schedule_change='{"reason":"Aplazamiento","sourceUrl":"https://example.org/comunicado"}' where id='b';`);
 let a=(await db.query('select * from outings')).rows[0];assert.equal(a.event_status,'rescheduled');assert.equal(a.schedule_change.previousDate,'2026-11-08');assert.equal(a.schedule_change.revision,1);

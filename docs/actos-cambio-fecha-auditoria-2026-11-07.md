@@ -1,5 +1,28 @@
 # Coherencia al cambiar la fecha de un acto
 
+## Validación vigente · Tarea 30 · 8/11/2026
+
+Este corte prevalece sobre las conclusiones históricas de este documento.
+
+- Main y producción comprobados: `6d6ee1d48ee73dfe88f6f6112b3c17a86e324fd6`.
+- #1391: error PGRST201 resuelto y comprobado en sesión autenticada; no se reabre.
+- Coronación del Amparo: 8/11 a las 10:00. Procesión: 15/11, 17:00–22:45.
+- El segundo besamanos sigue publicado y anunciado para 14–15/11. Existe contradicción con el relato histórico, pero en esta auditoría no se recuperó una fuente original posterior que confirme su aplazamiento. **PENDIENTE editorial**, no autoriza cambiarlo ni atribuirle automáticamente el aplazamiento de la procesión. La propuesta antigua de marcarlo aplazado queda condicionada a esa fuente y a autorización expresa.
+- Se corrige el detalle desplegable actual de Agenda: cada hito muestra su fecha propia, incluidos la coronación anterior y los regresos del día siguiente. El destacado compacto sigue limitado al día del acto.
+- ICS: en un acto de un solo día, una hora textual aislada como `10:00` conserva la hora de Madrid; un texto de turnos o una estimación se conserva en la descripción sin inventar inicio ni duración.
+- Coronadas: solo `held` acredita celebración. Canceladas/suspendidas/aplazadas no generan nuevas tarjetas de coronadas o próximas. En una imagen ya coronada conservan su estado explícito sin elevar el rango de la coronación celebrada. Una reprogramada necesita fecha vigente para ser próxima.
+
+### Integración de esquema preparada, no ejecutada
+
+1. #1417 ya está aplicada como `20261108080000_extraordinary_act_kind.sql`; conservar exactamente esa versión.
+2. La migración pendiente de #1405 se renumera a `20261108140000_event_schedule_changes.sql`, posterior a la última aplicada. Se elimina su nombre anterior de la cadena, sin duplicar SQL ni reescribir historial aplicado.
+3. Ambas evoluciones afectan a columnas distintas. La primera añade `extraordinary_kind`; la segunda añade `schedule_change`, amplía estados y crea los triggers de historial. No contiene DML editorial. No debe reaplicarse bajo otra versión si ya figura registrada: sus CREATE/ADD no son idempotentes.
+4. Antes de integrar, consultar de nuevo el historial real y validar la cadena en una base desechable. El código conserva la compatibilidad de lectura sin `schedule_change` y bloquea las escrituras que la necesitan hasta que exista; se mantiene la excepción documentada `hc-despliegue: tolerante`.
+5. Tras autorización de integración y esquema, comprobar aplicación y producción antes de autorizar cualquier corrección de datos. #1419 mantiene su revisión separada. #1364 no se toca.
+
+Validación local de este corte: **2.508 pruebas correctas**, `npm run build` correcto y `git diff --check` correcto. No se ha ejecutado ninguna migración en esta actualización, ni modificado registros reales. El CI de base desechable, la revisión visual móvil y las actualizaciones de clientes de calendario requieren su propia evidencia vigente; las pruebas locales no equivalen a certificación de producción.
+
+
 Estado: auditoría y propuesta implementada en rama; PR en borrador, NO FUSIONAR. No se han ejecutado migraciones ni escrituras de datos. Auditoría comunicada al propietario antes de crear la rama.
 
 ## Preflight y alcance
@@ -83,7 +106,7 @@ La cancelación ICS de una fecha aplazada retira esa convocatoria, no afirma una
 
 Propuesta de campos comunes: `event_status` con postponed/rescheduled, `previous_start_date`, `previous_end_date`, motivo público, fuente, fecha de cambio y `calendar_sequence` entero monotónico. Conservar las fechas anteriores al aplazar; distinguirlas mediante estado de las fechas activas. Guardar cada cambio en historial para aplazamientos sucesivos y actualización concurrente. No inferir estados desde frases ni desde un slug especial del Amparo.
 
-En producción outings y cult_occurrences admiten announced/held/cancelled; events admite además postponed. La PR prepara `20261107214344_event_schedule_changes.sql`, sin aplicarla: amplía estados y guarda fecha anterior, motivo, fuente, historial y revisión en `schedule_change` JSONB. El trigger controla la revisión y permite documentar una reprogramación ya publicada sin alterar su fecha actual. No hay UPDATE editorial en la migración.
+En producción outings y cult_occurrences admiten announced/held/cancelled; events admite además postponed. La PR prepara `20261108140000_event_schedule_changes.sql`, sin aplicarla: amplía estados y guarda fecha anterior, motivo, fuente, historial y revisión en `schedule_change` JSONB. El trigger controla la revisión y permite documentar una reprogramación ya publicada sin alterar su fecha actual. No hay UPDATE editorial en la migración.
 
 Para suscripciones, mantener los registros cancelados/aplazados en el feed aunque su fecha original pase: el filtro actual `!isPast` puede hacerlos desaparecer antes de que un cliente reciba la retirada. Definir retención explícita y probar refresco de Apple Calendar, Google Calendar y Outlook. Mantener UID estable por ID de acto, no por fecha/título. No cambiar categorías sin preservar el UID original. SEQUENCE debe aumentar al editar datos relevantes, no al descargar; LAST-MODIFIED debe proceder del cambio persistido.
 

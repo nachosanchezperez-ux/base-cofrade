@@ -9,7 +9,7 @@ const header = readFileSync(new URL('../components/HiloHeader.js', import.meta.u
 test('cada grupo tiene un resumen para el menú móvil y no se pierde ningún enlace', () => {
   assert.equal(MENU_GROUPS.length, 5)
   for (const group of MENU_GROUPS) assert.ok(group.hint && group.hint.length <= 40, group.id)
-  assert.equal(menuLinks().length, 24)
+  assert.equal(menuLinks().length, 27)
 })
 
 test('el menú móvil es un acordeón accesible que abre el grupo de la página actual', () => {
