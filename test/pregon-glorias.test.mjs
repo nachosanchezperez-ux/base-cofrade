@@ -90,3 +90,31 @@ test('la página está enlazada desde Glorias y en el sitemap', async () => {
   assert.match(page, /Hermandades que lo han presidido/)
   assert.match(page, /canonical: PREGON_GLORIAS_PATH/)
 })
+
+test('cada pregón y cada hermandad llevan su visual; la hermandad toma el del pregón más reciente', () => {
+  const visuals = new Map([
+    ['b', { photo: { src: '/1998.jpg', alt: 'Virgen de Todos los Santos', focus: '50% 30%' }, crest: '', palette: null }],
+    ['c', { photo: null, crest: '/escudo-todos-santos.svg', crestAlt: 'Escudo de Reina de Todos los Santos', palette: { primario: '#1b4d89' } }],
+    ['a', { photo: null, crest: '/escudo-torreblanca.png', crestAlt: 'Escudo', palette: null }],
+  ])
+  const data = buildPregonGlorias(rows, brotherhoods, visuals)
+  assert.equal(data.next.visual.crest, '/escudo-torreblanca.png')
+  assert.equal(data.held.find((item) => item.year === 1978).visual.crest, '/escudo-todos-santos.svg')
+  assert.equal(data.held.find((item) => item.year === 1969).visual, null)
+  const todosSantos = data.presidencies.find((group) => group.href === '/hermandades/reina-todos-santos-sevilla')
+  assert.equal(todosSantos.visual.photo.src, '/1998.jpg')
+  // Sin mapa de visuales, la página sigue funcionando sin miniaturas.
+  assert.equal(buildPregonGlorias(rows, brotherhoods).held[0].visual, null)
+})
+
+test('la página pinta la miniatura con foto, escudo o el hilo, y el menú enlaza el Pregón', async () => {
+  const page = await read('app/pregon-de-las-glorias/page.js')
+  assert.match(page, /function PregonVisual/)
+  assert.match(page, /EntityVisualFallback/)
+  assert.equal((page.match(/<PregonVisual /g) || []).length, 3)
+  const loader = await read('lib/supabase/pregon-glorias.js')
+  assert.match(loader, /relation_type', 'involves'/)
+  assert.match(loader, /throwOnError: true/)
+  const menu = await read('lib/site-navigation.js')
+  assert.match(menu, /\['\/pregon-de-las-glorias', 'Pregón de las Glorias'\]/)
+})

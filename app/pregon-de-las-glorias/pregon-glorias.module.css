@@ -48,9 +48,16 @@
 
 /* Próximo pregón */
 .next {
+  display: flex;
+  align-items: center;
+  gap: 16px;
   margin-top: 22px;
   padding: 4px 0 4px 16px;
   border-left: 3px solid var(--pg-accent);
+}
+
+.nextBody {
+  min-width: 0;
 }
 
 .kicker {
@@ -149,6 +156,7 @@
 
 .presidencies li > div {
   display: grid;
+  flex: 1 1 auto;
   min-width: 0;
   gap: 2px;
 }
@@ -172,6 +180,44 @@
   font-size: 22px;
   font-weight: 800;
   text-align: right;
+}
+
+/* Miniatura de la presidencia: foto, o escudo sobre los colores de la hermandad. */
+.visual {
+  --pg-visual-primary: #153b69;
+  --pg-visual-dark: #0d2949;
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  width: 56px;
+  height: 56px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 8px;
+  background: linear-gradient(180deg, var(--pg-visual-primary), var(--pg-visual-dark));
+}
+
+.visualLarge {
+  width: 88px;
+  height: 88px;
+}
+
+.visualPhoto {
+  background: #e9eef2;
+}
+
+.visualCrest {
+  width: 72%;
+  height: auto;
+  max-height: 82%;
+  object-fit: contain;
+}
+
+.visualFallback {
+  display: flex;
+  width: 100%;
+  justify-content: center;
 }
 
 /* Cronología */
@@ -226,7 +272,8 @@
 
 .years li {
   display: grid;
-  grid-template-columns: 52px minmax(0, 1fr);
+  grid-template-columns: 52px minmax(0, 1fr) 56px;
+  align-items: start;
   gap: 12px;
   padding: 12px 0;
   border-bottom: 1px solid var(--pg-line);
@@ -299,7 +346,12 @@
   }
 
   .years li {
-    grid-template-columns: 64px minmax(0, 1fr);
+    grid-template-columns: 64px minmax(0, 1fr) 56px;
+  }
+
+  .visualLarge {
+    width: 112px;
+    height: 112px;
   }
 }
 

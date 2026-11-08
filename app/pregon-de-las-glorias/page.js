@@ -1,5 +1,7 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { connection } from 'next/server'
+import EntityVisualFallback from '@/components/EntityVisualFallback'
 import JsonLd from '@/components/JsonLd'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import { getPregonGlorias } from '@/lib/supabase/pregon-glorias'
@@ -21,6 +23,45 @@ export const metadata = {
   ...socialMetadata({ title, description, path: PREGON_GLORIAS_PATH }),
 }
 
+function isSvg(path = '') {
+  return /\.svg(?:$|\?)/i.test(path)
+}
+
+// Miniatura de la presidencia: foto de la imagen que lo presidió, si no la de
+// la hermandad, si no su escudo sobre sus colores; sin nada, el hilo de Hilo.
+function PregonVisual({ visual, size = 'small' }) {
+  const palette = visual?.palette || {}
+  const style = {
+    '--pg-visual-primary': palette.primario || undefined,
+    '--pg-visual-dark': palette.oscuro || undefined,
+  }
+  const sizes = size === 'large' ? '112px' : '56px'
+  return (
+    <span className={`${styles.visual} ${size === 'large' ? styles.visualLarge : ''} ${visual?.photo ? styles.visualPhoto : ''}`} style={style}>
+      {visual?.photo ? (
+        <Image
+          src={visual.photo.src}
+          alt={visual.photo.alt}
+          fill
+          sizes={sizes}
+          style={{ objectFit: 'cover', objectPosition: visual.photo.focus }}
+        />
+      ) : visual?.crest ? (
+        <Image
+          className={styles.visualCrest}
+          src={visual.crest}
+          alt={visual.crestAlt}
+          width={80}
+          height={96}
+          unoptimized={isSvg(visual.crest)}
+        />
+      ) : (
+        <EntityVisualFallback className={styles.visualFallback} />
+      )}
+    </span>
+  )
+}
+
 // La imagen o Simpecado tal como lo consigna el Consejo; si la hermandad tiene
 // ficha publicada, ese mismo nombre enlaza a ella (sin repetir la hermandad).
 function Presidency({ item }) {
@@ -37,6 +78,7 @@ function PresidencyList({ groups }) {
     <ol className={styles.presidencies}>
       {groups.map((group) => (
         <li key={group.key}>
+          <PregonVisual visual={group.visual} />
           <div>
             {group.href ? <Link href={group.href}>{group.name}</Link> : <span>{group.name}</span>}
             <small>
@@ -99,26 +141,29 @@ export default async function PregonGloriasPage() {
 
         {next ? (
           <section className={styles.next} aria-labelledby="proximo-pregon-glorias">
-            <span className={styles.kicker}>Próximo pregón</span>
-            <h2 id="proximo-pregon-glorias">{next.year}</h2>
-            <dl>
-              {next.pregonero ? (
-                <div><dt>Pregonero</dt><dd>{next.pregonero}</dd></div>
-              ) : null}
-              {next.presidencia || next.brotherhood ? (
-                <div>
-                  <dt>Presidirá</dt>
-                  <dd>
-                    {next.brotherhood
-                      ? <Link href={next.brotherhood.href}>{next.presidencia || next.brotherhood.name}</Link>
-                      : next.presidencia}
-                  </dd>
-                </div>
-              ) : null}
-              {next.dateLabel || next.place ? (
-                <div><dt>Cuándo y dónde</dt><dd>{[next.dateLabel, next.place].filter(Boolean).join(' · ')}</dd></div>
-              ) : null}
-            </dl>
+            <PregonVisual visual={next.visual} size="large" />
+            <div className={styles.nextBody}>
+              <span className={styles.kicker}>Próximo pregón</span>
+              <h2 id="proximo-pregon-glorias">{next.year}</h2>
+              <dl>
+                {next.pregonero ? (
+                  <div><dt>Pregonero</dt><dd>{next.pregonero}</dd></div>
+                ) : null}
+                {next.presidencia || next.brotherhood ? (
+                  <div>
+                    <dt>Presidirá</dt>
+                    <dd>
+                      {next.brotherhood
+                        ? <Link href={next.brotherhood.href}>{next.presidencia || next.brotherhood.name}</Link>
+                        : next.presidencia}
+                    </dd>
+                  </div>
+                ) : null}
+                {next.dateLabel || next.place ? (
+                  <div><dt>Cuándo y dónde</dt><dd>{[next.dateLabel, next.place].filter(Boolean).join(' · ')}</dd></div>
+                ) : null}
+              </dl>
+            </div>
           </section>
         ) : null}
 
@@ -160,6 +205,7 @@ export default async function PregonGloriasPage() {
                         <p className={styles.meta}>{[item.dateLabel, item.place].filter(Boolean).join(' · ')}</p>
                       ) : null}
                     </div>
+                    <PregonVisual visual={item.visual} />
                   </li>
                 ))}
               </ol>

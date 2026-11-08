@@ -43,6 +43,12 @@ test('el programa de mano 2027 va en Hermandades, tras Semana Santa', () => {
   assert.equal(activeMenuGroup('/virgenes-coronadas'), 'patrimonio')
 })
 
+test('el Pregón de las Glorias va en Hermandades, tras Hermandades de Gloria', () => {
+  const links = MENU_GROUPS.find((group) => group.id === 'hermandades').sections[0].links.map(([href]) => href)
+  assert.equal(links.indexOf('/pregon-de-las-glorias'), links.indexOf('/hermandades/gloria') + 1)
+  assert.equal(activeMenuGroup('/pregon-de-las-glorias'), 'hermandades')
+})
+
 test('marca el grupo y el enlace de la página actual por la ruta más larga', () => {
   assert.equal(activeMenuGroup('/'), '')
   assert.equal(activeMenuGroup('/hermandades/el-baratillo'), 'hermandades')
