@@ -39,6 +39,7 @@ const editorialNewsFeaturedName = '20261018092323_editorial_news_featured_until.
 const outingHeroImageFitName = '20261020170000_outings_hero_image_fit.sql'
 const repertoireDisplayNameName = '20261103180000_musical_repertoires_display_name.sql'
 const routePointCoordinatesName = '20261106071749_outing_route_points_coordinates.sql'
+const extraordinaryActKindName = '20261108080000_extraordinary_act_kind.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
 const membershipStats = readFileSync(new URL(membershipStatsName, migrationsDirectory), 'utf8')
 const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
@@ -81,6 +82,7 @@ test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esq
     outingHeroImageFitName,
     repertoireDisplayNameName,
     routePointCoordinatesName,
+    extraordinaryActKindName,
   ])
 })
 
