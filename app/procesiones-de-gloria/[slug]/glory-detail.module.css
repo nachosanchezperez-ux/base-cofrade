@@ -372,7 +372,19 @@
   }
 
   .heroCopy h1 {
-    font-size: clamp(2.15rem, 11vw, 3.3rem);
+    /* Títulos largos («Alabanzas de la Coronación Canónica de…»): sin que
+       ocupen media pantalla. */
+    font-size: clamp(1.85rem, 8.6vw, 3.3rem);
+  }
+
+  .lead {
+    margin-top: 16px;
+    font-size: .98rem;
+    line-height: 1.6;
+  }
+
+  .keyFacts {
+    margin-top: 22px;
   }
 
   .heroVisual {
@@ -430,6 +442,7 @@
 .notesList li {
   position: relative;
   padding: 11px 0 11px 20px;
+  font-size: .97rem;
   border-top: 1px solid var(--hc-line);
   color: var(--hc-text, #34495d);
   line-height: 1.55;
