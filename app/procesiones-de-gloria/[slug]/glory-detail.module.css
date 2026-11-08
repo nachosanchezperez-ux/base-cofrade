@@ -374,7 +374,7 @@
   .heroCopy h1 {
     /* Títulos largos («Alabanzas de la Coronación Canónica de…»): sin que
        ocupen media pantalla. */
-    font-size: clamp(1.85rem, 8.6vw, 3.3rem);
+    font-size: clamp(1.85rem, 8.6vw, 3.3rem) !important;
   }
 
   .lead {
