@@ -19,7 +19,7 @@ export const metadata = { title: 'Patrimonio · Hermandad · Panel' }
 function HeritageUpdateForm({ item, data, canEdit }) {
   const isNew = !item?.id
   return (
-    <article className={styles.editorItem}>
+    <article id={item?.id ? `novedad-${item.id}` : undefined} className={styles.editorItem}>
       <div className={styles.itemHeading}>
         <div><span className={styles.eyebrow}>{isNew ? 'Nueva incorporación' : item.update_type}</span><h3>{isNew ? 'Añadir estreno o restauración' : item.title}</h3></div>
         {!isNew ? <span className={`${styles.statusBadge} ${styles[item.status]}`}>{STATUS_LABELS[item.status]}</span> : null}
@@ -81,7 +81,7 @@ function HeritageAssetForm({ item, data, canEdit }) {
   const isNew = !item?.entity?.id
   const entity = item?.entity || {}
   return (
-    <article className={`${styles.editorItem} ${styles.assetEditorItem}`}>
+    <article id={entity.id ? `pieza-${entity.id}` : undefined} className={`${styles.editorItem} ${styles.assetEditorItem}`}>
       <div className={styles.itemHeading}>
         <div><span className={styles.eyebrow}>{isNew ? 'Nueva pieza' : item.asset_type || 'Patrimonio'}</span><h3>{isNew ? 'Añadir obra o enser' : entity.name}</h3></div>
         {!isNew ? <span className={`${styles.statusBadge} ${styles[entity.status]}`}>{STATUS_LABELS[entity.status]}</span> : null}
