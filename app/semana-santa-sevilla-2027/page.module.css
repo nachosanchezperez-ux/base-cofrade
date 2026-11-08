@@ -91,3 +91,79 @@
     max-width: 760px;
   }
 }
+
+/* Bandas de la jornada: escudo y enlace natural a la ficha. */
+.bands {
+  margin-top: 24px;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .bands h2 {
+  margin: 0 0 10px;
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--hc-navy, #112339);
+}
+
+.bands ul {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid #e3e6eb;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.bands li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 8px 12px;
+}
+
+.bands li + li {
+  border-top: 1px solid #eef0f3;
+}
+
+.bands li > span:last-child {
+  display: grid;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.bands a {
+  color: var(--hc-navy, #112339);
+  font-size: 14.5px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.bands small {
+  color: #5a6578;
+  font-size: 12.5px;
+}
+
+.bandLogo,
+.bandEmpty {
+  display: grid;
+  flex: 0 0 36px;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #e3e6eb;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.bandLogo img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.bandEmpty {
+  color: #5a6578;
+  font-size: 15px;
+}

@@ -45,14 +45,27 @@ test('la Borriquita abre y el Amor cierra el Domingo de Ramos, con pasos reparti
   assert.deepEqual(entries.at(-1).withoutSteps, ['paso-sagrada-entrada-jerusalen-amor'])
 })
 
-test('las vísperas se ordenan por hora de salida y sin hora van al final sin número', () => {
+test('las vísperas se ordenan por hora de salida, sin número, y sin hora van al final', () => {
+  for (const id of ['viernes-de-dolores', 'sabado-de-pasion']) {
+    const vispera = day(id)
+    const items = vispera.entries.map((entry) => ({ name: entry.slug, departure: entry.times?.[0] || '' }))
+    const sorted = sortDayItems(vispera, items)
+    assert.ok(dayPositions(vispera, sorted).every((position) => position === null), id)
+  }
   const vd = day('viernes-de-dolores')
-  const items = vd.entries.map((entry) => ({ name: entry.slug, departure: entry.times?.[0] || '' }))
-  const sorted = sortDayItems(vd, items)
+  const sorted = sortDayItems(vd, vd.entries.map((entry) => ({ name: entry.slug, departure: entry.times?.[0] || '' })))
   assert.equal(sorted[0].name, 'bendicion-y-esperanza')
   assert.equal(sorted.at(-1).name, 'paz-y-misericordia-sevilla')
-  assert.equal(dayPositions(vd, sorted).at(-1), null)
-  assert.equal(dayPositions(vd, sorted)[0], 1)
+})
+
+test('Paz y Misericordia no tiene hora inventada: no consta en la nómina de 2026', () => {
+  const paz = day('viernes-de-dolores').entries.find((entry) => entry.slug === 'paz-y-misericordia-sevilla')
+  assert.equal(paz.times, undefined)
+})
+
+test('las jornadas con orden de paso sí numeran', () => {
+  const miercoles = day('miercoles-santo')
+  assert.deepEqual(dayPositions(miercoles, [{}, {}, {}]), [1, 2, 3])
 })
 
 test('una jornada pendiente va por orden alfabético y sin números ni flechas', () => {
@@ -138,8 +151,10 @@ test('la jornada inicial es la de hoy o la siguiente', () => {
 test('la página reutiliza «Mis hermandades» y cita al Consejo como fuente', () => {
   const component = readFileSync(new URL('../components/HolyWeekProgramme.js', import.meta.url), 'utf8')
   const page = readFileSync(new URL('../app/semana-santa-sevilla-2027/page.js', import.meta.url), 'utf8')
+  const shell = readFileSync(new URL('../app/semana-santa-sevilla-2027/ProgrammeShell.js', import.meta.url), 'utf8')
   assert.match(component, /followed-brotherhoods/)
-  assert.match(page, /consejoOrden2027/)
+  assert.match(shell, /consejoOrden2027/)
+  assert.doesNotMatch(shell + component, /Aprobado por el Consejo/)
   assert.match(page, /canonical: PROGRAMME_PATH/)
 })
 
