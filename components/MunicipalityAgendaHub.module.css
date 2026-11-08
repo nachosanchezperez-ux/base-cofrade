@@ -81,7 +81,7 @@
 .editorialLinks h3{margin:0 0 4px;font-size:12px;color:#173650}
 .editorialLinks a{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#173650;font-size:12px;font-weight:750;line-height:1.45;text-decoration:none}
 .editorialLinks a span{color:#a51d34}
-.editorialLinks a:hover{text-decoration:underline;text-underline-offset:3px}
+.editorialLinks a:hover{color:#a51d34}
 .editorialLinks a:focus-visible,.editorialSources a:focus-visible,.editorialHighlight a:focus-visible{outline:2px solid #a51d34;outline-offset:3px}
 .editorialHighlight{padding:17px 19px;margin:22px 0 0;border-left:3px solid #a51d34;background:#f9fbfc}
 .editorialHighlight h3{margin:0 0 8px;color:#173650;font-size:16px}
@@ -89,6 +89,6 @@
 .editorialHighlight a{color:#a51d34;font-size:12px;font-weight:850}
 .editorialSources{display:flex;flex-wrap:wrap;align-items:baseline;gap:7px 15px;margin-top:27px;padding-top:15px;border-top:1px solid #e5ebef;color:#778895;font-size:11px}
 .editorialSources span{font-weight:850}
-.editorialSources a{color:#506679;text-decoration:underline;text-underline-offset:2px}
+.editorialSources a{color:#506679}
 @media(max-width:800px){.editorialColumns{grid-template-columns:1fr}.editorialLinks{max-width:640px}}
 @media(max-width:560px){.editorialText p{font-size:13px}.editorialSources{align-items:flex-start;flex-direction:column}}
