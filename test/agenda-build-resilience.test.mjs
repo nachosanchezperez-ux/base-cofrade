@@ -1,3 +1,4 @@
+import { eventScheduleChange } from '../lib/event-schedule-change.js'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import test from 'node:test'
@@ -9,6 +10,7 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 
 // Ejecuta los cuerpos reales con dependencias controladas, sin red ni secretos.
 function loadModule(path, dependencies, exports) {
+  dependencies = { withScheduleChanges: async (items) => items, eventScheduleChange, ...dependencies }
   const source = read(path).replace(/^import .*\n/gm, '').replace(/^export /gm, '')
   return new Function(...Object.keys(dependencies), `${source}\nreturn { ${exports.join(', ')} }`)(...Object.values(dependencies))
 }

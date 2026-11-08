@@ -1,3 +1,4 @@
+import { previousEventStartDate } from '@/lib/event-schedule-change'
 import Link from 'next/link'
 import { notFound, permanentRedirect } from 'next/navigation'
 import { cache } from 'react'
@@ -137,6 +138,7 @@ export default async function CrewEventDetailPage({ params }) {
     ...(event.endTime ? { endDate: madridDateTime(event.date, event.endTime) } : {}),
     description,
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    ...(previousEventStartDate(event) ? { previousStartDate: previousEventStartDate(event) } : {}),
     ...(schemaEventStatus(event) ? { eventStatus: schemaEventStatus(event) } : {}),
     url: canonicalUrl,
     organizer: {

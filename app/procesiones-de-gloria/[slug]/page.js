@@ -1,3 +1,6 @@
+import { eventScheduleChange } from '@/lib/event-schedule-change'
+import EventScheduleNotice from '@/components/EventScheduleNotice'
+import { previousEventStartDate } from '@/lib/event-schedule-change'
 import { agendaEventPerformers, agendaEventSeoDescription, agendaEventSeoTitle, hasPublishedRoute } from '@/lib/agenda-event-seo'
 import OutingRepertoireLinks from '@/components/OutingRepertoireLinks'
 import Link from 'next/link'
@@ -88,6 +91,7 @@ function entryLabel(item) {
 }
 
 function statusLabel(item, entry = '') {
+  if (eventScheduleChange(item).withdrawn) return eventScheduleChange(item).label
   if (item.isCancelled) return 'Cancelada'
   if (item.isCelebrated) return 'Celebrada'
   if (item.isPast) return 'Fecha pasada'
@@ -206,6 +210,7 @@ export default async function GloryDetailPage({ params }) {
     } : {}),
     description: item.description || pageDescription,
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    ...(previousEventStartDate(item) ? { previousStartDate: previousEventStartDate(item) } : {}),
     ...(schemaEventStatus(item) ? { eventStatus: schemaEventStatus(item) } : {}),
     ...(item.heroImagePath ? { image: [absoluteUrl(item.heroImagePath)] } : {}),
     organizer: organizationJsonLdRef({
@@ -236,6 +241,7 @@ export default async function GloryDetailPage({ params }) {
       <JsonLd data={pageJsonLd} />
       {/* Sin fecha (actos históricos) no se publica un Event inválido. */}
       {item.date ? <JsonLd data={eventJsonLd} /> : null}
+      <EventScheduleNotice item={item} />
 
       <section className={styles.hero}>
         <div className={`shell ${styles.heroGrid}`}>
@@ -284,7 +290,7 @@ export default async function GloryDetailPage({ params }) {
 
       <div className={`shell ${styles.body}`}>
         <section className={`${styles.section} ${outingStyles.tools}`} aria-label="Guarda y comparte esta salida">
-          <OutingDayStatus outing={{ date: item.date, departureTime: item.departureTime, returnTime: item.returnTime, schedule: outingSchedule(item) }} className={outingStyles.dayStatusLight} />
+          <OutingDayStatus outing={{ eventStatus: item.eventStatus, date: item.date, departureTime: item.departureTime, returnTime: item.returnTime, schedule: outingSchedule(item) }} className={outingStyles.dayStatusLight} />
           <OutingShareBar
             share={actions.share}
             calendarHref={actions.calendarHref}

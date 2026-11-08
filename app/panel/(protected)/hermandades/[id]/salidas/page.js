@@ -1,3 +1,5 @@
+import ScheduleChangeReview from '@/components/panel/ScheduleChangeReview'
+import { EVENT_STATUS_LABELS } from '@/lib/panel/schedule-change-core'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import EntityPicker from '@/components/panel/EntityPicker'
@@ -20,7 +22,6 @@ import {
 import styles from '@/app/panel/panel.module.css'
 
 const STATUS_LABELS = { published: 'Publicado', review: 'En revisión', draft: 'Borrador', archived: 'Archivado' }
-const EVENT_STATUS_LABELS = { announced: 'Anunciada', held: 'Celebrada', cancelled: 'Cancelada' }
 const PARTICIPANT_ROLE_LABELS = { processional_image: 'Imagen procesional', processional_step: 'Paso procesional', liturgical_music: 'Música litúrgica' }
 const SAVED_MESSAGES = {
   created: 'La salida se ha creado correctamente.', updated: 'La salida se ha actualizado.', archived: 'La salida se ha archivado.',
@@ -39,6 +40,7 @@ function OutingFields({ item = null, data }) {
   const routeJson = item?.route ? JSON.stringify(item.route, null, 2) : ''
   return (
     <div className={styles.formGrid}>
+      <ScheduleChangeReview item={item} related={(data.outings || []).filter((row) => row.id !== item?.id).map((row) => ({ id: row.id, title: row.title, date: row.outing_date, href: `/panel/hermandades/${data.entity.id}/salidas` })).concat(data.relatedCults || [])} />
       <label className={styles.fieldWide}><span>Título público</span><input name="title" defaultValue={item?.title || ''} placeholder="Vía Crucis, Rosario, Traslado, Procesión…" /></label>
       <label><span>Tipo de salida</span><input name="outing_type" list="outing-types" defaultValue={item?.outing_type || ''} placeholder="Selecciona o escribe el tipo" required /></label>
       <label><span>Subtipo (opcional)</span><input name="outing_subtype" list="outing-subtypes" defaultValue={item?.outing_subtype || ''} placeholder="Variante del tipo: misional, de regreso…" /></label>

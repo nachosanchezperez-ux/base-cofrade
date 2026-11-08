@@ -138,3 +138,31 @@ test('una imagen con la ficha en revisión se muestra sin enlace', () => {
   assert.equal(olivares.year, 2028)
   assert.equal(olivares.acts[0].status, 'upcoming')
 })
+
+test('cancelar, suspender o aplazar no convierte una coronación en celebrada ni próxima', () => {
+  for (const event_status of ['cancelled', 'suspended', 'postponed']) {
+    for (const event_date of ['2026-11-01', '2026-11-15']) {
+      const result = buildVirgenesCoronadas({ events: [{ ...events[3], event_status, event_date }], links, images, today: '2026-11-08' })
+      assert.deepEqual(result.upcoming, [])
+      assert.deepEqual(result.crowned, [])
+      assert.equal(result.stats.count, 0)
+    }
+  }
+})
+
+test('una reprogramación solo es próxima con nueva fecha vigente y nunca se presume celebrada', () => {
+  for (const [event_date, expected] of [['2026-11-15', 'upcoming'], ['2026-11-01', 'unconfirmed'], [null, 'unconfirmed']]) {
+    const result = buildVirgenesCoronadas({ events: [{ ...events[3], event_status: 'rescheduled', event_date }], links, images, today: '2026-11-08' })
+    const item = [...result.upcoming, ...result.crowned][0]
+    assert.equal(item.acts[0].status, expected)
+    assert.equal(item.isUpcoming, expected === 'upcoming')
+  }
+})
+
+test('el reconocimiento aplazado no sustituye una coronación litúrgica ya celebrada', () => {
+  const result = buildVirgenesCoronadas({ events: [events[0], { ...events[1], event_status: 'postponed', event_date: '2026-11-15' }], links, images, today: '2026-11-08' })
+  assert.equal(result.crowned[0].kind, 'liturgica')
+  assert.equal(result.crowned[0].year, 1972)
+  assert.equal(result.crowned[0].acts[1].status, 'postponed')
+  assert.equal(result.upcoming.length, 0)
+})

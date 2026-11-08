@@ -1,5 +1,7 @@
 'use server'
 
+import { scheduleChangePayload } from '@/lib/panel/schedule-change-core'
+
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
@@ -8,7 +10,7 @@ import { createClient } from '@/lib/supabase/server'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const STATUSES = new Set(['draft', 'review', 'published', 'archived'])
-const EVENT_STATUSES = new Set(['announced', 'held', 'cancelled'])
+const EVENT_STATUSES = new Set(['announced', 'held', 'cancelled', 'postponed', 'suspended', 'rescheduled'])
 const CHARACTERS = new Set(['ordinary', 'extraordinary'])
 const PARTICIPATION_MODES = new Set(['full_route', 'segment', 'alternating', 'unspecified'])
 const PARTICIPANT_ROLES = new Set(['processional_image', 'liturgical_music'])
@@ -98,6 +100,9 @@ async function refresh(supabase, brotherhoodId, extraEntityIds = [], outingIds =
   revalidatePath(`/panel/hermandades/${brotherhoodId}`)
   revalidatePath(`/panel/hermandades/${brotherhoodId}/salidas`)
   revalidatePath('/hermandades')
+  revalidatePath('/calendario', 'layout')
+  revalidatePath('/agenda-cofrade', 'layout')
+  revalidatePath('/hermandades', 'layout')
   revalidatePath('/')
   if (brotherhood.slug) revalidatePath(`/hermandades/${brotherhood.slug}`)
 
@@ -142,6 +147,7 @@ export async function saveOutingAction(formData) {
   }
 
   const payload = {
+    ...scheduleChangePayload(formData, previousOuting, outingDate, eventStatus),
     brotherhood_entity_id: brotherhoodId,
     outing_series_id: seriesId,
     outing_type: required(formData, 'outing_type', 'El tipo de salida'),
@@ -173,7 +179,7 @@ export async function saveOutingAction(formData) {
   }
 
   const result = outingId
-    ? await supabase.from('outings').update(payload).eq('id', outingId).eq('brotherhood_entity_id', brotherhoodId).select('id').single()
+    ? await supabase.from('outings').update(payload).eq('id', outingId).eq('brotherhood_entity_id', brotherhoodId).eq('updated_at', previousOuting.updated_at).select('id').single()
     : await supabase.from('outings').insert(payload).select('id').single()
   const saved = assertRow(result, 'No se pudo guardar la salida')
 

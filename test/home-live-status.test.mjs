@@ -1,7 +1,31 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 
-import { getExtraordinaryLiveState } from '../lib/home-live-status.js'
+import { getExtraordinaryLiveState, outingBriefingSchedule } from '../lib/home-live-status.js'
+
+test('Amparo: la coronación del 8 no es el primer hito de la salida del 15', () => {
+  const rows = [
+    { id: 'coronacion', itemDate: '2026-11-08', time: '10:00' },
+    { id: 'salida', itemDate: '2026-11-15', time: '17:00' },
+    { id: 'entrada', itemDate: '2026-11-15', time: '22:45' },
+  ]
+  const selected = outingBriefingSchedule('2026-11-15', rows)
+  assert.deepEqual(selected.map((row) => row.id), ['salida', 'entrada'])
+  assert.equal(getExtraordinaryLiveState('2026-11-15', selected, new Date('2026-11-07T12:00:00Z')).nextId, 'salida')
+  assert.equal(rows[0].itemDate, '2026-11-08')
+  assert.equal(rows.length, 3)
+})
+
+test('el destacado conserva los hitos del día y las entradas de madrugada con su fecha', () => {
+  const rows = [
+    { id: 'previo', itemDate: '2026-11-14' },
+    { id: 'salida', itemDate: '2026-11-15', time: '23:00' },
+    { id: 'entrada', itemDate: '2026-11-16', time: '01:00', dayLabel: 'Lunes, 16 de noviembre' },
+    { id: 'sin-fecha', time: 'Por confirmar' },
+  ]
+  assert.deepEqual(outingBriefingSchedule('2026-11-15', rows), rows.slice(1))
+  assert.deepEqual(outingBriefingSchedule('', rows), rows)
+})
 
 const schedule = [
   { id: 'salida', itemDate: '2026-08-22', time: '19:00' },

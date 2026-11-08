@@ -1,3 +1,5 @@
+import EventScheduleNotice from '@/components/EventScheduleNotice'
+import { previousEventStartDate } from '@/lib/event-schedule-change'
 import { agendaEventPerformers, agendaEventSeoDescription, agendaEventSeoTitle, hasPublishedRoute } from '@/lib/agenda-event-seo'
 import OutingRepertoireLinks from '@/components/OutingRepertoireLinks'
 import Image from 'next/image'
@@ -123,6 +125,7 @@ export default async function RosaryDetailPage({ params }) {
     ...(item.returnTime || item.returnDate ? { endDate: dateTime(item.returnDate || item.date, item.returnTime) } : {}),
     description,
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    ...(previousEventStartDate(item) ? { previousStartDate: previousEventStartDate(item) } : {}),
     ...(schemaEventStatus(item) ? { eventStatus: schemaEventStatus(item) } : {}),
     ...(item.heroImagePath ? { image: [absoluteUrl(item.heroImagePath)] } : {}),
     organizer: {
@@ -154,6 +157,7 @@ export default async function RosaryDetailPage({ params }) {
       ])} />
       {/* Sin fecha (actos históricos) no se publica un Event inválido. */}
       {item.date ? <JsonLd data={eventJsonLd} /> : null}
+      <EventScheduleNotice item={item} />
 
       <header className={styles.hero}>
         <div className={`shell ${styles.heroInner}`}>
