@@ -376,9 +376,11 @@ export default function HolyWeekProgramme({ days = [], activeDayId = '', dateLab
               <p className={styles.kicker}>{dayKicker(day)}</p>
               <h2 id={`${day.id}-titulo`}><Link href={dayPath(day.id)} className={styles.dayTitleLink}>{day.name}</Link></h2>
             </>}
-          <p className={styles.dayMeta}>{dateLabels[day.id]?.long} · {day.items.length} {day.items.length === 1 ? 'hermandad' : 'hermandades'}</p>
-          {badge || day.note ? <p className={styles.dayNote}>
-            {badge ? <span data-tone={badge.tone}>{badge.label}</span> : null}
+          {/* En la página de la jornada, la fecha y el número ya van en la
+              cabecera y el rótulo del orden es el propio H2: sin repetirlos. */}
+          {mode === 'day' ? null : <p className={styles.dayMeta}>{dateLabels[day.id]?.long} · {day.items.length} {day.items.length === 1 ? 'hermandad' : 'hermandades'}</p>}
+          {(badge && mode !== 'day') || day.note ? <p className={styles.dayNote}>
+            {badge && mode !== 'day' ? <span data-tone={badge.tone}>{badge.label}</span> : null}
             {day.note ? <span>{day.note}</span> : null}
           </p> : null}
         </header>

@@ -129,3 +129,9 @@ test('imagen para compartir: marca, «Programa de mano» y las fechas', () => {
   assert.equal(holyWeekSocialConfig(programmeDay('miercoles-santo')).subtitle, 'Miércoles, 24 de marzo de 2027')
   assert.equal(holyWeekSocialConfig(programmeDay('madrugada')).subtitle, 'Noche del 25 al 26 de marzo de 2027')
 })
+
+test('la página de la jornada no repite fecha ni rótulo bajo el H2', () => {
+  const component = read('components/HolyWeekProgramme.js')
+  assert.match(component, /mode === 'day' \? null : <p className=\{styles\.dayMeta\}>/)
+  assert.match(component, /badge && mode !== 'day'/)
+})
