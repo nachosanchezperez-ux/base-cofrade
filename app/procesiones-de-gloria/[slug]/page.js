@@ -30,6 +30,7 @@ import OutingOccasion from '@/components/OutingOccasion'
 import { bandSegments, outingRouteStops } from '@/lib/brotherhood-featured-outing'
 import { outingActionLinks } from '@/lib/outing-actions'
 import outingStyles from '@/components/BrotherhoodChapterOuting.module.css'
+import { noteSentences, routeMoments, routeStreets, sourceDateLabel } from '@/lib/glory-detail-presentation'
 import styles from './glory-detail.module.css'
 
 export const dynamic = 'force-static'
@@ -177,6 +178,8 @@ export default async function GloryDetailPage({ params }) {
   const outingRoute = outingRouteStops(item.routeSummary, { origin: item.origin, destination: item.destination })
   const outingSegments = bandSegments(item.processionalMusic?.length ? item.processionalMusic : (item.music || []), outingRoute)
   const actions = outingActionLinks(item)
+  const moments = routeMoments(item.routePoints || [])
+  const streets = routeStreets(item.routeSummary)
   const pageDescription = seoDescription([
     `${item.title}${item.municipality ? ` · ${item.municipality}` : ''}`,
     formatSeoDate(item.date),
@@ -271,17 +274,6 @@ export default async function GloryDetailPage({ params }) {
         </div>
       </section>
 
-      <AgendaCofradeNav activeSection="glories" sticky={false} />
-
-      <AgendaRelationLinks
-        brotherhoodName={item.brotherhoodName}
-        brotherhoodHref={item.brotherhoodHref}
-        municipality={item.municipality}
-        bands={item.music}
-        calendarHref="/procesiones-de-gloria"
-        calendarLabel="Glorias"
-      />
-
       <div className={`shell ${styles.body}`}>
         <section className={`${styles.section} ${outingStyles.tools}`} aria-label="Guarda y comparte esta salida">
           <OutingDayStatus outing={{ date: item.date, departureTime: item.departureTime, returnTime: item.returnTime, schedule: outingSchedule(item) }} className={outingStyles.dayStatusLight} />
@@ -309,7 +301,10 @@ export default async function GloryDetailPage({ params }) {
               <span className="eyebrow">Información</span>
               <h2 id="datos-procesion-gloria">Información práctica</h2>
             </div>
-            <p className={styles.publicNotes}>{item.publicNotes}</p>
+            {/* Frase a frase: en el móvil, un bloque largo no se lee. */}
+            <ul className={styles.notesList}>
+              {noteSentences(item.publicNotes).map((sentence) => <li key={sentence}>{sentence}</li>)}
+            </ul>
           </section>
         ) : null}
 
@@ -319,10 +314,29 @@ export default async function GloryDetailPage({ params }) {
               <span className="eyebrow">Itinerario</span>
               <h2 id="recorrido-procesion-gloria">Recorrido</h2>
             </div>
-            <div className={outingStyles.tools}>
-              <BrotherhoodOutingMap points={item.routePoints || []} segments={outingSegments} title={item.title} />
+            <div className={styles.routeBody}>
+              <div className={outingStyles.tools}>
+                <BrotherhoodOutingMap points={item.routePoints || []} segments={outingSegments} title={item.title} />
+              </div>
+              {moments.length ? (
+                <ol className={styles.moments} aria-label="Momentos del recorrido">
+                  {moments.map((moment) => (
+                    <li key={moment.id}>
+                      {moment.time ? <time>{moment.time}</time> : null}
+                      <strong>{moment.label}</strong>
+                      {moment.notes ? <span>{moment.notes}</span> : null}
+                    </li>
+                  ))}
+                </ol>
+              ) : null}
+              {streets.length ? <p className={styles.streets}>{streets.join(' · ')}</p> : null}
+              {/* El detalle punto a punto (con horarios), plegado: el mapa y la
+                  línea de calles ya cuentan el recorrido. */}
+              <details className={styles.routeDetails} open={!streets.length}>
+                <summary>{processionRoute.totalPoints ? `Ver el recorrido punto a punto (${processionRoute.totalPoints})` : 'Ver el recorrido punto a punto'}</summary>
+                <ProcessionRoute route={processionRoute} />
+              </details>
             </div>
-            <ProcessionRoute route={processionRoute} />
           </section>
         ) : null}
 
@@ -356,23 +370,32 @@ export default async function GloryDetailPage({ params }) {
             <h2 id="fuentes-procesion-gloria">Fuentes consultadas</h2>
           </div>
           {item.sources.length ? (
-            <div className={styles.sources}>
+            <ol className={styles.sourceList}>
               {item.sources.map((source) => (
-                <article key={source.id}>
-                  <div>
-                    <strong>{source.name}</strong>
-                    {source.scope ? <p>{source.scope}</p> : null}
-                    <small>{[source.publisher, source.publicationDate].filter(Boolean).join(' · ')}</small>
-                  </div>
-                  {source.url ? <a href={source.url} target="_blank" rel="noreferrer">Consultar fuente ↗</a> : null}
-                </article>
+                <li key={source.id}>
+                  {source.url
+                    ? <a href={source.url} target="_blank" rel="noreferrer">{source.name} <span aria-hidden="true">↗</span></a>
+                    : <strong>{source.name}</strong>}
+                  <small>{[source.publisher, sourceDateLabel(source.publicationDate), source.scope].filter(Boolean).join(' · ')}</small>
+                </li>
               ))}
-            </div>
+            </ol>
           ) : (
             <p className={styles.pending}>No constan fuentes publicadas para esta salida.</p>
           )}
         </section>
       </div>
+
+      {/* Navegación de la Agenda y relaciones, al final: lo primero es la salida. */}
+      <AgendaRelationLinks
+        brotherhoodName={item.brotherhoodName}
+        brotherhoodHref={item.brotherhoodHref}
+        municipality={item.municipality}
+        bands={item.music}
+        calendarHref="/procesiones-de-gloria"
+        calendarLabel="Glorias"
+      />
+      <AgendaCofradeNav activeSection="glories" sticky={false} />
     </div>
   )
 }
