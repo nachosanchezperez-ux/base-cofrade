@@ -22,11 +22,11 @@ test('Cofradle aparece solo al final, como enlace externo y sin recursos de terc
   assert.ok(gameAt > -1 && cofradleAt > gameAt)
   assert.equal((page.match(/https:\/\/cofradle\.es\//g) || []).length, 1)
   assert.match(page, /rel="noopener noreferrer"/)
-  assert.match(page, /proyecto externo e independiente/)
+  assert.match(page, /[Pp]royecto externo e independiente/)
   // No se usa un favicon servido por Google como si fuera el logotipo oficial.
   assert.doesNotMatch(page, /google\.com\/s2\/favicons/)
   // El logotipo es la copia local del favicon oficial (permiso del propietario, 13/10/2026).
-  assert.match(page, /src="\/externos\/cofradle-favicon\.svg"/)
+  assert.doesNotMatch(page, /recommendationCard|recommendationLogo/)
   assert.ok(existsSync(new URL('../public/externos/cofradle-favicon.svg', import.meta.url)))
   assert.doesNotMatch(game, /cofradle/i)
 })

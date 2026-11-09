@@ -99,7 +99,7 @@ test('la puntuación penaliza pistas y errores, nunca una palabra no acertada', 
   progress.rounds[0] = { status: 'won', guesses: [normalizeHiddenAnswer(game.words[0].answer)], hints: [] }
   progress.finished = true
   assert.equal(hiddenTotalScore(progress), 100)
-  assert.ok(hiddenShareText(game, progress).includes('100/100 puntos'))
+  assert.ok(hiddenShareText(game, progress).includes('🧵 1/3'))
   assert.ok(!hiddenShareText(game, progress).includes(game.words[0].answer))
   assert.equal(hiddenShareText(game, { ...progress, finished: false }), '')
   assert.equal(HILO_GAME_MAX_ERRORS, 3)
@@ -219,7 +219,7 @@ test('el resultado compartido resume cada cabo sin revelar soluciones', () => {
   progress.finished = true
   assert.equal(validHiddenProgress(progress, expert), true)
   const text = hiddenShareText(expert, progress)
-  assert.ok(text.includes('Cabos: ✦ ✓ ✕'))
+  assert.ok(text.includes('🧵 1/3 · 🧵 2/3 · 🪢 X/3'))
   for (const word of expert.words) assert.ok(!text.toUpperCase().includes(word.answer))
 })
 

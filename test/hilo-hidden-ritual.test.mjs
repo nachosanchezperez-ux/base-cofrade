@@ -73,7 +73,7 @@ test('solo se cargan las secciones de las palabras del día', () => {
   assert.deepEqual(hiddenThreadSectionsFor(['TRABAJADERA']), ['pasos'])
 })
 
-test('la racha se comparte desde dos días, solo en el hilo del día y sin revelar la palabra', () => {
+test('el resultado incluye la racha diaria incluso en el primer día, sin revelar la palabra', () => {
   assert.equal(hiddenStreakLine(1), '')
   assert.equal(hiddenStreakLine(3), 'Racha: 3 días seguidos')
   assert.equal(hiddenStreakLine(3, 'expert'), '')
@@ -84,13 +84,13 @@ test('la racha se comparte desde dos días, solo en el hilo del día y sin revel
   progress.finished = true
   const withStreak = hiddenShareData(challenge, progress, { streak: 5 })
   assert.equal(withStreak.streak, 5)
-  assert.ok(withStreak.text.includes('Racha: 5 días seguidos'))
-  assert.ok(withStreak.tweet.includes('Racha: 5 días seguidos'))
+  assert.ok(withStreak.text.includes('Racha diaria: 5 días'))
+  assert.ok(withStreak.tweet.includes('Racha diaria: 5 días'))
   assert.ok(!withStreak.text.toUpperCase().includes(challenge.words[0].answer))
 
   const firstDay = hiddenShareData(challenge, progress, { streak: 1 })
-  assert.equal(firstDay.streak, 0)
-  assert.ok(!firstDay.text.includes('Racha'))
+  assert.equal(firstDay.streak, 1)
+  assert.ok(firstDay.text.includes('Racha diaria: 1 día'))
 })
 
 test('el tablero muestra la racha y la solución enlaza la ficha del día', () => {
