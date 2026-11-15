@@ -50,7 +50,7 @@ function Crest({ item, size = 44 }) {
 function BandBadge({ band, size = 32 }) {
   if (!band.logoPath) return <span className={styles.bandEmpty} aria-hidden="true">♪</span>
   return <span className={styles.bandLogo} style={{ background: band.logoBackground || '#fff' }} aria-hidden="true">
-    <Image src={band.logoPath} alt="" width={size} height={size} />
+    <Image src={band.logoPath} alt="" width={size} height={size} unoptimized={/\.svg(\?|$)/i.test(band.logoPath)} />
   </span>
 }
 
