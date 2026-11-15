@@ -13,7 +13,9 @@ export default function BandCrestBadge({ logoPath = '', background = '', size = 
     aria-hidden="true"
   >
     {logoPath
-      ? <Image src={logoPath} alt="" width={size * 2} height={size * 2} sizes={`${size}px`} />
+      // Los SVG (p. ej. el de Las Cigarreras) no pasan por el optimizador de
+      // imágenes, que los rechaza: se sirven tal cual.
+      ? <Image src={logoPath} alt="" width={size * 2} height={size * 2} sizes={`${size}px`} unoptimized={/\.svg(\?|$)/i.test(logoPath)} />
       : <MusicIcon size={Math.round(size * 0.45)} />}
   </span>
 }
