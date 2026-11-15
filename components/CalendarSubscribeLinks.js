@@ -13,9 +13,10 @@ export default function CalendarSubscribeLinks({ path, label, scope = 'brotherho
 
   return (
     <p className={className}>
-      <span>Añadir a tu calendario</span>
+      <span>Suscribirse al calendario</span>
       <a href={links.webcal} onClick={() => track('webcal')} data-analytics-skip-entity="true">iPhone, Mac u Outlook</a>
       <a href={links.google} target="_blank" rel="noopener noreferrer" onClick={() => track('google')} data-analytics-skip-entity="true">Google Calendar</a>
+      <small>La suscripción recibe cambios cuando tu aplicación actualiza. Una descarga puntual no se actualiza sola.</small>
     </p>
   )
 }

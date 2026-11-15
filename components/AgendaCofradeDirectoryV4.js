@@ -1,5 +1,7 @@
 'use client'
 
+import { agendaScheduleDateLabel } from '@/lib/agenda-schedule-steps'
+import EventScheduleNotice from '@/components/EventScheduleNotice'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -774,6 +776,13 @@ export default function AgendaCofradeDirectoryV4({
         <div>
           <span>Sevilla y provincia</span>
           <h2 id="agenda-v4-title">Agenda de actos</h2>
+          {items.some((item) => item.isPostponed || item.isCancelled) ? <details>
+            <summary>Cambios de convocatoria y cancelaciones</summary>
+            {items.filter((item) => item.isPostponed || item.isCancelled).map((item) => <div key={item.key}>
+              <strong>{item.title}</strong><EventScheduleNotice item={item} />
+              {item.href ? <Link href={item.href}>Ver información del acto</Link> : null}
+            </div>)}
+          </details> : null}
         </div>
         <p>Solo mostramos lo que está por venir. Elige cuándo, qué tipo de acto y dónde para localizar una cita de un vistazo.</p>
       </div>
@@ -980,7 +989,7 @@ export default function AgendaCofradeDirectoryV4({
                         <span>{displayDateInfo.month}</span>
                         {displayDateInfo.year && String(displayDateInfo.year) !== currentYear ? <small>{displayDateInfo.year}</small> : null}
                       </time>
-                      <div className={`${styles.cardBody} ${mobileStyles.cardBody}`}>
+                      <div className={`${styles.cardBody} ${mobileStyles.cardBody}`}><EventScheduleNotice item={item} />
                         {isOutingEvent(item) && !item.timeText ? (
                           <div className={mobileStyles.outingTimes}>
                             <div><span>Salida</span><strong>{item.startTime || scheduleTimeHint(item.schedule, 'departure') || 'Por confirmar'}</strong><small>{schedulePrecision(item.schedule, 'departure')}</small></div>
@@ -1018,7 +1027,7 @@ export default function AgendaCofradeDirectoryV4({
                                 ))}
                               </section>
                             ) : null}
-                            {item.schedule?.length ? <section className={mobileStyles.eventTimetable}><h5>Horarios del acto</h5>{item.schedule.map((row) => <div key={row.id}><strong>{row.time || row.timeText || 'Por confirmar'}</strong><span>{row.label}{row.notes ? <small>{row.notes}</small> : null}</span></div>)}</section> : null}
+                            {item.schedule?.length ? <section className={mobileStyles.eventTimetable}><h5>Horarios del acto</h5>{item.schedule.map((row) => <div key={row.id}><strong>{row.time || row.timeText || 'Por confirmar'}</strong><span>{row.label}<small>{agendaScheduleDateLabel(row, item)}</small>{row.notes ? <small>{row.notes}</small> : null}</span></div>)}</section> : null}
                             {item.music?.length ? <section className={mobileStyles.eventMusic}><h5>Acompañamiento musical</h5>{item.music.map((band, index) => <p key={band.id || index}>{band.href ? <Link href={band.href}>{band.name}</Link> : <strong>{band.name}</strong>}{band.context ? <small>{band.context}</small> : null}</p>)}</section> : null}
                             {agendaDirectionsHref(item.place, item.municipality) ? <a href={agendaDirectionsHref(item.place, item.municipality)} target="_blank" rel="noreferrer">{isOutingEvent(item) ? 'Cómo llegar a la salida' : 'Cómo llegar'} ↗</a> : null}
                             {item.summary && item.summary !== item.routeText ? <p>{item.summary}</p> : null}

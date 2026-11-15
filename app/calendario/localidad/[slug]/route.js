@@ -1,3 +1,4 @@
+import { retainCalendarItem } from '@/lib/event-schedule-change'
 import { agendaMunicipalityRouteSlug } from '@/lib/agenda-cofrade-location'
 import { buildAgendaCalendar, icsResponseHeaders } from '@/lib/agenda-ics'
 import { getAgendaCofrade } from '@/lib/supabase/agenda-cofrade'
@@ -18,7 +19,7 @@ export async function GET(_request, { params }) {
   }
 
   const municipality = slug === 'sevilla-capital' ? 'Sevilla' : local[0].municipality
-  const upcoming = local.filter((item) => !item.isPast)
+  const upcoming = local.filter(retainCalendarItem)
   const body = buildAgendaCalendar({
     name: `Agenda cofrade de ${municipality} · Hilo Cofrade`,
     description: `Próximos actos cofrades en ${municipality} según la Agenda de Hilo Cofrade.`,

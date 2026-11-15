@@ -40,6 +40,8 @@ const EXECUTABLE_SCHEMA_MIGRATIONS = [
   "20261103180000_musical_repertoires_display_name.sql",
   "20261106071749_outing_route_points_coordinates.sql",
   "20261108080000_extraordinary_act_kind.sql",
+  "20261108140000_event_schedule_changes.sql",
+
 ];
 
 test("Supabase migration versions are unique and well formed", async () => {

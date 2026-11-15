@@ -1,3 +1,4 @@
+import EventScheduleNotice from '@/components/EventScheduleNotice'
 import Image from 'next/image';
 import SectionTitle from '@/components/SectionTitle';
 import { visibleCultDescription } from '@/lib/brotherhood-ficha-content';
@@ -90,7 +91,8 @@ export default function BrotherhoodCultsSection({ cults = [] }) {
                 ) : null}
 
                 <div className={styles.body}>
-                  <CultDate cult={cult} />
+                  <EventScheduleNotice item={cult} />
+                  {!cult.eventStatus || !['postponed', 'cancelled', 'suspended'].includes(cult.eventStatus) ? <CultDate cult={cult} /> : null}
                   <div className={styles.copy}>
                     <span className={styles.type}>{cult.anunciada ? 'Próximo culto · ' : ''}{cult.tipo}</span>
                     <h3>{cult.nombre}</h3>

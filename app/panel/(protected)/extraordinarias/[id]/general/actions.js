@@ -1,12 +1,14 @@
 'use server'
 
+import { scheduleChangePayload } from '@/lib/panel/schedule-change-core'
+
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
-const EVENT_STATUSES = new Set(['announced', 'held', 'cancelled'])
+const EVENT_STATUSES = new Set(['announced', 'held', 'cancelled', 'postponed', 'suspended', 'rescheduled'])
 const EDITORIAL_STATUSES = new Set(['draft', 'review', 'published'])
 
 function value(formData, name) {
@@ -56,7 +58,7 @@ function slugify(input) {
 async function loadOuting(supabase, id) {
   const result = await supabase
     .from('outings')
-    .select('id, slug, title, outing_date, character')
+    .select('*')
     .eq('id', id)
     .eq('character', 'extraordinary')
     .maybeSingle()
@@ -79,6 +81,9 @@ async function audit(supabase, user, outing, changedFields) {
 }
 
 function refresh(id, slug, previousSlug = '') {
+  revalidatePath('/calendario', 'layout')
+  revalidatePath('/agenda-cofrade', 'layout')
+  revalidatePath('/hermandades', 'layout')
   revalidatePath('/')
   revalidateTag('home-public', { expire: 0 })
   revalidatePath('/extraordinarias')
@@ -131,6 +136,7 @@ export async function saveExtraordinaryGeneralAction(formData) {
   }
 
   const payload = {
+    ...scheduleChangePayload(formData, outing, outingDate, eventStatus),
     title,
     slug,
     reference_code: referenceCode,
@@ -156,7 +162,7 @@ export async function saveExtraordinaryGeneralAction(formData) {
     status,
   }
 
-  const updated = await supabase.from('outings').update(payload).eq('id', outingId).select('id').single()
+  const updated = await supabase.from('outings').update(payload).eq('id', outingId).eq('updated_at', outing.updated_at).select('id').single()
   if (updated.error) throw new Error(`No se pudo guardar la extraordinaria: ${updated.error.message}`)
 
   await audit(supabase, user, outing, payload)

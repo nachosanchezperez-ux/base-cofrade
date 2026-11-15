@@ -1,3 +1,7 @@
+import { createClient } from '@/lib/supabase/server'
+import ScheduleChangeReview from '@/components/panel/ScheduleChangeReview'
+import { EVENT_STATUS_LABELS } from '@/lib/panel/schedule-change-core'
+import { saveCultScheduleAction } from './schedule-actions'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import BrotherhoodInlineMedia from '@/components/panel/BrotherhoodInlineMedia'
@@ -64,6 +68,13 @@ export default async function BrotherhoodCultsPage({ params, searchParams }) {
   const [{ id }, query, user] = await Promise.all([params, searchParams, requirePanelUser()])
   const data = await getBrotherhoodEditorData(id)
   if (!data) notFound()
+  const supabase = await createClient()
+  const editions = await supabase.from('cult_occurrences').select('*, cults!inner(title, brotherhood_entity_id)').eq('cults.brotherhood_entity_id', id).order('start_date', { ascending: false })
+  if (editions.error) throw new Error('No se pudieron leer las ediciones de cultos')
+  const ids = (editions.data || []).map((item) => item.id)
+  const days = ids.length ? await supabase.from('cult_occurrence_days').select('id, cult_occurrence_id, celebration_date, start_time, time_text').in('cult_occurrence_id', ids) : { data: [] }
+  if (days.error) throw new Error('No se pudieron leer los días de culto vinculados')
+  for (const item of editions.data || []) item.schedule = (days.data || []).filter((day) => day.cult_occurrence_id === item.id).map((day) => ({ id: day.id, item_date: day.celebration_date, item_time: day.start_time, label: day.time_text || 'Día de culto' }))
   const canEdit = ['admin', 'editor'].includes(user.role)
   const savedMessage = query?.saved === 'uploaded'
     ? 'Fotografía del culto actualizada correctamente.'
@@ -82,6 +93,18 @@ export default async function BrotherhoodCultsPage({ params, searchParams }) {
       </header>
 
       {savedMessage ? <div className={styles.savedNotice} role="status">{savedMessage}</div> : null}
+      {canEdit ? <section className={styles.panelCard}><h2>Convocatorias de cultos</h2><p>El aplazamiento afecta a esta edición, no al culto anual ni a otras ediciones.</p>
+        {(editions.data || []).map((item) => <form key={item.id} action={saveCultScheduleAction} className={styles.editorForm}>
+          <h3>{item.title_override || item.cults.title}</h3>
+          <input type="hidden" name="brotherhood_id" value={id} /><input type="hidden" name="occurrence_id" value={item.id} />
+          <div className={styles.formGrid}>
+            <label>Fecha inicial<input name="start_date" type="date" defaultValue={item.start_date || ''} required /></label>
+            <label>Fecha final<input name="end_date" type="date" defaultValue={item.end_date || ''} /></label>
+            <label>Estado<select name="event_status" defaultValue={item.event_status}>{Object.entries(EVENT_STATUS_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
+            <ScheduleChangeReview item={item} dateField="start_date" related={(editions.data || []).filter((other) => other.id !== item.id).map((other) => ({ id: other.id, date: other.start_date, title: other.title_override || other.cults.title }))} />
+          </div><button type="submit" className={styles.primaryButton}>Guardar convocatoria</button>
+        </form>)}
+      </section> : null}
       {!canEdit ? <div className={styles.readOnlyNotice}>Tu perfil tiene acceso de consulta.</div> : null}
 
       <section className={styles.editorSection}>

@@ -1,0 +1,8 @@
+.review { grid-column: 1 / -1; min-width: 0; }
+.review fieldset { min-width: 0; display: grid; gap: 12px; padding: 16px; border: 1px solid #886013; background: #fff7e8; color: #483513; border-radius: 8px; overflow-wrap: anywhere; }
+.review legend { font-weight: 700; }
+.review p { margin: 0; line-height: 1.5; }
+.review label { display: grid; gap: 6px; }
+.review input:not([type=checkbox]) { min-height: 44px; width: 100%; box-sizing: border-box; }
+.review summary, .review a { min-height: 44px; display: inline-flex; align-items: center; }
+.review .confirm { display: flex; align-items: center; min-height: 44px; }

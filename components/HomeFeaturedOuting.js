@@ -1,6 +1,8 @@
+import { eventScheduleChange } from '@/lib/event-schedule-change'
+import EventScheduleNotice from '@/components/EventScheduleNotice'
 import Image from 'next/image'
 import Link from 'next/link'
-import { getExtraordinaryLiveState } from '@/lib/home-live-status'
+import { getExtraordinaryLiveState, outingBriefingSchedule } from '@/lib/home-live-status'
 import { getHomeAdaptivePriority } from '@/lib/home-adaptive-priority'
 import { getProcessionLiveState } from '@/lib/procession-live-status'
 import styles from '@/app/home.module.css'
@@ -38,6 +40,11 @@ function mobileScheduleIds(schedule = [], liveState = {}) {
 }
 
 export default function HomeFeaturedOuting({ featuredOuting, featuredBriefing }) {
+  if (eventScheduleChange(featuredOuting).withdrawn) return <EventScheduleNotice item={featuredOuting} />
+  featuredBriefing = {
+    ...featuredBriefing,
+    schedule: outingBriefingSchedule(featuredOuting?.date, featuredBriefing.schedule),
+  }
   const featuredGuideHref = featuredOuting?.href || featuredOuting?.calendarHref || '/extraordinarias'
   const todayKey = madridDateKey()
   const featuredIsToday = featuredOuting?.date === todayKey

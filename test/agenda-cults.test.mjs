@@ -33,7 +33,7 @@ function loadReader(tables) {
       return builder
     },
   }
-  const reader = new Function('createPublicClient', 'console', 'selectAllRows', 'selectRowsByIds', `${source}\nreturn { getKissingDevotions }`)(() => client, { error() {} }, selectAllRows, selectRowsByIds)
+  const reader = new Function('createPublicClient', 'console', 'selectAllRows', 'selectRowsByIds', 'withScheduleChanges', `${source}\nreturn { getKissingDevotions }`)(() => client, { error() {} }, selectAllRows, selectRowsByIds, async (items) => items)
   return { ...reader, calls }
 }
 

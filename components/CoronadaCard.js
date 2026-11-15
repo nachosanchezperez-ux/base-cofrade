@@ -3,7 +3,7 @@ import Link from 'next/link'
 import EntityVisualFallback from '@/components/EntityVisualFallback'
 import styles from './CoronadasExplorer.module.css'
 
-const ACT_STATUS_SUFFIX = { upcoming: ' · prevista', unconfirmed: ' · sin confirmar' }
+const ACT_STATUS_SUFFIX = { upcoming: ' · prevista', unconfirmed: ' · sin confirmar', postponed: ' · aplazada', suspended: ' · suspendida', cancelled: ' · cancelada' }
 
 function isSvg(path = '') {
   return /\.svg(?:$|\?)/i.test(path)
