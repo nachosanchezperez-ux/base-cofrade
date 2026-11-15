@@ -5,6 +5,7 @@ import { readFile } from 'node:fs/promises'
 import {
   buildVirgenesCoronadas,
   classifyCoronation,
+  coronationBands,
   coronationDateLabel,
   coronationYear,
 } from '../lib/virgenes-coronadas.js'
@@ -165,4 +166,50 @@ test('el reconocimiento aplazado no sustituye una coronación litúrgica ya cele
   assert.equal(result.crowned[0].year, 1972)
   assert.equal(result.crowned[0].acts[1].status, 'postponed')
   assert.equal(result.upcoming.length, 0)
+})
+
+test('música de la coronación: salidas de su hermandad junto al acto, sin repetir banda', () => {
+  const gerena = { id: 'b-gerena', name: 'Banda Municipal de Música de Gerena', href: '/bandas/gerena' }
+  const outings = [
+    { date: '2026-09-12', title: 'María Santísima de la Sangre', character: 'extraordinary', bands: [
+      gerena,
+      { id: '', name: 'Grupo de Cámara “SACRA”', href: '' },
+      gerena,
+    ] },
+    // Procesión de alabanzas días después: cuenta por su título.
+    { date: '2026-09-19', title: 'Procesión de alabanzas de la Coronación', character: 'ordinary', bands: [
+      { id: 'b-otra', name: 'Otra banda', href: '/bandas/otra' },
+    ] },
+    // Salida ordinaria cercana que no es de la coronación: no cuenta.
+    { date: '2026-09-13', title: 'Procesión de Gloria 2026', character: 'ordinary', bands: [{ id: 'b-x', name: 'Ajena', href: '' }] },
+    // Fuera de la ventana (más de ocho días después): no cuenta.
+    { date: '2026-09-25', title: 'Coronación · aniversario', character: 'extraordinary', bands: [{ id: 'b-y', name: 'Lejana', href: '' }] },
+  ]
+  assert.deepEqual(coronationBands('2026-09-12', outings).map((band) => band.name), [
+    'Banda Municipal de Música de Gerena',
+    'Grupo de Cámara “SACRA”',
+    'Otra banda',
+  ])
+  // Sin día exacto (solo año) no se atribuye música.
+  assert.deepEqual(coronationBands('', outings), [])
+})
+
+test('cada acto lleva la música de las salidas de su hermandad', () => {
+  const data = buildVirgenesCoronadas({
+    events: [{ entity_id: 'e1', event_type: 'Coronación canónica', event_date: '2026-09-12', event_status: 'held', brotherhood_entity_id: 'h1', name: 'Coronación' }],
+    links: new Map([['e1', { imageId: 'i1', officiants: [] }]]),
+    images: new Map([['i1', { name: 'María Santísima de la Sangre', slug: 'sangre', published: true }]]),
+    brotherhoods: new Map([['h1', { name: 'Gerena', slug: 'gerena' }]]),
+    outings: new Map([['h1', [{ date: '2026-09-12', title: 'Sangre', character: 'extraordinary', bands: [{ id: 'b', name: 'Banda Municipal', href: '/bandas/b' }] }]]]),
+    today: '2026-11-15',
+  })
+  assert.deepEqual(data.crowned[0].acts[0].bands, [{ name: 'Banda Municipal', href: '/bandas/b' }])
+})
+
+test('la tarjeta y la página muestran la música del acto', async () => {
+  const card = await read('components/CoronadaCard.js')
+  assert.match(card, /function Bands/)
+  assert.match(card, /<Bands bands=\{act\.bands\} \/>/)
+  const page = await read('app/virgenes-coronadas/page.js')
+  assert.match(page, /bands: act\.bands \|\| \[\]/)
 })
