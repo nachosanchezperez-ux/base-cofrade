@@ -54,6 +54,22 @@ function Officiants({ officiants = [] }) {
   )
 }
 
+// Bandas y formaciones que pusieron la música en la coronación y su procesión.
+function Bands({ bands = [] }) {
+  if (!bands.length) return null
+  return (
+    <span className={styles.bands}>
+      <span className={styles.bandsLabel}>Música</span>{' '}
+      {bands.map((band, index) => (
+        <span key={`${band.href || band.name}-${index}`}>
+          {index ? ', ' : ''}
+          {band.href ? <Link href={band.href}>{band.name}</Link> : band.name}
+        </span>
+      ))}
+    </span>
+  )
+}
+
 export default function CoronadaCard({ item, priority = false, headingLevel = 3 }) {
   const Heading = `h${headingLevel}`
   const palette = item.palette || {}
@@ -92,6 +108,7 @@ export default function CoronadaCard({ item, priority = false, headingLevel = 3 
               <span className={styles.actLabel}>{act.label}{ACT_STATUS_SUFFIX[act.status] || ''}</span>
               {act.dateLabel ? <time dateTime={act.date || undefined}>{act.dateLabel}</time> : null}
               <Officiants officiants={act.officiants} />
+              <Bands bands={act.bands} />
             </li>
           ))}
         </ol>

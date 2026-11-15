@@ -46,6 +46,7 @@ function compact(item) {
       isAnnounced: act.isAnnounced,
       status: act.status,
       officiants: act.officiants,
+      bands: act.bands || [],
     })),
   }
 }
