@@ -2,12 +2,13 @@ import EventScheduleNotice from './EventScheduleNotice'
 import Link from 'next/link'
 import OutingShareBar from './OutingShareBar'
 import OutingDayStatus from './OutingDayStatus'
-import { ChevronRightIcon, ChurchIcon, ClockIcon, FlagIcon, MusicIcon, PlusIcon, RouteIcon } from './icons/LucideIcons'
+import { ChurchIcon, ClockIcon, FlagIcon, MusicIcon, PlusIcon, RouteIcon } from './icons/LucideIcons'
 import BrotherhoodOutingMap from './BrotherhoodOutingMap'
 import OutingOccasion from './OutingOccasion'
 import BandCrestBadge from './BandCrestBadge'
 import { bandSegments, isSameStop, outingCardTitle, outingDateParts, outingRouteStops, outingSchedule, routeMilestones, splitRouteStreets } from '@/lib/brotherhood-featured-outing'
 import { outingActionLinks } from '@/lib/outing-actions'
+import { noteSentences, sourceDateLabel } from '@/lib/glory-detail-presentation'
 import styles from './BrotherhoodChapterOuting.module.css'
 
 // Salida destacada del capítulo Procesión, pensada para consultarla en la
@@ -148,10 +149,12 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
           </ol>
         </div> : outing.routeSummary ? <p className={styles.routeText}>{outing.routeSummary}</p> : null}
 
-        {outing.publicNotes ? <details className={styles.notes}>
-          <summary><span>Más detalles de la salida</span><b aria-hidden="true"><PlusIcon size={18} /></b></summary>
-          <p>{outing.publicNotes}</p>
-        </details> : null}
+        {/* Información práctica a la vista y frase a frase: esta tarjeta es la
+            página de la salida (la Agenda redirige aquí). */}
+        {outing.publicNotes ? <div className={styles.practical}>
+          <h3>Información práctica</h3>
+          <ul>{noteSentences(outing.publicNotes).map((sentence) => <li key={sentence}>{sentence}</li>)}</ul>
+        </div> : null}
 
         <div className={styles.actions}>
           <OutingShareBar
@@ -164,7 +167,17 @@ export default function BrotherhoodChapterOuting({ outing, names = [] }) {
           />
         </div>
 
-        {outing.detailHref ? <a className={styles.agenda} href={outing.detailHref}>Ver en la Agenda <ChevronRightIcon size={18} /></a> : null}
+        {outing.sources?.length ? <details className={styles.notes}>
+          <summary><span>Fuentes ({outing.sources.length})</span><b aria-hidden="true"><PlusIcon size={18} /></b></summary>
+          <ol className={styles.sourceList}>
+            {outing.sources.map((source) => <li key={source.id}>
+              {source.url
+                ? <a href={source.url} target="_blank" rel="noreferrer">{source.name} <span aria-hidden="true">↗</span></a>
+                : <strong>{source.name}</strong>}
+              <small>{[source.publisher, sourceDateLabel(source.publicationDate)].filter(Boolean).join(' · ')}</small>
+            </li>)}
+          </ol>
+        </details> : null}
       </div>
     </div>
   </section>

@@ -118,7 +118,7 @@ export default async function BrotherhoodProcessionStatsPage({ params, searchPar
 
         <div className={styles.editorStack}>
           {data.stats.length ? data.stats.map((item) => (
-            <article className={styles.editorItem} key={item.id}>
+            <article id={`jornada-${item.id}`} className={styles.editorItem} key={item.id}>
               <div className={styles.itemHeading}>
                 <div><span className={styles.eyebrow}>Jornada</span><h3>{item.year}</h3><p>{item.procession_day || data.brotherhood.current_procession_day || 'Jornada por documentar'}</p></div>
                 <span className={`${styles.statusBadge} ${styles[item.status]}`}>{STATUS_LABELS[item.status]}</span>

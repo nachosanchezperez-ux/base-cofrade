@@ -1,0 +1,15 @@
+.shell { width: min(1180px, calc(100% - 44px)); margin: 24px auto 0; padding: 16px; border: 1px solid var(--panel-line, #d6dee6); border-radius: 14px; background: white; color: var(--panel-ink, #182c40); }
+.shell label { display: block; font-weight: 750; margin-bottom: 8px; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; }
+.controls input { flex: 1 1 220px; min-width: 0; min-height: 44px; padding: 10px 12px; font: inherit; border: 1px solid #9baaba; border-radius: 8px; }
+.controls button { min-height: 44px; padding: 10px 16px; font: inherit; font-weight: 700; cursor: pointer; border: 1px solid #b6c1cd; border-radius: 8px; background: #f0f4f8; color: #18324b; }
+.controls button:disabled { cursor: wait; opacity: .7; }
+.help, .meta { color: #536174; font-size: 13px; line-height: 1.5; }
+.help { margin: 8px 0 0; }
+.results { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 12px; }
+.results li { padding: 14px 0; border-top: 1px solid #d6dee6; overflow-wrap: anywhere; }
+.results p { font-size: 14px; line-height: 1.5; margin: 6px 0; }
+.results a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 750; color: #713343; }
+.shell :focus-visible { outline: 3px solid #416f9c; outline-offset: 3px; }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+@media (max-width: 600px) { .shell { width: calc(100% - 24px); padding: 12px; } .controls input { flex-basis: 100%; font-size: 16px; } }

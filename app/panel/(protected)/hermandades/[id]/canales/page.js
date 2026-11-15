@@ -26,7 +26,7 @@ function SocialLinkForm({ item, entityId, canEdit, excludedPlatforms = [] }) {
     : SOCIAL_PLATFORMS
 
   return (
-    <form action={saveSocialLinkAction} className={`${styles.editorItem} ${styles.editorForm}`}>
+    <form id={item?.id ? `canal-${item.id}` : undefined} action={saveSocialLinkAction} className={`${styles.editorItem} ${styles.editorForm}`}>
       <input type="hidden" name="brotherhood_id" value={entityId} />
       <input type="hidden" name="link_id" value={item?.id || ''} />
       <div className={styles.formGrid}>

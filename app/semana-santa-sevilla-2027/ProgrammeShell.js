@@ -41,7 +41,7 @@ function DayBands({ day }) {
     <ul>
       {bands.map((band) => <li key={band.slug}>
         {band.logoPath
-          ? <span className={styles.bandLogo} style={{ background: band.logoBackground || '#fff' }} aria-hidden="true"><Image src={band.logoPath} alt="" width={32} height={32} /></span>
+          ? <span className={styles.bandLogo} style={{ background: band.logoBackground || '#fff' }} aria-hidden="true"><Image src={band.logoPath} alt="" width={32} height={32} unoptimized={/\.svg(\?|$)/i.test(band.logoPath)} /></span>
           : <span className={styles.bandEmpty} aria-hidden="true">♪</span>}
         <span>
           <Link href={band.href}>{band.name}</Link>

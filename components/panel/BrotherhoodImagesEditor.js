@@ -190,7 +190,7 @@ export default function BrotherhoodImagesEditor({ data, canEdit }) {
               const isArchived = relation.status === 'archived'
 
               return (
-                <article className={styles.editorItem} key={relation.id}>
+                <article id={`titular-${relation.id}`} className={styles.editorItem} key={relation.id}>
                   <div className={styles.itemHeading}>
                     <div>
                       <span className={styles.eyebrow}>{relationLabel(relation.relation_type)}</span>

@@ -15,7 +15,7 @@ export default function BandCrest({ band, size = 52, className = '' }) {
       style={{ width: size, height: size, background }}
       aria-hidden="true"
     >
-      <Image src={band.logoPath} alt="" width={size} height={size} sizes={`${size}px`} />
+      <Image src={band.logoPath} alt="" width={size} height={size} sizes={`${size}px`} unoptimized={/\.svg(\?|$)/i.test(band.logoPath)} />
     </span>
   )
 }

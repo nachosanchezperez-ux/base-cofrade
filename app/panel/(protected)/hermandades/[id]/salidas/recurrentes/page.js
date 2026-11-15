@@ -11,7 +11,7 @@ export const metadata = { title: 'Salidas habituales · Hermandad · Panel' }
 function HabitualOutingForm({ item, data, canEdit }) {
   const isNew = !item?.id
   return (
-    <article className={styles.editorItem}>
+    <article id={item?.id ? `serie-${item.id}` : undefined} className={styles.editorItem}>
       <div className={styles.itemHeading}>
         <div><span className={styles.eyebrow}>{isNew ? 'Nueva salida habitual' : item.outing_type}</span><h3>{isNew ? 'Añadir salida habitual' : item.title}</h3></div>
         {!isNew ? <span className={`${styles.statusBadge} ${styles[item.status]}`}>{STATUS_LABELS[item.status]}</span> : null}

@@ -7,6 +7,7 @@ import ContextAgendaSection from '@/components/ContextAgendaSection'
 import DirectoryBreadcrumb from '@/components/DirectoryBreadcrumb'
 import JsonLd from '@/components/JsonLd'
 import MunicipalityTemporalSpotlight from '@/components/MunicipalityTemporalSpotlight'
+import MunicipalityEditorialSpotlight from '@/components/MunicipalityEditorialSpotlight'
 import { localityGuideSeo } from '@/lib/locality-seo'
 import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, municipalityPlaceJsonLd } from '@/lib/seo'
 import styles from './MunicipalityAgendaHub.module.css'
@@ -216,6 +217,8 @@ export default function MunicipalityAgendaHub({ hub }) {
           </div>
         </section>
       )}
+
+      <MunicipalityEditorialSpotlight slug={hub.slug} label={hub.label} />
 
       {(hub.brotherhoods.length || hub.bands.length) ? (
         <section className={styles.entities}>
