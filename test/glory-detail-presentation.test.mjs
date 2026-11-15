@@ -47,3 +47,15 @@ test('las fuentes llevan la fecha en palabras', () => {
   assert.equal(sourceDateLabel('2026-11-07'), '7 de noviembre de 2026')
   assert.equal(sourceDateLabel(''), '')
 })
+
+test('una sola página por salida: la Agenda lleva a la ficha cuando esta destaca la salida', () => {
+  const glory = readFileSync(new URL('../app/procesiones-de-gloria/[slug]/page.js', import.meta.url), 'utf8')
+  assert.match(glory, /usesBrotherhoodChapters\(item\.brotherhoodId\)/)
+  assert.match(glory, /featured\.id === item\.id \? `\$\{item\.brotherhoodHref\}#salida`/)
+  assert.match(glory, /if \(fichaHref\) redirect\(fichaHref\)/)
+  const card = readFileSync(new URL('../components/BrotherhoodChapterOuting.js', import.meta.url), 'utf8')
+  // Sin enlace de vuelta a la Agenda (sería un bucle) y con lo que antes solo estaba allí.
+  assert.doesNotMatch(card, /Ver en la Agenda/)
+  assert.match(card, /Información práctica/)
+  assert.match(card, /Fuentes \(\{outing\.sources\.length\}\)/)
+})

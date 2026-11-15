@@ -2,7 +2,7 @@ import { agendaEventPerformers, agendaEventSeoDescription, agendaEventSeoTitle, 
 import OutingRepertoireLinks from '@/components/OutingRepertoireLinks'
 import Link from 'next/link'
 import { cache } from 'react'
-import { notFound, permanentRedirect } from 'next/navigation'
+import { notFound, permanentRedirect, redirect } from 'next/navigation'
 import { agendaEventDetailHref, isPreservedAgendaEventPath } from '@/lib/agenda-event-url-policy'
 import JsonLd from '@/components/JsonLd'
 import AgendaCofradeNav from '@/components/AgendaCofradeNav'
@@ -25,7 +25,10 @@ import GloryHeroMedia from './GloryHeroMedia'
 import BrotherhoodOutingMap from '@/components/BrotherhoodOutingMap'
 import OutingShareBar from '@/components/OutingShareBar'
 import OutingDayStatus from '@/components/OutingDayStatus'
-import { outingSchedule } from '@/lib/brotherhood-featured-outing'
+import { brotherhoodFichaFeaturedOuting, outingSchedule } from '@/lib/brotherhood-featured-outing'
+import { usesBrotherhoodChapters } from '@/lib/brotherhood-chapters-rollout'
+import { madridDateKey } from '@/lib/relative-day'
+import { getHermandadPageBySlug } from '@/lib/supabase/brotherhood-page'
 import OutingOccasion from '@/components/OutingOccasion'
 import { bandSegments, outingRouteStops } from '@/lib/brotherhood-featured-outing'
 import { outingActionLinks } from '@/lib/outing-actions'
@@ -155,11 +158,24 @@ export async function generateMetadata({ params }) {
   }
 }
 
+async function fichaOutingHref(item) {
+  const match = /^\/hermandades\/([^/#?]+)$/.exec(item?.brotherhoodHref || '')
+  if (!match || !usesBrotherhoodChapters(item.brotherhoodId)) return ''
+  const hermandad = await getHermandadPageBySlug(match[1]).catch(() => null)
+  const featured = hermandad ? brotherhoodFichaFeaturedOuting(hermandad, madridDateKey()) : null
+  return featured?.id && featured.id === item.id ? `${item.brotherhoodHref}#salida` : ''
+}
+
 export default async function GloryDetailPage({ params }) {
   const { slug } = await params
   const item = await getGlory(slug)
   if (item && !isPreservedAgendaEventPath(`/procesiones-de-gloria/${slug}`)) permanentRedirect(agendaEventDetailHref(item, 'procesiones-de-gloria'))
   if (!item) notFound()
+  // Una sola página por salida: si la ficha de la Hermandad (en modo
+  // aplicación) ya destaca esta salida, con su mapa, horarios y bandas, la
+  // Agenda lleva allí en lugar de repetirla.
+  const fichaHref = await fichaOutingHref(item)
+  if (fichaHref) redirect(fichaHref)
 
   const canonicalPath = item.detailHref
   const canonicalUrl = absoluteUrl(canonicalPath)

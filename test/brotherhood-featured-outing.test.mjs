@@ -141,3 +141,16 @@ test('penitencia: se destaca la próxima salida fuera de la Semana Santa, nunca 
   assert.equal(featuredBrotherhoodOuting(salidas, '2026-11-22', { penitencia: true }).id, 'p')
   assert.equal(featuredBrotherhoodOuting(salidas, '2026-11-23', { penitencia: true }), null)
 })
+
+test('la ficha y la Agenda eligen la misma salida destacada', async () => {
+  const { brotherhoodFichaFeaturedOuting } = await import('../lib/brotherhood-featured-outing.js')
+  const h = {
+    tipos: ['Gloria'],
+    salidas: [{ id: 'a', fecha: '2026-11-15', tipo: 'Procesión de Gloria' }],
+    acontecimientosSalidas: [{ id: 'x', fecha: '2026-11-10', tipo: 'Procesión de Gloria' }],
+  }
+  assert.equal(brotherhoodFichaFeaturedOuting(h, '2026-11-09').id, 'x')
+  assert.equal(brotherhoodFichaFeaturedOuting(h, '2026-11-15').id, 'a')
+  assert.equal(brotherhoodFichaFeaturedOuting({ tipos: ['Penitencia'], salidas: [{ id: 'p', fecha: '2026-01-01', tipo: 'Traslado' }] }, '2026-11-15'), null)
+  assert.equal(brotherhoodFichaFeaturedOuting({}, '2026-11-15'), null)
+})
