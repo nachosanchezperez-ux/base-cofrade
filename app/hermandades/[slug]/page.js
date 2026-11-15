@@ -22,7 +22,7 @@ import BrotherhoodOverviewV2 from '@/components/BrotherhoodOverviewV2';
 import BrotherhoodViaCrucisSection from '@/components/BrotherhoodViaCrucisSection';
 import BrotherhoodOutingsSection from '@/components/BrotherhoodOutingsSection';
 import BrotherhoodChapterOuting from '@/components/BrotherhoodChapterOuting';
-import { featuredBrotherhoodOuting, otherBrotherhoodOutings, outingCardTitle, outingTileSummary, outingWeekLabel } from '@/lib/brotherhood-featured-outing';
+import { otherBrotherhoodOutings, outingCardTitle, outingTileSummary, outingWeekLabel, brotherhoodFichaFeaturedOuting } from '@/lib/brotherhood-featured-outing';
 import { occasionSummary } from '@/lib/supabase/outing-occasion';
 import { getBandLogosBySlug } from '@/lib/supabase/band-logos';
 import OutingOccasion from '@/components/OutingOccasion';
@@ -282,7 +282,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   const featuredOuting = chapters
     // Las extraordinarias viven como acontecimientos de la ficha, pero también
     // pueden ser la próxima salida (traslados del centenario, coronaciones…).
-    ? featuredBrotherhoodOuting([...(h.salidas || []), ...(h.acontecimientosSalidas || [])], agendaData.today || '', { penitencia: isPenitencia })
+    ? brotherhoodFichaFeaturedOuting(h, agendaData.today || '')
     : null;
   const featuredOutingDetail = featuredOuting
     ? await getGloryDetailByOutingId(featuredOuting.id).catch((error) => {
