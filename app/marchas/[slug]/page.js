@@ -208,7 +208,7 @@ export default async function MarchDetailPage({ params }) {
             {march.dedications.length ? (
               <article>
                 <span>{march.dedications.length === 1 ? 'Dedicatoria' : 'Dedicatorias'}</span>
-                <ul>{march.dedications.map((dedication, index) => <li key={`${dedication.id}-${index}`}><small>{dedication.date || 'Dedicada a'}</small><strong>{dedication.href ? <Link href={dedication.href}>{dedication.name}</Link> : dedication.name}</strong>{dedication.text && dedication.text !== dedication.name ? <p>{dedication.text}</p> : null}</li>)}</ul>
+                <ul>{march.dedications.map((dedication, index) => <li key={`${dedication.id}-${index}`}><small>{dedication.date || 'Dedicada a'}</small><strong>{dedication.href ? <Link href={dedication.href}>{dedication.name}</Link> : dedication.name}</strong>{dedication.text && dedication.text !== dedication.name ? <p>{dedication.text}</p> : null}{dedication.brotherhood ? <p>Hermandad · {dedication.brotherhood.href ? <Link href={dedication.brotherhood.href}>{dedication.brotherhood.name}</Link> : dedication.brotherhood.name}</p> : null}</li>)}</ul>
               </article>
             ) : null}
           </div>
