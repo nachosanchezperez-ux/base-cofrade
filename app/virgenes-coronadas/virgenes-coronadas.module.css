@@ -103,3 +103,15 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+/* La regla global de typography.css (#hc-app > main > :not(#hc-panel) h2)
+   pisaba estos títulos. Mismo patrón que crucetas.module.css. */
+:global(#hc-app) .page:not(:global(#hc-panel)) .upcoming h2 {
+  font-size: 12px;
+  letter-spacing: .14em;
+  line-height: 1.3;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .blockTitle {
+  font-size: 22px;
+}

@@ -213,3 +213,10 @@ test('la tarjeta y la página muestran la música del acto', async () => {
   const page = await read('app/virgenes-coronadas/page.js')
   assert.match(page, /bands: act\.bands \|\| \[\]/)
 })
+
+test('en móvil la tarjeta va en fila y los títulos no los pisa la tipografía global', async () => {
+  const css = await read('components/CoronadasExplorer.module.css')
+  assert.match(css, /@media \(max-width: 719px\)[\s\S]*?\.card \{[\s\S]*?grid-template-columns: 104px minmax\(0, 1fr\)/)
+  const page = await read('app/virgenes-coronadas/virgenes-coronadas.module.css')
+  assert.match(page, /:global\(#hc-app\) \.page:not\(:global\(#hc-panel\)\) \.upcoming h2/)
+})

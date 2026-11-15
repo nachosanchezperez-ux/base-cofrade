@@ -299,6 +299,70 @@
   font-size: 11px;
 }
 
+/* Móvil: la tarjeta pasa a fila (miniatura a la izquierda y datos a la
+   derecha). Una imagen a todo el ancho por Virgen hacía la lista eterna y casi
+   siempre era el escudo sobre el color de la hermandad. */
+@media (max-width: 719px) {
+  .grid {
+    gap: 20px;
+  }
+
+  .card {
+    grid-template-columns: 104px minmax(0, 1fr);
+    align-items: start;
+    gap: 14px;
+  }
+
+  .media {
+    border-radius: 10px;
+  }
+
+  .crest {
+    width: 64%;
+  }
+
+  .fallback svg {
+    width: 56%;
+    height: auto;
+  }
+
+  .year {
+    bottom: 6px;
+    left: 6px;
+    padding: 4px 6px 5px;
+    border-radius: 7px;
+    font-size: 15px;
+  }
+
+  .year small {
+    margin-bottom: 1px;
+    font-size: 8px;
+    letter-spacing: .1em;
+  }
+
+  .body {
+    gap: 4px;
+  }
+
+  .name {
+    font-size: 17px;
+  }
+
+  .place {
+    font-size: 13px;
+  }
+
+  .acts {
+    gap: 6px;
+    margin-top: 2px;
+  }
+
+  .acts li {
+    padding-left: 8px;
+    font-size: 13px;
+  }
+}
+
 @media (min-width: 720px) {
   .selects {
     grid-template-columns: repeat(2, minmax(0, 260px));
