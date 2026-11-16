@@ -38,3 +38,21 @@
   outline: 3px solid rgba(255, 255, 255, .5);
   outline-offset: 2px;
 }
+
+.light {
+  min-height: 30px;
+  padding: 0 10px;
+  border-color: #c9d6e2;
+  background: #fff;
+  color: #123a67;
+  font-size: 12px;
+}
+
+.light:hover {
+  border-color: #123a67;
+  background: #f2f6fa;
+}
+
+.light:focus-visible {
+  outline-color: rgba(18, 58, 103, .35);
+}

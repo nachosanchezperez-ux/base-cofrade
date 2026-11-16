@@ -16,7 +16,8 @@ function PencilIcon() {
 // fichas se sirven desde caché, así que se decide en el navegador y no en el
 // servidor; para el público no se pinta nada. Es un <a> normal (no <Link>)
 // para no precargar el Panel.
-export default function PanelEditLink({ href, label = 'Editar ficha' }) {
+// tone="light": para fondos claros (tarjetas), con texto oscuro y sin relleno.
+export default function PanelEditLink({ href, label = 'Editar ficha', tone = 'dark' }) {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -26,7 +27,7 @@ export default function PanelEditLink({ href, label = 'Editar ficha' }) {
   if (!visible || !href) return null
 
   return (
-    <a className={styles.link} href={href} rel="nofollow" data-analytics-skip-entity="true">
+    <a className={tone === 'light' ? `${styles.link} ${styles.light}` : styles.link} href={href} rel="nofollow" data-analytics-skip-entity="true">
       <PencilIcon />
       <span>{label}</span>
     </a>

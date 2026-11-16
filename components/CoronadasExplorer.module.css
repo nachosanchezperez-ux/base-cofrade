@@ -293,6 +293,15 @@
   color: var(--cor-accent, #b01b32);
 }
 
+.edit {
+  display: flex;
+  margin-top: 4px;
+}
+
+.edit:empty {
+  display: none;
+}
+
 .credit {
   margin: 2px 0 0;
   color: #7a8a99;
