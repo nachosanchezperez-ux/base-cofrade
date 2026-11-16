@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import PanelEditLink from '@/components/PanelEditLink'
 import EntityVisualFallback from '@/components/EntityVisualFallback'
 import styles from './CoronadasExplorer.module.css'
 
@@ -109,6 +110,11 @@ export default function CoronadaCard({ item, priority = false, headingLevel = 3 
               {act.dateLabel ? <time dateTime={act.date || undefined}>{act.dateLabel}</time> : null}
               <Officiants officiants={act.officiants} />
               <Bands bands={act.bands} />
+              {act.id ? (
+                <span className={styles.edit}>
+                  <PanelEditLink href={`/panel/acontecimientos/${act.id}`} label="Editar en el Panel" tone="light" />
+                </span>
+              ) : null}
             </li>
           ))}
         </ol>

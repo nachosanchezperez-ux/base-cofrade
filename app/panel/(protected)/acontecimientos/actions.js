@@ -1,10 +1,11 @@
 'use server'
 
 import { randomUUID } from 'node:crypto'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
+import { EVENT_RELATION_TYPES, EVENT_STATUS_LABELS } from '@/lib/panel/events'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const STATUSES = new Set(['draft', 'review', 'published', 'archived'])
@@ -47,6 +48,9 @@ async function refreshEvent(supabase, eventId, targetIds = []) {
   revalidatePath('/panel/acontecimientos')
   revalidatePath(`/panel/acontecimientos/${eventId}`)
   revalidatePath('/')
+  // Vírgenes Coronadas lee los acontecimientos de coronación desde caché.
+  revalidateTag('virgenes-coronadas', { expire: 0 })
+  revalidatePath('/virgenes-coronadas')
 
   if (targetIds.length) {
     const result = await supabase.from('entities').select('entity_type, slug').in('id', [...new Set(targetIds.filter(Boolean))])
@@ -57,9 +61,23 @@ async function refreshEvent(supabase, eventId, targetIds = []) {
         if (entity.entity_type === 'image') revalidatePath(`/imagenes/${entity.slug}`)
         if (entity.entity_type === 'step') revalidatePath(`/pasos/${entity.slug}`)
         if (entity.entity_type === 'band') revalidatePath(`/bandas/${entity.slug}`)
+        if (entity.entity_type === 'agent') revalidatePath(`/autores/${entity.slug}`)
       }
     }
   }
+}
+
+function eventStatus(formData, fallback) {
+  const value = String(formData.get('event_status') || '').trim()
+  if (!value) return fallback
+  if (!Object.hasOwn(EVENT_STATUS_LABELS, value)) throw new Error('El estado del acto no es válido.')
+  return value
+}
+
+function relationType(formData) {
+  const value = String(formData.get('relation_type') || 'involves').trim()
+  if (!EVENT_RELATION_TYPES.includes(value)) throw new Error('El tipo de relación no es válido.')
+  return value
 }
 
 function redirectEvent(eventId, saved = '') {
@@ -123,7 +141,9 @@ export async function updateEventAction(formData) {
     event_date_text: nullable(formData, 'event_date_text'),
     place_id: uuid(formData, 'place_id', true),
     description: nullable(formData, 'description'),
+    event_status: eventStatus(formData, current.event?.event_status || null),
   }
+  if (!eventPayload.event_status) delete eventPayload.event_status
   assertMutation(await supabase.from('entities').update(entityPayload).eq('id', eventId).eq('entity_type', 'event'), 'No se pudo actualizar el Acontecimiento')
   assertMutation(await supabase.from('events').update(eventPayload).eq('entity_id', eventId).eq('event_category', 'historical'), 'No se pudo actualizar la ficha del Acontecimiento')
   await audit(supabase, user, { action_type: nextStatus === 'published' && current.entity.status !== 'published' ? 'publish' : 'update', object_type: 'event', object_id: eventId, entity_id: eventId, summary: `Acontecimiento actualizado: ${name}`, changed_fields: { entity: entityPayload, event: eventPayload } })
@@ -153,9 +173,11 @@ export async function saveEventRelationAction(formData) {
   await requireEvent(supabase, eventId)
   const target = await requireTarget(supabase, targetId)
   const relationStatus = status(formData)
+  const type = relationType(formData)
+  if (type === 'officiated_by' && target.entity_type !== 'agent') throw new Error('«Ofició o presidió» solo puede enlazar con una persona (Agentes).')
   const payload = {
     source_entity_id: eventId,
-    relation_type: 'involves',
+    relation_type: type,
     target_entity_id: targetId,
     date_from: optionalDate(formData, 'date_from'),
     date_from_text: nullable(formData, 'date_from_text'),
@@ -166,9 +188,9 @@ export async function saveEventRelationAction(formData) {
   }
 
   if (!relationId) {
-    const duplicate = await supabase.from('entity_relations').select('id').eq('source_entity_id', eventId).eq('relation_type', 'involves').eq('target_entity_id', targetId).neq('status', 'archived').limit(1).maybeSingle()
+    const duplicate = await supabase.from('entity_relations').select('id').eq('source_entity_id', eventId).eq('relation_type', type).eq('target_entity_id', targetId).neq('status', 'archived').limit(1).maybeSingle()
     if (duplicate.error) throw new Error(`No se pudo comprobar la relación: ${duplicate.error.message}`)
-    if (duplicate.data) throw new Error('Este Acontecimiento ya está relacionado con esa entidad.')
+    if (duplicate.data) throw new Error('Este Acontecimiento ya tiene esa relación con esa entidad.')
   }
 
   const result = relationId

@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import EntityPicker from '@/components/panel/EntityPicker'
 import RelationSourcesEditor from '@/components/panel/RelationSourcesEditor'
 import { requirePanelUser } from '@/lib/panel/auth'
-import { EVENT_TARGET_LABELS, getEventEditorData } from '@/lib/panel/events'
+import { EVENT_RELATION_LABELS, EVENT_STATUS_LABELS, EVENT_TARGET_LABELS, getEventEditorData } from '@/lib/panel/events'
 import {
   archiveEventAction,
   archiveEventRelationAction,
@@ -21,7 +21,8 @@ function StatusSelect({ defaultValue = 'draft' }) {
 
 function RelationFields({ relation = null, targetOptions }) {
   return <div className={styles.formGrid}>
-    <EntityPicker className={styles.fieldWide} name="target_entity_id" items={targetOptions} label="Entidad relacionada" placeholder="Buscar Hermandad, Imagen, Paso, Banda…" emptyLabel="Selecciona una entidad" defaultValue={relation?.target_entity_id || ''} />
+    <label><span>Tipo de relación</span><select name="relation_type" defaultValue={relation?.relation_type || 'involves'}>{Object.entries(EVENT_RELATION_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
+    <EntityPicker className={styles.fieldWide} name="target_entity_id" items={targetOptions} label="Entidad relacionada" placeholder="Buscar Hermandad, Imagen, Paso, Banda, prelado…" emptyLabel="Selecciona una entidad" defaultValue={relation?.target_entity_id || ''} />
     <label><span>Fecha inicial</span><input name="date_from" type="date" defaultValue={relation?.date_from || ''} /></label>
     <label><span>Datación inicial</span><input name="date_from_text" defaultValue={relation?.date_from_text || ''} /></label>
     <label><span>Fecha final</span><input name="date_to" type="date" defaultValue={relation?.date_to || ''} /></label>
@@ -66,6 +67,7 @@ export default async function EventEditorPage({ params, searchParams }) {
           <label><span>Tipo</span><input name="event_type" defaultValue={data.event.event_type} required /></label>
           <label><span>Slug</span><input name="slug" defaultValue={data.entity.slug || ''} required /></label>
           <label><span>Fecha exacta</span><input name="event_date" type="date" defaultValue={data.event.event_date || ''} /></label>
+          <label><span>Estado del acto</span><select name="event_status" defaultValue={data.event.event_status || ''}><option value="">Sin indicar</option>{Object.entries(EVENT_STATUS_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
           <label><span>Datación textual</span><input name="event_date_text" defaultValue={data.event.event_date_text || ''} /></label>
           <label><span>Lugar</span><select name="place_id" defaultValue={data.event.place_id || ''}><option value="">Sin lugar vinculado</option>{data.places.map((place) => <option key={place.id} value={place.id}>{place.name}</option>)}</select></label>
           <label><span>Estado editorial</span><StatusSelect defaultValue={data.entity.status} /></label>
@@ -80,8 +82,8 @@ export default async function EventEditorPage({ params, searchParams }) {
       <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Tira del hilo</span><h2>Entidades implicadas</h2></div><p>Una misma efeméride puede involucrar varias Hermandades, Imágenes, Pasos o Bandas.</p></div>
       <div className={styles.editorStack}>
         {data.relations.map((relation) => <article className={styles.editorItem} key={relation.id}>
-          <div className={styles.itemHeading}><div><span className={styles.eyebrow}>{relation.target ? EVENT_TARGET_LABELS[relation.target.entity_type] || relation.target.entity_type : 'Entidad'}</span><h3>{relation.target?.name || 'Entidad no disponible'}</h3></div><span className={`${styles.statusBadge} ${styles[relation.status]}`}>{STATUS_LABELS[relation.status]}</span></div>
-          {canEdit ? <form action={saveEventRelationAction} className={styles.editorForm}><input type="hidden" name="event_id" value={id} /><input type="hidden" name="relation_id" value={relation.id} /><RelationFields relation={relation} targetOptions={data.targetOptions} /><div className={styles.formActions}><small>La relación `involves` es la que usa el Front para situar el Acontecimiento dentro del grafo.</small><button className={styles.secondaryButton} type="submit">Guardar relación</button></div></form> : null}
+          <div className={styles.itemHeading}><div><span className={styles.eyebrow}>{relation.relation_type === 'officiated_by' ? `${EVENT_RELATION_LABELS.officiated_by} · ` : ''}{relation.target ? EVENT_TARGET_LABELS[relation.target.entity_type] || relation.target.entity_type : 'Entidad'}</span><h3>{relation.target?.name || 'Entidad no disponible'}</h3></div><span className={`${styles.statusBadge} ${styles[relation.status]}`}>{STATUS_LABELS[relation.status]}</span></div>
+          {canEdit ? <form action={saveEventRelationAction} className={styles.editorForm}><input type="hidden" name="event_id" value={id} /><input type="hidden" name="relation_id" value={relation.id} /><RelationFields relation={relation} targetOptions={data.targetOptions} /><div className={styles.formActions}><small>«Implicada» sitúa el Acontecimiento en el grafo; «Ofició o presidió» enlaza al prelado o celebrante (Vírgenes Coronadas).</small><button className={styles.secondaryButton} type="submit">Guardar relación</button></div></form> : null}
           <RelationSourcesEditor relationKind="entity_relation" relationId={relation.id} contextEntityId={id} sourceOptions={data.sourceOptions} links={relation.sourceLinks || []} returnPath={returnPath} canEdit={canEdit} />
           {canEdit ? <form action={archiveEventRelationAction} className={styles.archiveForm}><input type="hidden" name="event_id" value={id} /><input type="hidden" name="relation_id" value={relation.id} /><button type="submit">Archivar relación</button></form> : null}
         </article>)}
