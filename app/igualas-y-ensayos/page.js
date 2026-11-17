@@ -3,7 +3,7 @@ import CrewEventDirectory from '@/components/CrewEventDirectory'
 import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import JsonLd from '@/components/JsonLd'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
-import { getCrewEventDirectory } from '@/lib/supabase/public-directory-cache'
+import { getCrewEventDirectoryWithPhotos } from '@/lib/supabase/public-directory-cache'
 import styles from './crew-events-page.module.css'
 import introStyles from '@/components/CalendarIntro.module.css'
 import { pluralWord } from '@/lib/plural'
@@ -23,7 +23,7 @@ export const metadata = {
 
 export default async function CrewEventsPage() {
   await connection()
-  const events = await getCrewEventDirectory()
+  const events = await getCrewEventDirectoryWithPhotos()
   const upcoming = events.filter((item) => item.isUpcoming)
   const brotherhoodCount = new Set(events.map((item) => item.brotherhoodId)).size
   const stepCount = new Set(events.flatMap((item) => item.steps.map((step) => step.id))).size

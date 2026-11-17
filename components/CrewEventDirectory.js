@@ -23,6 +23,25 @@ import {
 import { trackEvent } from '@/lib/analytics/client'
 import styles from './CrewEventDirectory.module.css'
 import { hasCrewEventPage } from '@/lib/crew-event-url-policy'
+import { crewPhotoCaption } from '@/lib/crew-event-photo'
+
+const OPTIMIZABLE = /^(\/(?!\/)|https:\/\/[a-z0-9-]+\.supabase\.co\/storage\/v1\/object\/public\/)/i
+
+// Foto de la convocatoria (o de su titular o Paso). Un cartel no se recorta.
+function CrewPhoto({ photo, sizes, eager = false }) {
+  return (
+    <Image
+      src={photo.path}
+      alt={photo.alt || ''}
+      fill
+      sizes={sizes}
+      loading={eager ? 'eager' : 'lazy'}
+      fetchPriority={eager ? 'high' : undefined}
+      unoptimized={!OPTIMIZABLE.test(photo.path) || /\.svg(\?|$)/i.test(photo.path)}
+      style={{ objectFit: photo.fit === 'contain' ? 'contain' : 'cover', objectPosition: photo.position || '50% 50%' }}
+    />
+  )
+}
 
 const AGENDA_TYPE = 'igualas_ensayos'
 
@@ -127,10 +146,15 @@ function EventCard({ event, isMine = false }) {
           </div>
           {hasPage ? <Link className={styles.detailLink} href={event.detailHref} onClick={() => trackCrewOpen(event)}>Ver convocatoria <span>→</span></Link> : null}
         </div>
+        {event.photo && crewPhotoCaption(event.photo) ? <p className={styles.photoCredit}>{crewPhotoCaption(event.photo)}</p> : null}
         <ShareActions compact iconsOnly className={styles.cardShare} share={crewEventShare(event, { hasPage })} contentType="iguala" analytics={{ event_type: event.eventType || event.eventTypeLabel, municipality: event.municipality }} />
       </div>
 
-      {event.crestPath ? (
+      {event.photo ? (
+        <div className={styles.cardPhoto} data-fit={event.photo.fit}>
+          <CrewPhoto photo={event.photo} sizes="(max-width: 720px) 84px, 132px" />
+        </div>
+      ) : event.crestPath ? (
         <div className={styles.cardCrest} aria-hidden="true">
           <Image src={event.crestPath} alt="" width={78} height={78} sizes="78px" />
         </div>
@@ -259,31 +283,43 @@ export default function CrewEventDirectory({ events }) {
   return (
     <div className={styles.directory}>
       {featured ? (
-        <article className={styles.featured}>
-          <div className={styles.featuredDate}>
-            <time dateTime={featured.date}>
-              <strong>{featured.dateParts.day}</strong>
-              <span>{featured.dateParts.month}</span>
-              <small>{featured.dateParts.year}</small>
-            </time>
-            <EventStatus event={featured} />
-          </div>
+        <article className={styles.featured} data-photo={featured.photo ? 'true' : undefined}>
+          <figure className={styles.featuredVisual} data-fit={featured.photo?.fit}>
+            {featured.photo ? (
+              <CrewPhoto photo={featured.photo} sizes="(max-width: 720px) 100vw, 46vw" eager />
+            ) : featured.crestPath ? (
+              <span className={styles.featuredCrestMark} aria-hidden="true">
+                <Image src={featured.crestPath} alt="" width={220} height={220} sizes="220px" />
+              </span>
+            ) : null}
+            <div className={styles.featuredOverlay}>
+              <EventStatus event={featured} />
+              <time className={styles.featuredDateBadge} dateTime={featured.date}>
+                <strong>{featured.dateParts.day}</strong>
+                <span>{featured.dateParts.month}</span>
+                <small>{featured.dateParts.year}</small>
+              </time>
+            </div>
+            {featured.photo && crewPhotoCaption(featured.photo) ? <figcaption>{crewPhotoCaption(featured.photo)}</figcaption> : null}
+          </figure>
           <div className={styles.featuredCopy}>
             <span className={styles.kicker}>Próxima convocatoria · {featured.eventTypeLabel}</span>
             <h2>{hasCrewEventPage(featured.detailHref) ? <Link href={featured.detailHref} onClick={() => trackCrewOpen(featured)}>{featured.title}</Link> : featured.title}</h2>
-            <p className={styles.featuredBrotherhood}>{featured.brotherhoodName} · {featured.municipality}</p>
+            <p className={styles.featuredBrotherhood}>
+              {featured.photo && featured.crestPath ? <Image src={featured.crestPath} alt="" width={34} height={34} sizes="34px" /> : null}
+              <span>{featured.brotherhoodName} · {featured.municipality}</span>
+            </p>
             <div className={styles.featuredFacts}>
               <span><b>Fecha</b>{featured.dateParts.weekdayLabel}</span>
               <span><b>Hora</b>{featured.timeText || featured.startTime || 'Por confirmar'}</span>
               <span><b>Paso</b>{featured.steps.length ? <EntityNames items={featured.steps} /> : 'Por confirmar'}</span>
               <span><b>Capataz</b>{featured.agents.length ? <EntityNames items={featured.agents} /> : 'Por confirmar'}</span>
             </div>
-            {hasCrewEventPage(featured.detailHref) ? <Link className={styles.primaryAction} href={featured.detailHref} onClick={() => trackCrewOpen(featured)}>Ver convocatoria <span>→</span></Link> : <a className={styles.primaryAction} href={`#${featured.anchor}`}>Ver en el calendario <span>→</span></a>}
-            <ShareActions share={crewEventShare(featured, { hasPage: hasCrewEventPage(featured.detailHref) })} contentType="iguala" analytics={{ event_type: featured.eventType || featured.eventTypeLabel, municipality: featured.municipality, placement: 'featured' }} />
+            <div className={styles.featuredActions}>
+              {hasCrewEventPage(featured.detailHref) ? <Link className={styles.primaryAction} href={featured.detailHref} onClick={() => trackCrewOpen(featured)}>Ver convocatoria <span>→</span></Link> : <a className={styles.primaryAction} href={`#${featured.anchor}`}>Ver en el calendario <span>→</span></a>}
+              <ShareActions share={crewEventShare(featured, { hasPage: hasCrewEventPage(featured.detailHref) })} contentType="iguala" analytics={{ event_type: featured.eventType || featured.eventTypeLabel, municipality: featured.municipality, placement: 'featured' }} />
+            </div>
           </div>
-          {featured.crestPath ? (
-            <Image className={styles.featuredCrest} src={featured.crestPath} alt={`Escudo de ${featured.brotherhoodName}`} width={150} height={150} sizes="150px" />
-          ) : null}
         </article>
       ) : null}
 
