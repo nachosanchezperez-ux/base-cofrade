@@ -68,3 +68,67 @@
   .months{gap:18px}
   .monthHeading{padding:8px 0}
 }
+
+
+/* Explorador de convocatorias (17/11/2026): buscador, filtros facetados con
+   recuento, chips de filtros activos y, en móvil, panel de filtros plegable
+   para que el listado no quede debajo de seis desplegables. */
+.srOnly{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.controlsRow{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 14px}
+.toolbar{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+.search{position:relative;display:flex;align-items:center;min-width:0}
+.search>svg{position:absolute;left:15px;color:#6e7f8f;pointer-events:none}
+.search input{width:100%;min-width:0;height:50px;padding:0 46px 0 44px;border:1px solid #d4dfe7;border-radius:14px;background:#fff;color:#17283a;font:inherit;font-size:1rem;font-weight:600;-webkit-appearance:none;appearance:none}
+.search input::placeholder{color:#8794a0;font-weight:500}
+.search input::-webkit-search-cancel-button{display:none}
+.search input:focus{border-color:#123a67;outline:0;box-shadow:0 0 0 3px rgba(18,58,103,.1)}
+.searchClear{position:absolute;right:6px;display:grid;width:38px;height:38px;place-items:center;border:0;border-radius:10px;background:transparent;color:#5d6d7d;font:inherit;font-size:1.4rem;line-height:1;cursor:pointer}
+.searchClear:hover{background:#eef3f7}
+.filterToggle{display:none;align-items:center;justify-content:center;gap:8px;height:50px;padding:0 16px;border:1px solid #d4dfe7;border-radius:14px;background:#fff;color:#123a67;font:inherit;font-size:.9rem;font-weight:800;cursor:pointer}
+.filterToggle b{display:grid;min-width:22px;height:22px;place-items:center;padding:0 6px;border-radius:999px;background:#b71f37;color:#fff;font-size:12px}
+.filterToggle[aria-expanded="true"]{border-color:#123a67;background:#123a67;color:#fff}
+.selectFilter[data-active] select{border-color:#123a67;background:#eef4f9;color:#0f2742}
+.selectFilter[data-active]>span{color:#123a67}
+.selectFilter select{cursor:pointer;text-overflow:ellipsis}
+.filtersFooter{display:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.chips button{display:inline-flex;align-items:center;gap:6px;min-height:36px;max-width:100%;padding:0 12px;border:1px solid #c9d7e2;border-radius:999px;background:#eef4f9;color:#123a67;font:inherit;font-size:.84rem;font-weight:700;cursor:pointer;text-align:left}
+.chips button small{color:#6e7f8f;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.chips button span{font-size:1.05rem;line-height:1;color:#b71f37}
+.chips button:hover{border-color:#123a67}
+.resultHead{scroll-margin-top:110px}
+.emptyActions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:10px}
+.emptyActions button{min-height:42px;padding:0 16px;border:1px solid #123a67;border-radius:999px;background:#fff;color:#123a67;font:inherit;font-size:.86rem;font-weight:800;cursor:pointer}
+.emptyActions button:first-child{background:#123a67;color:#fff}
+.phaseTabs button:focus-visible,.filterToggle:focus-visible,.chips button:focus-visible,.emptyActions button:focus-visible,.searchClear:focus-visible{outline:2px solid #123a67;outline-offset:2px}
+
+@media(max-width:720px){
+  .controlsRow{display:grid;gap:8px}
+  .controlsRow>button{justify-self:start}
+  .toolbar{grid-template-columns:minmax(0,1fr) auto;gap:8px}
+  .search input{height:48px;font-size:16px}
+  .filterToggle{display:inline-flex;height:48px}
+  .filters{display:none;grid-template-columns:1fr;gap:12px;padding:14px}
+  .filters[data-open]{display:grid}
+  .selectFilter select{height:48px;font-size:16px}
+  .filtersFooter{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:4px}
+  .clearButton{min-height:44px;padding:0 6px;border:0;background:transparent;color:#b71f37;font:inherit;font-size:.9rem;font-weight:800;cursor:pointer}
+  .applyButton{min-height:48px;padding:0 20px;border:0;border-radius:999px;background:#123a67;color:#fff;font:inherit;font-size:.92rem;font-weight:800;cursor:pointer}
+  .chips{flex-wrap:nowrap;overflow-x:auto;margin:0 -4px;padding:2px 4px 4px;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chips li{flex:0 0 auto}
+  .chips button{white-space:nowrap}
+  .resultHead{scroll-margin-top:84px}
+  /* Destacada más compacta: fecha y estado en una fila sobre el título. */
+  .featured{grid-template-columns:1fr;background:#fff}
+  .featuredDate{display:flex;align-items:center;justify-content:flex-start;gap:14px;padding:20px 20px 0}
+  .featuredDate time{display:flex;align-items:baseline;gap:8px}
+  .featuredDate strong{font-size:2.6rem}
+  .featuredDate time span,.featuredDate time small{margin-top:0}
+  .featuredCopy{padding:14px 20px 22px}
+  .featuredCopy h2{font-size:1.6rem;line-height:1.08;padding-right:76px}
+  .featuredCrest{top:18px;right:18px;width:64px}
+  .featuredFacts{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:16px}
+  .featuredFacts span{padding:10px 11px}
+  .primaryAction{margin-top:16px}
+}
