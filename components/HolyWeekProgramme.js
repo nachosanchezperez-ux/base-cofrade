@@ -77,12 +77,19 @@ function shareItem(item, day) {
   navigator.clipboard?.writeText(url).catch(() => {})
 }
 
+// Etiqueta del bloque: oficial del año del programa o referencia del anterior.
+function referenceLabel(item, block) {
+  if (item.timesSource === 'oficial') return `Oficial ${item.year}`
+  if (block === 'times' && item.timesSource === 'consejo') return 'Consejo · 2026'
+  return 'Referencia 2026'
+}
+
 function RouteLegs({ item, onPull }) {
   if (!item.legs.length) return null
   return <div className={styles.block}>
     <div className={styles.blockHead}>
       <h4>Recorrido</h4>
-      <span className={styles.reference}>Referencia 2026</span>
+      <span className={styles.reference}>{referenceLabel(item, 'route')}</span>
     </div>
     <ol className={styles.legs} style={{ '--entity-color': item.color || 'var(--hc-navy, #112339)' }}>
       <li className={styles.legStop}>
@@ -96,7 +103,7 @@ function RouteLegs({ item, onPull }) {
         ? <li key={leg.id} className={styles.legCarrera}>
           <span className={styles.legMarkSquare} aria-hidden="true" />
           <div>
-            <p className={styles.carreraTitle}>Carrera Oficial</p>
+            <p className={styles.carreraTitle}>Carrera Oficial{item.campana ? <> · Campana <strong>{item.campana}</strong></> : null}</p>
             <p className={styles.legPlace}>Campana · Sierpes · Plaza de San Francisco · Avenida · Catedral</p>
           </div>
         </li>
@@ -146,7 +153,7 @@ function ProgrammeItem({ item, day, open, onToggle, followed, onFollow, onPull }
       {hasTimes ? <div className={styles.block}>
         <div className={styles.blockHead}>
           <h4>Horario</h4>
-          <span className={styles.reference}>{item.timesSource === 'consejo' ? 'Consejo · 2026' : 'Referencia 2026'}</span>
+          <span className={styles.reference}>{referenceLabel(item, 'times')}</span>
         </div>
         <div className={styles.times}>
           <div><span>Salida</span><strong>{item.departure}</strong></div>
@@ -361,7 +368,7 @@ export default function HolyWeekProgramme({ days = [], activeDayId = '', dateLab
               <span>
                 <small>{mineDay.name} · {dateLabels[mineDay.id]?.short}</small>
                 <strong>{item.name}</strong>
-                <span>{item.departure ? `Salida ${item.departure}${item.arrival ? ` · entrada ${item.arrival}` : ''} (2026)` : 'Horario 2027 por publicar'}</span>
+                <span>{item.departure ? `Salida ${item.departure}${item.arrival ? ` · entrada ${item.arrival}` : ''} (${item.year || 2026})` : 'Horario 2027 por publicar'}</span>
               </span>
             </button>
           </li>)}
