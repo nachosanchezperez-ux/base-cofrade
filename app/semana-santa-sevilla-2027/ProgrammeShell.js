@@ -81,7 +81,7 @@ export default function ProgrammeShell({ days, activeDayId, mode, breadcrumb, ey
           Horarios de vísperas: <a href={PROGRAMME_SOURCES.consejoPrevias2026.url} rel="noopener noreferrer" target="_blank">nómina de 2026 del Consejo</a>.
           Cortejo, bandas, horarios y recorridos de referencia: Hilo Cofrade.
         </p>
-        <p>Los horarios e itinerarios de 2027 se publican antes de la Cuaresma; hasta entonces se muestran los de 2026 como referencia.</p>
+        <p>Los horarios e itinerarios de 2027 se publican antes de la Cuaresma. Cuando una Hermandad publica los suyos, aparecen marcados como «Oficial 2027»; mientras tanto se muestran los de 2026 como referencia.</p>
       </footer>
     </div>
   </div>
