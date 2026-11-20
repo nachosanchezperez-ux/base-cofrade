@@ -125,3 +125,30 @@ test('las consultas de cultos y horarios se dividen en lotes para no desbordar l
     return filter && filter[2].length <= 150
   }))
 })
+
+test('un culto sin hermandad aparece en la Agenda por su localidad y sede', async () => {
+  const independent = {
+    ...tables,
+    cults: [{
+      id: 'c-parroquial', brotherhood_entity_id: null,
+      municipality_id: 'm1', place_text: 'Parroquia de San Ildefonso',
+      cult_type: 'Besapiés', title: 'Besapiés a Jesús Cautivo', status: 'published',
+    }],
+    cult_occurrences: [{
+      id: 'o-parroquial', cult_id: 'c-parroquial', start_date: '2099-11-20',
+      end_date: null, status: 'published', event_status: 'announced',
+    }],
+    cult_occurrence_days: [{
+      cult_occurrence_id: 'o-parroquial', celebration_date: '2099-11-20',
+      time_text: '10:00–13:00 y 18:00–20:00',
+    }],
+  }
+  const { getKissingDevotions } = loadReader(independent)
+  const items = await getKissingDevotions({ throwOnError: true })
+  assert.equal(items.length, 1)
+  assert.equal(items[0].municipality, 'Sevilla')
+  assert.equal(items[0].place, 'Parroquia de San Ildefonso')
+  assert.equal(items[0].brotherhoodName, '')
+  assert.equal(items[0].brotherhoodHref, '')
+  assert.equal(items[0].timeText, '10:00–13:00 y 18:00–20:00')
+})
