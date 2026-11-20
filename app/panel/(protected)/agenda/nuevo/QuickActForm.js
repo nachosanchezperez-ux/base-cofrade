@@ -68,15 +68,15 @@ export default function QuickActForm({ action, brotherhoods, municipalities, pla
           </select>
         </label>
         <label>
-          <span>Hermandad</span>
-          <select name="brotherhood_id" value={brotherhoodId} onChange={(event) => chooseBrotherhood(event.target.value)} required>
-            <option value="">Elige…</option>
+          <span>Hermandad <small>(opcional)</small></span>
+          <select name="brotherhood_id" value={brotherhoodId} onChange={(event) => chooseBrotherhood(event.target.value)}>
+            <option value="">Sin Hermandad asociada</option>
             {brotherhoods.map((item) => <option key={item.id} value={item.id}>{item.name}{item.status !== 'published' ? ' (sin publicar)' : ''}</option>)}
           </select>
         </label>
         <label className={styles.fieldWide}>
-          <span>Título <small>(opcional)</small></span>
-          <input name="title" maxLength={160} defaultValue={defaults.title || ''} placeholder={type ? `${type.label.replace(/ \(ordinari[ao]\)$/, '')} · Hermandad` : 'Se compone con el tipo y la Hermandad'} />
+          <span>Título {brotherhoodId ? <small>(opcional)</small> : <small>(obligatorio sin Hermandad)</small>}</span>
+          <input name="title" maxLength={160} required={!brotherhoodId} defaultValue={defaults.title || ''} placeholder={brotherhoodId ? 'Se compone con el tipo y la Hermandad' : 'Ej. Besapiés a Jesús Cautivo de San Ildefonso'} />
         </label>
         <label>
           <span>{isCult ? 'Primer día' : 'Fecha'}</span>
@@ -98,7 +98,7 @@ export default function QuickActForm({ action, brotherhoods, municipalities, pla
         ) : null}
         <label>
           <span>Localidad</span>
-          <select name="municipality_id" value={municipalityId} onChange={(event) => setMunicipalityId(event.target.value)}>
+          <select name="municipality_id" value={municipalityId} onChange={(event) => setMunicipalityId(event.target.value)} required={!brotherhoodId}>
             <option value="">Elige…</option>
             {municipalities.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
           </select>
@@ -110,12 +110,10 @@ export default function QuickActForm({ action, brotherhoods, municipalities, pla
             {visiblePlaces.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
           </select>
         </label>
-        {!isCult ? (
-          <label className={styles.fieldWide}>
-            <span>Lugar en texto <small>(si no está en la lista)</small></span>
-            <input name="place_text" maxLength={160} placeholder="Ej. Capilla de San José" />
-          </label>
-        ) : null}
+        <label className={styles.fieldWide}>
+          <span>Lugar en texto <small>(si no está en la lista)</small></span>
+          <input name="place_text" maxLength={160} placeholder="Ej. Capilla de San José" />
+        </label>
         <label className={styles.fieldWide}>
           <span>Información para el público <small>(opcional)</small></span>
           <textarea name="description" rows={3} maxLength={2000} defaultValue={defaults.description || ''} placeholder="Recorrido, motivo, quién preside…" />
@@ -159,7 +157,7 @@ export default function QuickActForm({ action, brotherhoods, municipalities, pla
         </label>
       </div>
       <div className={styles.formActions}>
-        <small>Se comprueba que no exista ya el mismo acto de la Hermandad ese día.</small>
+        <small>Puedes crear actos parroquiales o independientes sin Hermandad. Se comprueban posibles duplicados.</small>
         <button className={styles.primaryButton} type="submit" disabled={pending}>{pending ? 'Guardando…' : 'Crear acto'}</button>
       </div>
     </form>
