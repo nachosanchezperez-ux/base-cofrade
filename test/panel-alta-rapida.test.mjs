@@ -10,7 +10,7 @@ const M = '22222222-2222-4222-8222-222222222222'
 
 test('valida lo imprescindible y explica qué falta', () => {
   const { errors } = parseQuickAct(form({}))
-  assert.deepEqual(errors, ['Elige el tipo de acto.', 'Elige la Hermandad.', 'Indica la fecha.'])
+  assert.deepEqual(errors, ['Elige el tipo de acto.', 'Escribe un título cuando el acto no tenga Hermandad asociada.', 'Indica la fecha.', 'Elige la localidad para un acto sin Hermandad.'])
   assert.match(parseQuickAct(form({ act_type: 'triduo', brotherhood_id: B, start_date: '2026-10-24', end_date: '2026-10-20' })).errors[0], /anterior/)
   assert.match(parseQuickAct(form({ act_type: 'triduo', brotherhood_id: B, start_date: '2026-10-01', end_date: '2026-10-30' })).errors[0], /15 días/)
   assert.match(parseQuickAct(form({ act_type: 'triduo', brotherhood_id: B, start_date: '2026-10-24', start_time: '25:00' })).errors[0], /20:30/)
@@ -45,7 +45,7 @@ test('un culto crea su convocatoria con un día por fecha y reutiliza el culto e
 test('la acción comprueba duplicados, derechos de la imagen y deja auditoría', () => {
   const actions = read('app/panel/(protected)/agenda/nuevo/actions.js')
   assert.match(actions, /requirePanelEditor\(\)/)
-  assert.match(actions, /Ya existe esa salida de la Hermandad en esa fecha/)
+  assert.match(actions, /Ya existe una salida de ese tipo en esa fecha/)
   assert.match(actions, /Ese culto ya tiene una convocatoria en esa fecha/)
   assert.match(actions, /const RIGHTS = new Set\(\['owned', 'authorized'\]\)/)
   assert.match(actions, /hero_image_fit: image\.fit/)
