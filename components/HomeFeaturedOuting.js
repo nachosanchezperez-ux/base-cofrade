@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { getExtraordinaryLiveState, outingBriefingSchedule } from '@/lib/home-live-status'
 import { getHomeAdaptivePriority } from '@/lib/home-adaptive-priority'
 import { getProcessionLiveState } from '@/lib/procession-live-status'
+import { featuredGuideHref as guideHrefFor, followUpWhen } from '@/lib/home-editorial-focus'
 import styles from '@/app/home.module.css'
 import liveStyles from './HomeExtraordinaryLive.module.css'
 import navStyles from './HomeExtraordinaryNav.module.css'
@@ -39,13 +40,13 @@ function mobileScheduleIds(schedule = [], liveState = {}) {
   return new Set(schedule.slice(start, start + 3).map((item) => item.id))
 }
 
-export default function HomeFeaturedOuting({ featuredOuting, featuredBriefing }) {
+export default function HomeFeaturedOuting({ featuredOuting, featuredBriefing, followUps = [] }) {
   if (eventScheduleChange(featuredOuting).withdrawn) return <EventScheduleNotice item={featuredOuting} />
   featuredBriefing = {
     ...featuredBriefing,
     schedule: outingBriefingSchedule(featuredOuting?.date, featuredBriefing.schedule),
   }
-  const featuredGuideHref = featuredOuting?.href || featuredOuting?.calendarHref || '/extraordinarias'
+  const featuredGuideHref = guideHrefFor(featuredOuting || {})
   const todayKey = madridDateKey()
   const featuredIsToday = featuredOuting?.date === todayKey
   const scheduleLiveState = featuredOuting
@@ -183,6 +184,16 @@ export default function HomeFeaturedOuting({ featuredOuting, featuredBriefing })
                   <div className={`${styles.placePills} ${polishStyles.placePills}`}>
                     {featuredBriefing.places.map((place) => <span key={place.id}>{place.name}</span>)}
                   </div>
+                </section>
+              ) : null}
+              {followUps.length ? (
+                <section className={styles.briefingBlock} aria-labelledby={`briefing-despues-${featuredOuting.id}`}>
+                  <span className={styles.briefingLabel} id={`briefing-despues-${featuredOuting.id}`}>Y después</span>
+                  {followUps.map((item) => (
+                    <p key={item.id} style={{ margin: '4px 0 0' }}>
+                      <strong>{followUpWhen(item)}</strong> · <Link href={featuredGuideHref}>{item.title}</Link>
+                    </p>
+                  ))}
                 </section>
               ) : null}
             </div>

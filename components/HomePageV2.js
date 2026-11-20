@@ -66,8 +66,8 @@ export default function HomePageV2({
               <h2 id="destacados-title">{live?.isLive && !liveInAgenda && !editorialHighlights.length ? 'Procesión en curso' : 'Destacados'}</h2>
             </header>
             <div className={liveStyles.editorialHighlights}>
-              {highlights.map(({ outing, briefing }) => (
-                <HomeFeaturedOuting key={outing.id} featuredOuting={outing} featuredBriefing={briefing} />
+              {highlights.map(({ outing, briefing, followUps }) => (
+                <HomeFeaturedOuting key={outing.id} featuredOuting={outing} featuredBriefing={briefing} followUps={followUps} />
               ))}
             </div>
           </div>
