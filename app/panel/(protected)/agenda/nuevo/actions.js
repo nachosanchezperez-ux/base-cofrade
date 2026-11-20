@@ -74,7 +74,7 @@ export async function createQuickActAction(formData) {
     let duplicateQuery = supabase.from('outings').select('id').eq('outing_date', act.startDate).eq('outing_type', act.type.outingType).neq('status', 'archived')
     duplicateQuery = act.brotherhoodId
       ? duplicateQuery.eq('brotherhood_entity_id', act.brotherhoodId)
-      : duplicateQuery.is('brotherhood_entity_id', null).eq('title', quickActTitle(act))
+      : duplicateQuery.is('brotherhood_entity_id', null).eq('title', quickActTitle(act)).eq('municipality_id', act.municipalityId)
     const duplicate = await duplicateQuery.limit(1).maybeSingle()
     if (duplicate.error) return fail('No se pudo comprobar si el acto ya existe. Inténtalo de nuevo.')
     if (duplicate.data) return fail('Ya existe una salida de ese tipo en esa fecha. Revísala antes de crear otra.')
