@@ -21,7 +21,7 @@ function setup({ type = 'procesion', duplicate = false, failure = '' } = {}) {
       if (operation === 'insert') return { data: { id: 'created' }, error: null }
       return { data: duplicate ? { id: 'existing' } : null, error: null }
     }
-    const q = { select() { return this }, eq() { return this }, neq() { return this }, ilike() { return this }, order() { return this }, limit() { return this },
+    const q = { select() { return this }, eq() { return this }, is() { return this }, neq() { return this }, ilike() { return this }, order() { return this }, limit() { return this },
       insert(payload) { operation = 'insert'; writes.push({ table, payload }); return this },
       maybeSingle: async () => result(), single: async () => result(),
       then(resolve, reject) { return Promise.resolve(result()).then(resolve, reject) } }
@@ -71,4 +71,48 @@ test('a successful draft still redirects and never becomes published', async () 
   await action(form)
   assert.equal(writes.find(row => row.table === 'outings').payload.status, 'draft')
   assert.match(redirects[0], /creado=salida.*estado=borrador/)
+})
+
+test('un acto independiente exige título y localidad', () => {
+  const get = (values) => (key) => values[key] || ''
+  const missing = core.parseQuickAct(get({ act_type: 'besapies', start_date: '2026-11-20' }))
+  assert.match(missing.errors.join(' '), /título|localidad/)
+  const parsed = core.parseQuickAct(get({
+    act_type: 'besapies', start_date: '2026-11-20',
+    title: 'Besapiés al Cautivo de San Ildefonso',
+    municipality_id: '21279e61-2c75-4757-88d0-f8422e7e29ec',
+    place_text: 'Parroquia de San Ildefonso',
+  }))
+  assert.ok(parsed.act)
+  assert.equal(parsed.act.brotherhoodId, '')
+  const payloads = core.quickCultPayloads(parsed.act)
+  assert.equal(payloads.cult.brotherhood_entity_id, null)
+  assert.equal(payloads.cult.place_text, 'Parroquia de San Ildefonso')
+  assert.equal(payloads.cult.municipality_id, parsed.act.municipalityId)
+})
+
+test('una procesión sin hermandad conserva título, localidad y organizador vacío', () => {
+  const values = {
+    act_type: 'procesion', title: 'Procesión parroquial de Cristo Rey',
+    start_date: '2026-11-21', municipality_id: '21279e61-2c75-4757-88d0-f8422e7e29ec',
+    place_text: 'Parroquia de Santa Ana',
+  }
+  const parsed = core.parseQuickAct((key) => values[key] || '')
+  assert.ok(parsed.act)
+  const outing = core.quickOutingPayload(parsed.act)
+  assert.equal(outing.brotherhood_entity_id, null)
+  assert.equal(outing.organizer_name, null)
+  assert.equal(outing.origin_text, 'Parroquia de Santa Ana')
+})
+
+test('alta independiente crea salida sin hermandad ni enlace ficticio', async () => {
+  const { action, form, writes, redirects } = setup({ type: 'procesion' })
+  form.delete('brotherhood_id')
+  form.set('municipality_id', '21279e61-2c75-4757-88d0-f8422e7e29ec')
+  await action(form)
+  const outing = writes.find((row) => row.table === 'outings')
+  assert.equal(outing.payload.brotherhood_entity_id, null)
+  assert.equal(outing.payload.organizer_name, null)
+  assert.ok(redirects[0])
+  assert.doesNotMatch(redirects[0], /hermandad=/)
 })

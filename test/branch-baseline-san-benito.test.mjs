@@ -84,6 +84,7 @@ test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esq
     routePointCoordinatesName,
     extraordinaryActKindName,
     '20261108140000_event_schedule_changes.sql',
+    '20261120160000_cults_without_brotherhood.sql',
 
   ])
 })
