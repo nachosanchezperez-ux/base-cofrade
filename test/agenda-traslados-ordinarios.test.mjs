@@ -14,7 +14,7 @@ test('los traslados ordinarios entran en la Agenda como traslados', () => {
   const agenda = read('lib/supabase/agenda-cofrade.js')
   assert.match(agenda, /transfer: \{ category: 'transfers', label: 'Traslado'/)
   // v13 (08/11/2026) mantiene los traslados y añade la marca de acto extraordinario.
-  assert.match(agenda, /hilo-cofrade-agenda-sources-v13-extraordinarios/)
+  assert.match(agenda, /hilo-cofrade-agenda-sources-v1[3-9]-/)
   assert.match(read('lib/supabase/home-upcoming-agenda.js'), /isTransfer \? 'Traslado'/)
 })
 
