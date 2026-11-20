@@ -60,17 +60,24 @@ export async function createQuickActAction(formData) {
   try { image = readImage(formData) } catch (error) { return fail(error.message) }
   if (image && !image.alt) return fail('Describe la imagen (texto alternativo).')
 
-  const brotherhood = await supabase.from('entities').select('id, name, slug').eq('id', act.brotherhoodId).eq('entity_type', 'brotherhood').maybeSingle()
-  if (brotherhood.error || !brotherhood.data) return fail('No se encontró la Hermandad.')
-  const brotherhoodName = brotherhood.data.name
+  let brotherhood = { data: null }
+  if (act.brotherhoodId) {
+    brotherhood = await supabase.from('entities').select('id, name, slug').eq('id', act.brotherhoodId).eq('entity_type', 'brotherhood').maybeSingle()
+    if (brotherhood.error || !brotherhood.data) return fail('No se encontró la Hermandad.')
+  }
+  const brotherhoodName = brotherhood.data?.name || ''
 
   // Sin duplicados: el mismo tipo de acto de la misma Hermandad el mismo día.
   let target = ''
   let uploadedPath = ''
   if (act.type.group === 'outing') {
-    const duplicate = await supabase.from('outings').select('id').eq('brotherhood_entity_id', act.brotherhoodId).eq('outing_date', act.startDate).eq('outing_type', act.type.outingType).neq('status', 'archived').limit(1).maybeSingle()
+    let duplicateQuery = supabase.from('outings').select('id').eq('outing_date', act.startDate).eq('outing_type', act.type.outingType).neq('status', 'archived')
+    duplicateQuery = act.brotherhoodId
+      ? duplicateQuery.eq('brotherhood_entity_id', act.brotherhoodId)
+      : duplicateQuery.is('brotherhood_entity_id', null).eq('title', quickActTitle(act))
+    const duplicate = await duplicateQuery.limit(1).maybeSingle()
     if (duplicate.error) return fail('No se pudo comprobar si el acto ya existe. Inténtalo de nuevo.')
-    if (duplicate.data) return fail('Ya existe esa salida de la Hermandad en esa fecha. Revísala en su ficha antes de crear otra.')
+    if (duplicate.data) return fail('Ya existe una salida de ese tipo en esa fecha. Revísala antes de crear otra.')
     const slug = await uniqueOutingSlug(supabase, slugify(`${quickActTitle(act, brotherhoodName)}-${act.startDate.slice(0, 4)}`))
     const payload = quickOutingPayload(act, { brotherhoodName, slug })
     const created = await supabase.from('outings').insert(payload).select('id').single()
@@ -93,7 +100,11 @@ export async function createQuickActAction(formData) {
     }
   } else {
     // Se reutiliza el culto del mismo tipo de la Hermandad, si existe.
-    const existing = await supabase.from('cults').select('id').eq('brotherhood_entity_id', act.brotherhoodId).ilike('cult_type', act.type.cultType).neq('status', 'archived').order('created_at').limit(1).maybeSingle()
+    let existingQuery = supabase.from('cults').select('id').ilike('cult_type', act.type.cultType).neq('status', 'archived')
+    existingQuery = act.brotherhoodId
+      ? existingQuery.eq('brotherhood_entity_id', act.brotherhoodId)
+      : existingQuery.is('brotherhood_entity_id', null).eq('title', quickActTitle(act)).eq('municipality_id', act.municipalityId)
+    const existing = await existingQuery.order('created_at').limit(1).maybeSingle()
     if (existing.error) return fail('No se pudo consultar el culto de la Hermandad. Inténtalo de nuevo.')
     const payloads = quickCultPayloads(act, { brotherhoodName, existingCultId: existing.data?.id || '' })
     let cultId = existing.data?.id || ''
@@ -134,10 +145,12 @@ export async function createQuickActAction(formData) {
   }
 
   revalidatePath('/panel')
-  revalidatePath(`/panel/hermandades/${act.brotherhoodId}`)
-  if (brotherhood.data.slug) revalidatePath(`/hermandades/${brotherhood.data.slug}`)
+  if (act.brotherhoodId) {
+    revalidatePath(`/panel/hermandades/${act.brotherhoodId}`)
+    if (brotherhood.data?.slug) revalidatePath(`/hermandades/${brotherhood.data.slug}`)
+  }
   revalidatePath('/extraordinarias')
   revalidatePath('/procesiones-de-gloria')
   revalidateAgendaPhotos()
-  redirect(`/panel/agenda/nuevo?creado=${act.type.group === 'outing' ? 'salida' : 'culto'}&id=${target}&hermandad=${act.brotherhoodId}&estado=${act.publish ? 'publicado' : 'borrador'}`)
+  redirect(`/panel/agenda/nuevo?creado=${act.type.group === 'outing' ? 'salida' : 'culto'}&id=${target}${act.brotherhoodId ? `&hermandad=${act.brotherhoodId}` : ''}&estado=${act.publish ? 'publicado' : 'borrador'}`)
 }
