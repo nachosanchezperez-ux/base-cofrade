@@ -41,6 +41,7 @@ const EXECUTABLE_SCHEMA_MIGRATIONS = [
   "20261106071749_outing_route_points_coordinates.sql",
   "20261108080000_extraordinary_act_kind.sql",
   "20261108140000_event_schedule_changes.sql",
+  "20261120160000_cults_without_brotherhood.sql",
 
 ];
 
