@@ -104,3 +104,15 @@ test('una procesión sin hermandad conserva título, localidad y organizador vac
   assert.equal(outing.organizer_name, null)
   assert.equal(outing.origin_text, 'Parroquia de Santa Ana')
 })
+
+test('alta independiente crea salida sin hermandad ni enlace ficticio', async () => {
+  const { action, form, writes, redirects } = setup({ type: 'procesion' })
+  form.delete('brotherhood_id')
+  form.set('municipality_id', '21279e61-2c75-4757-88d0-f8422e7e29ec')
+  await action(form)
+  const outing = writes.find((row) => row.table === 'outings')
+  assert.equal(outing.payload.brotherhood_entity_id, null)
+  assert.equal(outing.payload.organizer_name, null)
+  assert.ok(redirects[0])
+  assert.doesNotMatch(redirects[0], /hermandad=/)
+})
