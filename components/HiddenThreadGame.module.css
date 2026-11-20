@@ -1,24 +1,24 @@
 /*
  * El hilo escondido · estilos del juego.
  * Mobile-first: la base es un iPhone de 390 px; las mejoras para pantallas mayores van al final.
- * Paleta de Hilo Cofrade: burdeos, marfil, blanco y dorado.
+ * Paleta de Hilo Cofrade: azul y blanco.
  */
 .page {
-  --hg-wine: #6f2337;
-  --hg-wine-dark: #4b1626;
-  --hg-wine-soft: #f6ebee;
-  --hg-ivory: #fbf7f0;
-  --hg-paper: #fffdf9;
-  --hg-gold: #c79a4b;
-  --hg-gold-soft: #f3e4c6;
-  --hg-ink: #2a1f24;
-  --hg-muted: #6c6066;
-  --hg-line: #eadfd6;
+  --hg-wine: #153b69;
+  --hg-wine-dark: #102d50;
+  --hg-wine-soft: #edf4fb;
+  --hg-ivory: #f4f7fb;
+  --hg-paper: #ffffff;
+  --hg-gold: #537fa9;
+  --hg-gold-soft: #e3eef8;
+  --hg-ink: #172a40;
+  --hg-muted: #52657a;
+  --hg-line: #d5e1ec;
   --hg-ok: #2f6a43;
-  --hg-ok-soft: #eaf4ec;
-  --hg-ko: #9a2f45;
-  --hg-ko-soft: #fbecee;
-  --hg-focus: #d8a34b;
+  --hg-ok-soft: #edf4fb;
+  --hg-ko: #244c76;
+  --hg-ko-soft: #edf4fb;
+  --hg-focus: #3977b6;
   background: var(--hg-ivory);
   color: var(--hg-ink);
 }
@@ -43,7 +43,7 @@
   display: inline-flex;
   align-items: center;
   min-height: 40px;
-  color: #f2d9c2;
+  color: #c7dff5;
   font-size: 13px;
   font-weight: 700;
   text-decoration: none;
@@ -79,7 +79,7 @@
   margin-bottom: 10px;
   padding: 4px;
   border-radius: 14px;
-  background: #efe4da;
+  background: #e3edf7;
 }
 
 .mode {
@@ -110,7 +110,7 @@
 .mode[aria-selected='true'] {
   background: var(--hg-paper);
   color: var(--hg-wine);
-  box-shadow: 0 2px 8px rgba(75, 22, 38, .12);
+  box-shadow: 0 2px 8px rgba(21, 59, 105, .12);
 }
 
 .board {
@@ -118,7 +118,7 @@
   border: 1px solid var(--hg-line);
   border-radius: 18px;
   background: var(--hg-paper);
-  box-shadow: 0 10px 30px rgba(42, 31, 36, .06);
+  box-shadow: 0 10px 30px rgba(23, 42, 64, .06);
   scroll-margin-top: 80px;
 }
 
@@ -261,7 +261,7 @@
 }
 
 .attempts i.attemptUsed {
-  background: #ddd2c8;
+  background: #ceddea;
 }
 
 .attempts small {
@@ -313,7 +313,7 @@
   padding: 4px 10px;
   border-radius: 999px;
   background: rgba(255, 255, 255, .12);
-  color: #f6e7da;
+  color: #d8e8f7;
   font-size: 13px;
   font-weight: 700;
 }
@@ -386,7 +386,7 @@
 }
 
 .choice[data-state='wrong'] {
-  border-color: #e7c6cd;
+  border-color: #bbcede;
   background: var(--hg-ko-soft);
   color: var(--hg-ko);
   text-decoration: line-through;
@@ -480,7 +480,7 @@
   padding: 8px 14px;
   border: 1px dashed var(--hg-gold);
   border-radius: 12px;
-  background: #fffaf0;
+  background: #f4f8fc;
   color: var(--hg-wine-dark);
   font: inherit;
   font-size: 15px;
@@ -524,7 +524,7 @@
 .result {
   margin-top: 14px;
   padding: 16px;
-  border: 1px solid #cfe3d4;
+  border: 1px solid #c6d9eb;
   border-radius: 14px;
   background: var(--hg-ok-soft);
   animation: hgReveal .3s ease-out;
@@ -532,7 +532,7 @@
 }
 
 .result[data-status='lost'] {
-  border-color: #ecd3d8;
+  border-color: #c6d9eb;
   background: var(--hg-ko-soft);
 }
 
@@ -558,7 +558,7 @@
 
 .result p {
   margin: 6px 0 0;
-  color: #43393e;
+  color: #283e56;
   font-size: 15px;
   line-height: 1.45;
 }
@@ -688,7 +688,7 @@
   margin-top: 12px;
   padding: 18px 14px;
   border-radius: 16px;
-  background: linear-gradient(160deg, #172a40 0%, var(--hg-wine) 60%, #2b1a2b 100%);
+  background: linear-gradient(160deg, #172a40 0%, var(--hg-wine) 60%, #102d50 100%);
   color: #fff;
   text-align: center;
 }
@@ -702,7 +702,7 @@
 }
 
 .shareMode {
-  color: #eadbd6;
+  color: #d6e5f4;
   font-size: 13px;
 }
 
@@ -714,7 +714,7 @@
 
 .shareScore small {
   font-size: 16px;
-  color: #eadbd6;
+  color: #d6e5f4;
 }
 
 .shareMarks {
@@ -1152,3 +1152,14 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
+
+/* Daily ritual: one main action, readable local stats. */
+.page a, .page a:hover { text-decoration: none; }
+.statsNote { color: var(--hg-muted); font-size: 13px; line-height: 1.5; }
+.distribution { margin-top: 16px; }
+.distribution > strong { display: block; margin-bottom: 8px; font-size: 14px; }
+.distributionRow { display: grid; grid-template-columns: 20px minmax(0, 1fr); align-items: center; gap: 8px; margin: 6px 0; }
+.distributionBar { box-sizing: border-box; min-width: 28px; padding: 4px 8px; border-radius: 4px; background: var(--hg-wine); color: white; text-align: right; }
+.moreShare { margin-top: 12px; }
+.moreShare summary { cursor: pointer; padding: 12px 0; font-size: 14px; }
+.recommendationNote a { display: inline-block; padding: 12px 2px; color: var(--hg-wine); }
