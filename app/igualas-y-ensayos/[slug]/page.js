@@ -18,7 +18,7 @@ import {
   socialMetadata,
 } from '@/lib/seo'
 import { getCrewEventDetail } from '@/lib/supabase/crew-events'
-import { hasCrewEventPage } from '@/lib/crew-event-url-policy'
+import { hasCrewEventPage, isIndexableCrewEventPage } from '@/lib/crew-event-url-policy'
 import styles from './crew-event-detail.module.css'
 
 export const dynamic = 'force-static'
@@ -105,6 +105,7 @@ export async function generateMetadata({ params }) {
     title,
     description,
     ...socialMetadata({ title, description, path: canonical, type: 'article' }),
+    ...(isIndexableCrewEventPage(event) ? {} : { robots: { index: false, follow: true } }),
   }
 }
 

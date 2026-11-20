@@ -30,7 +30,8 @@ test('la ficha redirige las convocatorias no conservadas y el sitemap solo lista
   const page = read('app/igualas-y-ensayos/[slug]/page.js')
   assert.equal((page.match(/if \(!hasCrewEventPage\(event\.detailHref\)\) permanentRedirect\(event\.detailHref\)/g) || []).length, 2)
   const sitemap = read('app/sitemap.js')
-  assert.match(sitemap, /\.filter\(\(event\) => hasCrewEventPage\(event\.detailHref\)\)/)
+  // Desde el 27/10/2026 también quedan fuera las conservadas ya pasadas.
+  assert.match(sitemap, /\.filter\(\(event\) => isIndexableCrewEventPage\(event\)\)/)
   const loader = read('lib/supabase/crew-events.js')
   assert.match(loader, /detailHref: crewEventDetailHref\(entity\.slug\),\s*anchor: crewEventAnchor\(entity\.slug\),/)
 })
