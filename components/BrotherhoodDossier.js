@@ -43,6 +43,49 @@ function Piece({ piece, headingLevel = 3 }) {
   </article>
 }
 
+function Journey({ outing, occasion = null }) {
+  const schedule = outing?.schedule || []
+  // Momentos del recorrido entre la salida y la entrada (la salida y la entrada
+  // ya están en los horarios).
+  const routePoints = outing?.routePoints || []
+  const stations = routePoints.slice(1, -1).filter((point) => point.notes || point.type === 'station')
+  return <>
+    {occasion?.description ? <p className={styles.lead}>{occasion.description}</p> : null}
+    {schedule.length ? <>
+      <h3 className={styles.subheading}><ClockIcon size={17} /> Horarios</h3>
+      <ol className={styles.schedule}>
+        {schedule.map((item) => <li key={item.id}>
+          <time>{item.time || item.timeText || '—'}</time>
+          <div><strong>{item.label}</strong>{item.date && outing.date && item.date !== outing.date ? <span>{dossierDayLabel(item.date)}</span> : null}{item.place ? <span>{item.place}</span> : null}{item.notes ? <p>{item.notes}</p> : null}</div>
+        </li>)}
+      </ol>
+    </> : null}
+    {schedule.length ? null : <Facts items={[
+      { label: 'Salida', value: outing.departureTime },
+      { label: 'Entrada', value: outing.returnTime },
+    ].filter((fact) => fact.value)} />}
+    {outing.routeSummary ? <>
+      <h3 className={styles.subheading}><RouteIcon size={17} /> Recorrido</h3>
+      <p>{outing.routeSummary}</p>
+    </> : null}
+    {stations.length ? <ul className={styles.stations} aria-label="Momentos del recorrido">
+      {stations.map((point) => <li key={point.order}>{point.time ? <time>{point.time}</time> : null}<strong>{point.label}</strong>{point.notes ? <span>{point.notes}</span> : null}</li>)}
+    </ul> : null}
+    {outing.publicNotes ? <p className={styles.context}>{outing.publicNotes}</p> : null}
+    {outing.music?.length ? <>
+      <h3 className={styles.subheading}><MusicIcon size={17} /> Acompañamiento musical</h3>
+      <ul className={styles.plainList}>
+        {outing.music.map((row) => <li key={row.id}>
+          {row.href ? <Link href={row.href} prefetch={false}>{row.name}</Link> : <strong>{row.name}</strong>}
+          {row.context ? <span>{row.context}</span> : null}
+          {row.notes ? <p>{row.notes}</p> : null}
+        </li>)}
+      </ul>
+    </> : null}
+    {outing.detailHref ? <p><Link className={styles.more} href={outing.detailHref} prefetch={false}>Mapa y horario por puntos <ChevronRightIcon size={16} /></Link></p> : null}
+  </>
+}
+
 export default function BrotherhoodDossier({
   brotherhood,
   title,
@@ -50,6 +93,7 @@ export default function BrotherhoodDossier({
   crestPath = '',
   keyFacts = [],
   outing = null,
+  outings = [],
   occasion = null,
   occasionPieces = [],
   images = [],
@@ -66,15 +110,12 @@ export default function BrotherhoodDossier({
   children = null,
 }) {
   const marches = occasion?.marches || []
-  const schedule = outing?.schedule || []
-  // Momentos del recorrido entre la salida y la entrada (la salida y la entrada
-  // ya están en los horarios).
-  const routePoints = outing?.routePoints || []
-  const stations = routePoints.slice(1, -1).filter((point) => point.notes || point.type === 'station')
+  // Una o varias salidas en la misma jornada (traslado y procesión de vuelta).
+  const journey = (outings?.length ? outings : [outing]).filter(Boolean)
   const pieceCount = heritageGroups.reduce((total, group) => total + group.items.length, 0)
   const index = [
     keyFacts.length && { href: '#datos', label: 'Datos clave' },
-    outing && { href: '#jornada', label: 'La jornada' },
+    journey.length && { href: '#jornada', label: journey.length > 1 ? 'Las salidas' : 'La jornada' },
     (occasionPieces.length || marches.length) && { href: '#coronacion', label: title.short || 'La gran cita' },
     images.length && { href: '#titular', label: images.length > 1 ? 'Titulares' : 'La Titular' },
     pieceCount && { href: '#patrimonio', label: 'Patrimonio' },
@@ -111,41 +152,13 @@ export default function BrotherhoodDossier({
         <Facts items={keyFacts} className={styles.keyFacts} />
       </Section> : null}
 
-      {outing ? <Section id="jornada" title="La jornada">
-        {occasion?.description ? <p className={styles.lead}>{occasion.description}</p> : null}
-        {schedule.length ? <>
-          <h3 className={styles.subheading}><ClockIcon size={17} /> Horarios</h3>
-          <ol className={styles.schedule}>
-            {schedule.map((item) => <li key={item.id}>
-              <time>{item.time || item.timeText || '—'}</time>
-              <div><strong>{item.label}</strong>{item.date && outing.date && item.date !== outing.date ? <span>{dossierDayLabel(item.date)}</span> : null}{item.place ? <span>{item.place}</span> : null}{item.notes ? <p>{item.notes}</p> : null}</div>
-            </li>)}
-          </ol>
-        </> : null}
-        {schedule.length ? null : <Facts items={[
-          { label: 'Salida', value: outing.departureTime },
-          { label: 'Entrada', value: outing.returnTime },
-        ].filter((fact) => fact.value)} />}
-        {outing.routeSummary ? <>
-          <h3 className={styles.subheading}><RouteIcon size={17} /> Recorrido</h3>
-          <p>{outing.routeSummary}</p>
-        </> : null}
-        {stations.length ? <ul className={styles.stations} aria-label="Momentos del recorrido">
-          {stations.map((point) => <li key={point.order}>{point.time ? <time>{point.time}</time> : null}<strong>{point.label}</strong>{point.notes ? <span>{point.notes}</span> : null}</li>)}
-        </ul> : null}
-        {outing.publicNotes ? <p className={styles.context}>{outing.publicNotes}</p> : null}
-        {outing.music?.length ? <>
-          <h3 className={styles.subheading}><MusicIcon size={17} /> Acompañamiento musical</h3>
-          <ul className={styles.plainList}>
-            {outing.music.map((row) => <li key={row.id}>
-              {row.href ? <Link href={row.href} prefetch={false}>{row.name}</Link> : <strong>{row.name}</strong>}
-              {row.context ? <span>{row.context}</span> : null}
-              {row.notes ? <p>{row.notes}</p> : null}
-            </li>)}
-          </ul>
-        </> : null}
-        {outing.detailHref ? <p><Link className={styles.more} href={outing.detailHref} prefetch={false}>Mapa y horario por puntos <ChevronRightIcon size={16} /></Link></p> : null}
-      </Section> : null}
+      {journey.map((item, position) => <Section
+        key={item.id || position}
+        id={position ? `jornada-${position + 1}` : 'jornada'}
+        title={journey.length > 1 ? [item.title || item.outingType, dossierDayLabel(item.date)].filter(Boolean).join(' · ') : 'La jornada'}
+      >
+        <Journey outing={item} occasion={position ? null : occasion} />
+      </Section>)}
 
       {occasionPieces.length || marches.length ? <Section id="coronacion" title={title.short || 'La gran cita'}>
         {occasionPieces.map((piece) => <Piece key={piece.id} piece={piece} />)}

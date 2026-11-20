@@ -6,6 +6,7 @@ import {
   dossierHeritageGroups,
   dossierDayLabel,
   dossierHref,
+  dossierJourneyOutings,
   dossierKeyFacts,
   heritageFamilyKey,
   imageFacts,
@@ -107,4 +108,25 @@ test('si la procesión se aplaza, la jornada y la procesión llevan su fecha', (
     occasion: { name: 'Coronación Canónica', date: '2026-11-08', time: '10:00' },
   }).map((fact) => [fact.label, fact.value]))
   assert.equal(sameDay['Procesión'], 'Salida 17:00')
+})
+
+test('San Esteban entra en el dosier y su jornada reúne traslado y procesión', () => {
+  assert.equal(usesBrotherhoodDossier('36b4d5c1-f7bb-4025-a09a-948e0d5d188f'), true)
+  const traslado = { id: 't', fecha: '2026-11-21', estado: 'announced' }
+  const procesion = { id: 'p', fecha: '2026-11-22', estado: 'announced' }
+  const lejana = { id: 'l', fecha: '2027-03-30', estado: 'announced' }
+  const suspendida = { id: 's', fecha: '2026-11-23', estado: 'cancelled' }
+  assert.deepEqual(dossierJourneyOutings(traslado, [procesion, lejana, traslado, suspendida]).map((item) => item.id), ['t', 'p'])
+  assert.deepEqual(dossierJourneyOutings(null, [procesion]), [])
+  const facts = dossierKeyFacts({
+    outings: [
+      { date: '2026-11-21', outingType: 'Traslado', departureTime: '11:00' },
+      { date: '2026-11-22', outingType: 'Procesión', departureTime: '16:00', music: [{ name: 'Virgen de los Reyes', context: 'Tras el paso' }] },
+    ],
+  }).map((fact) => [fact.label, fact.value])
+  assert.deepEqual(facts, [
+    ['Traslado', 'Sábado 21 de noviembre · Salida 11:00'],
+    ['Procesión', 'Domingo 22 de noviembre · Salida 16:00'],
+    ['Música', 'Virgen de los Reyes · Tras el paso'],
+  ])
 })
