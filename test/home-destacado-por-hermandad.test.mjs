@@ -39,7 +39,9 @@ test('cuando el traslado termina, el regreso ocupa la tarjeta', () => {
 test('la guía lleva a la ficha de la Hermandad en modo aplicación', () => {
   assert.equal(featuredGuideHref({ brotherhoodId: SAN_ESTEBAN, organizerHref: '/hermandades/san-esteban', href: '/extraordinarias/x' }), '/hermandades/san-esteban#salida')
   assert.equal(featuredGuideHref({ brotherhoodId: 'fuera-del-piloto', organizerHref: '/hermandades/otra', href: '/extraordinarias/x' }), '/extraordinarias/x')
+  assert.equal(featuredGuideHref({ brotherhoodId: SAN_ESTEBAN, brotherhoodHref: '/hermandades/san-esteban', href: '/extraordinarias/x' }), '/hermandades/san-esteban#salida')
   assert.equal(followUpWhen({ date: '2026-11-22', startTime: '16:00' }), 'Dom 22 · 16:00')
+  assert.equal(followUpWhen({ date: '2026-11-22', departureTime: '16:00' }), 'Dom 22 · 16:00')
 })
 
 test('la portada pinta «Y después» y no repite la salida en curso', () => {
@@ -47,4 +49,6 @@ test('la portada pinta «Y después» y no repite la salida en curso', () => {
   assert.match(read('components/HomePageV2.js'), /followUps=\{followUps\}/)
   assert.match(read('lib/home-agenda-now.js'), /followUps/)
   assert.match(read('lib/supabase/extraordinary-directory.js'), /brotherhoodId: item\.brotherhood_entity_id/)
+  assert.match(read('lib/supabase/home.js'), /brotherhoodId: item\.brotherhood_entity_id/)
+  assert.match(read('lib/supabase/home-snapshot.js'), /brotherhoodHrefById/)
 })
