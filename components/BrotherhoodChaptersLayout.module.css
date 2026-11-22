@@ -910,7 +910,9 @@
 
 /* Dentro de una fila abierta, los títulos internos bajan un escalón: la fila
    ya hace de título de sección, así que nada dentro compite con ella. */
-:global(#hc-app) .chapters :global([class*='__disclosureBody'] .section-heading h2) {
+/* «#hc-app#hc-app»: la regla global «#hc-app > main > :not(#hc-panel) h2»
+   lleva dos identificadores; este doble id iguala su peso sin !important. */
+:global(#hc-app#hc-app) .chapters :global([class*='__disclosureBody'] .section-heading h2) {
   margin: 4px 0 12px;
   color: var(--chapter-fold-title);
   font-family: inherit;
