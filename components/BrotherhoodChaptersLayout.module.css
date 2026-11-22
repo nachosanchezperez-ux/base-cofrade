@@ -770,7 +770,9 @@
   width: 28px;
   height: 28px;
   border: 0;
-  background: transparent;
+  border-radius: 0;
+  /* La ficha clásica fija el fondo del botón con !important en #fuentes. */
+  background: transparent !important;
   color: var(--chapter-fold-title, #17324a);
   font-size: 22px;
   font-weight: 400;
@@ -784,7 +786,8 @@
 /* 3 · El Hilo se mueve (cierre de la ficha). */
 :global(body#hc-app):has(.chapters) :global(#el-hilo-se-mueve) {
   padding-block: 0 28px;
-  background: transparent;
+  /* Queda fuera de la ficha, sobre el fondo de la página: se iguala al blanco. */
+  background: #fff;
 }
 
 :global(body#hc-app):has(.chapters) :global(#el-hilo-se-mueve details) {
