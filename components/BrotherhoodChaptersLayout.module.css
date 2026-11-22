@@ -907,3 +907,27 @@
   font-size: 15px;
   line-height: 1.6;
 }
+
+/* Dentro de una fila abierta, los títulos internos bajan un escalón: la fila
+   ya hace de título de sección, así que nada dentro compite con ella. */
+:global(#hc-app) .chapters :global([class*='__disclosureBody'] .section-heading h2) {
+  margin: 4px 0 12px;
+  color: var(--chapter-fold-title);
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+:global(#hc-app) .chapters :global([class*='__disclosureBody'] h3) {
+  font-family: inherit;
+  font-size: min(18px, 1em + 2px);
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+:global(#hc-app) .chapters :global([class*='__disclosureBody'] .section) {
+  padding-block: 4px 12px;
+  background: transparent;
+}
