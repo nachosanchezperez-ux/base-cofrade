@@ -841,13 +841,22 @@
   letter-spacing: -.01em;
 }
 
-/* Título y «+» con la misma letra en todas las filas (otras capas fijaban 14 px). */
-.chapters :global([class*='BrotherhoodReadingLayout'][class*='__disclosure'] > summary > span) {
+/* Título y «+» con la misma letra en todas las filas. Las reglas globales
+   de #hc-app (p. ej. «#hc-app b» en negrita) pesan más que una clase, así
+   que estas llevan también #hc-app delante. */
+:global(#hc-app) .chapters :global([class*='BrotherhoodReadingLayout'][class*='__disclosure'] > summary) {
+  font-size: 16px;
+}
+
+:global(#hc-app) .chapters :global([class*='BrotherhoodReadingLayout'][class*='__disclosure'] > summary > span) {
   font-size: 16px;
   font-weight: 700;
 }
 
-.chapters :global([class*='BrotherhoodReadingLayout'][class*='__disclosure'] > summary > b),
-.chapters :global(#conoce-hermandad > summary > b) {
+:global(#hc-app) .chapters :global([class*='BrotherhoodReadingLayout'][class*='__disclosure'] > summary > b) {
+  font-weight: 400;
+}
+
+:global(#hc-app) .chapters :global(#conoce-hermandad > summary > b) {
   font-weight: 400;
 }
