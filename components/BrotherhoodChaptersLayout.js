@@ -5,6 +5,7 @@ import BrotherhoodOverviewV2 from './BrotherhoodOverviewV2'
 import HiloMovementCards from './HiloMovementCards'
 import BandCrestBadge from './BandCrestBadge'
 import { plural } from '@/lib/plural'
+import { heritageFoldCount } from '@/lib/heritage-fold-count'
 import styles from './BrotherhoodChaptersLayout.module.css'
 import readingStyles from './BrotherhoodReadingLayout.module.css'
 
@@ -175,7 +176,7 @@ export default function BrotherhoodChaptersLayout({
         >{slots.outings}</Disclosure>
       </Supplement> : null}
       {isPenitencia && (hasHeritage || hasHeritageExtras) ? <Supplement>
-        {hasHeritage ? <Disclosure title="Patrimonio y estrenos" count={h.patrimonio?.length ? plural(h.patrimonio.length, 'pieza', 'piezas') : ''}>{slots.heritage}</Disclosure> : null}
+        {hasHeritage ? <Disclosure title="Patrimonio y estrenos" count={heritageFoldCount(h.patrimonio, h.estrenos)}>{slots.heritage}</Disclosure> : null}
         {h.simpecados?.length ? <Disclosure title="Simpecados" count={h.simpecados.length}>{slots.simpecados}</Disclosure> : null}
         {h.cartelesFiestas?.length ? <Disclosure title="Carteles" count={h.cartelesFiestas.length}>{slots.posters}</Disclosure> : null}
       </Supplement> : null}

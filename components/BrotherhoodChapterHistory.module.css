@@ -86,10 +86,7 @@
   line-height: 1.35;
 }
 
-.highlighted .copy h3 {
-  font-size: 18px;
-  font-weight: 800;
-}
+/* El hito destacado se distingue solo por el punto: misma letra que el resto. */
 
 .copy h3 a {
   color: var(--brotherhood-primary, #153b69);

@@ -600,3 +600,157 @@
 .bandsToday .bandTodayText a {
   min-height: 28px;
 }
+
+/* ── Sistema común de la ficha por capítulos ─────────────────────────────
+   Un solo lenguaje para los bloques secundarios: fila plegable con filete
+   arriba y abajo, título en azul marino, recuento en gris y «+» que gira.
+   Se aplica a los plegables propios y a los bloques compartidos que cierran
+   la ficha (Conoce, Fuentes, El Hilo se mueve), solo en las fichas por
+   capítulos para no alterar el resto de la web. */
+.chapters {
+  --chapter-fold-line: #dce1e6;
+  --chapter-fold-title: #17324a;
+  --chapter-fold-meta: #5a6570;
+  --chapter-section-title: #171b20;
+}
+
+/* Fondo único: sin franjas grises entre bloques del mismo capítulo. */
+.chapters :global(#historia) {
+  background: transparent !important;
+}
+
+/* Fila plegable: los plegables propios (Patrimonio, Curiosidades…). */
+.chapters :global([class*='BrotherhoodReadingLayout'][class*='__disclosure']),
+.chapters :global(#conoce-hermandad),
+:global(body):has(.chapters) :global(.sources-section details),
+:global(body):has(.chapters) :global(#el-hilo-se-mueve details) {
+  margin-block: 0;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid var(--chapter-fold-line, #dce1e6);
+  border-bottom: 1px solid var(--chapter-fold-line, #dce1e6);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Dos filas seguidas comparten filete. */
+.chapters :global([class*='__disclosure'] + [class*='__disclosure']),
+.chapters :global(#conoce-hermandad + [class*='__disclosure']) {
+  border-top: 0;
+}
+
+.chapters :global([class*='BrotherhoodReadingLayout'][class*='__disclosure'] > summary),
+.chapters :global(#conoce-hermandad > summary),
+:global(body):has(.chapters) :global(.sources-section details > summary),
+:global(body):has(.chapters) :global(#el-hilo-se-mueve details > summary) {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 14px 0;
+  color: var(--chapter-fold-title, #17324a);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+  list-style: none;
+  cursor: pointer;
+}
+
+.chapters :global([class*='BrotherhoodReadingLayout'][class*='__disclosure'] > summary small),
+.chapters :global(#conoce-hermandad > summary small) {
+  color: var(--chapter-fold-meta, #5a6570);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* El «+» es igual en todas las filas: sin círculo, a la derecha, gira al abrir. */
+.chapters :global([class*='BrotherhoodReadingLayout'][class*='__disclosure'] > summary b),
+.chapters :global(#conoce-hermandad > summary b),
+:global(body):has(.chapters) :global(.sources-section details > summary b),
+:global(body):has(.chapters) :global(#el-hilo-se-mueve details > summary b) {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-left: auto;
+  flex: 0 0 28px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--chapter-fold-title, #17324a);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1;
+  transition: transform .18s ease;
+}
+
+/* Fuentes y El Hilo se mueve: mismo rótulo que el resto de filas. */
+:global(body):has(.chapters) :global(.sources-section) {
+  padding-block: 8px 20px;
+}
+
+:global(body):has(.chapters) :global(.sources-section details > summary .eyebrow) {
+  display: none;
+}
+
+/* El titular de la última noticia queda como línea secundaria, en gris. */
+:global(body):has(.chapters) :global(#el-hilo-se-mueve details > summary strong + span) {
+  display: block;
+  margin-top: 2px;
+  color: var(--chapter-fold-meta, #5a6570);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+:global(body):has(.chapters) :global(.sources-section details > summary h2),
+:global(body):has(.chapters) :global(#el-hilo-se-mueve details > summary strong) {
+  margin: 0;
+  color: var(--chapter-fold-title, #17324a);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+:global(body):has(.chapters) :global(.sources-section details > summary > span) {
+  margin-left: auto;
+  gap: 12px;
+  color: var(--chapter-fold-meta, #5a6570);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+:global(body):has(.chapters) :global(.sources-section details > div) {
+  padding: 0 0 20px;
+  border-top: 0;
+}
+
+:global(body):has(.chapters) :global(#el-hilo-se-mueve) {
+  padding-block: 0 28px;
+  background: transparent;
+}
+
+:global(body):has(.chapters) :global(#el-hilo-se-mueve details > summary > span) {
+  min-width: 0;
+}
+
+:global(body):has(.chapters) :global(#el-hilo-se-mueve details[open] > summary b),
+:global(body):has(.chapters) :global(.sources-section details[open] > summary b) {
+  transform: rotate(45deg);
+}
+
+/* Títulos de sección: todos con el mismo tamaño, peso y color. */
+.chapters :global(.heritage-subheading h3) {
+  margin: 6px 0 0;
+  color: var(--chapter-section-title, #171b20);
+  font-family: inherit;
+  font-size: clamp(22px, 5.6vw, 30px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -.01em;
+}
