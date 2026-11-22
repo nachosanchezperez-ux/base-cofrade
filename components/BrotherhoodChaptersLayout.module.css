@@ -860,3 +860,50 @@
 :global(#hc-app) .chapters :global(#conoce-hermandad > summary > b) {
   font-weight: 400;
 }
+
+/* Curiosidades dentro de su fila: lista ligera, sin repetir el título de la
+   fila, sin tarjetas ni el icono grande. Cada curiosidad, separada por filete. */
+:global(#hc-app) .chapters :global(#curiosidades) {
+  padding-block: 0 8px;
+  background: transparent;
+}
+
+:global(#hc-app) .chapters :global(#curiosidades .section-heading) {
+  display: none;
+}
+
+:global(#hc-app) .chapters :global(#curiosidades .curiosity-card) {
+  display: block;
+  max-width: none;
+  margin: 0;
+  padding: 16px 0;
+  border: 0;
+  border-bottom: 1px solid #eef1f4;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+:global(#hc-app) .chapters :global(#curiosidades .curiosity-card:last-child) {
+  border-bottom: 0;
+}
+
+:global(#hc-app) .chapters :global(#curiosidades .curiosity-mark) {
+  display: none;
+}
+
+:global(#hc-app) .chapters :global(#curiosidades .curiosity-card h3) {
+  margin: 4px 0 6px;
+  color: var(--chapter-fold-title);
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+:global(#hc-app) .chapters :global(#curiosidades .curiosity-card p) {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+}

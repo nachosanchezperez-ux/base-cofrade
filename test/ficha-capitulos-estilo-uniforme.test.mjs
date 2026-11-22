@@ -37,3 +37,9 @@ test('los recuentos de los plegables llevan su palabra', () => {
   assert.match(layout, /plural\(h\.curiosidades\.length, 'curiosidad', 'curiosidades'\)/)
   assert.doesNotMatch(layout, /count=\{h\.[a-zA-Z]+\.length\}/)
 })
+
+test('las curiosidades se leen como lista dentro de su fila', () => {
+  const css = read('components/BrotherhoodChaptersLayout.module.css')
+  assert.match(css, /#curiosidades \.section-heading\) \{\s*display: none;/)
+  assert.match(css, /#curiosidades \.curiosity-mark\) \{\s*display: none;/)
+})
