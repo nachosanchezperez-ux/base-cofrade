@@ -840,3 +840,14 @@
   line-height: 1.15;
   letter-spacing: -.01em;
 }
+
+/* Título y «+» con la misma letra en todas las filas (otras capas fijaban 14 px). */
+.chapters :global([class*='BrotherhoodReadingLayout'][class*='__disclosure'] > summary > span) {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.chapters :global([class*='BrotherhoodReadingLayout'][class*='__disclosure'] > summary > b),
+.chapters :global(#conoce-hermandad > summary > b) {
+  font-weight: 400;
+}
