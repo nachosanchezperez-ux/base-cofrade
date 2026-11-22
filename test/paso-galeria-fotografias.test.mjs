@@ -3,15 +3,17 @@ import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { stepGalleryMedia } from '../lib/entity-gallery.js'
 
-test('la galería del paso excluye portada y cabecera y conserva el orden', () => {
+test('la galería del paso solo muestra fotos de galería, en orden', () => {
   const items = [
     { id: 'a', path: '/a.jpg', isCover: true, relationType: 'cover' },
     { id: 'b', path: '/b.jpg', isCover: false, relationType: 'gallery' },
     { id: 'c', path: '/c.jpg', isCover: false, relationType: 'hero' },
     { id: 'd', path: '', isCover: false, relationType: 'gallery' },
     { id: 'e', path: '/e.jpg', isCover: false, relationType: 'portrait' },
+    { id: 'f', path: '/f.jpg', isCover: false, relationType: 'cover' },
+    { id: 'g', path: '/g.jpg', isCover: false, relationType: 'gallery' },
   ]
-  assert.deepEqual(stepGalleryMedia(items).map((item) => item.id), ['b', 'e'])
+  assert.deepEqual(stepGalleryMedia(items).map((item) => item.id), ['b', 'g'])
   assert.deepEqual(stepGalleryMedia(null), [])
 })
 
