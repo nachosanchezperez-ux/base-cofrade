@@ -5,6 +5,7 @@ import BrotherhoodOverviewV2 from './BrotherhoodOverviewV2'
 import HiloMovementCards from './HiloMovementCards'
 import BandCrestBadge from './BandCrestBadge'
 import { plural } from '@/lib/plural'
+import { heritageFoldCount } from '@/lib/heritage-fold-count'
 import styles from './BrotherhoodChaptersLayout.module.css'
 import readingStyles from './BrotherhoodReadingLayout.module.css'
 
@@ -99,7 +100,7 @@ export default function BrotherhoodChaptersLayout({
     {slots.ownMusic}
     {slots.musicalHeritage}
     {slots.repertoires}
-    {h.acompanamientos?.length ? <Supplement><Disclosure title="Acompañamientos históricos" count={h.acompanamientos.length}>{slots.historicalMusic}</Disclosure></Supplement> : null}
+    {h.acompanamientos?.length ? <Supplement><Disclosure title="Acompañamientos históricos" count={plural(h.acompanamientos.length, 'etapa', 'etapas')}>{slots.historicalMusic}</Disclosure></Supplement> : null}
   </div>
 
   // Vida de hermandad: se llega desde Inicio; el detalle sigue en el HTML.
@@ -175,9 +176,9 @@ export default function BrotherhoodChaptersLayout({
         >{slots.outings}</Disclosure>
       </Supplement> : null}
       {isPenitencia && (hasHeritage || hasHeritageExtras) ? <Supplement>
-        {hasHeritage ? <Disclosure title="Patrimonio y estrenos" count={h.patrimonio?.length ? plural(h.patrimonio.length, 'pieza', 'piezas') : ''}>{slots.heritage}</Disclosure> : null}
-        {h.simpecados?.length ? <Disclosure title="Simpecados" count={h.simpecados.length}>{slots.simpecados}</Disclosure> : null}
-        {h.cartelesFiestas?.length ? <Disclosure title="Carteles" count={h.cartelesFiestas.length}>{slots.posters}</Disclosure> : null}
+        {hasHeritage ? <Disclosure title="Patrimonio y estrenos" count={heritageFoldCount(h.patrimonio, h.estrenos)}>{slots.heritage}</Disclosure> : null}
+        {h.simpecados?.length ? <Disclosure title="Simpecados" count={plural(h.simpecados.length, 'simpecado', 'simpecados')}>{slots.simpecados}</Disclosure> : null}
+        {h.cartelesFiestas?.length ? <Disclosure title="Carteles" count={plural(h.cartelesFiestas.length, 'cartel', 'carteles')}>{slots.posters}</Disclosure> : null}
       </Supplement> : null}
     </>)}
 
@@ -187,8 +188,8 @@ export default function BrotherhoodChaptersLayout({
       {slots.occasion}
       {slots.heritage}
       {h.simpecados?.length || h.cartelesFiestas?.length ? <Supplement>
-        {h.simpecados?.length ? <Disclosure title="Simpecados" count={h.simpecados.length}>{slots.simpecados}</Disclosure> : null}
-        {h.cartelesFiestas?.length ? <Disclosure title="Carteles" count={h.cartelesFiestas.length}>{slots.posters}</Disclosure> : null}
+        {h.simpecados?.length ? <Disclosure title="Simpecados" count={plural(h.simpecados.length, 'simpecado', 'simpecados')}>{slots.simpecados}</Disclosure> : null}
+        {h.cartelesFiestas?.length ? <Disclosure title="Carteles" count={plural(h.cartelesFiestas.length, 'cartel', 'carteles')}>{slots.posters}</Disclosure> : null}
       </Supplement> : null}
       {hasMusic ? music : null}
     </div>)}
@@ -197,7 +198,7 @@ export default function BrotherhoodChaptersLayout({
       {slots.history}
       {(h.viaCrucisCofradias?.length || h.participacionesConsejo?.length || h.curiosidades?.length) ? <Supplement>
         {(h.viaCrucisCofradias?.length || h.participacionesConsejo?.length) ? <Disclosure title="Participaciones institucionales y Vía Crucis">{slots.council}{slots.viaCrucis}</Disclosure> : null}
-        {h.curiosidades?.length ? <Disclosure title="Curiosidades" count={h.curiosidades.length}>{slots.curiosities}</Disclosure> : null}
+        {h.curiosidades?.length ? <Disclosure title="Curiosidades" count={plural(h.curiosidades.length, 'curiosidad', 'curiosidades')}>{slots.curiosities}</Disclosure> : null}
       </Supplement> : null}
     </>)}
 
