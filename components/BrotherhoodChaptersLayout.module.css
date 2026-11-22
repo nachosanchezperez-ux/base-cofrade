@@ -754,3 +754,21 @@
   line-height: 1.15;
   letter-spacing: -.01em;
 }
+
+/* Historia termina en «Conoce» y sigue con los plegables del capítulo:
+   una sola lista de filas, sin hueco ni filete doble entre ellas. */
+.chapters :global(#historia:has(#conoce-hermandad)) {
+  padding-bottom: 0;
+}
+
+.chapters :global(#historia:has(#conoce-hermandad)) + .supplement {
+  padding-top: 0;
+}
+
+.chapters :global(#historia:has(#conoce-hermandad)) + .supplement > :first-child {
+  border-top: 0;
+}
+
+.chapters :global(#conoce-hermandad > summary small) {
+  display: inline;
+}
