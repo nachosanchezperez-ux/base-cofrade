@@ -622,8 +622,8 @@
 /* Fila plegable: los plegables propios (Patrimonio, Curiosidades…). */
 .chapters :global([class*='BrotherhoodReadingLayout'][class*='__disclosure']),
 .chapters :global(#conoce-hermandad),
-:global(body):has(.chapters) :global(.sources-section details),
-:global(body):has(.chapters) :global(#el-hilo-se-mueve details) {
+:global(body):has(.chapters) :global(#hc-app #fuentes details),
+:global(body):has(.chapters) :global(#hc-app #el-hilo-se-mueve details) {
   margin-block: 0;
   padding: 0;
   border: 0;
@@ -631,7 +631,8 @@
   border-bottom: 1px solid var(--chapter-fold-line, #dce1e6);
   border-radius: 0;
   background: transparent;
-  box-shadow: none;
+  /* La ficha clásica fija una sombra con !important en #fuentes. */
+  box-shadow: none !important;
 }
 
 /* Dos filas seguidas comparten filete. */
@@ -642,8 +643,8 @@
 
 .chapters :global([class*='BrotherhoodReadingLayout'][class*='__disclosure'] > summary),
 .chapters :global(#conoce-hermandad > summary),
-:global(body):has(.chapters) :global(.sources-section details > summary),
-:global(body):has(.chapters) :global(#el-hilo-se-mueve details > summary) {
+:global(body):has(.chapters) :global(#hc-app #fuentes details > summary),
+:global(body):has(.chapters) :global(#hc-app #el-hilo-se-mueve details > summary) {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -667,8 +668,8 @@
 /* El «+» es igual en todas las filas: sin círculo, a la derecha, gira al abrir. */
 .chapters :global([class*='BrotherhoodReadingLayout'][class*='__disclosure'] > summary b),
 .chapters :global(#conoce-hermandad > summary b),
-:global(body):has(.chapters) :global(.sources-section details > summary b),
-:global(body):has(.chapters) :global(#el-hilo-se-mueve details > summary b) {
+:global(body):has(.chapters) :global(#hc-app #fuentes details > summary b),
+:global(body):has(.chapters) :global(#hc-app #el-hilo-se-mueve details > summary b) {
   display: inline-grid;
   place-items: center;
   width: 28px;
@@ -686,16 +687,16 @@
 }
 
 /* Fuentes y El Hilo se mueve: mismo rótulo que el resto de filas. */
-:global(body):has(.chapters) :global(.sources-section) {
+:global(body):has(.chapters) :global(#hc-app #fuentes) {
   padding-block: 8px 20px;
 }
 
-:global(body):has(.chapters) :global(.sources-section details > summary .eyebrow) {
+:global(body):has(.chapters) :global(#hc-app #fuentes details > summary .eyebrow) {
   display: none;
 }
 
 /* El titular de la última noticia queda como línea secundaria, en gris. */
-:global(body):has(.chapters) :global(#el-hilo-se-mueve details > summary strong + span) {
+:global(body):has(.chapters) :global(#hc-app #el-hilo-se-mueve details > summary strong + span) {
   display: block;
   margin-top: 2px;
   color: var(--chapter-fold-meta, #5a6570);
@@ -704,8 +705,8 @@
   line-height: 1.4;
 }
 
-:global(body):has(.chapters) :global(.sources-section details > summary h2),
-:global(body):has(.chapters) :global(#el-hilo-se-mueve details > summary strong) {
+:global(body):has(.chapters) :global(#hc-app #fuentes details > summary h2),
+:global(body):has(.chapters) :global(#hc-app #el-hilo-se-mueve details > summary strong) {
   margin: 0;
   color: var(--chapter-fold-title, #17324a);
   font-family: inherit;
@@ -715,7 +716,7 @@
   letter-spacing: 0;
 }
 
-:global(body):has(.chapters) :global(.sources-section details > summary > span) {
+:global(body):has(.chapters) :global(#hc-app #fuentes details > summary > span) {
   margin-left: auto;
   gap: 12px;
   color: var(--chapter-fold-meta, #5a6570);
@@ -725,22 +726,22 @@
   letter-spacing: 0;
 }
 
-:global(body):has(.chapters) :global(.sources-section details > div) {
+:global(body):has(.chapters) :global(#hc-app #fuentes details > div) {
   padding: 0 0 20px;
   border-top: 0;
 }
 
-:global(body):has(.chapters) :global(#el-hilo-se-mueve) {
+:global(body):has(.chapters) :global(#hc-app #el-hilo-se-mueve) {
   padding-block: 0 28px;
   background: transparent;
 }
 
-:global(body):has(.chapters) :global(#el-hilo-se-mueve details > summary > span) {
+:global(body):has(.chapters) :global(#hc-app #el-hilo-se-mueve details > summary > span) {
   min-width: 0;
 }
 
-:global(body):has(.chapters) :global(#el-hilo-se-mueve details[open] > summary b),
-:global(body):has(.chapters) :global(.sources-section details[open] > summary b) {
+:global(body):has(.chapters) :global(#hc-app #el-hilo-se-mueve details[open] > summary b),
+:global(body):has(.chapters) :global(#hc-app #fuentes details[open] > summary b) {
   transform: rotate(45deg);
 }
 
@@ -771,4 +772,32 @@
 
 .chapters :global(#conoce-hermandad > summary small) {
   display: inline;
+}
+
+/* Recuento debajo del título: el título nunca se parte por el recuento y el
+   «+» queda siempre en la misma columna. */
+.chapters :global([class*='BrotherhoodReadingLayout'][class*='__disclosure'] > summary),
+.chapters :global(#conoce-hermandad > summary) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 12px;
+  row-gap: 2px;
+}
+
+.chapters :global([class*='BrotherhoodReadingLayout'][class*='__disclosure'] > summary > span),
+.chapters :global(#conoce-hermandad > summary > span) {
+  grid-column: 1;
+}
+
+.chapters :global([class*='BrotherhoodReadingLayout'][class*='__disclosure'] > summary > small),
+.chapters :global(#conoce-hermandad > summary > small) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.chapters :global([class*='BrotherhoodReadingLayout'][class*='__disclosure'] > summary > b),
+.chapters :global(#conoce-hermandad > summary > b) {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
 }
