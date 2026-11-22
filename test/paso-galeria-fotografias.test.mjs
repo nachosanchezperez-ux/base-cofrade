@@ -18,6 +18,10 @@ test('la galería del paso excluye portada y cabecera y conserva el orden', () =
 test('la ficha del paso muestra la galería con su ancla', () => {
   const page = readFileSync(new URL('../app/pasos/[slug]/page.js', import.meta.url), 'utf8')
   assert.match(page, /<EntityMediaGallery[\s\S]*id="fotografias"/)
+  // La galería se desestructura dentro del componente de la página, no en generateMetadata.
+  const component = page.slice(page.indexOf('export default async function PasoDetailPage'))
+  assert.match(component, /galleryMedia = \[\],[\s\S]*\} = result;/)
+  assert.ok(component.indexOf('galleryMedia = [],') < component.indexOf('} = result;'))
   assert.match(page, /href: '#fotografias', label: 'Fotografías'/)
   const loader = readFileSync(new URL('../lib/supabase/public-entity-pages.js', import.meta.url), 'utf8')
   assert.match(loader, /galleryMedia: stepGalleryMedia\(entityMedia\)/)

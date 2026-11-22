@@ -50,7 +50,6 @@ export async function generateMetadata({ params }) {
     bandas = [],
     historicoMusical = [],
     coverMedia = null,
-    galleryMedia = [],
     heritage = { phases: [], pieces: [], sources: [] },
   } = result;
   const title = contextualEntitySeoTitle(paso.nombre, {
@@ -114,6 +113,7 @@ export default async function PasoDetailPage({params}){
     bandas = [],
     historicoMusical = [],
     coverMedia = null,
+    galleryMedia = [],
     heritage = { phases: [], pieces: [], sources: [] },
   } = result;
   const directoryType = heritageTypeForValue(paso.tipo, 'pasos');
