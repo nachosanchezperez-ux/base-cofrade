@@ -8,16 +8,22 @@ function isWikimediaUpload(photoSrc = '') {
   }
 }
 
-export default function EntityMediaGallery({ items = [], id }) {
+export default function EntityMediaGallery({
+  items = [],
+  id,
+  eyebrow = 'Galería',
+  title = 'Detalles fotográficos',
+  intro = 'Otras miradas de la imagen, conservadas con su autoría y procedencia.',
+}) {
   if (!items.length) return null;
 
   return (
     <section className="section entity-media-gallery-section" id={id}>
       <div className="shell">
         <div className="entity-media-gallery-heading">
-          <span className="eyebrow">Galería</span>
-          <h2>Detalles fotográficos</h2>
-          <p>Otras miradas de la imagen, conservadas con su autoría y procedencia.</p>
+          <span className="eyebrow">{eyebrow}</span>
+          <h2>{title}</h2>
+          {intro ? <p>{intro}</p> : null}
         </div>
 
         <div className={`entity-media-gallery-grid ${items.length === 1 ? 'is-single' : ''}`}>

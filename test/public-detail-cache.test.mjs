@@ -15,7 +15,7 @@ test('las fichas públicas comparten la caché de datos de 6 horas', () => {
 
   const pages = read('lib/supabase/public-entity-pages.js')
   assert.match(pages, /\['hilo-cofrade-public-image-detail-v8-sucesion'\],\n  \{ revalidate: PUBLIC_DETAIL_DATA_REVALIDATE, tags: \['public-image-detail', 'public-brotherhood-detail'\] \}/)
-  assert.match(pages, /\['hilo-cofrade-public-step-detail-v8-figuras'\],\n  \{ revalidate: PUBLIC_DETAIL_DATA_REVALIDATE, tags: \['public-step-detail', 'public-brotherhood-detail'\] \}/)
+  assert.match(pages, /\['hilo-cofrade-public-step-detail-v9-galeria'\],\n  \{ revalidate: PUBLIC_DETAIL_DATA_REVALIDATE, tags: \['public-step-detail', 'public-brotherhood-detail'\] \}/)
   // El histórico musical del Paso usa el año en curso.
   assert.match(pages, /return readPasoPage\(slug, publicDetailCacheDay\(\)\)/)
   assert.match(pages, /readCurrent: getCachedPasoPageBySlug,/)

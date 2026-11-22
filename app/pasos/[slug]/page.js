@@ -3,6 +3,7 @@ import { cache } from 'react';
 import { notFound } from 'next/navigation';
 import EntitySectionNav from '@/components/EntitySectionNav';
 import EntityLastUpdated from '@/components/EntityLastUpdated';
+import EntityMediaGallery from '@/components/EntityMediaGallery';
 import JsonLd from '@/components/JsonLd';
 import RelationalEntityHero from '@/components/RelationalEntityHero';
 import SectionTitle from '@/components/SectionTitle';
@@ -112,6 +113,7 @@ export default async function PasoDetailPage({params}){
     bandas = [],
     historicoMusical = [],
     coverMedia = null,
+    galleryMedia = [],
     heritage = { phases: [], pieces: [], sources: [] },
   } = result;
   const directoryType = heritageTypeForValue(paso.tipo, 'pasos');
@@ -201,6 +203,7 @@ export default async function PasoDetailPage({params}){
         { href: '#resumen', label: 'Resumen' },
         (bandas.length > 0 || historicoMusical.length > 0) && { href: '#acompanamiento', label: 'Acompañamiento' },
         (heritage.phases.length > 0 || heritage.pieces.length > 0 || heritage.sources.length > 0) && { href: '#patrimonio', label: 'Patrimonio y evolución' },
+        galleryMedia.length > 0 && { href: '#fotografias', label: 'Fotografías' },
       ]} />
 
       <section className="section" id="resumen"><div className="shell content-grid">
@@ -336,6 +339,14 @@ export default async function PasoDetailPage({params}){
           ) : null}
         </div>
       </section> : null}
+
+      <EntityMediaGallery
+        items={galleryMedia}
+        id="fotografias"
+        eyebrow="Fotografías"
+        title="El paso a través del tiempo"
+        intro="Fotografías del paso, también históricas, con su procedencia."
+      />
     </div>
   );
 }
