@@ -1,0 +1,83 @@
+/*
+ * Cifras vivas de la portada, dentro de la banda azul y bajo el buscador.
+ * Móvil: rejilla de 2 columnas; desde 720 px, una sola fila.
+ * Texto blanco sobre azul (nunca rojo sobre azul).
+ */
+.pulse {
+  min-width: 0;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, .16);
+}
+
+:global(#hc-app #inicio) .title {
+  margin: 0 0 10px;
+  color: var(--home-on-blue);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 64px;
+  height: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  color: #fff;
+  background: rgba(255, 255, 255, .08);
+  text-decoration: none;
+}
+
+.item:hover,
+.item:focus-visible {
+  background: rgba(255, 255, 255, .14);
+}
+
+.figure {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  color: rgba(255, 255, 255, .82);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* Con un número impar de cifras, la última ocupa la fila entera en móvil. */
+.list > li:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 720px) {
+  .list > li:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+
+  .list {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+
+/* Desde 768 px la cabecera es de dos columnas: las cifras ocupan todo el ancho. */
+@media (min-width: 768px) {
+  .pulse {
+    grid-column: 1 / -1;
+  }
+}
