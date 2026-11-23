@@ -1,0 +1,42 @@
+/* Fichas por capítulos (Banda, …): mismas reglas que la ficha de Hermandad. */
+.chapters {
+  background: inherit;
+}
+
+/* La barra inferior de capítulos no tapa el final de la ficha en móvil. */
+:global(body):has(.chapters) {
+  padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+}
+
+.chapterTitle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.chapterTitle:focus-visible {
+  outline: none;
+}
+
+@media (max-width: 899px) {
+  /* Modo aplicación (móvil con JavaScript): un capítulo por pantalla. */
+  .chapters[data-app='on'] > section[data-chapter]:not([data-active]) {
+    display: none;
+  }
+
+  .chapters[data-app='on'] > section[data-chapter] {
+    min-height: calc(100svh - var(--hc-app-header-height, 70px) - 60px);
+  }
+
+  .chapters[data-app='on'] section[id] {
+    scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 56px);
+  }
+
+  /* Fuera de Inicio, la portada de la ficha deja paso a la mini cabecera. */
+  :global(html[data-hc-chapter-screen="inner"]) :global(section[aria-labelledby="entity-hero-title"]) {
+    display: none;
+  }
+}
