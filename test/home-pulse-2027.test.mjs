@@ -5,11 +5,13 @@ import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { addDays, buildHomePulse, countUpcomingWeek, holyWeekCountdown } from '../lib/home-pulse.js'
 
-test('cuenta atrás hasta el Domingo de Ramos de 2027', () => {
+test('cuenta atrás hasta el Viernes de Dolores de 2027, con reloj', () => {
   assert.deepEqual(holyWeekCountdown('2026-11-23'), {
-    key: 'countdown', figure: '118', label: 'días para el Domingo de Ramos', href: '/semana-santa-sevilla-2027',
+    key: 'countdown', figure: '116', label: 'días para el Viernes de Dolores', href: '/semana-santa-sevilla-2027',
+    target: '2027-03-19T00:00:00+01:00',
   })
-  assert.equal(holyWeekCountdown('2027-03-20').label, 'día para el Domingo de Ramos')
+  assert.equal(holyWeekCountdown('2027-03-18').label, 'día para el Viernes de Dolores')
+  assert.equal(holyWeekCountdown('2027-03-19').figure, 'Hoy')
   assert.equal(holyWeekCountdown('2027-03-24').figure, 'Hoy')
   assert.equal(holyWeekCountdown('2027-03-29'), null)
 })
@@ -37,7 +39,7 @@ test('sin dato no hay cifra: nunca se muestra un cero', () => {
     musicChanges: 1234,
   })
   assert.deepEqual(full.map((item) => [item.key, item.figure, item.label]), [
-    ['countdown', '118', 'días para el Domingo de Ramos'],
+    ['countdown', '116', 'días para el Viernes de Dolores'],
     ['agenda', '1', 'acto en la agenda esta semana'],
     ['crew', '2', 'igualás y ensayos esta semana'],
     ['music', '1234', 'cambios de banda para 2027'],
@@ -66,4 +68,21 @@ test('horarios oficiales 2027: una Hermandad cuenta una vez y sin ninguno no hay
     key: 'schedules', figure: '1 de 3', label: 'horarios oficiales de 2027 publicados', href: '/semana-santa-sevilla-2027',
   })
   assert.equal(buildHomePulse({ today: '2026-11-23', schedules: { official: 0, total: 3 } }).some((item) => item.key === 'schedules'), false)
+})
+
+test('reloj: días, horas, minutos y segundos hasta la medianoche del Viernes de Dolores (hora de Sevilla)', async () => {
+  const { countdownParts } = await import('../lib/home-pulse.js')
+  // 23/11/2026 23:31:20 en Madrid = 22:31:20 UTC
+  assert.deepEqual(countdownParts('2027-03-19T00:00:00+01:00', Date.parse('2026-11-23T22:31:20Z')), {
+    days: 115, hours: 0, minutes: 28, seconds: 40,
+  })
+  assert.equal(countdownParts('2027-03-19T00:00:00+01:00', Date.parse('2027-03-19T00:00:00+01:00')), null)
+  assert.equal(countdownParts('no-es-fecha'), null)
+  // Con la hora real, el servidor pinta los mismos días que el reloj.
+  assert.equal(holyWeekCountdown('2026-11-23', Date.parse('2026-11-23T22:31:20Z')).figure, '115')
+  assert.equal(holyWeekCountdown('2026-11-23', Date.parse('2026-11-23T08:00:00Z')).figure, '115')
+  const clock = readFileSync(new URL('../components/PulseClock.js', import.meta.url), 'utf8')
+  assert.match(clock, /^'use client'/)
+  assert.match(clock, /setInterval\(tick, 1000\)/)
+  assert.match(clock, /clearInterval/)
 })
