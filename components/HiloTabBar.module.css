@@ -30,9 +30,8 @@
     display: none;
   }
 
-  :global(body:has(nav[aria-label="Capítulos de la ficha"])) {
-    padding-bottom: 0;
-  }
+  /* El margen inferior lo mantiene la ficha (60 px): no se anula aquí, o el
+     final de la ficha quedaría bajo la barra de capítulos. */
 }
 
 .list {
