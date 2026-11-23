@@ -53,3 +53,17 @@ test('la cabecera conserva la marca en el H1 y pinta las cifras bajo el buscador
   const css = readFileSync(new URL('../components/HomePulse.module.css', import.meta.url), 'utf8')
   assert.doesNotMatch(css, /color:\s*(var\(--home-red\)|#b01b32|#b71f37)/i)
 })
+
+test('horarios oficiales 2027: una Hermandad cuenta una vez y sin ninguno no hay cifra', async () => {
+  const { countOfficialSchedules } = await import('../lib/home-pulse.js')
+  const programme = { days: [
+    { items: [{ slug: 'amor', timesSource: 'consejo' }, { slug: 'amor', timesSource: 'consejo' }, { slug: 'resurreccion', timesSource: 'oficial' }] },
+    { items: [{ slug: 'baratillo', timesSource: 'hilo' }] },
+  ] }
+  assert.deepEqual(countOfficialSchedules(programme), { official: 1, total: 3 })
+  const pulse = buildHomePulse({ today: '2026-11-23', schedules: { official: 1, total: 3 } })
+  assert.deepEqual(pulse.find((item) => item.key === 'schedules'), {
+    key: 'schedules', figure: '1 de 3', label: 'horarios oficiales de 2027 publicados', href: '/semana-santa-sevilla-2027',
+  })
+  assert.equal(buildHomePulse({ today: '2026-11-23', schedules: { official: 0, total: 3 } }).some((item) => item.key === 'schedules'), false)
+})
