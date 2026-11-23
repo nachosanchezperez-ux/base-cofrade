@@ -29,7 +29,7 @@ test('El Hilo se mueve en portada: una principal con foto y titulares secundario
   const [withCover, withoutCover] = buildHomeNews([
     { id: 'a', href: '/el-hilo-se-mueve/a', title: 'A', topic: 'musica', protagonist: { id: 'h1', label: 'H1' }, announcedOn: '2026-10-12', cover: { path: '/h1.jpg', alt: 'Foto H1', focusPosition: '50% 30%' } },
     { id: 'b', href: '/el-hilo-se-mueve/b', title: 'B', topic: 'agenda', protagonist: { id: 'h2', label: 'H2' }, announcedOn: '2026-10-11' },
-  ], 3)
+  ], 3, '2026-10-13')
   assert.deepEqual(withCover.photo, { src: '/h1.jpg', alt: 'Foto H1', focusPosition: '50% 30%' })
   assert.equal(withoutCover.photo, null)
 })

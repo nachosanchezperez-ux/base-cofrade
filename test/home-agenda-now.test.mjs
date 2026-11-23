@@ -135,7 +135,7 @@ test('los titulares de El Hilo se mueve en portada: los más recientes, uno por 
     item('c', 'h2', '2026-10-10'),
     item('d', 'h3', '2026-10-09'),
     item('e', 'h4', '2026-10-08'),
-  ])
+  ], undefined, '2026-10-13')
   assert.deepEqual(news.map((n) => n.id), ['a', 'c', 'd'])
   assert.equal(news[0].topic, 'Música')
   assert.equal(news[0].dateLabel, '12 de octubre de 2026')
@@ -153,7 +153,7 @@ test('titulares ágiles: fecha relativa en días de Madrid y enlace a las fichas
   const [withLink, withoutLink] = buildHomeNews([
     { id: 'a', href: '/el-hilo-se-mueve#a', title: 'A', topic: 'musica', brotherhood: { id: 'h1', label: 'H1' }, announcedOn: '2026-10-12', discover: { label: 'Descubre', href: '/hermandades/h1' } },
     { id: 'b', href: '/el-hilo-se-mueve#b', title: 'B', topic: 'agenda', brotherhood: { id: 'h2', label: 'H2' }, announcedOn: '2026-10-11' },
-  ])
+  ], undefined, '2026-10-13')
   assert.deepEqual(withLink.discover, { label: 'Descubre', href: '/hermandades/h1' })
   assert.equal(withoutLink.discover, null)
 })
