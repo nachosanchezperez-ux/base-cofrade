@@ -162,9 +162,9 @@ test('el DML posterior al baseline permanece íntegro y fuera de la cadena ejecu
     .filter((file) => file.endsWith('.sql'))
     .sort()
 
-  assert.equal(archived.length, 172)
+  assert.equal(archived.length, 173)
   assert.equal(archived[0], '20260831074355_publica_tres_igualas_septiembre_2026.sql')
-  assert.equal(archived.at(-1), '20261116074500_publica_cruceta_amparo_carmen_salteras_2026.sql')
+  assert.equal(archived.at(-1), '20261123090000_publica_cruceta_caridad_baratillo_carmen_salteras_2026.sql')
   assert.ok(archived.includes('20261107220000_coronaciones_anunciadas_2026_2028.sql'))
   assert.ok(archived.includes('20261107230000_coronaciones_ajustes_publicacion.sql'))
   assert.ok(archived.includes('20261115190000_coronacion_sangre_huevar_2024.sql'))
