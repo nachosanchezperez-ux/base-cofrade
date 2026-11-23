@@ -27,5 +27,5 @@ test('Últimos hilos prioriza recencia y usa prioridad solo como desempate', () 
 
 test('el snapshot público cambia de versión para descartar la selección antigua', () => {
   const snapshot = read('lib/supabase/home-snapshot.js')
-  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v28-una-por-hermandad/)
+  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v29-pulso-2027/)
 })

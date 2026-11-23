@@ -29,6 +29,7 @@ export default function HomePageV2({
   exploreStats,
   news = [],
   crewCalls = null,
+  pulse = [],
 }) {
   // La procesión en curso con su horario y bandas, salvo que ya figure entre los
   // destacados del Panel (selectHomeFeaturedOuting evita la repetición).
@@ -47,7 +48,7 @@ export default function HomePageV2({
 
   return (
     <div className={styles.home}>
-      <HomeHero />
+      <HomeHero pulse={pulse} />
 
       {agendaNow ? (
         <HomeAgendaNow agenda={agendaNow}>

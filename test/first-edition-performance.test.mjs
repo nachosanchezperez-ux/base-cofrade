@@ -35,7 +35,7 @@ test('the homepage offers clear first-visit paths: search, agenda and section ac
     read('lib/home-discover.js'),
   ])
 
-  assert.match(home, /<HomeHero \/>/)
+  assert.match(home, /<HomeHero pulse=\{pulse\} \/>/)
   assert.match(hero, /<HiloSearch homeCompact \/>/)
   assert.match(home, /<HomeAgendaNow agenda=\{agendaNow\}>/)
   assert.match(home, /<HomeDiscover stats=\{exploreStats\}>/)
