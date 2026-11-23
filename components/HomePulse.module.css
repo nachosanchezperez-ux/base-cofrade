@@ -60,13 +60,52 @@
   line-height: 1.3;
 }
 
-/* Con un número impar de cifras, la última ocupa la fila entera en móvil. */
-.list > li:last-child:nth-child(odd) {
+/* Móvil: el reloj ocupa la primera fila entera; si el resto de cifras es
+   impar, la última también ocupa su fila. */
+.list > li:has(> .clockItem) {
   grid-column: 1 / -1;
 }
 
+.list > li:has(> .clockItem) ~ li:last-child:nth-child(even),
+.list > li:not(:has(> .clockItem)):first-child ~ li:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+/* Reloj del Viernes de Dolores */
+.clockRow {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+}
+
+.clockIcon {
+  align-self: center;
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+
+.clock {
+  display: flex;
+  gap: 12px;
+  min-height: 22px;
+  color: rgba(255, 255, 255, .82);
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.clock b {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+}
+
 @media (min-width: 720px) {
-  .list > li:last-child:nth-child(odd) {
+  .list > li:has(> .clockItem),
+  .list > li:has(> .clockItem) ~ li:last-child:nth-child(even),
+  .list > li:not(:has(> .clockItem)):first-child ~ li:last-child:nth-child(odd) {
     grid-column: auto;
   }
 

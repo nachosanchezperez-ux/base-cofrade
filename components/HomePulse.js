@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import PulseClock from '@/components/PulseClock'
 import styles from './HomePulse.module.css'
 
 // «Semana Santa 2027 en datos»: cifras vivas bajo el buscador. Cada cifra lleva
@@ -12,9 +13,15 @@ export default function HomePulse({ items = [] }) {
       <ul className={styles.list}>
         {items.map((item) => (
           <li key={item.key}>
-            <Link className={styles.item} href={item.href} data-key={item.key}>
-              <b className={styles.figure}>{item.figure}</b>
-              <span className={styles.label}>{item.label}</span>
+            <Link className={`${styles.item} ${item.target ? styles.clockItem : ''}`} href={item.href} data-key={item.key}>
+              {item.target ? (
+                <PulseClock target={item.target} figure={item.figure} label={item.label} />
+              ) : (
+                <>
+                  <b className={styles.figure}>{item.figure}</b>
+                  <span className={styles.label}>{item.label}</span>
+                </>
+              )}
             </Link>
           </li>
         ))}
