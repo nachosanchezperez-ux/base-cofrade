@@ -16,6 +16,7 @@ import './titulars-desktop-layout.css';
 import './entity-visual-fallbacks.css';
 import './readability.css';
 import HiloHeader from '@/components/HiloHeader';
+import HiloTabBar from '@/components/HiloTabBar';
 import HiloFooter from '@/components/HiloFooter';
 import JsonLd from '@/components/JsonLd';
 import HiloAnalytics from '@/components/analytics/HiloAnalytics';
@@ -84,6 +85,7 @@ export default function RootLayout({ children }) {
         <HiloHeader />
         <main id="main-content" tabIndex={-1}>{children}</main>
         <HiloFooter />
+        <HiloTabBar />
         <HiloAnalytics />
       </body>
     </html>

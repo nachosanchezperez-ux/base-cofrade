@@ -26,6 +26,12 @@ export default function GlobalHiloSearch() {
     return () => window.removeEventListener('hilo:open-updates', closeDialog)
   }, [closeDialog])
 
+  // La pestaña «Buscar» de la barra inferior (components/HiloTabBar.js) lo abre.
+  useEffect(() => {
+    window.addEventListener('hilo:request-search', openDialog)
+    return () => window.removeEventListener('hilo:request-search', openDialog)
+  }, [openDialog])
+
   useEffect(() => {
     setOpen(false)
   }, [pathname])
