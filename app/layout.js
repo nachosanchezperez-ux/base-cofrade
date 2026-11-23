@@ -17,6 +17,7 @@ import './entity-visual-fallbacks.css';
 import './readability.css';
 import HiloHeader from '@/components/HiloHeader';
 import HiloTabBar from '@/components/HiloTabBar';
+import HiloInstallPrompt from '@/components/HiloInstallPrompt';
 import HiloFooter from '@/components/HiloFooter';
 import JsonLd from '@/components/JsonLd';
 import HiloAnalytics from '@/components/analytics/HiloAnalytics';
@@ -30,6 +31,8 @@ export const metadata = {
   creator: SITE_NAME,
   publisher: SITE_NAME,
   manifest: '/manifest.webmanifest',
+  // iPhone: al abrirla desde la pantalla de inicio, a pantalla completa y con su nombre.
+  appleWebApp: { capable: true, title: 'Hilo Cofrade', statusBarStyle: 'default' },
   icons: {
     icon: [
       { url: '/brand/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
@@ -86,6 +89,7 @@ export default function RootLayout({ children }) {
         <main id="main-content" tabIndex={-1}>{children}</main>
         <HiloFooter />
         <HiloTabBar />
+        <HiloInstallPrompt />
         <HiloAnalytics />
       </body>
     </html>
