@@ -25,6 +25,8 @@ test('sin barra en el Panel; se aparta donde la ficha trae su propia barra', () 
   const css = readFileSync(new URL('../components/HiloTabBar.module.css', import.meta.url), 'utf8')
   assert.match(css, /Capítulos de la ficha/)
   assert.match(css, /max-width: 859px/)
+  // La ficha de Hermandad conserva su margen inferior para su barra de capítulos.
+  assert.doesNotMatch(css, /Capítulos de la ficha"\]\)\) \{\s*padding-bottom: 0/)
   const chapterNav = readFileSync(new URL('../components/BrotherhoodChapterNav.js', import.meta.url), 'utf8')
   assert.match(chapterNav, /aria-label="Capítulos de la ficha"/)
 })
