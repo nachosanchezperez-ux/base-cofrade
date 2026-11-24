@@ -371,7 +371,8 @@ export default async function MarchesDirectoryPage({ searchParams } = {}) {
                   <header><h3 id={`titulo-${group.initial.toLowerCase()}`}>{group.initial}</h3><span>{group.items.length}</span></header>
                   <div className={styles.list}>
                     {group.items.map((march) => (
-                      <Link className={styles.card} href={march.href} key={march.id}>
+                      <Link className={styles.card} href={march.href} key={march.id}
+                        style={march.color ? { '--march-card-color': march.color } : undefined}>
                         <span className={styles.cardCopy}>
                           <strong>{march.name}</strong>
                           <small>{authorLabel(march)}</small>
