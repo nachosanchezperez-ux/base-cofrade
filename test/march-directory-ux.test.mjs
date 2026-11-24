@@ -52,7 +52,7 @@ test('la exploración de Marchas se adapta a móvil sin envolver el alfabeto', (
 
 test('el directorio de Marchas invalida la caché al incorporar createdAt', () => {
   const cache = read('lib/supabase/public-directory-cache.js')
-  assert.match(cache, /public-directory-public-marches-strict-v2/)
+  assert.match(cache, /public-directory-public-marches-strict-v3-color/)
 })
 
 
