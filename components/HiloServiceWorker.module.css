@@ -1,0 +1,25 @@
+/* Aviso de «Sin conexión»: franja fija arriba, discreta. */
+.banner {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: #112339;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(13, 41, 73, .25);
+  font-size: 13px;
+  font-weight: 700;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.banner span {
+  color: #f2b84b;
+  font-size: 10px;
+}

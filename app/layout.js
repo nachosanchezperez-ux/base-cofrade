@@ -19,6 +19,7 @@ import HiloHeader from '@/components/HiloHeader';
 import HiloTabBar from '@/components/HiloTabBar';
 import HiloInstallPrompt from '@/components/HiloInstallPrompt';
 import HiloBackToTop from '@/components/HiloBackToTop';
+import HiloServiceWorker from '@/components/HiloServiceWorker';
 import HiloFooter from '@/components/HiloFooter';
 import JsonLd from '@/components/JsonLd';
 import HiloAnalytics from '@/components/analytics/HiloAnalytics';
@@ -92,6 +93,7 @@ export default function RootLayout({ children }) {
         <HiloTabBar />
         <HiloInstallPrompt />
         <HiloBackToTop />
+        <HiloServiceWorker />
         <HiloAnalytics />
       </body>
     </html>
