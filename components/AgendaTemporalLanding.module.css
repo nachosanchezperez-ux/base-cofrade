@@ -71,3 +71,11 @@
   .emptyActions a{justify-content:center;padding:0 10px}
   .emptyActions a[data-primary="true"]{grid-column:1/-1}
 }
+
+/* Adviento: días grandes de la temporada (24/11/2026). */
+.keyDays { padding: 14px 0 4px; }
+.keyDays :global(.shell) { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.keyDays a { display: grid; flex: 0 0 auto; gap: 2px; min-width: 140px; padding: 10px 14px; border: 1px solid #dce4eb; border-left: 4px solid #112339; border-radius: 12px; background: #fff; color: #112339; text-decoration: none; }
+.keyDays a:hover, .keyDays a:focus-visible { border-color: #112339; }
+.keyDays strong { font-size: 15px; font-weight: 800; }
+.keyDays small { color: #5b6670; font-size: 13px; }

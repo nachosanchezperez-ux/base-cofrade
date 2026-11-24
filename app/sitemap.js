@@ -141,6 +141,12 @@ const staticEntries = [
     priority: 0.9,
   },
   {
+    // Especial anual de Adviento y Navidad (24/11/2026).
+    url: absoluteUrl('/agenda-cofrade/adviento'),
+    changeFrequency: 'daily',
+    priority: 0.88,
+  },
+  {
     url: absoluteUrl('/extraordinarias'),
     changeFrequency: 'daily',
     priority: 0.9,
