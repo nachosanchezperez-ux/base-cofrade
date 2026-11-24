@@ -22,6 +22,10 @@ const ICONS = {
   patrimonio: <path d="M7 4h10l-1.5 6a3.5 3.5 0 0 1-7 0zM12 13.5V19M8 20h8" />,
   historia: <path d="M12 7v5l3 2M21 12a9 9 0 1 1-9-9 9 9 0 0 1 9 9Z" />,
   hilo: <path d="M2.5 15h4c4 0 1.5-7 5.5-7s1.5 9 5.5 9h4M6.5 15a1 1 0 1 0 0 .01M17.5 17a1 1 0 1 0 0 .01" />,
+  // Fichas de marcha, imagen y paso (24/11/2026).
+  escuchar: <path d="M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18ZM10 8.5v7l5.5-3.5z" />,
+  disco: <path d="M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18Zm0-6.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />,
+  galeria: <path d="M4 5h16v14H4zM4 15l4.5-4.5 4 4 2.5-2.5L20 17M15.5 9.5a1 1 0 1 0 0 .01" />,
 };
 
 export function ChapterIcon({ icon, className }) {

@@ -36,7 +36,7 @@
   }
 
   /* Fuera de Inicio, la portada de la ficha deja paso a la mini cabecera. */
-  :global(html[data-hc-chapter-screen="inner"]) :global(section[aria-labelledby="entity-hero-title"]) {
+  :global(html[data-hc-chapter-screen="inner"]) :global([aria-labelledby="entity-hero-title"]) {
     display: none;
   }
 }
