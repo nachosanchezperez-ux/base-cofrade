@@ -18,6 +18,7 @@ import './readability.css';
 import HiloHeader from '@/components/HiloHeader';
 import HiloTabBar from '@/components/HiloTabBar';
 import HiloInstallPrompt from '@/components/HiloInstallPrompt';
+import HiloBackToTop from '@/components/HiloBackToTop';
 import HiloFooter from '@/components/HiloFooter';
 import JsonLd from '@/components/JsonLd';
 import HiloAnalytics from '@/components/analytics/HiloAnalytics';
@@ -90,6 +91,7 @@ export default function RootLayout({ children }) {
         <HiloFooter />
         <HiloTabBar />
         <HiloInstallPrompt />
+        <HiloBackToTop />
         <HiloAnalytics />
       </body>
     </html>
