@@ -24,7 +24,8 @@ test('la ficha del paso muestra la galería con su ancla', () => {
   const component = page.slice(page.indexOf('export default async function PasoDetailPage'))
   assert.match(component, /galleryMedia = \[\],[\s\S]*\} = result;/)
   assert.ok(component.indexOf('galleryMedia = [],') < component.indexOf('} = result;'))
-  assert.match(page, /href: '#fotografias', label: 'Fotografías'/)
+  // Modo aplicación (24/11/2026): la galería es el capítulo «Fotos».
+  assert.match(page, /\{ id: 'fotos', label: 'Fotos', icon: 'galeria', show: galleryMedia\.length > 0 \}/)
   const loader = readFileSync(new URL('../lib/supabase/public-entity-pages.js', import.meta.url), 'utf8')
   assert.match(loader, /galleryMedia: stepGalleryMedia\(entityMedia\)/)
 })

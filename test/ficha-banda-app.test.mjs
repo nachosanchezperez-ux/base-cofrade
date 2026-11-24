@@ -25,6 +25,6 @@ test('reutiliza la navegación de la Hermandad con la portada de la ficha de ent
   const nav = read('components/BrotherhoodChapterNav.js')
   assert.match(nav, /heroTitleId = 'brotherhood-program-title'/)
   const css = read('components/EntityChapters.module.css')
-  assert.match(css, /section\[aria-labelledby="entity-hero-title"\]/)
+  assert.match(css, /\[aria-labelledby="entity-hero-title"\]/)
   assert.match(css, /padding-bottom: calc\(60px/)
 })

@@ -102,6 +102,7 @@ test('un principal claro se oscurece para mantener el contraste del texto blanco
   assert.equal(legibleMarchPalette({ primario: '#4B1E5A', oscuro: '#270F2F' }).primario, '#4B1E5A')
 })
 test('la miga visible de la Marcha no muestra «Inicio» (se conserva en el JSON-LD)', () => {
-  assert.doesNotMatch(page, /label: 'Inicio'/)
+  // La miga visible no lleva «Inicio» (el capítulo «Inicio» de la barra es otra cosa).
+  assert.doesNotMatch(page, /\{ label: 'Inicio', href/)
   assert.match(page, /\{ name: 'Inicio', path: '\/' \}/)
 })
