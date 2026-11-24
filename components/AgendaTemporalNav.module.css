@@ -15,3 +15,6 @@
   .nav a{flex:1 0 auto;min-width:96px}
   .nav strong{font-size:14px;white-space:nowrap}
 }
+
+/* Con Adviento hay cuatro accesos: una fila en ordenador (24/11/2026). */
+.nav>div>div{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);width:min(860px,100%)}

@@ -10,8 +10,8 @@ import styles from './AgendaTemporalLanding.module.css'
 // Con pocas citas no hay nada que filtrar: la lista va directamente tras el periodo.
 const FILTERS_FROM = 4
 
-const PERIOD_LABEL = { today: 'Hoy', tomorrow: 'Mañana', weekend: 'Fin de semana' }
-const PERIOD_PHRASE = { today: 'hoy', tomorrow: 'mañana', weekend: 'este fin de semana' }
+const PERIOD_LABEL = { today: 'Hoy', tomorrow: 'Mañana', weekend: 'Fin de semana', advent: 'Adviento y Navidad' }
+const PERIOD_PHRASE = { today: 'hoy', tomorrow: 'mañana', weekend: 'este fin de semana', advent: 'este Adviento todavía' }
 const OTHER_PERIODS = [
   { key: 'today', href: '/agenda-cofrade/hoy', label: 'Ver hoy' },
   { key: 'tomorrow', href: '/agenda-cofrade/manana', label: 'Ver mañana' },
@@ -45,6 +45,23 @@ function PeriodFilters({ landing }) {
             </Link>
           ))}
         </div>
+      </div>
+    </nav>
+  )
+}
+
+// Adviento: accesos a los días grandes de la temporada que tienen actos.
+function KeyDays({ days = [] }) {
+  if (!days.length) return null
+  return (
+    <nav className={styles.keyDays} aria-label="Días grandes de Adviento y Navidad">
+      <div className="shell">
+        {days.map((day) => (
+          <a href={`#agenda-dia-${day.date}`} key={day.date}>
+            <strong>{day.label}</strong>
+            <small>{day.caption}</small>
+          </a>
+        ))}
       </div>
     </nav>
   )
@@ -117,7 +134,8 @@ export default function AgendaTemporalLanding({ landing }) {
 
       {count ? (
         <>
-          {count >= FILTERS_FROM ? <PeriodFilters landing={landing} /> : null}
+          <KeyDays days={landing.keyDays} />
+          {count >= FILTERS_FROM && landing.queryPeriod ? <PeriodFilters landing={landing} /> : null}
           <AgendaTemporalEventList landing={landing} />
         </>
       ) : <EmptyPeriod landing={landing} />}
