@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { cache } from 'react';
 import { notFound } from 'next/navigation';
-import EntitySectionNav from '@/components/EntitySectionNav';
+import { EntityChapter, EntityChapters, chapterNavItems } from '@/components/EntityChapters';
 import EntityLastUpdated from '@/components/EntityLastUpdated';
 import EntityMediaGallery from '@/components/EntityMediaGallery';
 import JsonLd from '@/components/JsonLd';
@@ -199,14 +199,19 @@ export default async function PasoDetailPage({params}){
         }}
       />
 
-      <EntitySectionNav items={[
-        { href: '#resumen', label: 'Resumen' },
-        (bandas.length > 0 || historicoMusical.length > 0) && { href: '#acompanamiento', label: 'Acompañamiento' },
-        (heritage.phases.length > 0 || heritage.pieces.length > 0 || heritage.sources.length > 0) && { href: '#patrimonio', label: 'Patrimonio y evolución' },
-        galleryMedia.length > 0 && { href: '#fotografias', label: 'Fotografías' },
-      ]} />
+      {/* Modo aplicación (24/11/2026): Inicio · Música · Patrimonio · Fotos. */}
+      <EntityChapters
+        name={paso.nombre}
+        crestSrc={hermandad?.escudoPath || ''}
+        items={chapterNavItems([
+          { id: 'resumen', label: 'Inicio', icon: 'inicio', show: true },
+          { id: 'acompanamiento', label: 'Música', icon: 'musica', show: bandas.length > 0 || historicoMusical.length > 0 },
+          { id: 'patrimonio', label: 'Patrimonio', icon: 'patrimonio', show: heritage.phases.length > 0 || heritage.pieces.length > 0 || heritage.sources.length > 0 },
+          { id: 'fotos', label: 'Fotos', icon: 'galeria', show: galleryMedia.length > 0 },
+        ])}
+      >
 
-      <section className="section" id="resumen"><div className="shell content-grid">
+      <section className="section" id="resumen" data-chapter="resumen"><div className="shell content-grid">
         <div>
           <SectionTitle eyebrow="Configuración actual" title="Datos del paso" />
           <EntityLastUpdated value={paso.updatedAt} />
@@ -239,7 +244,7 @@ export default async function PasoDetailPage({params}){
       </div></section>
 
       {(bandas.length > 0 || historicoMusical.length > 0) && (
-        <section className={`section ${styles.accompanimentSection}`} id="acompanamiento">
+        <section className={`section ${styles.accompanimentSection}`} id="acompanamiento" data-chapter="acompanamiento">
           <div className="shell">
             <SectionTitle
               eyebrow={bandas.length > 0 ? 'Relación actual' : 'Histórico'}
@@ -273,7 +278,7 @@ export default async function PasoDetailPage({params}){
         </section>
       )}
 
-      {(heritage.phases.length > 0 || heritage.pieces.length > 0 || heritage.sources.length > 0) ? <section className={`section brotherhood-soft ${styles.heritageSection}`} id="patrimonio">
+      {(heritage.phases.length > 0 || heritage.pieces.length > 0 || heritage.sources.length > 0) ? <section className={`section brotherhood-soft ${styles.heritageSection}`} id="patrimonio" data-chapter="patrimonio">
         <div className="shell">
           <div className={styles.heritageIntro}>
             <SectionTitle
@@ -340,6 +345,7 @@ export default async function PasoDetailPage({params}){
         </div>
       </section> : null}
 
+      {galleryMedia.length > 0 ? <EntityChapter id="fotos" label="Fotos" owner={paso.nombre}>
       <EntityMediaGallery
         items={galleryMedia}
         id="fotografias"
@@ -347,6 +353,8 @@ export default async function PasoDetailPage({params}){
         title="El paso a través del tiempo"
         intro="Fotografías del paso, también históricas, con su procedencia."
       />
+      </EntityChapter> : null}
+      </EntityChapters>
     </div>
   );
 }

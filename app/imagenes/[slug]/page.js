@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { cache } from 'react';
 import { notFound } from 'next/navigation';
-import EntitySectionNav from '@/components/EntitySectionNav';
+import { EntityChapter, EntityChapters, chapterNavItems } from '@/components/EntityChapters';
 import EntityLastUpdated from '@/components/EntityLastUpdated';
 import EntityMediaGallery from '@/components/EntityMediaGallery';
 import ImageHeroV2 from '@/components/ImageHeroV2';
@@ -163,6 +163,9 @@ export default async function ImagenPage({ params }) {
     { name: imagen.nombre, path: canonicalPath },
   ];
 
+  // Capítulo «Historia»: restauraciones, hitos, cronología y fuentes.
+  const hasImageHistory = Boolean(restorationCards?.length || imagen.acontecimientos?.length || showChronology || imagen.fuentes?.length)
+
   return (
     <div
       className="brotherhood-page image-detail-v2"
@@ -255,14 +258,17 @@ export default async function ImagenPage({ params }) {
         }}
       />
 
-      <EntitySectionNav items={[
-        hasImageOverview && { href: '#resumen', label: 'Resumen' },
-        galleryMedia.length > 0 && { href: '#galeria', label: 'Galería' },
-        imagen.restauraciones?.length > 0 && { href: '#restauraciones', label: 'Restauraciones' },
-        imagen.acontecimientos?.length > 0 && { href: '#hitos', label: 'Hitos' },
-        showChronology && { href: '#cronologia', label: 'Cronología' },
-        imagen.fuentes?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
-      ]} />
+      {/* Modo aplicación (24/11/2026): Inicio · Fotos · Historia. */}
+      <EntityChapters
+        name={imagen.nombre}
+        crestSrc={hermandad?.escudoPath || ''}
+        items={chapterNavItems([
+          { id: 'inicio', label: 'Inicio', icon: 'inicio', show: true },
+          { id: 'fotos', label: 'Fotos', icon: 'galeria', show: galleryMedia.length > 0 },
+          { id: 'historia', label: 'Historia', icon: 'historia', show: hasImageHistory },
+        ])}
+      >
+      <EntityChapter id="inicio" label="Inicio" owner={imagen.nombre}>
 
       {hasImageOverview ? <section className="section image-overview-v2" id="resumen">
         <div className="shell image-overview-grid-v2">
@@ -354,8 +360,13 @@ export default async function ImagenPage({ params }) {
         </div>
       </section> : null}
 
-      <EntityMediaGallery items={galleryMedia} id="galeria" />
+      </EntityChapter>
 
+      {galleryMedia.length > 0 ? <EntityChapter id="fotos" label="Fotos" owner={imagen.nombre}>
+      <EntityMediaGallery items={galleryMedia} id="galeria" />
+      </EntityChapter> : null}
+
+      {hasImageHistory ? <EntityChapter id="historia" label="Historia" owner={imagen.nombre}>
       <ImageRestorationsSection items={restorationCards} />
 
       {imagen.acontecimientos?.length > 0 && (
@@ -397,6 +408,8 @@ export default async function ImagenPage({ params }) {
       )}
 
       <SourcesBlock sources={imagen.fuentes} />
+      </EntityChapter> : null}
+      </EntityChapters>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import EntityLastUpdated from '@/components/EntityLastUpdated'
-import EntitySectionNav from '@/components/EntitySectionNav'
+import { EntityChapters, chapterNavItems } from '@/components/EntityChapters'
 import { getPublicMarchBySlug } from '@/lib/supabase/public-marches'
 import { groupReleasesForDisplay } from '@/lib/bands/discography'
 import { absoluteUrl, breadcrumbJsonLd, marchHeadingByline, marchSeoTitle, socialMetadata } from '@/lib/seo'
@@ -147,7 +147,7 @@ export default async function MarchDetailPage({ params }) {
           }),
       }} />
 
-      <header className={styles.hero}>
+      <header className={styles.hero} aria-labelledby="entity-hero-title">
         <div className={`shell ${styles.heroShell}`}>
           <SiteBreadcrumb
             items={[
@@ -160,7 +160,7 @@ export default async function MarchDetailPage({ params }) {
           <div className={styles.heroBody}>
             <span>{march.workType}</span>
             {/* Hay varias «Esperanza» o «Macarena»: el compositor forma parte del H1. */}
-            <h1>
+            <h1 id="entity-hero-title">
               {march.name}
               {headingByline ? <span className={styles.titleQualifier}><span className="sr-only">, </span>{headingByline}</span> : null}
             </h1>
@@ -178,15 +178,20 @@ export default async function MarchDetailPage({ params }) {
 
       <EntityLastUpdated value={march.updatedAt} variant="bar" />
 
-      <EntitySectionNav items={[
-        identityBlocks > 0 && { href: '#resumen', label: 'Ficha musical' },
-        march.listenings.length > 0 && { href: '#escuchar', label: 'Escuchar' },
-        march.repertoireHistory.length > 0 && { href: '#crucetas', label: 'Crucetas' },
-        march.discographyHistory.length > 0 && { href: '#discografia', label: 'Discografía' },
-      ]} />
+      {/* Modo aplicación (24/11/2026): cada sección es un capítulo; en móvil,
+          una pantalla con barra inferior. */}
+      <EntityChapters
+        name={march.name}
+        items={chapterNavItems([
+          { id: 'resumen', label: 'Inicio', icon: 'inicio', show: Boolean(identityBlocks) },
+          { id: 'escuchar', label: 'Escuchar', icon: 'escuchar', show: march.listenings.length > 0 },
+          { id: 'crucetas', label: 'Crucetas', icon: 'cortejo', show: march.repertoireHistory.length > 0 },
+          { id: 'discografia', label: 'Discografía', icon: 'disco', show: march.discographyHistory.length > 0 },
+        ])}
+      >
 
       {identityBlocks ? (
-        <section className={styles.identitySection} id="resumen">
+        <section className={styles.identitySection} id="resumen" data-chapter="resumen">
           <div className={`shell ${styles.identityGrid}`} data-blocks={identityBlocks}>
             {hasFicha ? (
               <article>
@@ -216,7 +221,7 @@ export default async function MarchDetailPage({ params }) {
       ) : null}
 
       {march.listenings.length ? (
-        <section className={styles.listenSection} id="escuchar">
+        <section className={styles.listenSection} id="escuchar" data-chapter="escuchar">
           <div className="shell">
             <header className={styles.sectionHeading}><h2>Escuchar la marcha</h2></header>
             <div className={styles.listenGrid}>
@@ -245,7 +250,7 @@ export default async function MarchDetailPage({ params }) {
       ) : null}
 
       {march.repertoireHistory.length ? (
-        <section className={styles.historySection} id="crucetas">
+        <section className={styles.historySection} id="crucetas" data-chapter="crucetas">
           <div className="shell">
             <header className={styles.sectionHeading}><h2>Interpretada en</h2></header>
             <div className={styles.historyList}>
@@ -264,7 +269,7 @@ export default async function MarchDetailPage({ params }) {
       ) : null}
 
       {march.discographyHistory.length ? (
-        <section className={styles.discographySection} id="discografia">
+        <section className={styles.discographySection} id="discografia" data-chapter="discografia">
           <div className="shell">
             <header className={styles.sectionHeading}><h2>En la discografía</h2></header>
             <div className={styles.discographyList}>
@@ -281,6 +286,7 @@ export default async function MarchDetailPage({ params }) {
           </div>
         </section>
       ) : null}
+      </EntityChapters>
     </div>
   )
 }
