@@ -29,3 +29,15 @@ test('distintivo legible', () => {
   assert.equal(streetBadge(item(1, '2025', 'Restauración')), 'Restaurado 2025')
   assert.equal(streetBadge({ fechaIso: '2026-03-01' }), 'Estreno 2026')
 })
+
+test('«En la calle» sigue la escala de legibilidad común', async () => {
+  const { readFileSync } = await import('node:fs')
+  const css = readFileSync(new URL('../components/BrotherhoodStreetStory.module.css', import.meta.url), 'utf8')
+  const sizes = [...css.matchAll(/font-size:\s*(\d+)px/g)].map((m) => Number(m[1]))
+  assert.ok(sizes.every((size) => size >= 12), `hay tamaños por debajo de 12 px: ${sizes}`)
+  assert.match(css, /\.updateText \{[^}]*font-size: var\(--font-size-body, 16px\)/)
+  assert.match(css, /\.curiosityCopy p \{[^}]*font-size: var\(--font-size-body, 16px\)/)
+  assert.doesNotMatch(css, /line-clamp/, 'no se corta texto que no se puede desplegar')
+  // Texto blanco solo sobre el tono oscuro de la Hermandad.
+  assert.doesNotMatch(css, /background: var\(--brotherhood-primary/)
+})
