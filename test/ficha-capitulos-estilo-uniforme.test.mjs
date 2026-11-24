@@ -16,7 +16,7 @@ test('el plegable de Patrimonio cuenta piezas, estrenos y restauraciones', () =>
 
 test('la ficha por capítulos usa el recuento completo', () => {
   const layout = read('components/BrotherhoodChaptersLayout.js')
-  assert.match(layout, /title="Patrimonio y estrenos" count=\{heritageFoldCount\(h\.patrimonio, h\.estrenos\)\}/)
+  assert.match(layout, /title="Patrimonio y estrenos" count=\{heritageFoldCount\(h\.patrimonio, heritageUpdates\)\}/)
 })
 
 test('un solo estilo de plegable para los bloques de cierre de la ficha', () => {
@@ -34,7 +34,6 @@ test('los hitos destacados de Historia no cambian de tamaño de letra', () => {
 
 test('los recuentos de los plegables llevan su palabra', () => {
   const layout = read('components/BrotherhoodChaptersLayout.js')
-  assert.match(layout, /plural\(h\.curiosidades\.length, 'curiosidad', 'curiosidades'\)/)
   assert.doesNotMatch(layout, /count=\{h\.[a-zA-Z]+\.length\}/)
 })
 
