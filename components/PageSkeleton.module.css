@@ -1,0 +1,103 @@
+/* Silueta de carga: bloques grises con un brillo suave (sin brillo si el
+   usuario pide menos movimiento). */
+.skeleton {
+  min-height: 70vh;
+}
+
+.block {
+  display: block;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #eef2f5 0%, #f7f9fb 40%, #eef2f5 80%) 0 0 / 300% 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .block {
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: 0 0; }
+}
+
+.hero {
+  padding: 28px 0 24px;
+  background: #112339;
+}
+
+.hero .block {
+  background: linear-gradient(90deg, rgba(255, 255, 255, .1) 0%, rgba(255, 255, 255, .18) 40%, rgba(255, 255, 255, .1) 80%) 0 0 / 300% 100%;
+}
+
+.heroInner {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+}
+
+.crest {
+  width: 64px;
+  height: 76px;
+}
+
+.heroTitle {
+  width: min(420px, 80%);
+  height: 34px;
+}
+
+.heroLine {
+  width: min(300px, 60%);
+  height: 16px;
+}
+
+.body {
+  display: grid;
+  gap: 14px;
+  padding: 20px 0 40px;
+}
+
+.title {
+  width: min(360px, 70%);
+  height: 34px;
+}
+
+.line {
+  width: min(520px, 90%);
+  height: 16px;
+}
+
+.search {
+  height: 48px;
+  border-radius: 999px;
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.chip {
+  flex: 0 0 96px;
+  height: 36px;
+  border-radius: 999px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+.card {
+  height: 150px;
+  border-radius: 14px;
+}
+
+@media (max-width: 760px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+}

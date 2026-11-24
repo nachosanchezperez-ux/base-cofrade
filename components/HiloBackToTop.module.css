@@ -1,0 +1,60 @@
+/* Volver arriba: botón redondo azul marino abajo a la derecha. En móvil, por
+   encima de la barra inferior (general o de capítulos). */
+.top {
+  position: fixed;
+  right: 16px;
+  bottom: 24px;
+  z-index: 66;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #112339;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(13, 41, 73, .28);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+}
+
+.top[data-visible='true'] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .top {
+    transition: opacity .2s ease, transform .2s ease;
+  }
+}
+
+.top svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.top:focus-visible {
+  outline: 3px solid #175f99;
+  outline-offset: 3px;
+}
+
+@media (max-width: 899px) {
+  .top {
+    bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Con el aviso «Añadir a inicio» a la vista, el botón se aparta. */
+  :global(body:has(aside[aria-label="Instalar Hilo Cofrade"])) .top {
+    display: none;
+  }
+}
