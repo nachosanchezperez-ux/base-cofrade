@@ -1,0 +1,202 @@
+/*
+ * «En la calle»: tarjetas con el color de la Hermandad, sobre la escala
+ * tipográfica común (app/typography.css) y el suelo de app/readability.css.
+ * - Cuerpo a 16 px y título de tarjeta a 18 px en todos los tamaños.
+ * - Rellenos con texto blanco sobre --brotherhood-dark (siempre oscuro);
+ *   --brotherhood-primary solo como acento, porque hay colores claros.
+ * - Móvil 1 columna · tableta 2 · escritorio 3; las curiosidades, con
+ *   un ancho de línea cómodo para leer en pantallas grandes.
+ */
+.street {
+  --street-ink: #112339;
+  --street-text: #2b3945;
+  --street-meta: #4f5b66;
+  --street-fill: var(--brotherhood-dark, #0d2949);
+  --street-accent: var(--brotherhood-primary, #153b69);
+  display: grid;
+  gap: 28px;
+  padding-top: 20px;
+  padding-bottom: 8px;
+}
+
+.block {
+  display: grid;
+  gap: 14px;
+}
+
+/* Mismo título que el resto de secciones de la ficha. */
+.title {
+  margin: 0;
+  color: var(--chapter-section-title, var(--street-ink));
+  font-size: clamp(22px, 5.6vw, 30px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -.01em;
+}
+
+.updates,
+.curiosities {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 700px) {
+  .updates {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .updates {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .curiosities {
+    max-width: 760px;
+  }
+}
+
+.update {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  overflow: hidden;
+  padding: 0 16px 18px;
+  border: 1px solid #d5dee6;
+  border-top: 5px solid var(--street-accent);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.updateImage {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  margin: 0 -16px 4px;
+  background: #eef2f5;
+}
+
+.updateImage img {
+  object-fit: cover;
+}
+
+.badge {
+  justify-self: start;
+  margin-top: 14px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--street-fill);
+  color: #fff;
+  font-size: var(--font-size-meta, 13px);
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.update[data-kind='restauracion'] .badge {
+  border: 1.5px solid var(--street-fill);
+  background: #fff;
+  color: var(--street-fill);
+}
+
+.updateImage + .badge {
+  margin-top: 4px;
+}
+
+.updateTitle {
+  color: var(--street-ink);
+  font-size: var(--font-size-lead, 18px);
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.updateBy {
+  color: var(--street-meta);
+  font-size: var(--font-size-button, 14px);
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.updateText {
+  margin: 2px 0 0;
+  color: var(--street-text);
+  font-size: var(--font-size-body, 16px);
+  line-height: var(--line-body, 1.6);
+}
+
+.curiosity {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid #e1e7ec;
+  border-left: 5px solid var(--street-accent);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.mark {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--street-fill);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.curiosityCopy {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.curiosityKind {
+  color: var(--street-meta);
+  font-size: var(--font-size-eyebrow, 12px);
+  font-weight: 800;
+  letter-spacing: .06em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.curiosityCopy strong {
+  color: var(--street-ink);
+  font-size: var(--font-size-lead, 18px);
+  line-height: 1.3;
+}
+
+.curiosityCopy p {
+  margin: 0;
+  color: var(--street-text);
+  font-size: var(--font-size-body, 16px);
+  line-height: var(--line-body, 1.6);
+}
+
+/* En móvil muy estrecho, el signo pasa encima para ganar ancho de línea. */
+@media (max-width: 359px) {
+  .curiosity {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.more summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 0;
+  color: var(--street-fill);
+  font-size: var(--font-size-body, 16px);
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.more[open] summary {
+  margin-bottom: 10px;
+}

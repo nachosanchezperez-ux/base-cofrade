@@ -6,6 +6,7 @@ import { usesBrotherhoodReading } from '@/lib/brotherhood-reading-rollout';
 import { usesBrotherhoodChapters } from '@/lib/brotherhood-chapters-rollout';
 import { brotherhoodChapterProfile, brotherhoodChapters, chapterHeroFacts, foundingYearLabel } from '@/lib/brotherhood-chapters';
 import BrotherhoodChaptersLayout from '@/components/BrotherhoodChaptersLayout';
+import { splitStreetUpdates } from '@/lib/brotherhood-street';
 import { brotherhoodMilestone, nextBrotherhoodAppointment, upcomingBrotherhoodActs } from '@/lib/brotherhood-reading';
 import BrotherhoodChapterMilestone, { milestoneDateLabel } from '@/components/BrotherhoodChapterMilestone';
 import Image from 'next/image';
@@ -769,10 +770,15 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   const postersSection = (<>
 <FestivalPostersSection posters={h.cartelesFiestas} />
   </>);
+  // «En la calle» (24/11/2026): novedades recientes arriba; el resto, en Patrimonio.
+  const { street: streetUpdates, archive: archiveUpdates } = splitStreetUpdates(
+    h.estrenos || [],
+    Number(agendaData.today?.slice(0, 4)) || new Date().getUTCFullYear(),
+  )
   const heritageSection = chapters ? (
     <BrotherhoodChapterHeritage
       pieces={h.patrimonio || []}
-      updates={h.estrenos || []}
+      updates={archiveUpdates}
       currentYear={Number(agendaData.today?.slice(0, 4)) || new Date().getUTCFullYear()}
       sourcesHref={h.fuentesFicha?.length ? '#fuentes' : undefined}
     />
@@ -932,6 +938,8 @@ export default async function HermandadDetailPage({ params, reading: readingOver
         <BrotherhoodChaptersLayout
           brotherhood={h}
           profile={chapterProfile}
+          streetUpdates={streetUpdates}
+          archiveUpdates={archiveUpdates}
           chapters={brotherhoodChapters({
             types: tiposHermandad,
             availability: {

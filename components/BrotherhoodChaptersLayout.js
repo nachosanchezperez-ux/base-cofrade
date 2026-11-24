@@ -5,6 +5,7 @@ import BrotherhoodOverviewV2 from './BrotherhoodOverviewV2'
 import HiloMovementCards from './HiloMovementCards'
 import BandCrestBadge from './BandCrestBadge'
 import { plural } from '@/lib/plural'
+import BrotherhoodStreetStory from './BrotherhoodStreetStory'
 import { heritageFoldCount } from '@/lib/heritage-fold-count'
 import styles from './BrotherhoodChaptersLayout.module.css'
 import readingStyles from './BrotherhoodReadingLayout.module.css'
@@ -62,6 +63,9 @@ export default function BrotherhoodChaptersLayout({
   crestSrc = '',
   milestone = null,
   currentBands = [],
+  // «En la calle» (24/11/2026): novedades recientes; el resto, en Patrimonio.
+  streetUpdates = [],
+  archiveUpdates = null,
   slots,
 }) {
   const byId = Object.fromEntries(chapters.map((chapter, index) => [chapter.id, { chapter, index }]))
@@ -78,7 +82,12 @@ export default function BrotherhoodChaptersLayout({
   const destinations = chapters.filter((chapter) => chapter.id !== 'inicio')
   const isPenitencia = profile === 'penitencia'
   const hasHeritageExtras = h.simpecados?.length || h.cartelesFiestas?.length
-  const hasHeritage = h.patrimonio?.length || h.estrenos?.length
+  const heritageUpdates = archiveUpdates || h.estrenos || []
+  const hasHeritage = h.patrimonio?.length || heritageUpdates.length
+  const streetChapterId = isPenitencia ? 'cortejo' : 'procesion'
+  const streetStory = <BrotherhoodStreetStory updates={streetUpdates} curiosities={h.curiosidades || []} />
+  // Sin capítulo «En la calle» (sin titulares ni pasos), la historia lo acoge.
+  const streetHost = byId[streetChapterId] ? streetChapterId : 'historia'
 
   // Música: el envoltorio #musica conserva el tratamiento lineal de la versión
   // lectura (sin tarjetas anidadas). En una Gloria vive dentro de Patrimonio.
@@ -163,8 +172,9 @@ export default function BrotherhoodChaptersLayout({
 
     </>)}
 
-    {render(isPenitencia ? 'cortejo' : 'procesion', <>
+    {render(streetChapterId, <>
       {slots.outingFeature}
+      {streetHost === streetChapterId ? streetStory : null}
       {slots.steps}
       {isPenitencia ? slots.habit : null}
       {slots.titulars}
@@ -176,7 +186,7 @@ export default function BrotherhoodChaptersLayout({
         >{slots.outings}</Disclosure>
       </Supplement> : null}
       {isPenitencia && (hasHeritage || hasHeritageExtras) ? <Supplement>
-        {hasHeritage ? <Disclosure title="Patrimonio y estrenos" count={heritageFoldCount(h.patrimonio, h.estrenos)}>{slots.heritage}</Disclosure> : null}
+        {hasHeritage ? <Disclosure title="Patrimonio y estrenos" count={heritageFoldCount(h.patrimonio, heritageUpdates)}>{slots.heritage}</Disclosure> : null}
         {h.simpecados?.length ? <Disclosure title="Simpecados" count={plural(h.simpecados.length, 'simpecado', 'simpecados')}>{slots.simpecados}</Disclosure> : null}
         {h.cartelesFiestas?.length ? <Disclosure title="Carteles" count={plural(h.cartelesFiestas.length, 'cartel', 'carteles')}>{slots.posters}</Disclosure> : null}
       </Supplement> : null}
@@ -195,10 +205,11 @@ export default function BrotherhoodChaptersLayout({
     </div>)}
 
     {render('historia', <>
+      {streetHost === 'historia' ? streetStory : null}
       {slots.history}
-      {(h.viaCrucisCofradias?.length || h.participacionesConsejo?.length || h.curiosidades?.length) ? <Supplement>
-        {(h.viaCrucisCofradias?.length || h.participacionesConsejo?.length) ? <Disclosure title="Participaciones institucionales y Vía Crucis">{slots.council}{slots.viaCrucis}</Disclosure> : null}
-        {h.curiosidades?.length ? <Disclosure title="Curiosidades" count={plural(h.curiosidades.length, 'curiosidad', 'curiosidades')}>{slots.curiosities}</Disclosure> : null}
+      {/* Las curiosidades viven en «En la calle» (sin repetirlas aquí). */}
+      {(h.viaCrucisCofradias?.length || h.participacionesConsejo?.length) ? <Supplement>
+        <Disclosure title="Participaciones institucionales y Vía Crucis">{slots.council}{slots.viaCrucis}</Disclosure>
       </Supplement> : null}
     </>)}
 

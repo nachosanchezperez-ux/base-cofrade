@@ -20,15 +20,15 @@ const full = {
 
 test('Penitencia: Inicio · Cortejo · Música · Historia · Hilo', () => {
   const chapters = brotherhoodChapters({ types: ['Penitencia', 'Sacramental'], availability: full });
-  assert.deepEqual(chapters.map((item) => item.label), ['Inicio', 'Cortejo', 'Música', 'Historia', 'Hilo']);
+  assert.deepEqual(chapters.map((item) => item.label), ['Inicio', 'En la calle', 'Música', 'Historia', 'Hilo']);
   assert.equal(chapters[1].summary, '3 titulares · 2 pasos');
   assert.equal(chapters[2].summary, '2 bandas actuales · 5 composiciones dedicadas');
   assert.equal(chapters[3].summary, '12 acontecimientos');
 });
 
-test('Gloria: Inicio · Procesión · Patrimonio · Historia · Hilo, sin apartados de Penitencia', () => {
+test('Gloria: Inicio · En la calle · Patrimonio · Historia · Hilo, sin apartados de Penitencia', () => {
   const chapters = brotherhoodChapters({ types: ['Gloria'], availability: { ...full, titulars: 1, steps: 1 } });
-  assert.deepEqual(chapters.map((item) => item.label), ['Inicio', 'Procesión', 'Patrimonio', 'Historia', 'Hilo']);
+  assert.deepEqual(chapters.map((item) => item.label), ['Inicio', 'En la calle', 'Patrimonio', 'Historia', 'Hilo']);
   assert.equal(chapters[1].summary, '1 titular · 1 paso');
   assert.equal(chapters.some((item) => ['cortejo', 'musica'].includes(item.id)), false);
 });
