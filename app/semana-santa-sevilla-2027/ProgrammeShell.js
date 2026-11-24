@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import HolyWeekProgramme from '@/components/HolyWeekProgramme'
+import ProgrammeOfflineSave from '@/components/ProgrammeOfflineSave'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import { PROGRAMME_DAYS, PROGRAMME_PATH, PROGRAMME_SOURCES, dateLabel } from '@/lib/holy-week-programme'
 import styles from './page.module.css'
@@ -65,6 +66,7 @@ export default function ProgrammeShell({ days, activeDayId, mode, breadcrumb, ey
     </header>
 
     <div className={`shell ${styles.content}`}>
+      <ProgrammeOfflineSave />
       <HolyWeekProgramme key={activeDayId} days={days} activeDayId={activeDayId} dateLabels={programmeDateLabels()} mode={mode} />
 
       {mode === 'day' ? <DayBands day={day} /> : null}
