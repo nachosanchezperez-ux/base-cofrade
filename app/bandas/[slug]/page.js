@@ -8,7 +8,7 @@ import OfficialLinks from '@/components/OfficialLinks'
 import RelationalEntityHero from '@/components/RelationalEntityHero'
 import FollowBandButton from '@/components/FollowBandButton'
 import { panelEditHref } from '@/lib/panel-session-cookie'
-import EntitySectionNav from '@/components/EntitySectionNav'
+import { EntityChapter, EntityChapters, chapterNavItems } from '@/components/EntityChapters'
 import EntityLastUpdated from '@/components/EntityLastUpdated'
 import BandDiscographySection from '@/components/bands/BandDiscographySection'
 import BandFeaturePhoto from '@/components/BandFeaturePhoto'
@@ -252,6 +252,16 @@ export default async function BandDetailPage({ params }) {
   const hasMusicalRepertoires = musicalRepertoires.length > 0
   const hasDiscography = discography.length > 0
   const hasDirection = band.direction.length > 0
+  // Ficha en modo aplicación (24/11/2026): cuatro capítulos con contenido.
+  const hasWhereItPlays = hasAccompaniments || hasUpcomingAccompaniments || hasGloryAccompaniments || hasHistoricalAccompaniments
+  const hasMusicChapter = hasPremieres || hasMusicalRepertoires || hasDiscography
+  const hasMoreChapter = hasDirection || band.interestLinks.length > 0 || band.sources?.length > 0
+  const chapterItems = chapterNavItems([
+    { id: 'inicio', label: 'Inicio', icon: 'inicio', show: true },
+    { id: 'donde-suena', label: 'Dónde suena', icon: 'procesion', show: hasWhereItPlays },
+    { id: 'musica', label: 'Música', icon: 'musica', show: hasMusicChapter },
+    { id: 'mas', label: 'Más', icon: 'historia', show: hasMoreChapter },
+  ])
   const banderin = band.heritage?.find((item) => item.type === 'Banderín') || null
   const primaryColor = colors.find((item) => item.role === 'primary')?.hexValue || band.primaryColor
   const secondaryColor = colors.find((item) => item.role === 'secondary')?.hexValue || band.secondaryColor
@@ -326,21 +336,8 @@ export default async function BandDetailPage({ params }) {
         }}
       />
 
-      <EntitySectionNav items={[
-        { href: '#resumen', label: 'De un vistazo' },
-        hasUpcomingAgenda && { href: '#agenda', label: 'Agenda' },
-        banderin && { href: '#banderin', label: 'Banderín' },
-        hasAccompaniments && { href: '#acompanamientos', label: 'Dónde suena' },
-        hasUpcomingAccompaniments && { href: '#proximos-acompanamientos', label: 'Próximos' },
-        hasGloryAccompaniments && { href: '#glorias', label: 'Glorias y eucarísticas' },
-        hasHistoricalAccompaniments && { href: '#acompanamientos-historicos', label: 'Histórico' },
-        hasPremieres && { href: '#repertorio', label: 'Música' },
-        hasMusicalRepertoires && { href: '#crucetas-musicales', label: 'Crucetas' },
-        hasDiscography && { href: '#discografia', label: 'Discografía' },
-        hasDirection && { href: '#direccion', label: 'Dirección' },
-        band.interestLinks.length > 0 && { href: '#enlaces-de-interes', label: 'Enlaces de interés' },
-        band.sources?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
-      ]} />
+      <EntityChapters items={chapterItems} name={band.popularName} crestSrc={band.logoPath || ''}>
+      <EntityChapter id="inicio" label="Inicio" owner={band.popularName}>
 
       <section className={`${styles.contentSection} ${styles.overviewSection}`} id="resumen">
         <div className="shell">
@@ -424,6 +421,9 @@ export default async function BandDetailPage({ params }) {
         </div>
       </section> : null}
 
+      </EntityChapter>
+
+      {hasWhereItPlays ? <EntityChapter id="donde-suena" label="Dónde suena" owner={band.popularName}>
       {hasAccompaniments ? <section className={`${styles.contentSection} ${styles.softSection}`} id="acompanamientos">
         <div className="shell">
           <div className={styles.sectionHeading}>
@@ -537,6 +537,9 @@ export default async function BandDetailPage({ params }) {
         </div>
       </section> : null}
 
+      </EntityChapter> : null}
+
+      {hasMusicChapter ? <EntityChapter id="musica" label="Música" owner={band.popularName}>
       {hasPremieres ? <section className={`${styles.contentSection} ${styles.premiereSection}`} id="repertorio">
         <div className="shell">
           <div className={styles.sectionHeading}><span className={styles.eyebrow}>Conoce su música</span><h2>Estrenos y novedades</h2></div>
@@ -571,6 +574,9 @@ export default async function BandDetailPage({ params }) {
 
       <BandDiscographySection releases={discography} />
 
+      </EntityChapter> : null}
+
+      {hasMoreChapter ? <EntityChapter id="mas" label="Más" owner={band.popularName}>
       {hasDirection ? <section className={`${styles.contentSection} ${styles.softSection}`} id="direccion">
         <div className="shell">
           <div className={styles.sectionHeading}><span className={styles.eyebrow}>Organización</span><h2>Dirección actual</h2></div>
@@ -580,6 +586,8 @@ export default async function BandDetailPage({ params }) {
 
       <OfficialLinks links={band.interestLinks} />
       <SourcesBlock sources={band.sources} />
+      </EntityChapter> : null}
+      </EntityChapters>
     </div>
   )
 }

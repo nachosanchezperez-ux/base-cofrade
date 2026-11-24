@@ -28,7 +28,7 @@ export function ChapterIcon({ icon, className }) {
   return <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false">{ICONS[icon]}</svg>;
 }
 
-export default function BrotherhoodChapterNav({ items = [], name = '', crestSrc = '' }) {
+export default function BrotherhoodChapterNav({ items = [], name = '', crestSrc = '', heroTitleId = 'brotherhood-program-title' }) {
   const [active, setActive] = useState(items[0]?.anchor || '');
   const [appMode, setAppMode] = useState(false);
   const [heroOut, setHeroOut] = useState(false);
@@ -72,12 +72,12 @@ export default function BrotherhoodChapterNav({ items = [], name = '', crestSrc 
     if (!appMode) { setHeroOut(false); return undefined; }
     // Toda la portada, no solo el título: la mini cabecera no aparece mientras
     // se vea cualquier parte de ella (evita el texto cortado debajo).
-    const hero = document.getElementById('brotherhood-program-title')?.closest('section') || document.getElementById('brotherhood-program-title');
+    const hero = document.getElementById(heroTitleId)?.closest('section') || document.getElementById(heroTitleId);
     if (!hero || typeof IntersectionObserver === 'undefined') return undefined;
     const observer = new IntersectionObserver(([entry]) => setHeroOut(!entry.isIntersecting && entry.boundingClientRect.top < 0), { threshold: 0 });
     observer.observe(hero);
     return () => observer.disconnect();
-  }, [appMode]);
+  }, [appMode, heroTitleId]);
 
   if (items.length < 2) return null;
   const current = items.find((item) => item.anchor === active) || items[0];
