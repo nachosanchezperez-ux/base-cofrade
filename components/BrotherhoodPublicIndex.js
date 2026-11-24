@@ -8,6 +8,7 @@ import { groupBrotherhoodsByLocality } from '@/lib/brotherhood-public-index'
 import { CALENDAR_VIEWS, calendarSelection, calendarSections, localityAnchor } from '@/lib/brotherhood-locality-calendar'
 import styles from './BrotherhoodPublicIndex.module.css'
 import { plural } from '@/lib/plural'
+import { directoryInitials } from '@/lib/brotherhood-directory-initials'
 
 const LOCALITY_FILTERS = [
   ...CALENDAR_VIEWS,
@@ -15,19 +16,25 @@ const LOCALITY_FILTERS = [
   { key: 'agrupaciones-parroquiales', label: 'Agrupaciones Parroquiales' },
 ]
 
+// Tarjeta del directorio (24/11/2026): escudo grande sobre el color de la
+// Hermandad (o azul marino si no consta) y nombre debajo. Sin escudo, sus
+// iniciales en ese color: nunca un hueco vacío.
 function BrotherhoodRow({ item, showCrest }) {
   const secondary = directorySecondaryLabel(item)
+  const name = displayName(item)
   return (
     <li>
-      <Link href={`/hermandades/${item.slug}`} prefetch={false} className={styles.row}>
-        {item.escudoPath ? (
-          <span className={styles.crest} aria-hidden="true">
-            {showCrest ? <BrotherhoodDirectoryCrestImage src={item.escudoPath} alt="" width={44} height={52}
-              sizes="44px" maxScale={1} className={styles.crestImage} fallbackClassName={styles.crestFallback} /> : null}
-          </span>
-        ) : null}
-        <span className={styles.copy}><strong>{displayName(item)}</strong>{secondary ? <span>{secondary}</span> : null}</span>
-        <span className={styles.arrow} aria-hidden="true">→</span>
+      <Link href={`/hermandades/${item.slug}`} prefetch={false} className={styles.row}
+        style={item.color ? { '--hc-card-color': item.color } : undefined} data-color={item.color ? 'own' : 'hilo'}>
+        <span className={styles.crest} aria-hidden="true">
+          {item.escudoPath ? (
+            showCrest ? <BrotherhoodDirectoryCrestImage src={item.escudoPath} alt="" width={56} height={66}
+              sizes="56px" maxScale={1} className={styles.crestImage} fallbackClassName={styles.crestFallback} /> : null
+          ) : (
+            <span className={styles.initials}>{directoryInitials(name)}</span>
+          )}
+        </span>
+        <span className={styles.copy}><strong>{name}</strong>{secondary ? <span>{secondary}</span> : null}</span>
       </Link>
     </li>
   )
