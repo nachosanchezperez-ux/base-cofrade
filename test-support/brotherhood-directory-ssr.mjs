@@ -8,6 +8,7 @@ import * as publicIndex from '../lib/brotherhood-public-index.js'
 import * as localityCalendar from '../lib/brotherhood-locality-calendar.js'
 import { buildBrotherhoodDirectoryNavigation } from '../lib/brotherhood-directory-navigation.js'
 import * as plural from '../lib/plural.js'
+import * as initials from '../lib/brotherhood-directory-initials.js'
 
 const require = createRequire(import.meta.url)
 const { loadBindings, transform } = require('next/dist/build/swc')
@@ -48,6 +49,7 @@ function getComponents() {
       '@/lib/brotherhood-public-index': publicIndex,
       '@/lib/brotherhood-locality-calendar': localityCalendar,
       '@/lib/plural': plural,
+      '@/lib/brotherhood-directory-initials': initials,
       '@/components/BrotherhoodDirectoryCrestImage': function UnexpectedCrest() {
         throw new Error('SSR fixtures do not exercise images; verify crests in browser QA')
       },
