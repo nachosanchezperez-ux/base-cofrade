@@ -79,7 +79,7 @@ export default function ProgrammeShell({ days, activeDayId, mode, breadcrumb, ey
 
       <footer className={styles.sources}>
         <p>
-          Orden de paso: <a href={PROGRAMME_SOURCES.consejoOrden2027.url} rel="noopener noreferrer" target="_blank">Consejo General de Hermandades y Cofradías de Sevilla</a>.
+          Orden de paso: <a href={PROGRAMME_SOURCES.consejoOrden2027.url} rel="noopener noreferrer" target="_blank">Consejo General de Hermandades y Cofradías de Sevilla</a> (<a href={PROGRAMME_SOURCES.consejoLunes2027.url} rel="noopener noreferrer" target="_blank">Lunes Santo</a>).
           Horarios de vísperas: <a href={PROGRAMME_SOURCES.consejoPrevias2026.url} rel="noopener noreferrer" target="_blank">nómina de 2026 del Consejo</a>.
           Cortejo, bandas, horarios y recorridos de referencia: Hilo Cofrade.
         </p>
