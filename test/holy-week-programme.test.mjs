@@ -69,10 +69,19 @@ test('las jornadas con orden de paso sí numeran', () => {
 })
 
 test('una jornada pendiente va por orden alfabético y sin números ni flechas', () => {
-  const lunes = day('lunes-santo')
-  const sorted = sortDayItems(lunes, [{ name: 'San Pablo' }, { name: 'Las Aguas' }, { name: 'El Museo' }])
+  const pending = { ...day('lunes-santo'), status: 'pending', order: 'alfa' }
+  const sorted = sortDayItems(pending, [{ name: 'San Pablo' }, { name: 'Las Aguas' }, { name: 'El Museo' }])
   assert.deepEqual(sorted.map((item) => item.name), ['Las Aguas', 'El Museo', 'San Pablo'])
-  assert.deepEqual(dayPositions(lunes, sorted), [null, null, null])
+  assert.deepEqual(dayPositions(pending, sorted), [null, null, null])
+})
+
+test('el Lunes Santo 2027 mantiene el orden de 2026: abre San Pablo y cierra el Museo', () => {
+  const lunes = day('lunes-santo')
+  assert.equal(lunes.status, 'approved')
+  assert.equal(lunes.order, 'carrera')
+  assert.equal(lunes.entries[0].slug, 'hermandad-de-san-pablo')
+  assert.equal(lunes.entries.at(-1).slug, 'el-museo')
+  assert.equal(lunes.entries.length, 9)
 })
 
 test('el Martes Santo muestra el orden de 2026 numerado pero sin flechas de cambio', () => {
