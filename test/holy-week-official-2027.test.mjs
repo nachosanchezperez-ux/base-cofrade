@@ -40,5 +40,5 @@ test('el programa etiqueta lo oficial y la Campana', () => {
   assert.match(component, /Campana <strong>\{item\.campana\}<\/strong>/)
   const loader = read('lib/supabase/holy-week-programme.js')
   assert.match(loader, /pickProgrammeOuting\(outings, entity\.id\)/)
-  assert.match(loader, /programme-v2-oficial/)
+  assert.match(loader, /programme-v3-musica-2027/)
 })
