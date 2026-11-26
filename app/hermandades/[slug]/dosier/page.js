@@ -5,10 +5,11 @@ import SourcesBlock from '@/components/SourcesBlock'
 import {
   dossierChronology,
   dossierHeritageGroups,
+  dossierJourneyOutings,
   dossierKeyFacts,
   usesBrotherhoodDossier,
 } from '@/lib/brotherhood-dossier'
-import { featuredBrotherhoodOuting, outingCardTitle } from '@/lib/brotherhood-featured-outing'
+import { brotherhoodFichaFeaturedOuting, outingCardTitle } from '@/lib/brotherhood-featured-outing'
 import { historyParagraphs } from '@/lib/brotherhood-thread'
 import { madridDateKey } from '@/lib/relative-day'
 import { getHermandadPageBySlug } from '@/lib/supabase/brotherhood-page'
@@ -21,7 +22,8 @@ import { getGloryDetailByOutingId } from '@/lib/supabase/glory-directory'
 import { publicText } from '@/lib/supabase/public-entity-page'
 import { pageTitle } from '@/lib/seo'
 
-// Dosier de la Hermandad (piloto: el Amparo y su Coronación Canónica). Reúne en
+// Dosier de la Hermandad (piloto: el Amparo y su Coronación Canónica; San
+// Esteban y su centenario). Reúne en
 // una página lo que ya publica la ficha, ordenado para seguir la jornada en
 // directo. No se indexa: el contenido es el de la ficha, que es la canónica.
 
@@ -36,18 +38,20 @@ async function loadDossier(slug) {
   const h = await getHermandad(slug)
   if (!h || !usesBrotherhoodDossier(h.id)) return null
   const today = madridDateKey()
-  const featured = featuredBrotherhoodOuting(h.salidas || [], today)
-  const outing = featured
-    ? await getGloryDetailByOutingId(featured.id).catch((error) => {
-      console.error('[Hilo Cofrade] Salida omitida temporalmente en el dosier', { slug, error })
-      return null
-    })
-    : null
-  const occasion = outing?.occasion || null
+  // La misma salida que destaca la ficha (también las extraordinarias) y las
+  // que la acompañan esa semana (p. ej. traslado de ida y procesión de vuelta).
+  const featured = brotherhoodFichaFeaturedOuting(h, today)
+  const journey = dossierJourneyOutings(featured, [...(h.salidas || []), ...(h.acontecimientosSalidas || [])])
+  const outings = (await Promise.all(journey.map((item) => getGloryDetailByOutingId(item.id).catch((error) => {
+    console.error('[Hilo Cofrade] Salida omitida temporalmente en el dosier', { slug, id: item.id, error })
+    return null
+  })))).filter(Boolean)
+  const outing = outings[0] || null
+  const occasion = outings.find((item) => item.occasion)?.occasion || null
   const names = [h.nombrePopular, h.nombreOficial, ...(h.imagenes || []).map((imagen) => imagen.nombre)]
   const occasionTitle = occasion ? outingCardTitle(occasion.name, { names, fallback: occasion.type || occasion.name }) : ''
   const mainImage = (h.imagenes || [])[0] || null
-  return { h, today, outing, occasion, occasionTitle, mainImage }
+  return { h, today, outing, outings, occasion, occasionTitle, mainImage }
 }
 
 const getDossier = cache(loadDossier)
@@ -78,7 +82,7 @@ export default async function BrotherhoodDossierPage({ params }) {
   const { slug } = await params
   const data = await getDossier(slug)
   if (!data) notFound()
-  const { h, today, outing, occasion } = data
+  const { h, today, outing, outings, occasion } = data
   const images = h.imagenes || []
   const coverTypes = new Map(images.map((imagen) => [imagen.id, 'image']))
   const [imageMedia, crestPath, musicalHeritage] = await Promise.all([
@@ -109,7 +113,7 @@ export default async function BrotherhoodDossierPage({ params }) {
   })
   const steps = h.pasos || []
   const history = historyParagraphs(publicText(h.historia), { leadLength: 600 })
-  const keyFacts = dossierKeyFacts({ brotherhood: h, image: data.mainImage, step: steps[0] || null, outing, occasion })
+  const keyFacts = dossierKeyFacts({ brotherhood: h, image: data.mainImage, step: steps[0] || null, outing, outings, occasion })
   const currentMusic = (h.acompanamientoActual || []).filter((item) => publicText(item.banda))
   const historicalMusic = (h.acompanamientos || []).filter((item) => publicText(item.banda))
 
@@ -121,6 +125,7 @@ export default async function BrotherhoodDossierPage({ params }) {
       crestPath={crestPath || h.escudoPath || ''}
       keyFacts={keyFacts}
       outing={outing}
+      outings={outings}
       occasion={occasion}
       occasionPieces={occasionPieces}
       images={images}
