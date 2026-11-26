@@ -11,7 +11,7 @@ const DESCRIPTION = 'Un juego diario de vocabulario cofrade: lee la adivinanza, 
 
 // La adivinanza se calcula en cada visita con la hora de Madrid. Con ISR (revalidate) la
 // primera visita tras horas sin tráfico recibía el HTML de otro día, porque Vercel sirve la
-// copia antigua mientras regenera. El render es barato: no consulta la base de datos.
+// copia antigua mientras regenera. Las palabras son locales; las fichas relacionadas se cachean por día.
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
@@ -44,29 +44,7 @@ export default async function HiddenThreadPage() {
 
       <aside className={styles.recommendation} aria-label="Otro juego cofrade">
         <div className="shell">
-          <a
-            className={styles.recommendationCard}
-            href="https://cofradle.es/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {/* Favicon oficial de cofradle.es, sin alterar, usado con permiso (13/10/2026). */}
-            <img
-              className={styles.recommendationLogo}
-              src="/externos/cofradle-favicon.svg"
-              alt=""
-              width="40"
-              height="40"
-              loading="lazy"
-              decoding="async"
-            />
-            <span className={styles.recommendationText}>
-              <small>¿Quieres más retos?</small>
-              <strong>Juega también en <span className={styles.recommendationBrand}>Cofradle</span></strong>
-            </span>
-            <span className={styles.recommendationLink} aria-hidden="true">↗</span>
-          </a>
-          <p className={styles.recommendationNote}>Cofradle es un proyecto externo e independiente de Hilo Cofrade.</p>
+          <p className={styles.recommendationNote}>Otro juego cofrade: <a href="https://cofradle.es/" target="_blank" rel="noopener noreferrer">Cofradle ↗</a>. Proyecto externo e independiente.</p>
         </div>
       </aside>
     </div>
