@@ -47,13 +47,14 @@ test('sin dato no hay cifra: nunca se muestra un cero', () => {
   assert.equal(buildHomePulse({}).length, 0)
 })
 
-test('la cabecera conserva la marca en el H1 y pinta las cifras bajo el buscador', () => {
+test('la cabecera conserva la marca en el H1 y lleva las cifras a la tarjeta 2027', () => {
   const hero = readFileSync(new URL('../components/HomeHero.js', import.meta.url), 'utf8')
   assert.match(hero, /Hilo Cofrade · Sevilla y su provincia/)
-  assert.match(hero, /La central de datos de las cofradías/)
-  assert.ok(hero.indexOf('<HiloSearch') < hero.indexOf('<HomePulse'))
-  const css = readFileSync(new URL('../components/HomePulse.module.css', import.meta.url), 'utf8')
-  assert.doesNotMatch(css, /color:\s*(var\(--home-red\)|#b01b32|#b71f37)/i)
+  assert.match(hero, /central de datos<\/strong> de las cofradías/)
+  assert.ok(hero.indexOf('<HiloSearch') < hero.indexOf('<HomeSeason2027'))
+  const css = readFileSync(new URL('../components/HomeSeason2027.module.css', import.meta.url), 'utf8')
+  // Texto blanco solo sobre el granate oscuro, nunca sobre el rojo corporativo.
+  assert.doesNotMatch(css, /background:\s*(var\(--home-red\)|#b01b32|#b71f37)/i)
 })
 
 test('horarios oficiales 2027: una Hermandad cuenta una vez y sin ninguno no hay cifra', async () => {
@@ -81,7 +82,7 @@ test('reloj: días, horas, minutos y segundos hasta la medianoche del Viernes de
   // Con la hora real, el servidor pinta los mismos días que el reloj.
   assert.equal(holyWeekCountdown('2026-11-23', Date.parse('2026-11-23T22:31:20Z')).figure, '115')
   assert.equal(holyWeekCountdown('2026-11-23', Date.parse('2026-11-23T08:00:00Z')).figure, '115')
-  const clock = readFileSync(new URL('../components/PulseClock.js', import.meta.url), 'utf8')
+  const clock = readFileSync(new URL('../components/SeasonClock.js', import.meta.url), 'utf8')
   assert.match(clock, /^'use client'/)
   assert.match(clock, /setInterval\(tick, 1000\)/)
   assert.match(clock, /clearInterval/)
