@@ -6,6 +6,7 @@ import HomeDiscover from '@/components/HomeDiscover'
 import HomeUpdatesLink from '@/components/HomeUpdatesLink'
 import HomeTodayV2 from '@/components/HomeTodayV2'
 import HomeKnowledgeThreads from '@/components/HomeKnowledgeThreads'
+import { buildHomeArchiveFigures } from '@/lib/home-archive'
 import { buildHomeAgendaNow, homeLiveFocus, selectHomeFeaturedOuting } from '@/lib/home-agenda-now'
 import styles from '@/app/home.module.css'
 import liveStyles from './HomeExtraordinaryLive.module.css'
@@ -48,7 +49,7 @@ export default function HomePageV2({
 
   return (
     <div className={styles.home}>
-      <HomeHero pulse={pulse} />
+      <HomeHero pulse={pulse} archive={buildHomeArchiveFigures(exploreStats)} today={today} />
 
       {agendaNow ? (
         <HomeAgendaNow agenda={agendaNow}>

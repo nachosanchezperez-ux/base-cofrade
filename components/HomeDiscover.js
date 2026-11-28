@@ -23,11 +23,7 @@ export default function HomeDiscover({ stats, children = null }) {
                   <HomeDiscoverIcon name={item.key} />
                 </span>
                 <strong className={styles.name}>{item.label}</strong>
-                {item.total ? (
-                  <span className={styles.figure}><b>{item.total}</b> {item.unit}</span>
-                ) : item.detail ? (
-                  <span className={styles.hint}>{item.detail}</span>
-                ) : null}
+                {item.hint ? <span className={styles.hint}>{item.hint}</span> : null}
               </Link>
             </li>
           ))}
