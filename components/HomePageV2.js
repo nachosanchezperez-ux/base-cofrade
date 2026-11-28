@@ -49,7 +49,7 @@ export default function HomePageV2({
 
   return (
     <div className={styles.home}>
-      <HomeHero pulse={pulse} archive={buildHomeArchiveFigures(exploreStats)} today={today} />
+      <HomeHero pulse={pulse} archive={buildHomeArchiveFigures(exploreStats)} />
 
       {agendaNow ? (
         <HomeAgendaNow agenda={agendaNow}>

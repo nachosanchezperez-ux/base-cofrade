@@ -42,3 +42,9 @@ test('«Descubre» ya no repite las cifras: explica qué hay en cada sección', 
   assert.equal(items.find((item) => item.key === 'brotherhood').hint, 'Historia, titulares y cultos')
   assert.ok(items.every((item) => item.hint))
 })
+
+test('la fecha de Sevilla sale en formato AAAA-MM-DD', async () => {
+  const { sevilleDateKey } = await import('../lib/home-season.js')
+  assert.equal(sevilleDateKey(new Date('2026-11-28T23:30:00Z')), '2026-11-29')
+  assert.equal(sevilleDateKey(new Date('2026-11-28T10:00:00Z')), '2026-11-28')
+})

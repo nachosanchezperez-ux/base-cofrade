@@ -1,16 +1,16 @@
 import Link from 'next/link'
 import SeasonClock from '@/components/SeasonClock'
 import { HOLY_WEEK_2027 } from '@/lib/home-pulse'
-import { buildSeasonTimeline } from '@/lib/home-season'
+import { buildSeasonTimeline, sevilleDateKey } from '@/lib/home-season'
 import styles from './HomeSeason2027.module.css'
 
 // Tarjeta «Semana Santa 2027» (28/11/2026): a la izquierda, el reloj hasta el
 // Viernes de Dolores y la línea de hitos litúrgicos; a la derecha, las cifras
 // vivas de la semana (agenda, igualás, horarios oficiales, cambios de banda).
-export default function HomeSeason2027({ pulse = [], today = '' }) {
+export default function HomeSeason2027({ pulse = [] }) {
   const countdown = pulse.find((item) => item.key === 'countdown')
   const figures = pulse.filter((item) => item.key !== 'countdown')
-  const timeline = buildSeasonTimeline(today)
+  const timeline = buildSeasonTimeline(sevilleDateKey())
   if (!countdown && !figures.length) return null
 
   return (

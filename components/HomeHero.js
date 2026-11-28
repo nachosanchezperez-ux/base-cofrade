@@ -6,7 +6,7 @@ import styles from './HomeHero.module.css'
 // Cabecera de la portada (28/11/2026): identidad, buscador y «El archivo en
 // cifras» en la banda azul; debajo, la tarjeta «Semana Santa 2027» con el reloj,
 // los hitos y las cifras de la semana.
-export default function HomeHero({ pulse = [], archive = [], today = '' }) {
+export default function HomeHero({ pulse = [], archive = [] }) {
   return (
     <>
       <section className={styles.hero} id="inicio" aria-labelledby="home-title">
@@ -46,7 +46,7 @@ export default function HomeHero({ pulse = [], archive = [], today = '' }) {
         </div>
       </section>
 
-      <HomeSeason2027 pulse={pulse} today={today} />
+      <HomeSeason2027 pulse={pulse} />
     </>
   )
 }
